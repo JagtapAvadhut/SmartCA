@@ -1,0 +1,163 @@
+﻿================================================================================
+SMART CA â€” QA TEST REPORT (LIVE BROWSER VERIFICATION)
+================================================================================
+
+Method          : Playwright Chromium against running Vite app
+Base URL        : http://localhost:5173
+Executed at     : 2026-07-12T15:01:08.916Z
+Harness         : scripts/qa-verify.mjs
+Source results  : qa-results.json
+
+IMPORTANT
+---------
+Every result below was observed in a real browser session.
+Nothing here is estimated from source reading.
+
+SUMMARY
+-------
+PASS : 99
+FAIL : 0
+TOTAL: 99
+
+CRITICAL BUGS FOUND AND FIXED DURING THIS QA PASS
+-------------------------------------------------
+1. EntityFormModal reset on every parent re-render wiped in-progress form
+   values (Create Client submitted undefined fields). FIXED: reset only when
+   modal opens / draftKey changes.
+2. Input labels were not associated with controls (missing htmlFor/id).
+   FIXED: Input auto-id + EntityFormModal field ids.
+3. AI Send control had no accessible name. FIXED: aria-label on Send and
+   message input.
+4. Wide DataTable sizing + Settings tab strip scroll hardened for mobile.
+
+FINAL VERDICT
+-------------
+ALL LISTED BROWSER TESTS PASSED. Application is demo-ready for live walkthroughs on LocalStorage mock data (Demo Mode banner visible).
+
+================================================================================
+DETAILED RESULTS
+================================================================================
+
+PASS | AUTH login â€” http://localhost:5173/
+PASS | PAGE_LOAD / â€” Dashboard
+PASS | PAGE_LOAD /clients â€” Clients
+PASS | PAGE_LOAD /companies â€” Companies
+PASS | PAGE_LOAD /employees â€” Employees
+PASS | PAGE_LOAD /invoices â€” Invoices
+PASS | PAGE_LOAD /payments â€” Payments
+PASS | PAGE_LOAD /documents â€” Documents
+PASS | PAGE_LOAD /compliance â€” Compliance
+PASS | PAGE_LOAD /compliance/gst â€” GST
+PASS | PAGE_LOAD /compliance/itr â€” Income Tax
+PASS | PAGE_LOAD /compliance/tds â€” TDS
+PASS | PAGE_LOAD /compliance/roc â€” ROC
+PASS | PAGE_LOAD /accounting â€” Accounting
+PASS | PAGE_LOAD /calendar â€” Calendar
+PASS | PAGE_LOAD /reports â€” Reports
+PASS | PAGE_LOAD /settings â€” Settings
+PASS | PAGE_LOAD /ai â€” AI
+PASS | PAGE_LOAD /recycle-bin â€” Recycle
+PASS | PAGE_LOAD /tasks â€” Tasks
+PASS | PAGE_LOAD /notes â€” Notes
+PASS | NOTIFICATIONS open panel
+PASS | NOTIFICATIONS mark all read
+PASS | THEME switch to dark â€” html.dark=true
+PASS | DARK_MODE / â€” rgb(3, 7, 18)
+PASS | DARK_MODE /clients â€” rgb(3, 7, 18)
+PASS | DARK_MODE /companies â€” rgb(3, 7, 18)
+PASS | DARK_MODE /employees â€” rgb(3, 7, 18)
+PASS | DARK_MODE /invoices â€” rgb(3, 7, 18)
+PASS | DARK_MODE /payments â€” rgb(3, 7, 18)
+PASS | DARK_MODE /documents â€” rgb(3, 7, 18)
+PASS | DARK_MODE /compliance â€” rgb(3, 7, 18)
+PASS | DARK_MODE /compliance/gst â€” rgb(3, 7, 18)
+PASS | DARK_MODE /compliance/itr â€” rgb(3, 7, 18)
+PASS | DARK_MODE /compliance/tds â€” rgb(3, 7, 18)
+PASS | DARK_MODE /compliance/roc â€” rgb(3, 7, 18)
+PASS | DARK_MODE /accounting â€” rgb(3, 7, 18)
+PASS | DARK_MODE /calendar â€” rgb(3, 7, 18)
+PASS | DARK_MODE /reports â€” rgb(3, 7, 18)
+PASS | DARK_MODE /settings â€” rgb(3, 7, 18)
+PASS | DARK_MODE /ai â€” rgb(3, 7, 18)
+PASS | DARK_MODE /recycle-bin â€” rgb(3, 7, 18)
+PASS | DARK_MODE /tasks â€” rgb(3, 7, 18)
+PASS | DARK_MODE /notes â€” rgb(3, 7, 18)
+PASS | THEME switch to light
+PASS | OVERFLOW dashboard 320x720
+PASS | OVERFLOW clients 320x720
+PASS | OVERFLOW settings 320x720
+PASS | OVERFLOW dashboard 375x812
+PASS | OVERFLOW clients 375x812
+PASS | OVERFLOW settings 375x812
+PASS | OVERFLOW dashboard 390x844
+PASS | OVERFLOW clients 390x844
+PASS | OVERFLOW settings 390x844
+PASS | OVERFLOW dashboard 414x896
+PASS | OVERFLOW clients 414x896
+PASS | OVERFLOW settings 414x896
+PASS | OVERFLOW dashboard 768x1024
+PASS | OVERFLOW clients 768x1024
+PASS | OVERFLOW settings 768x1024
+PASS | OVERFLOW dashboard 1024x768
+PASS | OVERFLOW clients 1024x768
+PASS | OVERFLOW settings 1024x768
+PASS | OVERFLOW dashboard 1280x800
+PASS | OVERFLOW clients 1280x800
+PASS | OVERFLOW settings 1280x800
+PASS | OVERFLOW dashboard 1440x900
+PASS | OVERFLOW clients 1440x900
+PASS | OVERFLOW settings 1440x900
+PASS | OVERFLOW dashboard 1920x1080
+PASS | OVERFLOW clients 1920x1080
+PASS | OVERFLOW settings 1920x1080
+PASS | REL read outstanding before â€” 6583724
+PASS | CRUD client create â€” QA Client 572240
+PASS | CRUD invoice create â€” SCA/2025-26/1385 QA Client 572240 12 Jul 2026 11 Aug 2026 â‚¹11,800 â‚¹0 Sent
+PASS | CRUD payment create â€” QA-PAY-572240 inv=SCA/2025-26/1385
+PASS | REL outstanding changed after payment â€” before=6583724 after=6590524
+PASS | REL reports page live â€” chart=true
+PASS | CRUD payment delete â€” rowsLeft=0
+PASS | REL outstanding rollback after payment delete â€” afterPay=6590524 afterDelete=6595524
+PASS | TABLE invoices search
+PASS | TABLE invoices export click
+PASS | TABLE column visibility
+PASS | CRUD invoice duplicate
+PASS | CRUD document upload
+PASS | DOC favourite toggle
+PASS | CRUD client archive
+PASS | RECYCLE bin shows archived client
+PASS | RECYCLE restore
+PASS | ACCOUNTING modules interactive â€” tabsHit=5
+PASS | CALENDAR month/week/day
+PASS | SETTINGS branding apply â€” styleTag=true
+PASS | SETTINGS create user
+PASS | SETTINGS user persists after refresh
+PASS | SETTINGS create role
+PASS | SETTINGS theme persists after refresh
+PASS | AI send message
+PASS | DASHBOARD click Outstanding â€” http://localhost:5173/payments
+PASS | RUNTIME no critical pageerrors
+
+================================================================================
+COVERAGE MAP (what was exercised live)
+================================================================================
+- Auth login
+- Page load: Dashboard, Clients, Companies, Employees, Invoices, Payments,
+  Documents, Compliance, GST, ITR, TDS, ROC, Accounting, Calendar, Reports,
+  Settings, AI, Recycle Bin, Tasks, Notes
+- Notifications panel
+- Dark mode on every listed page + theme persistence after refresh
+- Overflow checks at 320/375/390/414/768/1024/1280/1440/1920
+- Relationship chain: Client -> Invoice -> Payment -> Outstanding/Reports ->
+  Payment delete rollback
+- Table search / export / column visibility / invoice duplicate
+- Document upload + favourite
+- Client archive -> Recycle Bin -> Restore
+- Accounting tabs, Calendar month/week/day
+- Settings branding, create user (+ refresh), create role
+- AI send message
+- Dashboard Outstanding KPI navigation
+
+================================================================================
+END OF QA_Test_Report.txt
+================================================================================

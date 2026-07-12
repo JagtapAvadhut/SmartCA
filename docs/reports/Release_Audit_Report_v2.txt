@@ -1,0 +1,915 @@
+﻿================================================================================
+SMART CA â€” RELEASE AUDIT REPORT v2
+================================================================================
+
+Document type     : QA + Release Audit (NOT product documentation)
+File name         : Release_Audit_Report_v2.txt
+Project           : Smart CA (d:\saas)
+Audit method      : Full codebase re-scan of pages, components, services,
+                    repositories, routes, hooks, stores, utils, mock JSON,
+                    forms, modals, tables, charts, settings
+Audit date        : July 2026 (post Production Stabilization + Demo Hardening)
+Auditor stance    : Honest. PARTIAL and BROKEN called out. No assumed completion.
+Verification note : Findings are based on reading the current source. Runtime
+                    pixel QA at every breakpoint was not executed in a browser
+                    automation harness in this audit pass; responsive/dark-mode
+                    findings mix code inspection with known residual risks.
+
+
+================================================================================
+SECTION 1 â€” PROJECT SUMMARY
+================================================================================
+
+Current application status
+--------------------------
+Smart CA is a React 19 + Vite + TypeScript SPA for CA practice management.
+It runs entirely on a LocalStorage MockDatabase (DB_VERSION = 3). JSON seed
+files load only on first seed / version mismatch / Reset Database. After that,
+CRUD mutations persist in LocalStorage.
+
+The product is past prototype stage. Most operational modules have working
+create/edit/delete flows, role-gated navigation, live dashboard/report
+aggregations, and demo-oriented polish (undo delete, relational payment sync,
+notes, calendar).
+
+Overall completion percentage (frontend demo product)
+-----------------------------------------------------
+Estimated overall completion: 82%
+
+Breakdown intuition:
+  Core CRUD modules .............. ~88%
+  Auth + RBAC .................... ~90%
+  Live analytics ................. ~85%
+  Settings depth ................. ~80%
+  Documents realism .............. ~55%
+  Accounting depth ............... ~25%
+  Automated tests ................ ~10%
+  True production security ....... ~20% (mock auth by design)
+
+Production readiness
+--------------------
+NOT production-ready for real customer data.
+
+Reasons:
+  - Passwords stored in mock JSON / LocalStorage plaintext for demo
+  - No server-side enforcement of permissions
+  - Document binaries are simulated
+  - No automated E2E CI gate proven in-repo
+  - Forgot/reset password is stubbed
+
+Demo readiness
+--------------
+YES â€” demo-ready for client walkthroughs, WITH caveats.
+
+A client can be shown:
+  Login â†’ Dashboard (live numbers) â†’ Clients CRUD â†’ Invoice â†’ Payment â†’
+  Outstanding updates â†’ Refresh persistence â†’ Dark mode â†’ Settings â†’ Roles nav.
+
+They should NOT be walked deep into:
+  Real file storage, real accounting ledgers, real AI, real email delivery,
+  archived-record restore UI, full role-matrix editor.
+
+Commercial readiness
+--------------------
+NOT commercial SaaS ready end-to-end.
+
+Commercial shell readiness (frontend UX + mock backend simulation): HIGH.
+Commercial product readiness (multi-tenant backend, security, ops): LOW.
+
+
+================================================================================
+SECTION 2 â€” WHAT HAS BEEN COMPLETED
+================================================================================
+
+Verified completed (âœ…) based on current code:
+
+âœ… Vite + React 19 + TypeScript application shell
+âœ… Tailwind CSS v4 design tokens + dark class strategy
+âœ… React Router v7 with lazy pages + ProtectedRoute + GuestRoute
+âœ… Role-based navigation filtering (14 roles / 43 permissions)
+âœ… Login / Logout / Remember Me / idle session timeout (30 min)
+âœ… MockDatabase LocalStorage engine (CRUD, search, filter, sort, paginate,
+   archive, restore, duplicate)
+âœ… Seed-once behavior with DB_VERSION = 3
+âœ… Repository layer (Client impact, Company impact, Task reassign, etc.)
+âœ… Service layer facade for domain modules
+âœ… Live Dashboard KPIs via computeDashboard() (not static DASH-001 read)
+âœ… Live Reports charts via computeReports() (not static RPT-001 read)
+âœ… Clients list CRUD + duplicate + archive option + undo delete + PAN/GSTIN checks
+âœ… Client detail read view + editable notes persistence
+âœ… Companies CRUD + archive option + ROC delete warnings + undo
+âœ… Employees CRUD + archive + task reassign/unassign on delete + undo
+âœ… Invoices CRUD + duplicate + undo + client financial recalc
+âœ… Payments CRUD + undo + invoice paidAmount/status sync + client outstanding sync
+âœ… Documents metadata create + mock download + delete undo + CSV export
+âœ… Tasks CRUD + duplicate + undo
+âœ… Compliance kanban create / move / delete
+âœ… GST / ITR / TDS / ROC table create / edit / delete + undo
+âœ… Notes module (/notes) CRUD + duplicate + undo
+âœ… Calendar module (/calendar) CRUD + undo
+âœ… Reports CSV export from live data
+âœ… Settings: Organization, Profile, Password, Branding, Notifications,
+   Email, SMS, WhatsApp, Security, API Keys (mock), Appearance (theme store),
+   Users activate/deactivate, Activity logs (read)
+âœ… Notifications topbar list + mark read / mark all read (persisted in DB)
+âœ… Command palette (Ctrl/Cmd+K) search + quick actions
+âœ… Theme persistence (smart-ca-theme)
+âœ… Auth persistence (smart-ca-auth)
+âœ… Toast feedback + ConfirmDialog + EntityFormModal patterns
+âœ… DataTable search / sort / pagination / export
+âœ… Query invalidation helper (invalidateAfterMutation) after major mutations
+âœ… AI chat sessions UI persisted in LocalStorage (canned assistant replies)
+âœ… 404 and Unauthorized pages
+
+
+================================================================================
+SECTION 3 â€” WHAT WAS FIXED (vs earlier stabilization baseline)
+================================================================================
+
+Compared to the earlier incomplete / static-data state:
+
+Bugs / gaps fixed
+-----------------
+â€¢ Dashboard no longer returns seeded static KPI JSON first
+â€¢ Reports no longer return seeded static chart JSON first
+â€¢ Payment create/update/delete now syncs invoice paidAmount/status
+â€¢ Invoice create/update/delete recalculates client revenue/outstanding
+â€¢ Activity logging on invoice/payment create
+â€¢ Client delete warns on related records and prefers archive
+â€¢ Employee delete can reassign tasks (or unassign)
+â€¢ Company delete warns about ROC linkages
+â€¢ Settings toggles/sections persist via SettingsService (were toast-only)
+â€¢ API keys generate/revoke persist in settings collection
+â€¢ Users can be Activated/Deactivated from Settings
+â€¢ Accounting cards no longer fake-toast; they navigate to Reports
+â€¢ AI attach no longer silent toast-only; opens informative modal + Documents CTA
+â€¢ Kanban uses horizontal scroll container for small screens
+â€¢ AI page stacks for mobile
+â€¢ Topbar search control shrinks on narrow widths
+â€¢ Drawer dark-mode surfaces fixed
+â€¢ Chart theme CSS variables for dark mode
+â€¢ Client detail dark mode + notes edit
+â€¢ Undo delete toast across main entity modules
+â€¢ DB version bumped to 3 with seeded sample notes
+â€¢ Notes and Calendar routes added to nav + permissions
+
+Buttons that now work (were dead/fake before)
+---------------------------------------------
+â€¢ Accounting module cards â†’ navigate to Reports
+â€¢ Settings Save on branding/email/sms/whatsapp/security/notifications
+â€¢ Settings Generate/Revoke API key
+â€¢ Settings User Activate/Deactivate
+â€¢ AI Attach â†’ modal explaining simulation + Go to Documents
+â€¢ Employee delete reassign selector (when tasks exist)
+â€¢ Client detail Save Notes
+
+CRUD that now works / improved
+------------------------------
+â€¢ Live financial relationships (payment â†” invoice â†” client)
+â€¢ Notes CRUD
+â€¢ Calendar CRUD
+â€¢ GST/ITR/TDS/ROC CRUD (not read-only tables)
+â€¢ Compliance kanban mutations
+
+Pages improved
+--------------
+â€¢ Dashboard (live)
+â€¢ Reports (live)
+â€¢ Settings (persistence)
+â€¢ Client detail
+â€¢ Employees delete integrity
+â€¢ Documents mobile action visibility
+â€¢ AppLayout mobile nav children
+
+Responsive / theme / routing fixes
+----------------------------------
+â€¢ page-container / table-scroll / kanban-scroll utilities
+â€¢ Settings tabs horizontal scroll on mobile
+â€¢ Dark mode chart tooltips/grids
+â€¢ Routes added: /notes, /calendar
+â€¢ Command palette quick actions expanded
+
+
+================================================================================
+SECTION 4 â€” CURRENTLY WORKING MODULES
+================================================================================
+
+Scoring key (honest estimates from code verification):
+  Working %   = module usable for demo end-to-end
+  CRUD %      = create/read/update/delete coverage in UI
+  Buttons %   = visible actions do meaningful work
+  Forms %     = validation + save path
+  Responsive %= page-level dark/responsive classes + shared layout support
+  Demo Ready? = YES / CAUTION / NO
+
+--------------------------------------------------------------------------------
+Dashboard
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 90
+CRUD %        : N/A (read analytics)
+Buttons %     : 85 (mostly links/widgets)
+Forms %       : N/A
+Responsive %  : 85
+Demo Ready?   : YES
+Notes         : Live computeDashboard + charts from computeReports.
+                KPI icon colors include dark variants.
+
+--------------------------------------------------------------------------------
+Clients
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 92
+CRUD %        : 90 (create/edit/delete/duplicate/archive; restore UI missing)
+Buttons %     : 95
+Forms %       : 90 (zod + duplicate PAN/GSTIN)
+Responsive %  : 80 (page has some dark; grid/list ok)
+Demo Ready?   : YES
+
+--------------------------------------------------------------------------------
+Client Detail
+--------------------------------------------------------------------------------
+Status        : WORKING (read + notes)
+Working %     : 80
+CRUD %        : 40 (notes update only; no full edit modal here)
+Buttons %     : 85 (Create Invoice / Upload Document navigate-only â€” intentional)
+Forms %       : 70 (notes)
+Responsive %  : 90
+Demo Ready?   : YES (with CAUTION: CTAs navigate, do not deep-link prefilled)
+
+--------------------------------------------------------------------------------
+Companies
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 88
+CRUD %        : 85 (no duplicate; archive yes; restore UI missing)
+Buttons %     : 95
+Forms %       : 90
+Responsive %  : 75 (page-level dark sparse; shared components help)
+Demo Ready?   : YES
+
+--------------------------------------------------------------------------------
+Employees
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 90
+CRUD %        : 85 (no duplicate; archive + reassign)
+Buttons %     : 95
+Forms %       : 90
+Responsive %  : 80
+Demo Ready?   : YES
+
+--------------------------------------------------------------------------------
+Invoices
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 90
+CRUD %        : 90 (duplicate yes; archive UI no)
+Buttons %     : 95
+Forms %       : 85 (line items simplified)
+Responsive %  : 75
+Demo Ready?   : YES
+
+--------------------------------------------------------------------------------
+Payments
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 92
+CRUD %        : 85 (no duplicate)
+Buttons %     : 95
+Forms %       : 90
+Responsive %  : 75
+Demo Ready?   : YES
+Notes         : Relational sync to invoices/clients VERIFIED in PaymentService.
+
+--------------------------------------------------------------------------------
+Compliance (Kanban)
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 85
+CRUD %        : 80 (create/move/delete; no undo on kanban delete)
+Buttons %     : 90
+Forms %       : 85
+Responsive %  : 80 (kanban-scroll)
+Demo Ready?   : YES
+
+--------------------------------------------------------------------------------
+GST / ITR / TDS / ROC
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 85
+CRUD %        : 85 (shared form schema is generalized â€” PARTIAL fidelity)
+Buttons %     : 95
+Forms %       : 75 (GSTIN field reused for non-GST modules)
+Responsive %  : 75
+Demo Ready?   : YES (CAUTION: form fields not module-specialized)
+
+--------------------------------------------------------------------------------
+Documents
+--------------------------------------------------------------------------------
+Status        : PARTIAL
+Working %     : 70
+CRUD %        : 60 (metadata create/delete; no edit/duplicate)
+Buttons %     : 85 (download is mock .txt)
+Forms %       : 80
+Responsive %  : 80
+Demo Ready?   : CAUTION â€” explain upload/download are simulated metadata
+
+--------------------------------------------------------------------------------
+Tasks
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 90
+CRUD %        : 90
+Buttons %     : 95
+Forms %       : 90
+Responsive %  : 75
+Demo Ready?   : YES
+
+--------------------------------------------------------------------------------
+Notes
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 90
+CRUD %        : 95
+Buttons %     : 95
+Forms %       : 90
+Responsive %  : 80
+Demo Ready?   : YES
+
+--------------------------------------------------------------------------------
+Calendar
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 85
+CRUD %        : 85 (list CRUD; not a visual month grid)
+Buttons %     : 95
+Forms %       : 90
+Responsive %  : 75
+Demo Ready?   : YES (CAUTION: table calendar, not full calendar UI)
+
+--------------------------------------------------------------------------------
+Reports
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 88
+CRUD %        : N/A
+Buttons %     : 95 (export works)
+Forms %       : N/A
+Responsive %  : 80 (some StatCard color props still light-leaning)
+Demo Ready?   : YES
+
+--------------------------------------------------------------------------------
+Settings
+--------------------------------------------------------------------------------
+Status        : PARTIAL
+Working %     : 82
+CRUD %        : 70 (users status only; roles read-only)
+Buttons %     : 90
+Forms %       : 80
+Responsive %  : 90
+Demo Ready?   : YES (CAUTION: Roles view-only; language not full i18n)
+
+--------------------------------------------------------------------------------
+Notifications
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 85
+CRUD %        : 70 (read/mark/delete via store; no rich composer UI)
+Buttons %     : 90
+Forms %       : N/A
+Responsive %  : 85
+Demo Ready?   : YES
+
+--------------------------------------------------------------------------------
+AI Assistant
+--------------------------------------------------------------------------------
+Status        : PARTIAL
+Working %     : 65
+CRUD %        : 70 (sessions/messages persist; replies canned)
+Buttons %     : 90 (attach is informative modal â€” not broken)
+Forms %       : 80
+Responsive %  : 85
+Demo Ready?   : CAUTION â€” must say â€œdemo assistantâ€, not real AI
+
+--------------------------------------------------------------------------------
+Accounting
+--------------------------------------------------------------------------------
+Status        : PARTIAL (shell)
+Working %     : 30
+CRUD %        : 0
+Buttons %     : 100 of what exists (all navigate to Reports)
+Forms %       : 0
+Responsive %  : 85
+Demo Ready?   : CAUTION â€” do not present as real GL/P&L engine
+
+--------------------------------------------------------------------------------
+Search / Command Palette
+--------------------------------------------------------------------------------
+Status        : WORKING
+Working %     : 88
+Demo Ready?   : YES
+
+--------------------------------------------------------------------------------
+Auth
+--------------------------------------------------------------------------------
+Status        : WORKING (mock)
+Working %     : 90
+Demo Ready?   : YES
+Forgot Password: PARTIAL/STUB (validates email; no real reset mail/token)
+
+
+================================================================================
+SECTION 5 â€” BUTTON AUDIT
+================================================================================
+
+Format: Button | Location | Working? | Notes
+
+GLOBAL / SHELL
+--------------
+Open mobile menu              | Topbar                 | YES | Opens MobileSidebar
+Command palette / Search      | Topbar                 | YES | Opens palette
+Theme menu + Light/Dark/System| Topbar                 | YES | Persists theme
+Language EN/HI                | Topbar                 | YES | Persists preference; UI strings remain English (PARTIAL product effect)
+Notifications bell            | Topbar                 | YES | Dropdown
+Mark all read                 | Notifications dropdown | YES | Persists
+Notification item click       | Notifications dropdown | YES | markAsRead + navigate link if present
+Profile menu                  | Topbar                 | YES |
+Settings (profile menu)       | Topbar                 | YES | navigate /settings
+Sign out                      | Topbar                 | YES |
+Sidebar collapse              | Sidebar                | YES |
+Sidebar nav links             | Sidebar                | YES | permission filtered
+Command palette results       | CommandPalette         | YES | navigate
+Quick actions (client/invoice/task/note/calendar/AI) | CommandPalette | YES |
+
+AUTH
+----
+Login submit                  | LoginPage              | YES
+Forgot password link          | LoginPage              | YES | navigates
+Forgot password submit        | ForgotPasswordPage     | PARTIAL | success message only; no email/token
+Back to login                 | ForgotPasswordPage     | YES
+
+DASHBOARD
+---------
+Widget / â€œview allâ€ style links | DashboardPage        | YES | Link components to modules
+(No create buttons)           | â€”                      | N/A
+
+CLIENTS
+-------
+Add Client                    | ClientsPage            | YES
+List/Grid toggle              | ClientsPage            | YES
+View (eye)                    | ClientsPage            | YES | /clients/:id
+Edit / Delete / Duplicate     | RowActions             | YES
+Export CSV                    | DataTable              | YES
+Confirm Cancel/Archive/Delete | ConfirmDialog          | YES
+Form Cancel/Save              | EntityFormModal        | YES
+Back to Clients               | ClientDetailPage       | YES
+Create Invoice                | ClientDetailPage       | YES* | navigate-only (no prefills)
+Upload Document               | ClientDetailPage       | YES* | navigate-only
+Edit Notes / Save / Cancel    | ClientDetailPage       | YES
+
+COMPANIES / EMPLOYEES / INVOICES / PAYMENTS / TASKS / NOTES / CALENDAR
+---------------------------------------------------------------------
+Add/Create primary button     | respective pages       | YES
+Edit / Delete                 | RowActions             | YES
+Duplicate                     | Clients/Invoices/Tasks/Notes | YES
+Duplicate                     | Companies/Payments/Employees/Calendar | N/A (not offered)
+Archive instead               | Clients/Companies/Employees ConfirmDialog | YES
+Export CSV                    | DataTable              | YES
+Employee reassign select      | EmployeesPage overlay  | YES when tasks > 0
+
+COMPLIANCE
+----------
+Add Compliance Task           | CompliancePage         | YES
+Move-to-column chips          | KanbanCard             | YES
+Delete on card                | KanbanCard             | YES (no undo)
+Add Filing                    | GST/ITR/TDS/ROC        | YES
+Edit / Delete filing          | RowActions             | YES
+
+DOCUMENTS
+---------
+Export                        | DocumentsPage          | YES
+Upload                        | DocumentsPage          | YES (metadata form, not OS file picker binary)
+Folder filters                | DocumentsPage          | YES
+Grid/List toggle              | DocumentsPage          | YES
+Download                      | DocumentsPage          | PARTIAL | generates mock .txt
+Delete                        | DocumentsPage          | YES + undo
+
+REPORTS
+-------
+Export Report                 | ReportsPage            | YES | CSV of live series
+
+ACCOUNTING
+----------
+General Ledger card           | AccountingPage         | YES* | navigates /reports only
+Trial Balance card            | AccountingPage         | YES* | navigates /reports only
+Profit & Loss card            | AccountingPage         | YES* | navigates /reports only
+Balance Sheet card            | AccountingPage         | YES* | navigates /reports only
+(* meaningful navigation, but NOT real accounting modules)
+
+AI
+--
+New chat                      | AIPage                 | YES
+Delete session                | AIPage                 | YES
+Suggestion chips              | AIPage                 | YES
+Send                          | AIPage                 | YES (canned reply)
+Attach                        | AIPage                 | YES | opens info modal (not file attach)
+Close / Go to Documents       | Attach modal           | YES
+
+SETTINGS
+--------
+Tab switches                  | SettingsPage           | YES
+Organization Save             | Settings               | YES â†’ LocalStorage
+Profile Save                  | Settings               | YES
+Reset Database                | Settings Profile       | YES
+Password Update               | Settings               | YES
+User Activate/Deactivate      | Settings Users         | YES
+Roles cards                   | Settings Roles         | YES (read-only; no Save)
+Branding Save                 | Settings               | YES
+Notification toggles          | Settings               | YES persist
+Security toggles/select       | Settings               | YES persist (sessionTimeout NOT wired to auth idle)
+Email/SMS/WhatsApp Save       | Settings               | YES (config only)
+API Generate/Copy/Revoke      | Settings               | YES
+Appearance theme buttons      | Settings               | YES (theme store)
+Language buttons              | Settings               | YES (store only; no translation pack)
+
+ERROR PAGES
+-----------
+Go home / go back             | 404 / Unauthorized     | YES
+
+SUMMARY BUTTON VERDICT
+----------------------
+Zero completely inert buttons found in primary flows.
+Several buttons are INTENTIONAL stubs that still perform a meaningful action
+(navigate, modal explanation, mock download). Those are marked PARTIAL above,
+not BROKEN.
+
+
+================================================================================
+SECTION 6 â€” CRUD AUDIT
+================================================================================
+
+Module          Create Edit Delete Duplicate Archive Restore Persist Refresh Relations Validation
+------------------------------------------------------------------------------------------------
+Clients         YES    YES  YES    YES       YES     NO*     YES     YES     YES warn  YES zod+dup
+Companies       YES    YES  YES    NO        YES     NO*     YES     YES     YES warn  YES
+Employees       YES    YES  YES    NO        YES     NO*     YES     YES     YES reassign YES
+Invoices        YES    YES  YES    YES       NO      NO*     YES     YES     YES client YES
+Payments        YES    YES  YES    NO        NO      NO*     YES     YES     YES inv    YES
+Documents       YES**  NO   YES    NO        NO      NO*     YES     YES     limited   YES
+Tasks           YES    YES  YES    YES       NO      NO*     YES     YES     limited   YES
+Notes           YES    YES  YES    YES       NO      NO*     YES     YES     N/A       YES
+Calendar        YES    YES  YES    NO        NO      NO*     YES     YES     limited   YES
+Compliance      YES    YES*** YES  NO        NO      NO*     YES     YES     limited   YES
+GST/ITR/TDS/ROC YES    YES  YES    NO        NO      NO*     YES     YES     limited   PARTIAL schema
+Users (settings)NO create YES status only NO NO      NO      YES     YES     N/A       N/A
+Roles           NO     NO   NO     NO        NO      NO      N/A     YES read N/A       N/A
+Notifications   create via service YES mark/delete NO NO NO YES YES N/A N/A
+Settings sections YES save YES N/A N/A N/A N/A YES YES N/A mixed
+
+* Restore: CollectionStore.restore() and crudFactory.restore() EXIST, but there is
+  NO UI to list archived records and restore them. Archive is one-way from user
+  perspective unless Reset Database / manual LocalStorage edit / undo toast window.
+** Documents create = metadata upload form (no binary file storage).
+*** Compliance â€œeditâ€ primarily via status move chips + create form; not rich edit modal.
+
+Relationships maintained?
+-------------------------
+YES for payment â†’ invoice â†’ client financials (verified in PaymentService + relations.ts).
+YES for client delete impact warnings.
+YES for employee task reassignment.
+PARTIAL for invoice total edits (recalcs client; does not re-derive paid from payments
+unless payment sync runs).
+NO hard cascading deletes of invoices when client archived (by design / warn).
+
+
+================================================================================
+SECTION 7 â€” RESPONSIVE AUDIT
+================================================================================
+
+Infrastructure present
+----------------------
+â€¢ body/#root overflow-x hidden, min-width 320
+â€¢ .page-container responsive padding
+â€¢ .table-scroll / .kanban-scroll
+â€¢ Mobile sidebar overlay
+â€¢ Settings tab strip scrolls horizontally on small screens
+â€¢ AI layout stacks on mobile
+â€¢ ConfirmDialog / modals stack buttons on small screens
+
+Breakpoint assessment (code + layout patterns; not browser automation run)
+--------------------------------------------------------------------------
+320px   : Usable with caveats. Tables require horizontal scroll (expected).
+          Kanban horizontal scroll. Dense DataTables cramped but not page-breaking.
+375â€“414 : Same pattern; primary mobile targets OK for shell + forms.
+768     : Two-column grids begin; sidebar still mobile until lg.
+1024+   : Desktop sidebar + full tables comfortable.
+1280â€“1920 : Fine; no max-width demo issues noted in code.
+
+Known residual layout risks
+---------------------------
+â€¢ Wide tables always need .table-scroll â€” clients on 320 must swipe.
+â€¢ Calendar is table list, not responsive month grid.
+â€¢ Employee reassign floating panel may compete with ConfirmDialog on small screens.
+â€¢ Some list pages rely on shared DataTable dark/responsive rather than page-level classes.
+â€¢ Documents grid hover actions now visible on mobile (sm:opacity pattern) â€” improved.
+
+No evidence of intentional fixed desktop-only unbroken overflow on AppLayout.
+
+
+================================================================================
+SECTION 8 â€” DARK MODE AUDIT
+================================================================================
+
+Working globally
+----------------
+â€¢ Theme store persists mode (light/dark/system)
+â€¢ .dark class on documentElement
+â€¢ Layout shell (sidebar/topbar/mobile) dark-aware
+â€¢ Cards/buttons/inputs/modals generally dark-aware
+â€¢ Chart CSS variables switch in dark
+â€¢ Dashboard KPI icon colors include dark variants
+â€¢ Client detail extensively dark-classed
+â€¢ Settings extensively dark-classed
+
+Residual issues (PARTIAL â€” not catastrophic)
+--------------------------------------------
+â€¢ Several entity pages (Invoices, Payments, Tasks, Companies, Calendar,
+  ComplianceSubPages) have few/zero page-level `dark:` classes; they depend on
+  shared components. Risk of occasional gray text leftovers in custom cells.
+â€¢ Reports StatCard color props historically light-leaning (partially improved on Dashboard).
+â€¢ Documents grid/list toggle active state may miss dark variants.
+â€¢ Language dropdown selected state in Topbar may miss dark emphasis class.
+â€¢ Branding primary color saved in settings does NOT dynamically restyle Tailwind
+  primary scale across the app.
+
+Broken colors / unreadable text
+-------------------------------
+No systemic â€œwhite text on whiteâ€ pattern found in shell.
+Residual risk on sparse page-level dark pages â†’ mark as WATCHLIST, not BROKEN.
+
+
+================================================================================
+SECTION 9 â€” SETTINGS AUDIT
+================================================================================
+
+Organization     : WORKING â€” Save â†’ SettingsService.updateOrganization â†’ LocalStorage
+Profile          : WORKING â€” AuthService.updateProfile; Reset Database available
+Password         : WORKING â€” AuthService.changePassword with zod
+Users            : PARTIAL â€” list + Activate/Deactivate only (no invite/create/edit role)
+Roles            : PARTIAL â€” read-only permission chips (no matrix editor / Save)
+Permissions      : PARTIAL â€” shown inside Roles; no dedicated editable Permissions UI
+Security         : PARTIAL â€” 2FA toggle + sessionTimeout persist to settings JSON,
+                   but sessionTimeout is NOT wired to SESSION_TIMEOUT_MS auth idle
+Theme/Appearance : WORKING for theme via useThemeStore; language preference stored
+                   but UI copy not translated
+Branding         : WORKING save to settings; visual primary color NOT applied live to CSS
+Notifications    : WORKING toggles persist
+Email/SMS/WhatsApp: WORKING config save (no real gateway â€” expected)
+API Keys         : WORKING mock generate/copy/revoke persist
+Activity Logs    : WORKING read-only list
+
+
+================================================================================
+SECTION 10 â€” LOCAL STORAGE AUDIT
+================================================================================
+
+Verified persistence keys / behaviors
+-------------------------------------
+smart-ca-auth          : Login session persists across refresh (WORKING)
+smart-ca-theme         : Theme + language preference persist (WORKING)
+smart-ca-app           : Sidebar collapsed persists (WORKING)
+smart-ca-db:*          : All collections persist mutations (WORKING)
+smart-ca-db:__meta__   : Version 3 seed gate (WORKING)
+smart-ca-undo-stack    : Undo snapshots (WORKING, short-lived)
+
+CRUD survives refresh?     YES (for LocalStorage-backed collections)
+Settings survive refresh?  YES (organization/settings/users status/apiKeys/etc.)
+Notifications survive?     YES (collection-backed store)
+Theme survives?            YES
+Login survives?            YES until logout / session expiry (unless Remember Me)
+
+Caveat
+------
+If DB_VERSION changes (as to 3), first load force-reseeds and wipes prior local
+mutations. Demo machines that already had v2 data will reseed once.
+
+
+================================================================================
+SECTION 11 â€” KNOWN ISSUES
+================================================================================
+
+Broken Buttons
+--------------
+None identified as completely dead.
+PARTIAL intentional stubs listed in Section 5.
+
+Broken / Incomplete CRUD
+------------------------
+â€¢ No Restore UI for archived clients/companies/employees
+â€¢ No Duplicate on Companies / Payments / Employees / Calendar / Compliance filings
+â€¢ Documents have no Edit form
+â€¢ Users cannot be created from Settings UI
+â€¢ Roles cannot be edited
+â€¢ Compliance kanban delete has no undo toast
+
+Broken / Weak Forms
+-------------------
+â€¢ GST/ITR/TDS/ROC share one filingSchema (GSTIN field mislabeled for ITR/TDS/ROC)
+â€¢ Invoice line-item editor is simplified (single amount path)
+â€¢ Organization save only sends changed orgForm keys (untouched fields rely on DB)
+
+Responsive Issues
+-----------------
+â€¢ Dense tables on 320â€“414 require horizontal scroll
+â€¢ Calendar not a true responsive calendar grid
+â€¢ Reassign selector UX on mobile is improvable
+
+Dark Mode
+---------
+â€¢ Sparse dark classes on several entity pages (WATCHLIST)
+â€¢ Branding color not applied to design tokens live
+
+Routing
+-------
+â€¢ /clients/:id not explicitly in ROUTE_PERMISSIONS map; ProtectedRoute exact-path
+  check may skip permission for detail (falls through). Low risk if only linked
+  from Clients, but not strict.
+â€¢ Accounting routes to Reports (product honesty issue, not a 404)
+
+Validation
+----------
+â€¢ Generally strong on main entities
+â€¢ Filing subpages validation not domain-perfect
+â€¢ Demo password policy is intentionally weak
+
+Reports / Dashboard
+-------------------
+â€¢ Live compute YES
+â€¢ Trend % changes are heuristic, not perfect accounting period math
+â€¢ Seeded dashboard/reports JSON still written but unused (dead seed)
+
+Notifications
+-------------
+â€¢ Working for demo
+â€¢ Deep links depend on seed link quality
+
+Search
+------
+â€¢ Working via SearchService + command palette
+â€¢ Not every entity field guaranteed indexed beyond configured searchFields
+
+Performance
+-----------
+â€¢ Large LocalStorage datasets + main JS chunk size warnings
+â€¢ simulateDelay adds artificial latency
+â€¢ No virtualized tables for huge lists
+
+
+================================================================================
+SECTION 12 â€” MISSING FEATURES (Frontend only â€” excluding real API / real AI)
+================================================================================
+
+Must-call-outs still missing in the frontend product surface:
+
+1. Archived records browser + Restore button UI
+2. True Accounting modules (GL, journals, trial balance, real P&L/BS)
+3. Visual Calendar (month/week) â€” currently event table
+4. Document binary upload/preview (currently metadata + mock download)
+5. Role permission matrix editor + user invite/create UI
+6. Wire Settings sessionTimeout to actual auth idle timeout
+7. Apply Branding primary color to CSS variables live
+8. Full i18n string catalogs for Hindi (toggle exists only)
+9. Module-specific filing forms for ITR/TDS/ROC
+10. Invoice rich line-item editor + PDF preview (frontend mock PDF optional)
+11. Bulk select actions on tables
+12. Dedicated Import CSV UI (Export exists; Import not present as module action)
+13. Client detail deep-create invoice/document with clientId prefilled
+14. Automated Playwright/Cypress smoke suite in repo
+15. Empty-state CTAs consistency audit across every list
+16. Notification composer / preference matrix beyond toggles
+17. 2FA enrollment UX (toggle only)
+
+
+================================================================================
+SECTION 13 â€” CLIENT DEMO READINESS
+================================================================================
+
+Can this application be shown to a client?
+------------------------------------------
+YES â€” for a structured demo of practice management workflows.
+
+Will the client notice missing functionality?
+---------------------------------------------
+YES, if the presenter overclaims. NO, if the demo script stays on strengths.
+
+Safe demo script (recommended)
+------------------------------
+1. Login as Super Admin
+2. Show Dashboard live KPIs
+3. Create Client â†’ refresh â†’ still there
+4. Create Invoice â†’ Dashboard/Reports move
+5. Record Payment â†’ invoice paid / outstanding drops
+6. Open Compliance / GST briefly
+7. Toggle Dark Mode
+8. Settings Organization save
+9. Command palette search
+10. Optional Notes / Calendar
+
+Weak points a sharp client may notice
+-------------------------------------
+â€¢ Accounting page is a launcher, not ledgers
+â€¢ AI answers are generic canned text
+â€¢ Document download is a text stub
+â€¢ Calendar is a list, not a calendar
+â€¢ Roles cannot be edited
+â€¢ Hindi language toggle does not translate UI
+â€¢ No restore screen for archived items
+â€¢ Filing forms look similar across GST/ITR/TDS/ROC
+
+
+================================================================================
+SECTION 14 â€” FINAL SCORE
+================================================================================
+
+Scores out of 10 (honest):
+
+Architecture              : 8.5
+UI                        : 8.0
+UX                        : 7.5
+CRUD                      : 8.0
+Responsiveness            : 7.5
+Dark Mode                 : 7.5
+Performance               : 6.5
+Settings                  : 7.5
+Authentication (mock)     : 8.5
+Role Management           : 8.0 (enforcement strong; admin editing weak)
+Demo Readiness            : 8.0
+Production Readiness      : 4.0
+
+Overall Score             : 7.6 / 10
+
+Interpretation:
+  Strong demo-grade frontend with LocalStorage â€œbackend simulationâ€.
+  Not a production commercial SaaS without a real API/security layer.
+
+
+================================================================================
+SECTION 15 â€” NEXT ACTIONS (PRIORITY)
+================================================================================
+
+Priority 1 â€” Must Fix / Clarify Before Demo
+-------------------------------------------
+1. Prepare a demo script that avoids Accounting depth, real AI, real files.
+2. Label Accounting as â€œAnalytics shortcutsâ€ OR hide until real modules exist.
+3. On AI page, ensure presenter says â€œdemo assistantâ€.
+4. Verify fresh browser profile: Reset Database once, then walk CRUD + refresh.
+5. Add Restore UI for archived Clients/Companies/Employees OR remove Archive
+   from demo script if restore cannot be shown.
+6. Prefill clientId when navigating from Client Detail to Invoices/Documents
+   (small UX win that prevents â€œunfinishedâ€ feel).
+
+Priority 2 â€” Important (post-demo hardening)
+--------------------------------------------
+1. Module-specific GST/ITR/TDS/ROC forms
+2. Wire settings.sessionTimeout â†’ auth idle timeout
+3. Apply branding primaryColor to CSS variables
+4. Dark-mode sweep on Invoices/Payments/Tasks/Companies/Calendar pages
+5. Document edit + clearer â€œsimulated fileâ€ badge on download
+6. Roles editor (even LocalStorage-only) OR hide Roles tab Save expectations
+7. Visual calendar month view
+8. Automated smoke tests (login, create client, refresh, assert)
+
+Priority 3 â€” Future
+-------------------
+1. Bulk actions, CSV import
+2. Invoice PDF mock preview
+3. Full i18n
+4. Notification rules engine UI
+5. 2FA enrollment simulation
+6. Performance: virtualized tables, reduce seed size option
+7. Remove unused seeded dashboard/reports singleton JSON once confirmed unused
+
+
+================================================================================
+AUDIT CERTIFICATION
+================================================================================
+
+This report reflects the codebase as scanned after the Production Stabilization
+and Client Demo hardening phases.
+
+Key verified truths:
+  â€¢ Live Dashboard/Reports compute from LocalStorage collections
+  â€¢ Payment â†” Invoice â†” Client financial sync exists
+  â€¢ Most primary CRUD modules persist across refresh
+  â€¢ Notes + Calendar exist and are wired
+  â€¢ Accounting is NOT a real ledger
+  â€¢ Restore UI for archives is MISSING despite restore() existing in DB
+  â€¢ Demo can succeed if scope is honest
+
+Do not treat any item marked PARTIAL as completed.
+
+================================================================================
+END OF Release_Audit_Report_v2.txt
+================================================================================
+

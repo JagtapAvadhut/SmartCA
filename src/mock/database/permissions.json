@@ -1,0 +1,263 @@
+{
+  "data": [
+    {
+      "id": "dashboard.view",
+      "module": "dashboard",
+      "action": "view",
+      "description": "View dashboard"
+    },
+    {
+      "id": "clients.view",
+      "module": "clients",
+      "action": "view",
+      "description": "View clients"
+    },
+    {
+      "id": "clients.create",
+      "module": "clients",
+      "action": "create",
+      "description": "Create clients"
+    },
+    {
+      "id": "clients.edit",
+      "module": "clients",
+      "action": "edit",
+      "description": "Edit clients"
+    },
+    {
+      "id": "clients.delete",
+      "module": "clients",
+      "action": "delete",
+      "description": "Delete clients"
+    },
+    {
+      "id": "companies.view",
+      "module": "companies",
+      "action": "view",
+      "description": "View companies"
+    },
+    {
+      "id": "companies.create",
+      "module": "companies",
+      "action": "create",
+      "description": "Create companies"
+    },
+    {
+      "id": "companies.edit",
+      "module": "companies",
+      "action": "edit",
+      "description": "Edit companies"
+    },
+    {
+      "id": "compliance.view",
+      "module": "compliance",
+      "action": "view",
+      "description": "View compliance"
+    },
+    {
+      "id": "compliance.create",
+      "module": "compliance",
+      "action": "create",
+      "description": "Create compliance"
+    },
+    {
+      "id": "compliance.edit",
+      "module": "compliance",
+      "action": "edit",
+      "description": "Edit compliance"
+    },
+    {
+      "id": "compliance.delete",
+      "module": "compliance",
+      "action": "delete",
+      "description": "Delete compliance"
+    },
+    {
+      "id": "gst.view",
+      "module": "gst",
+      "action": "view",
+      "description": "View gst"
+    },
+    {
+      "id": "itr.view",
+      "module": "itr",
+      "action": "view",
+      "description": "View itr"
+    },
+    {
+      "id": "tds.view",
+      "module": "tds",
+      "action": "view",
+      "description": "View tds"
+    },
+    {
+      "id": "roc.view",
+      "module": "roc",
+      "action": "view",
+      "description": "View roc"
+    },
+    {
+      "id": "accounting.view",
+      "module": "accounting",
+      "action": "view",
+      "description": "View accounting"
+    },
+    {
+      "id": "invoices.view",
+      "module": "invoices",
+      "action": "view",
+      "description": "View invoices"
+    },
+    {
+      "id": "invoices.create",
+      "module": "invoices",
+      "action": "create",
+      "description": "Create invoices"
+    },
+    {
+      "id": "invoices.edit",
+      "module": "invoices",
+      "action": "edit",
+      "description": "Edit invoices"
+    },
+    {
+      "id": "invoices.delete",
+      "module": "invoices",
+      "action": "delete",
+      "description": "Delete invoices"
+    },
+    {
+      "id": "payments.view",
+      "module": "payments",
+      "action": "view",
+      "description": "View payments"
+    },
+    {
+      "id": "payments.create",
+      "module": "payments",
+      "action": "create",
+      "description": "Create payments"
+    },
+    {
+      "id": "documents.view",
+      "module": "documents",
+      "action": "view",
+      "description": "View documents"
+    },
+    {
+      "id": "documents.upload",
+      "module": "documents",
+      "action": "upload",
+      "description": "Upload documents"
+    },
+    {
+      "id": "documents.delete",
+      "module": "documents",
+      "action": "delete",
+      "description": "Delete documents"
+    },
+    {
+      "id": "tasks.view",
+      "module": "tasks",
+      "action": "view",
+      "description": "View tasks"
+    },
+    {
+      "id": "tasks.create",
+      "module": "tasks",
+      "action": "create",
+      "description": "Create tasks"
+    },
+    {
+      "id": "tasks.edit",
+      "module": "tasks",
+      "action": "edit",
+      "description": "Edit tasks"
+    },
+    {
+      "id": "tasks.delete",
+      "module": "tasks",
+      "action": "delete",
+      "description": "Delete tasks"
+    },
+    {
+      "id": "reports.view",
+      "module": "reports",
+      "action": "view",
+      "description": "View reports"
+    },
+    {
+      "id": "reports.export",
+      "module": "reports",
+      "action": "export",
+      "description": "Export reports"
+    },
+    {
+      "id": "employees.view",
+      "module": "employees",
+      "action": "view",
+      "description": "View employees"
+    },
+    {
+      "id": "employees.create",
+      "module": "employees",
+      "action": "create",
+      "description": "Create employees"
+    },
+    {
+      "id": "employees.edit",
+      "module": "employees",
+      "action": "edit",
+      "description": "Edit employees"
+    },
+    {
+      "id": "ai.view",
+      "module": "ai",
+      "action": "view",
+      "description": "View ai"
+    },
+    {
+      "id": "settings.view",
+      "module": "settings",
+      "action": "view",
+      "description": "View settings"
+    },
+    {
+      "id": "settings.edit",
+      "module": "settings",
+      "action": "edit",
+      "description": "Edit settings"
+    },
+    {
+      "id": "settings.users",
+      "module": "settings",
+      "action": "users",
+      "description": "Users settings"
+    },
+    {
+      "id": "settings.roles",
+      "module": "settings",
+      "action": "roles",
+      "description": "Roles settings"
+    },
+    {
+      "id": "settings.security",
+      "module": "settings",
+      "action": "security",
+      "description": "Security settings"
+    },
+    {
+      "id": "settings.branding",
+      "module": "settings",
+      "action": "branding",
+      "description": "Branding settings"
+    },
+    {
+      "id": "settings.api",
+      "module": "settings",
+      "action": "api",
+      "description": "Api settings"
+    }
+  ],
+  "total": 43
+}

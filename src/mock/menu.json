@@ -1,0 +1,122 @@
+{
+  "data": [
+    {
+      "id": "dashboard",
+      "name": "Dashboard",
+      "path": "/",
+      "permission": "dashboard.view",
+      "icon": "dashboard"
+    },
+    {
+      "id": "clients",
+      "name": "Clients",
+      "path": "/clients",
+      "permission": "clients.view",
+      "icon": "clients"
+    },
+    {
+      "id": "companies",
+      "name": "Companies",
+      "path": "/companies",
+      "permission": "companies.view",
+      "icon": "companies"
+    },
+    {
+      "id": "compliance",
+      "name": "Compliance",
+      "path": "/compliance",
+      "permission": "compliance.view",
+      "icon": "compliance",
+      "children": [
+        {
+          "id": "gst",
+          "name": "GST",
+          "path": "/compliance/gst",
+          "permission": "gst.view"
+        },
+        {
+          "id": "itr",
+          "name": "Income Tax",
+          "path": "/compliance/itr",
+          "permission": "itr.view"
+        },
+        {
+          "id": "tds",
+          "name": "TDS",
+          "path": "/compliance/tds",
+          "permission": "tds.view"
+        },
+        {
+          "id": "roc",
+          "name": "ROC",
+          "path": "/compliance/roc",
+          "permission": "roc.view"
+        }
+      ]
+    },
+    {
+      "id": "accounting",
+      "name": "Accounting",
+      "path": "/accounting",
+      "permission": "accounting.view",
+      "icon": "accounting"
+    },
+    {
+      "id": "invoices",
+      "name": "Invoices",
+      "path": "/invoices",
+      "permission": "invoices.view",
+      "icon": "invoices"
+    },
+    {
+      "id": "payments",
+      "name": "Payments",
+      "path": "/payments",
+      "permission": "payments.view",
+      "icon": "payments"
+    },
+    {
+      "id": "documents",
+      "name": "Documents",
+      "path": "/documents",
+      "permission": "documents.view",
+      "icon": "documents"
+    },
+    {
+      "id": "tasks",
+      "name": "Tasks",
+      "path": "/tasks",
+      "permission": "tasks.view",
+      "icon": "tasks"
+    },
+    {
+      "id": "reports",
+      "name": "Reports",
+      "path": "/reports",
+      "permission": "reports.view",
+      "icon": "reports"
+    },
+    {
+      "id": "employees",
+      "name": "Employees",
+      "path": "/employees",
+      "permission": "employees.view",
+      "icon": "employees"
+    },
+    {
+      "id": "ai",
+      "name": "AI Assistant",
+      "path": "/ai",
+      "permission": "ai.view",
+      "icon": "ai"
+    },
+    {
+      "id": "settings",
+      "name": "Settings",
+      "path": "/settings",
+      "permission": "settings.view",
+      "icon": "settings"
+    }
+  ],
+  "total": 13
+}

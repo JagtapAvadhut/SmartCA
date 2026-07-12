@@ -1,0 +1,17 @@
+{
+  "data": [
+    {
+      "code": "IN",
+      "name": "India"
+    },
+    {
+      "code": "US",
+      "name": "United States"
+    },
+    {
+      "code": "UK",
+      "name": "United Kingdom"
+    }
+  ],
+  "total": 3
+}

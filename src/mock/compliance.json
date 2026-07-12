@@ -1,0 +1,1285 @@
+{
+  "data": [
+    {
+      "id": "CMP-0001",
+      "clientId": "CLT-0020",
+      "clientName": "UltraTech Cement",
+      "service": "GST Registration",
+      "priority": "urgent",
+      "assignedTo": "EMP-0009",
+      "assignedToName": "Anita Malhotra",
+      "dueDate": "2025-03-30",
+      "status": "waiting_client",
+      "description": "Company Registration for UltraTech Cement",
+      "createdAt": "2025-07-29",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0002",
+      "clientId": "CLT-0024",
+      "clientName": "Coal India",
+      "service": "Bookkeeping",
+      "priority": "high",
+      "assignedTo": "EMP-0010",
+      "assignedToName": "Rajesh Desai",
+      "dueDate": "2025-12-27",
+      "status": "waiting_client",
+      "description": "Trademark Filing for Coal India",
+      "createdAt": "2024-10-12",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0003",
+      "clientId": "CLT-0025",
+      "clientName": "ONGC",
+      "service": "Trademark Filing",
+      "priority": "low",
+      "assignedTo": "EMP-0016",
+      "assignedToName": "Naveen Menon",
+      "dueDate": "2025-11-02",
+      "status": "waiting_client",
+      "description": "Company Registration for ONGC",
+      "createdAt": "2025-12-12",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0004",
+      "clientId": "CLT-0028",
+      "clientName": "Hindustan Unilever",
+      "service": "Bookkeeping",
+      "priority": "high",
+      "assignedTo": "EMP-0022",
+      "assignedToName": "Amit Menon",
+      "dueDate": "2025-05-26",
+      "status": "in_progress",
+      "description": "ITR Filing for Hindustan Unilever",
+      "createdAt": "2024-08-03",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0005",
+      "clientId": "CLT-0032",
+      "clientName": "Dabur India",
+      "service": "Tax Planning",
+      "priority": "high",
+      "assignedTo": "EMP-0013",
+      "assignedToName": "Vikram Nair",
+      "dueDate": "2025-09-27",
+      "status": "in_progress",
+      "description": "GST Registration for Dabur India",
+      "createdAt": "2025-06-28",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0006",
+      "clientId": "CLT-0030",
+      "clientName": "Godrej Consumer",
+      "service": "Company Registration",
+      "priority": "medium",
+      "assignedTo": "EMP-0012",
+      "assignedToName": "Pooja Patel",
+      "dueDate": "2025-01-25",
+      "status": "upcoming",
+      "description": "Tax Planning for Godrej Consumer",
+      "createdAt": "2025-04-12",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0007",
+      "clientId": "CLT-0076",
+      "clientName": "IRFC",
+      "service": "GST Registration",
+      "priority": "low",
+      "assignedTo": "EMP-0010",
+      "assignedToName": "Naveen Kumar",
+      "dueDate": "2025-12-05",
+      "status": "waiting_client",
+      "description": "Company Registration for IRFC",
+      "createdAt": "2025-02-18",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0008",
+      "clientId": "CLT-0081",
+      "clientName": "HAL",
+      "service": "Audit",
+      "priority": "urgent",
+      "assignedTo": "EMP-0014",
+      "assignedToName": "Manoj Pillai",
+      "dueDate": "2025-07-10",
+      "status": "completed",
+      "description": "GST Filing for HAL",
+      "createdAt": "2024-08-14",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0009",
+      "clientId": "CLT-0012",
+      "clientName": "Bharti Airtel",
+      "service": "Audit",
+      "priority": "urgent",
+      "assignedTo": "EMP-0006",
+      "assignedToName": "Rajesh Nair",
+      "dueDate": "2025-02-11",
+      "status": "waiting_client",
+      "description": "GST Registration for Bharti Airtel",
+      "createdAt": "2025-12-20",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0010",
+      "clientId": "CLT-0057",
+      "clientName": "KEI Industries",
+      "service": "Audit",
+      "priority": "urgent",
+      "assignedTo": "EMP-0020",
+      "assignedToName": "Naveen Sharma",
+      "dueDate": "2025-02-10",
+      "status": "waiting_client",
+      "description": "Company Registration for KEI Industries",
+      "createdAt": "2024-07-22",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0011",
+      "clientId": "CLT-0082",
+      "clientName": "Garden Reach Shipbuilders",
+      "service": "Tax Planning",
+      "priority": "high",
+      "assignedTo": "EMP-0013",
+      "assignedToName": "Sanjay Gupta",
+      "dueDate": "2025-03-11",
+      "status": "completed",
+      "description": "GST Filing for Garden Reach Shipbuilders",
+      "createdAt": "2026-01-23",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0012",
+      "clientId": "CLT-0112",
+      "clientName": "TCS 2",
+      "service": "ITR Filing",
+      "priority": "urgent",
+      "assignedTo": "EMP-0024",
+      "assignedToName": "Suresh Desai",
+      "dueDate": "2025-09-01",
+      "status": "in_progress",
+      "description": "Trademark Filing for TCS 2",
+      "createdAt": "2024-07-10",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0013",
+      "clientId": "CLT-0105",
+      "clientName": "Gujarat Gas",
+      "service": "TDS Return",
+      "priority": "medium",
+      "assignedTo": "EMP-0015",
+      "assignedToName": "Karthik Desai",
+      "dueDate": "2025-06-20",
+      "status": "waiting_client",
+      "description": "ROC Filing for Gujarat Gas",
+      "createdAt": "2024-10-15",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0014",
+      "clientId": "CLT-0068",
+      "clientName": "Emami Ltd",
+      "service": "ITR Filing",
+      "priority": "low",
+      "assignedTo": "EMP-0018",
+      "assignedToName": "Anita Kumar",
+      "dueDate": "2025-03-23",
+      "status": "upcoming",
+      "description": "Audit for Emami Ltd",
+      "createdAt": "2025-08-09",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0015",
+      "clientId": "CLT-0009",
+      "clientName": "Adani Enterprises",
+      "service": "Tax Planning",
+      "priority": "high",
+      "assignedTo": "EMP-0025",
+      "assignedToName": "Anita Desai",
+      "dueDate": "2025-01-28",
+      "status": "upcoming",
+      "description": "ITR Filing for Adani Enterprises",
+      "createdAt": "2026-02-03",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0016",
+      "clientId": "CLT-0117",
+      "clientName": "Sun Pharma 2",
+      "service": "Tax Planning",
+      "priority": "medium",
+      "assignedTo": "EMP-0004",
+      "assignedToName": "Deepa Patel",
+      "dueDate": "2025-07-23",
+      "status": "completed",
+      "description": "GST Registration for Sun Pharma 2",
+      "createdAt": "2025-10-30",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0017",
+      "clientId": "CLT-0016",
+      "clientName": "Axis Bank",
+      "service": "ITR Filing",
+      "priority": "low",
+      "assignedTo": "EMP-0007",
+      "assignedToName": "Amit Pillai",
+      "dueDate": "2025-03-24",
+      "status": "upcoming",
+      "description": "TDS Return for Axis Bank",
+      "createdAt": "2024-07-25",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0018",
+      "clientId": "CLT-0035",
+      "clientName": "Dr Reddys Labs",
+      "service": "ROC Filing",
+      "priority": "low",
+      "assignedTo": "EMP-0019",
+      "assignedToName": "Vikram Desai",
+      "dueDate": "2025-09-14",
+      "status": "upcoming",
+      "description": "GST Registration for Dr Reddys Labs",
+      "createdAt": "2025-12-12",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0019",
+      "clientId": "CLT-0028",
+      "clientName": "Hindustan Unilever",
+      "service": "Tax Planning",
+      "priority": "urgent",
+      "assignedTo": "EMP-0014",
+      "assignedToName": "Kavita Desai",
+      "dueDate": "2025-01-07",
+      "status": "completed",
+      "description": "Company Registration for Hindustan Unilever",
+      "createdAt": "2026-01-23",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0020",
+      "clientId": "CLT-0045",
+      "clientName": "Coforge",
+      "service": "ROC Filing",
+      "priority": "medium",
+      "assignedTo": "EMP-0016",
+      "assignedToName": "Vikram Kumar",
+      "dueDate": "2025-10-09",
+      "status": "waiting_client",
+      "description": "GST Filing for Coforge",
+      "createdAt": "2024-07-27",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0021",
+      "clientId": "CLT-0004",
+      "clientName": "HDFC Bank",
+      "service": "TDS Return",
+      "priority": "high",
+      "assignedTo": "EMP-0008",
+      "assignedToName": "Deepa Malhotra",
+      "dueDate": "2025-06-18",
+      "status": "in_progress",
+      "description": "Bookkeeping for HDFC Bank",
+      "createdAt": "2024-08-06",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0022",
+      "clientId": "CLT-0001",
+      "clientName": "Infosys Ltd",
+      "service": "ROC Filing",
+      "priority": "low",
+      "assignedTo": "EMP-0022",
+      "assignedToName": "Amit Menon",
+      "dueDate": "2025-04-22",
+      "status": "in_progress",
+      "description": "GST Filing for Infosys Ltd",
+      "createdAt": "2025-12-31",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0023",
+      "clientId": "CLT-0028",
+      "clientName": "Hindustan Unilever",
+      "service": "ROC Filing",
+      "priority": "medium",
+      "assignedTo": "EMP-0006",
+      "assignedToName": "Suresh Mehta",
+      "dueDate": "2025-07-16",
+      "status": "in_progress",
+      "description": "Tax Planning for Hindustan Unilever",
+      "createdAt": "2026-03-26",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0024",
+      "clientId": "CLT-0070",
+      "clientName": "Westlife Development",
+      "service": "GST Filing",
+      "priority": "medium",
+      "assignedTo": "EMP-0004",
+      "assignedToName": "Pooja Patel",
+      "dueDate": "2025-05-31",
+      "status": "in_progress",
+      "description": "Audit for Westlife Development",
+      "createdAt": "2024-07-08",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0025",
+      "clientId": "CLT-0101",
+      "clientName": "GAIL",
+      "service": "GST Filing",
+      "priority": "low",
+      "assignedTo": "EMP-0006",
+      "assignedToName": "Karthik Menon",
+      "dueDate": "2025-11-21",
+      "status": "upcoming",
+      "description": "TDS Return for GAIL",
+      "createdAt": "2025-09-29",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0026",
+      "clientId": "CLT-0018",
+      "clientName": "Bajaj Finance",
+      "service": "Bookkeeping",
+      "priority": "medium",
+      "assignedTo": "EMP-0013",
+      "assignedToName": "Suresh Kumar",
+      "dueDate": "2025-01-03",
+      "status": "waiting_client",
+      "description": "Company Registration for Bajaj Finance",
+      "createdAt": "2025-12-07",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0027",
+      "clientId": "CLT-0015",
+      "clientName": "Maruti Suzuki",
+      "service": "Bookkeeping",
+      "priority": "high",
+      "assignedTo": "EMP-0006",
+      "assignedToName": "Naveen Nair",
+      "dueDate": "2025-07-22",
+      "status": "waiting_client",
+      "description": "ROC Filing for Maruti Suzuki",
+      "createdAt": "2026-05-08",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0028",
+      "clientId": "CLT-0049",
+      "clientName": "Cyient",
+      "service": "TDS Return",
+      "priority": "urgent",
+      "assignedTo": "EMP-0013",
+      "assignedToName": "Deepa Desai",
+      "dueDate": "2025-06-20",
+      "status": "in_progress",
+      "description": "ROC Filing for Cyient",
+      "createdAt": "2025-07-11",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0029",
+      "clientId": "CLT-0047",
+      "clientName": "Tech Mahindra",
+      "service": "Tax Planning",
+      "priority": "medium",
+      "assignedTo": "EMP-0011",
+      "assignedToName": "Karthik Desai",
+      "dueDate": "2025-05-20",
+      "status": "in_progress",
+      "description": "Tax Planning for Tech Mahindra",
+      "createdAt": "2025-08-07",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0030",
+      "clientId": "CLT-0038",
+      "clientName": "Zomato",
+      "service": "Tax Planning",
+      "priority": "medium",
+      "assignedTo": "EMP-0020",
+      "assignedToName": "Deepa Mehta",
+      "dueDate": "2025-10-12",
+      "status": "in_progress",
+      "description": "ITR Filing for Zomato",
+      "createdAt": "2026-05-27",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0031",
+      "clientId": "CLT-0027",
+      "clientName": "ITC Ltd",
+      "service": "ROC Filing",
+      "priority": "low",
+      "assignedTo": "EMP-0005",
+      "assignedToName": "Anita Desai",
+      "dueDate": "2025-05-17",
+      "status": "waiting_client",
+      "description": "Company Registration for ITC Ltd",
+      "createdAt": "2024-07-22",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0032",
+      "clientId": "CLT-0106",
+      "clientName": "Star Health",
+      "service": "Trademark Filing",
+      "priority": "low",
+      "assignedTo": "EMP-0014",
+      "assignedToName": "Naveen Iyer",
+      "dueDate": "2025-08-23",
+      "status": "in_progress",
+      "description": "Bookkeeping for Star Health",
+      "createdAt": "2026-02-08",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0033",
+      "clientId": "CLT-0086",
+      "clientName": "NHPC",
+      "service": "GST Filing",
+      "priority": "urgent",
+      "assignedTo": "EMP-0001",
+      "assignedToName": "Vikram Menon",
+      "dueDate": "2025-11-14",
+      "status": "waiting_client",
+      "description": "Audit for NHPC",
+      "createdAt": "2026-04-19",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0034",
+      "clientId": "CLT-0107",
+      "clientName": "Max Healthcare",
+      "service": "Audit",
+      "priority": "low",
+      "assignedTo": "EMP-0018",
+      "assignedToName": "Suresh Desai",
+      "dueDate": "2025-09-24",
+      "status": "completed",
+      "description": "ROC Filing for Max Healthcare",
+      "createdAt": "2025-11-16",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0035",
+      "clientId": "CLT-0112",
+      "clientName": "TCS 2",
+      "service": "Company Registration",
+      "priority": "high",
+      "assignedTo": "EMP-0007",
+      "assignedToName": "Rahul Mehta",
+      "dueDate": "2025-07-30",
+      "status": "upcoming",
+      "description": "ROC Filing for TCS 2",
+      "createdAt": "2025-03-05",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0036",
+      "clientId": "CLT-0082",
+      "clientName": "Garden Reach Shipbuilders",
+      "service": "Bookkeeping",
+      "priority": "high",
+      "assignedTo": "EMP-0023",
+      "assignedToName": "Anita Menon",
+      "dueDate": "2025-04-13",
+      "status": "completed",
+      "description": "Bookkeeping for Garden Reach Shipbuilders",
+      "createdAt": "2026-03-07",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0037",
+      "clientId": "CLT-0031",
+      "clientName": "Pidilite Industries",
+      "service": "TDS Return",
+      "priority": "low",
+      "assignedTo": "EMP-0013",
+      "assignedToName": "Amit Menon",
+      "dueDate": "2025-10-13",
+      "status": "waiting_client",
+      "description": "GST Filing for Pidilite Industries",
+      "createdAt": "2026-03-26",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0038",
+      "clientId": "CLT-0054",
+      "clientName": "Crompton Greaves",
+      "service": "Audit",
+      "priority": "high",
+      "assignedTo": "EMP-0019",
+      "assignedToName": "Anita Bhat",
+      "dueDate": "2025-01-20",
+      "status": "completed",
+      "description": "Company Registration for Crompton Greaves",
+      "createdAt": "2026-02-06",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0039",
+      "clientId": "CLT-0087",
+      "clientName": "SJVN Ltd",
+      "service": "Audit",
+      "priority": "medium",
+      "assignedTo": "EMP-0008",
+      "assignedToName": "Karthik Menon",
+      "dueDate": "2025-08-19",
+      "status": "completed",
+      "description": "Bookkeeping for SJVN Ltd",
+      "createdAt": "2024-08-16",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0040",
+      "clientId": "CLT-0075",
+      "clientName": "IRCTC",
+      "service": "Audit",
+      "priority": "low",
+      "assignedTo": "EMP-0015",
+      "assignedToName": "Pooja Pillai",
+      "dueDate": "2025-11-28",
+      "status": "waiting_client",
+      "description": "TDS Return for IRCTC",
+      "createdAt": "2025-03-12",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0041",
+      "clientId": "CLT-0011",
+      "clientName": "ICICI Bank",
+      "service": "Bookkeeping",
+      "priority": "medium",
+      "assignedTo": "EMP-0024",
+      "assignedToName": "Manoj Desai",
+      "dueDate": "2025-12-17",
+      "status": "waiting_client",
+      "description": "Tax Planning for ICICI Bank",
+      "createdAt": "2025-09-22",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0042",
+      "clientId": "CLT-0041",
+      "clientName": "Policybazaar",
+      "service": "Tax Planning",
+      "priority": "medium",
+      "assignedTo": "EMP-0015",
+      "assignedToName": "Rahul Bhat",
+      "dueDate": "2025-05-27",
+      "status": "completed",
+      "description": "ITR Filing for Policybazaar",
+      "createdAt": "2025-02-16",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0043",
+      "clientId": "CLT-0004",
+      "clientName": "HDFC Bank",
+      "service": "Tax Planning",
+      "priority": "high",
+      "assignedTo": "EMP-0003",
+      "assignedToName": "Pooja Singh",
+      "dueDate": "2025-08-20",
+      "status": "in_progress",
+      "description": "ITR Filing for HDFC Bank",
+      "createdAt": "2026-03-17",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0044",
+      "clientId": "CLT-0112",
+      "clientName": "TCS 2",
+      "service": "Trademark Filing",
+      "priority": "urgent",
+      "assignedTo": "EMP-0009",
+      "assignedToName": "Naveen Mehta",
+      "dueDate": "2025-09-04",
+      "status": "upcoming",
+      "description": "ROC Filing for TCS 2",
+      "createdAt": "2025-09-21",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0045",
+      "clientId": "CLT-0091",
+      "clientName": "JSW Steel",
+      "service": "Company Registration",
+      "priority": "low",
+      "assignedTo": "EMP-0020",
+      "assignedToName": "Anita Desai",
+      "dueDate": "2025-07-06",
+      "status": "in_progress",
+      "description": "TDS Return for JSW Steel",
+      "createdAt": "2024-08-22",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0046",
+      "clientId": "CLT-0007",
+      "clientName": "Sun Pharma",
+      "service": "Tax Planning",
+      "priority": "low",
+      "assignedTo": "EMP-0008",
+      "assignedToName": "Karthik Malhotra",
+      "dueDate": "2025-08-11",
+      "status": "in_progress",
+      "description": "ITR Filing for Sun Pharma",
+      "createdAt": "2025-05-18",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0047",
+      "clientId": "CLT-0005",
+      "clientName": "Mahindra & Mahindra",
+      "service": "TDS Return",
+      "priority": "urgent",
+      "assignedTo": "EMP-0005",
+      "assignedToName": "Anita Desai",
+      "dueDate": "2025-06-16",
+      "status": "in_progress",
+      "description": "Bookkeeping for Mahindra & Mahindra",
+      "createdAt": "2025-06-16",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0048",
+      "clientId": "CLT-0038",
+      "clientName": "Zomato",
+      "service": "Trademark Filing",
+      "priority": "high",
+      "assignedTo": "EMP-0024",
+      "assignedToName": "Amit Gupta",
+      "dueDate": "2025-05-25",
+      "status": "waiting_client",
+      "description": "GST Filing for Zomato",
+      "createdAt": "2024-10-28",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0049",
+      "clientId": "CLT-0020",
+      "clientName": "UltraTech Cement",
+      "service": "Trademark Filing",
+      "priority": "urgent",
+      "assignedTo": "EMP-0008",
+      "assignedToName": "Suresh Kumar",
+      "dueDate": "2025-08-10",
+      "status": "upcoming",
+      "description": "ITR Filing for UltraTech Cement",
+      "createdAt": "2024-08-18",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0050",
+      "clientId": "CLT-0017",
+      "clientName": "Kotak Mahindra Bank",
+      "service": "TDS Return",
+      "priority": "low",
+      "assignedTo": "EMP-0005",
+      "assignedToName": "Vikram Menon",
+      "dueDate": "2025-03-18",
+      "status": "waiting_client",
+      "description": "ROC Filing for Kotak Mahindra Bank",
+      "createdAt": "2024-11-12",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0051",
+      "clientId": "CLT-0105",
+      "clientName": "Gujarat Gas",
+      "service": "GST Filing",
+      "priority": "urgent",
+      "assignedTo": "EMP-0020",
+      "assignedToName": "Amit Malhotra",
+      "dueDate": "2025-11-10",
+      "status": "completed",
+      "description": "Tax Planning for Gujarat Gas",
+      "createdAt": "2026-04-13",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0052",
+      "clientId": "CLT-0088",
+      "clientName": "Torrent Power",
+      "service": "GST Registration",
+      "priority": "urgent",
+      "assignedTo": "EMP-0007",
+      "assignedToName": "Karthik Kumar",
+      "dueDate": "2025-08-17",
+      "status": "in_progress",
+      "description": "GST Filing for Torrent Power",
+      "createdAt": "2025-01-09",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0053",
+      "clientId": "CLT-0019",
+      "clientName": "Titan Company",
+      "service": "ITR Filing",
+      "priority": "high",
+      "assignedTo": "EMP-0012",
+      "assignedToName": "Deepa Desai",
+      "dueDate": "2025-12-28",
+      "status": "in_progress",
+      "description": "GST Registration for Titan Company",
+      "createdAt": "2026-01-10",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0054",
+      "clientId": "CLT-0064",
+      "clientName": "JK Cement",
+      "service": "Tax Planning",
+      "priority": "high",
+      "assignedTo": "EMP-0019",
+      "assignedToName": "Suresh Gupta",
+      "dueDate": "2025-10-12",
+      "status": "waiting_client",
+      "description": "Company Registration for JK Cement",
+      "createdAt": "2026-02-05",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0055",
+      "clientId": "CLT-0021",
+      "clientName": "Nestle India",
+      "service": "ITR Filing",
+      "priority": "high",
+      "assignedTo": "EMP-0007",
+      "assignedToName": "Anita Menon",
+      "dueDate": "2025-10-17",
+      "status": "completed",
+      "description": "GST Registration for Nestle India",
+      "createdAt": "2026-02-23",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0056",
+      "clientId": "CLT-0100",
+      "clientName": "National Aluminium",
+      "service": "Bookkeeping",
+      "priority": "low",
+      "assignedTo": "EMP-0005",
+      "assignedToName": "Rahul Menon",
+      "dueDate": "2025-01-28",
+      "status": "completed",
+      "description": "Tax Planning for National Aluminium",
+      "createdAt": "2025-09-28",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0057",
+      "clientId": "CLT-0056",
+      "clientName": "Polycab India",
+      "service": "Company Registration",
+      "priority": "urgent",
+      "assignedTo": "EMP-0023",
+      "assignedToName": "Anita Gupta",
+      "dueDate": "2025-02-11",
+      "status": "upcoming",
+      "description": "GST Registration for Polycab India",
+      "createdAt": "2025-08-04",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0058",
+      "clientId": "CLT-0032",
+      "clientName": "Dabur India",
+      "service": "Audit",
+      "priority": "high",
+      "assignedTo": "EMP-0014",
+      "assignedToName": "Amit Desai",
+      "dueDate": "2025-08-12",
+      "status": "waiting_client",
+      "description": "Bookkeeping for Dabur India",
+      "createdAt": "2024-12-05",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0059",
+      "clientId": "CLT-0039",
+      "clientName": "Paytm",
+      "service": "Audit",
+      "priority": "urgent",
+      "assignedTo": "EMP-0016",
+      "assignedToName": "Sanjay Iyer",
+      "dueDate": "2025-09-22",
+      "status": "completed",
+      "description": "Company Registration for Paytm",
+      "createdAt": "2025-05-22",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0060",
+      "clientId": "CLT-0074",
+      "clientName": "EIH Ltd",
+      "service": "Company Registration",
+      "priority": "high",
+      "assignedTo": "EMP-0023",
+      "assignedToName": "Lakshmi Patel",
+      "dueDate": "2025-12-26",
+      "status": "upcoming",
+      "description": "ROC Filing for EIH Ltd",
+      "createdAt": "2024-12-07",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0061",
+      "clientId": "CLT-0060",
+      "clientName": "Apar Industries",
+      "service": "Audit",
+      "priority": "high",
+      "assignedTo": "EMP-0025",
+      "assignedToName": "Pooja Pillai",
+      "dueDate": "2025-09-12",
+      "status": "upcoming",
+      "description": "Company Registration for Apar Industries",
+      "createdAt": "2025-11-06",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0062",
+      "clientId": "CLT-0019",
+      "clientName": "Titan Company",
+      "service": "GST Registration",
+      "priority": "medium",
+      "assignedTo": "EMP-0014",
+      "assignedToName": "Amit Sharma",
+      "dueDate": "2025-12-30",
+      "status": "waiting_client",
+      "description": "ITR Filing for Titan Company",
+      "createdAt": "2026-03-02",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0063",
+      "clientId": "CLT-0107",
+      "clientName": "Max Healthcare",
+      "service": "GST Filing",
+      "priority": "urgent",
+      "assignedTo": "EMP-0020",
+      "assignedToName": "Naveen Desai",
+      "dueDate": "2025-09-16",
+      "status": "waiting_client",
+      "description": "GST Registration for Max Healthcare",
+      "createdAt": "2024-07-09",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0064",
+      "clientId": "CLT-0027",
+      "clientName": "ITC Ltd",
+      "service": "Company Registration",
+      "priority": "medium",
+      "assignedTo": "EMP-0017",
+      "assignedToName": "Suresh Desai",
+      "dueDate": "2025-12-16",
+      "status": "in_progress",
+      "description": "Audit for ITC Ltd",
+      "createdAt": "2024-08-07",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0065",
+      "clientId": "CLT-0083",
+      "clientName": "Mazagon Dock",
+      "service": "Trademark Filing",
+      "priority": "high",
+      "assignedTo": "EMP-0004",
+      "assignedToName": "Naveen Desai",
+      "dueDate": "2025-12-11",
+      "status": "completed",
+      "description": "ITR Filing for Mazagon Dock",
+      "createdAt": "2026-03-11",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0066",
+      "clientId": "CLT-0001",
+      "clientName": "Infosys Ltd",
+      "service": "ROC Filing",
+      "priority": "high",
+      "assignedTo": "EMP-0020",
+      "assignedToName": "Rahul Kumar",
+      "dueDate": "2025-07-28",
+      "status": "in_progress",
+      "description": "ROC Filing for Infosys Ltd",
+      "createdAt": "2024-09-30",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0067",
+      "clientId": "CLT-0059",
+      "clientName": "Dixon Technologies",
+      "service": "Audit",
+      "priority": "high",
+      "assignedTo": "EMP-0007",
+      "assignedToName": "Lakshmi Agarwal",
+      "dueDate": "2025-05-27",
+      "status": "in_progress",
+      "description": "ITR Filing for Dixon Technologies",
+      "createdAt": "2025-11-30",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0068",
+      "clientId": "CLT-0084",
+      "clientName": "Cochin Shipyard",
+      "service": "Company Registration",
+      "priority": "high",
+      "assignedTo": "EMP-0022",
+      "assignedToName": "Pooja Iyer",
+      "dueDate": "2025-06-05",
+      "status": "completed",
+      "description": "GST Registration for Cochin Shipyard",
+      "createdAt": "2026-04-28",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0069",
+      "clientId": "CLT-0101",
+      "clientName": "GAIL",
+      "service": "Audit",
+      "priority": "urgent",
+      "assignedTo": "EMP-0021",
+      "assignedToName": "Pooja Menon",
+      "dueDate": "2025-12-29",
+      "status": "upcoming",
+      "description": "ITR Filing for GAIL",
+      "createdAt": "2024-10-31",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0070",
+      "clientId": "CLT-0110",
+      "clientName": "Aster DM Healthcare",
+      "service": "Bookkeeping",
+      "priority": "high",
+      "assignedTo": "EMP-0003",
+      "assignedToName": "Naveen Patel",
+      "dueDate": "2025-12-17",
+      "status": "completed",
+      "description": "GST Registration for Aster DM Healthcare",
+      "createdAt": "2026-05-12",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0071",
+      "clientId": "CLT-0029",
+      "clientName": "Britannia Industries",
+      "service": "Company Registration",
+      "priority": "medium",
+      "assignedTo": "EMP-0002",
+      "assignedToName": "Pooja Malhotra",
+      "dueDate": "2025-12-09",
+      "status": "in_progress",
+      "description": "TDS Return for Britannia Industries",
+      "createdAt": "2024-08-16",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0072",
+      "clientId": "CLT-0103",
+      "clientName": "Indraprastha Gas",
+      "service": "Tax Planning",
+      "priority": "urgent",
+      "assignedTo": "EMP-0005",
+      "assignedToName": "Naveen Pillai",
+      "dueDate": "2025-05-08",
+      "status": "completed",
+      "description": "Trademark Filing for Indraprastha Gas",
+      "createdAt": "2025-01-13",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0073",
+      "clientId": "CLT-0094",
+      "clientName": "Hindalco",
+      "service": "TDS Return",
+      "priority": "medium",
+      "assignedTo": "EMP-0024",
+      "assignedToName": "Lakshmi Menon",
+      "dueDate": "2025-03-20",
+      "status": "completed",
+      "description": "Tax Planning for Hindalco",
+      "createdAt": "2025-11-28",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0074",
+      "clientId": "CLT-0088",
+      "clientName": "Torrent Power",
+      "service": "Bookkeeping",
+      "priority": "high",
+      "assignedTo": "EMP-0024",
+      "assignedToName": "Pooja Pillai",
+      "dueDate": "2025-05-09",
+      "status": "in_progress",
+      "description": "TDS Return for Torrent Power",
+      "createdAt": "2024-10-05",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0075",
+      "clientId": "CLT-0044",
+      "clientName": "Persistent Systems",
+      "service": "GST Filing",
+      "priority": "urgent",
+      "assignedTo": "EMP-0011",
+      "assignedToName": "Anita Desai",
+      "dueDate": "2025-05-18",
+      "status": "in_progress",
+      "description": "Bookkeeping for Persistent Systems",
+      "createdAt": "2025-12-16",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0076",
+      "clientId": "CLT-0061",
+      "clientName": "Shree Cement",
+      "service": "Company Registration",
+      "priority": "urgent",
+      "assignedTo": "EMP-0006",
+      "assignedToName": "Suresh Mehta",
+      "dueDate": "2025-05-01",
+      "status": "completed",
+      "description": "GST Filing for Shree Cement",
+      "createdAt": "2024-09-14",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0077",
+      "clientId": "CLT-0001",
+      "clientName": "Infosys Ltd",
+      "service": "ITR Filing",
+      "priority": "low",
+      "assignedTo": "EMP-0025",
+      "assignedToName": "Karthik Menon",
+      "dueDate": "2025-02-03",
+      "status": "upcoming",
+      "description": "Audit for Infosys Ltd",
+      "createdAt": "2025-02-15",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0078",
+      "clientId": "CLT-0088",
+      "clientName": "Torrent Power",
+      "service": "GST Filing",
+      "priority": "high",
+      "assignedTo": "EMP-0025",
+      "assignedToName": "Deepa Menon",
+      "dueDate": "2025-06-14",
+      "status": "upcoming",
+      "description": "Audit for Torrent Power",
+      "createdAt": "2025-01-10",
+      "tags": [
+        "monthly"
+      ]
+    },
+    {
+      "id": "CMP-0079",
+      "clientId": "CLT-0064",
+      "clientName": "JK Cement",
+      "service": "Audit",
+      "priority": "medium",
+      "assignedTo": "EMP-0010",
+      "assignedToName": "Anita Desai",
+      "dueDate": "2025-12-12",
+      "status": "upcoming",
+      "description": "Bookkeeping for JK Cement",
+      "createdAt": "2025-02-03",
+      "tags": [
+        "urgent"
+      ]
+    },
+    {
+      "id": "CMP-0080",
+      "clientId": "CLT-0045",
+      "clientName": "Coforge",
+      "service": "Company Registration",
+      "priority": "medium",
+      "assignedTo": "EMP-0018",
+      "assignedToName": "Anita Gupta",
+      "dueDate": "2025-03-16",
+      "status": "waiting_client",
+      "description": "GST Filing for Coforge",
+      "createdAt": "2025-09-07",
+      "tags": [
+        "monthly"
+      ]
+    }
+  ],
+  "total": 80
+}

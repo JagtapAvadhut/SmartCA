@@ -1,0 +1,1605 @@
+{
+  "data": [
+    {
+      "id": "DOC-0001",
+      "name": "Pan Card - Dixon Technologies",
+      "clientId": "CLT-0059",
+      "clientName": "Dixon Technologies",
+      "type": "pan_card",
+      "folder": "Audit Reports",
+      "size": 4979481,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0019",
+      "uploadedAt": "2024-10-06",
+      "tags": [
+        "important"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0002",
+      "name": "Audit Report - HAL",
+      "clientId": "CLT-0081",
+      "clientName": "HAL",
+      "type": "audit_report",
+      "folder": "Invoices",
+      "size": 4431130,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0020",
+      "uploadedAt": "2025-11-28",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0003",
+      "name": "Balance Sheet - Indraprastha Gas",
+      "clientId": "CLT-0103",
+      "clientName": "Indraprastha Gas",
+      "type": "balance_sheet",
+      "folder": "ITR Documents",
+      "size": 80571,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0019",
+      "uploadedAt": "2025-04-14",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0004",
+      "name": "Agreement - Crompton Greaves",
+      "clientId": "CLT-0054",
+      "clientName": "Crompton Greaves",
+      "type": "agreement",
+      "folder": "Invoices",
+      "size": 1981666,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0021",
+      "uploadedAt": "2026-03-02",
+      "tags": [
+        "important"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0005",
+      "name": "Receipt - Sun Pharma 2",
+      "clientId": "CLT-0117",
+      "clientName": "Sun Pharma 2",
+      "type": "receipt",
+      "folder": "Agreements",
+      "size": 881527,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0009",
+      "uploadedAt": "2025-12-16",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0006",
+      "name": "Other - Jindal Steel",
+      "clientId": "CLT-0092",
+      "clientName": "Jindal Steel",
+      "type": "other",
+      "folder": "Receipts",
+      "size": 1715131,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0007",
+      "uploadedAt": "2024-12-15",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0007",
+      "name": "Other - Pidilite Industries",
+      "clientId": "CLT-0031",
+      "clientName": "Pidilite Industries",
+      "type": "other",
+      "folder": "Bank Statements",
+      "size": 3568103,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0023",
+      "uploadedAt": "2025-03-04",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0008",
+      "name": "Pan Card - Ambuja Cements",
+      "clientId": "CLT-0062",
+      "clientName": "Ambuja Cements",
+      "type": "pan_card",
+      "folder": "ITR Documents",
+      "size": 4406274,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0005",
+      "uploadedAt": "2024-10-29",
+      "tags": [
+        "archived"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0009",
+      "name": "Bank Statement - HCL Technologies",
+      "clientId": "CLT-0013",
+      "clientName": "HCL Technologies",
+      "type": "bank_statement",
+      "folder": "Bank Statements",
+      "size": 4378190,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0002",
+      "uploadedAt": "2025-05-28",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0010",
+      "name": "Audit Report - Apollo Hospitals",
+      "clientId": "CLT-0037",
+      "clientName": "Apollo Hospitals",
+      "type": "audit_report",
+      "folder": "Audit Reports",
+      "size": 4605132,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0009",
+      "uploadedAt": "2025-09-06",
+      "tags": [
+        "verified"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0011",
+      "name": "Balance Sheet - Tech Mahindra",
+      "clientId": "CLT-0047",
+      "clientName": "Tech Mahindra",
+      "type": "balance_sheet",
+      "folder": "Bank Statements",
+      "size": 3142253,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0023",
+      "uploadedAt": "2025-05-17",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0012",
+      "name": "Pan Card - ACC Ltd",
+      "clientId": "CLT-0063",
+      "clientName": "ACC Ltd",
+      "type": "pan_card",
+      "folder": "Receipts",
+      "size": 1512562,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0005",
+      "uploadedAt": "2025-02-05",
+      "tags": [
+        "archived"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0013",
+      "name": "Invoice - Reliance Industries 2",
+      "clientId": "CLT-0113",
+      "clientName": "Reliance Industries 2",
+      "type": "invoice",
+      "folder": "Receipts",
+      "size": 979395,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0022",
+      "uploadedAt": "2024-03-17",
+      "tags": [
+        "verified"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0014",
+      "name": "Receipt - Maruti Suzuki",
+      "clientId": "CLT-0015",
+      "clientName": "Maruti Suzuki",
+      "type": "receipt",
+      "folder": "ITR Documents",
+      "size": 1981726,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0025",
+      "uploadedAt": "2024-02-26",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0015",
+      "name": "Balance Sheet - Garden Reach Shipbuilders",
+      "clientId": "CLT-0082",
+      "clientName": "Garden Reach Shipbuilders",
+      "type": "balance_sheet",
+      "folder": "ITR Documents",
+      "size": 1895437,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0021",
+      "uploadedAt": "2024-03-06",
+      "tags": [
+        "verified"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0016",
+      "name": "Itr - Dabur India",
+      "clientId": "CLT-0032",
+      "clientName": "Dabur India",
+      "type": "itr",
+      "folder": "Invoices",
+      "size": 116513,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0006",
+      "uploadedAt": "2025-07-01",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0017",
+      "name": "Itr - Sun Pharma 2",
+      "clientId": "CLT-0117",
+      "clientName": "Sun Pharma 2",
+      "type": "itr",
+      "folder": "Receipts",
+      "size": 2253555,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0009",
+      "uploadedAt": "2025-09-11",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0018",
+      "name": "Pan Card - KEI Industries",
+      "clientId": "CLT-0057",
+      "clientName": "KEI Industries",
+      "type": "pan_card",
+      "folder": "Receipts",
+      "size": 1100626,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0010",
+      "uploadedAt": "2025-12-13",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0019",
+      "name": "Audit Report - Westlife Development",
+      "clientId": "CLT-0070",
+      "clientName": "Westlife Development",
+      "type": "audit_report",
+      "folder": "Receipts",
+      "size": 3756017,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0024",
+      "uploadedAt": "2026-05-16",
+      "tags": [
+        "archived"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0020",
+      "name": "Agreement - IRCTC",
+      "clientId": "CLT-0075",
+      "clientName": "IRCTC",
+      "type": "agreement",
+      "folder": "GST Returns",
+      "size": 148385,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0015",
+      "uploadedAt": "2025-07-03",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0021",
+      "name": "Gst Return - RPG Enterprises",
+      "clientId": "CLT-0051",
+      "clientName": "RPG Enterprises",
+      "type": "gst_return",
+      "folder": "GST Returns",
+      "size": 769519,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0018",
+      "uploadedAt": "2026-01-10",
+      "tags": [
+        "verified"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0022",
+      "name": "Itr - Mphasis",
+      "clientId": "CLT-0043",
+      "clientName": "Mphasis",
+      "type": "itr",
+      "folder": "Bank Statements",
+      "size": 4997102,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0012",
+      "uploadedAt": "2024-02-22",
+      "tags": [
+        "verified"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0023",
+      "name": "Invoice - Titan Company",
+      "clientId": "CLT-0019",
+      "clientName": "Titan Company",
+      "type": "invoice",
+      "folder": "Invoices",
+      "size": 2392623,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0007",
+      "uploadedAt": "2024-08-06",
+      "tags": [
+        "archived"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0024",
+      "name": "Receipt - Adani Power",
+      "clientId": "CLT-0090",
+      "clientName": "Adani Power",
+      "type": "receipt",
+      "folder": "Agreements",
+      "size": 3076642,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0023",
+      "uploadedAt": "2025-09-11",
+      "tags": [
+        "archived"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0025",
+      "name": "Other - EIH Ltd",
+      "clientId": "CLT-0074",
+      "clientName": "EIH Ltd",
+      "type": "other",
+      "folder": "ITR Documents",
+      "size": 2869939,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0004",
+      "uploadedAt": "2025-10-05",
+      "tags": [
+        "verified"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0026",
+      "name": "Gst Return - Hindustan Zinc",
+      "clientId": "CLT-0099",
+      "clientName": "Hindustan Zinc",
+      "type": "gst_return",
+      "folder": "ITR Documents",
+      "size": 968055,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0025",
+      "uploadedAt": "2024-02-12",
+      "tags": [
+        "important"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0027",
+      "name": "Itr - BEL",
+      "clientId": "CLT-0080",
+      "clientName": "BEL",
+      "type": "itr",
+      "folder": "ITR Documents",
+      "size": 2197428,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0014",
+      "uploadedAt": "2025-07-09",
+      "tags": [
+        "archived"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0028",
+      "name": "Gst Return - Tata Steel",
+      "clientId": "CLT-0010",
+      "clientName": "Tata Steel",
+      "type": "gst_return",
+      "folder": "ITR Documents",
+      "size": 749798,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0008",
+      "uploadedAt": "2024-10-18",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0029",
+      "name": "Agreement - Zomato",
+      "clientId": "CLT-0038",
+      "clientName": "Zomato",
+      "type": "agreement",
+      "folder": "Agreements",
+      "size": 4004476,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0024",
+      "uploadedAt": "2024-11-27",
+      "tags": [
+        "verified"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0030",
+      "name": "Invoice - Dr Reddys Labs",
+      "clientId": "CLT-0035",
+      "clientName": "Dr Reddys Labs",
+      "type": "invoice",
+      "folder": "ITR Documents",
+      "size": 3126630,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0007",
+      "uploadedAt": "2025-07-30",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0031",
+      "name": "Agreement - Tata Steel",
+      "clientId": "CLT-0010",
+      "clientName": "Tata Steel",
+      "type": "agreement",
+      "folder": "Audit Reports",
+      "size": 1362926,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0016",
+      "uploadedAt": "2026-04-16",
+      "tags": [
+        "verified"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0032",
+      "name": "Other - Vedanta Ltd",
+      "clientId": "CLT-0095",
+      "clientName": "Vedanta Ltd",
+      "type": "other",
+      "folder": "Invoices",
+      "size": 2263158,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0001",
+      "uploadedAt": "2024-04-23",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0033",
+      "name": "Invoice - Rail Vikas Nigam",
+      "clientId": "CLT-0078",
+      "clientName": "Rail Vikas Nigam",
+      "type": "invoice",
+      "folder": "Audit Reports",
+      "size": 2754532,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0009",
+      "uploadedAt": "2024-05-19",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0034",
+      "name": "Itr - ITC Ltd",
+      "clientId": "CLT-0027",
+      "clientName": "ITC Ltd",
+      "type": "itr",
+      "folder": "Agreements",
+      "size": 2988379,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0021",
+      "uploadedAt": "2025-01-29",
+      "tags": [
+        "verified"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0035",
+      "name": "Other - Cochin Shipyard",
+      "clientId": "CLT-0084",
+      "clientName": "Cochin Shipyard",
+      "type": "other",
+      "folder": "Receipts",
+      "size": 2095781,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0019",
+      "uploadedAt": "2025-02-27",
+      "tags": [
+        "archived"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0036",
+      "name": "Audit Report - Apollo Hospitals",
+      "clientId": "CLT-0037",
+      "clientName": "Apollo Hospitals",
+      "type": "audit_report",
+      "folder": "GST Returns",
+      "size": 1192224,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0022",
+      "uploadedAt": "2025-07-23",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0037",
+      "name": "Receipt - Mahanagar Gas",
+      "clientId": "CLT-0104",
+      "clientName": "Mahanagar Gas",
+      "type": "receipt",
+      "folder": "GST Returns",
+      "size": 2430639,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0007",
+      "uploadedAt": "2026-01-07",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0038",
+      "name": "Audit Report - Dixon Technologies",
+      "clientId": "CLT-0059",
+      "clientName": "Dixon Technologies",
+      "type": "audit_report",
+      "folder": "Agreements",
+      "size": 3853845,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0013",
+      "uploadedAt": "2024-08-07",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0039",
+      "name": "Audit Report - Apollo Hospitals",
+      "clientId": "CLT-0037",
+      "clientName": "Apollo Hospitals",
+      "type": "audit_report",
+      "folder": "ITR Documents",
+      "size": 4607319,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0024",
+      "uploadedAt": "2025-03-22",
+      "tags": [
+        "archived"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0040",
+      "name": "Receipt - TCS",
+      "clientId": "CLT-0002",
+      "clientName": "TCS",
+      "type": "receipt",
+      "folder": "ITR Documents",
+      "size": 3482497,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0013",
+      "uploadedAt": "2024-05-23",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0041",
+      "name": "Agreement - National Aluminium",
+      "clientId": "CLT-0100",
+      "clientName": "National Aluminium",
+      "type": "agreement",
+      "folder": "GST Returns",
+      "size": 1096409,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0013",
+      "uploadedAt": "2025-05-21",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0042",
+      "name": "Balance Sheet - HCL Technologies",
+      "clientId": "CLT-0013",
+      "clientName": "HCL Technologies",
+      "type": "balance_sheet",
+      "folder": "Receipts",
+      "size": 978111,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0004",
+      "uploadedAt": "2025-09-21",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0043",
+      "name": "Receipt - Mphasis",
+      "clientId": "CLT-0043",
+      "clientName": "Mphasis",
+      "type": "receipt",
+      "folder": "Agreements",
+      "size": 1115061,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0025",
+      "uploadedAt": "2026-06-29",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0044",
+      "name": "Pan Card - Mahindra & Mahindra",
+      "clientId": "CLT-0005",
+      "clientName": "Mahindra & Mahindra",
+      "type": "pan_card",
+      "folder": "Audit Reports",
+      "size": 4173818,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0017",
+      "uploadedAt": "2025-10-17",
+      "tags": [
+        "archived"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0045",
+      "name": "Bank Statement - Emami Ltd",
+      "clientId": "CLT-0068",
+      "clientName": "Emami Ltd",
+      "type": "bank_statement",
+      "folder": "Audit Reports",
+      "size": 1790217,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0004",
+      "uploadedAt": "2025-01-13",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0046",
+      "name": "Invoice - Axis Bank",
+      "clientId": "CLT-0016",
+      "clientName": "Axis Bank",
+      "type": "invoice",
+      "folder": "Agreements",
+      "size": 3339891,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0025",
+      "uploadedAt": "2025-09-06",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0047",
+      "name": "Itr - Bharti Airtel",
+      "clientId": "CLT-0012",
+      "clientName": "Bharti Airtel",
+      "type": "itr",
+      "folder": "Agreements",
+      "size": 3741110,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0018",
+      "uploadedAt": "2024-05-08",
+      "tags": [
+        "archived"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0048",
+      "name": "Agreement - Nestle India",
+      "clientId": "CLT-0021",
+      "clientName": "Nestle India",
+      "type": "agreement",
+      "folder": "Receipts",
+      "size": 4550735,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0023",
+      "uploadedAt": "2026-05-23",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0049",
+      "name": "Balance Sheet - Power Grid Corp",
+      "clientId": "CLT-0022",
+      "clientName": "Power Grid Corp",
+      "type": "balance_sheet",
+      "folder": "Audit Reports",
+      "size": 882040,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0019",
+      "uploadedAt": "2024-07-09",
+      "tags": [
+        "archived"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0050",
+      "name": "Gst Return - UltraTech Cement",
+      "clientId": "CLT-0020",
+      "clientName": "UltraTech Cement",
+      "type": "gst_return",
+      "folder": "Agreements",
+      "size": 3778354,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0003",
+      "uploadedAt": "2025-11-06",
+      "tags": [
+        "important"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0051",
+      "name": "Invoice - Infosys Ltd 2",
+      "clientId": "CLT-0111",
+      "clientName": "Infosys Ltd 2",
+      "type": "invoice",
+      "folder": "Invoices",
+      "size": 2811358,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0001",
+      "uploadedAt": "2026-05-27",
+      "tags": [
+        "important"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0052",
+      "name": "Receipt - Hindalco",
+      "clientId": "CLT-0094",
+      "clientName": "Hindalco",
+      "type": "receipt",
+      "folder": "Audit Reports",
+      "size": 4598693,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0003",
+      "uploadedAt": "2025-10-28",
+      "tags": [
+        "archived"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0053",
+      "name": "Balance Sheet - Tata Steel 2",
+      "clientId": "CLT-0120",
+      "clientName": "Tata Steel 2",
+      "type": "balance_sheet",
+      "folder": "Audit Reports",
+      "size": 3734907,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0013",
+      "uploadedAt": "2025-04-30",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0054",
+      "name": "Itr - L&T 2",
+      "clientId": "CLT-0116",
+      "clientName": "L&T 2",
+      "type": "itr",
+      "folder": "Receipts",
+      "size": 452299,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0004",
+      "uploadedAt": "2025-11-18",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0055",
+      "name": "Agreement - Persistent Systems",
+      "clientId": "CLT-0044",
+      "clientName": "Persistent Systems",
+      "type": "agreement",
+      "folder": "Bank Statements",
+      "size": 2218128,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0016",
+      "uploadedAt": "2026-04-22",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0056",
+      "name": "Receipt - Wipro",
+      "clientId": "CLT-0008",
+      "clientName": "Wipro",
+      "type": "receipt",
+      "folder": "Invoices",
+      "size": 1437803,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0003",
+      "uploadedAt": "2025-02-18",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0057",
+      "name": "Audit Report - RPG Enterprises",
+      "clientId": "CLT-0051",
+      "clientName": "RPG Enterprises",
+      "type": "audit_report",
+      "folder": "Audit Reports",
+      "size": 4112256,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0016",
+      "uploadedAt": "2025-12-24",
+      "tags": [
+        "archived"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0058",
+      "name": "Itr - JK Cement",
+      "clientId": "CLT-0064",
+      "clientName": "JK Cement",
+      "type": "itr",
+      "folder": "Bank Statements",
+      "size": 4033552,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0022",
+      "uploadedAt": "2024-03-20",
+      "tags": [
+        "archived"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0059",
+      "name": "Audit Report - Nestle India",
+      "clientId": "CLT-0021",
+      "clientName": "Nestle India",
+      "type": "audit_report",
+      "folder": "Bank Statements",
+      "size": 1260466,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0006",
+      "uploadedAt": "2025-06-18",
+      "tags": [
+        "important"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0060",
+      "name": "Gst Return - EIH Ltd",
+      "clientId": "CLT-0074",
+      "clientName": "EIH Ltd",
+      "type": "gst_return",
+      "folder": "ITR Documents",
+      "size": 2601561,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0025",
+      "uploadedAt": "2026-04-02",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0061",
+      "name": "Gst Return - Godrej Consumer",
+      "clientId": "CLT-0030",
+      "clientName": "Godrej Consumer",
+      "type": "gst_return",
+      "folder": "Audit Reports",
+      "size": 1094461,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0016",
+      "uploadedAt": "2024-04-04",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0062",
+      "name": "Audit Report - Hindustan Unilever",
+      "clientId": "CLT-0028",
+      "clientName": "Hindustan Unilever",
+      "type": "audit_report",
+      "folder": "Bank Statements",
+      "size": 4534069,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0015",
+      "uploadedAt": "2025-12-16",
+      "tags": [
+        "important"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0063",
+      "name": "Agreement - Shree Cement",
+      "clientId": "CLT-0061",
+      "clientName": "Shree Cement",
+      "type": "agreement",
+      "folder": "ITR Documents",
+      "size": 3015629,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0007",
+      "uploadedAt": "2025-01-22",
+      "tags": [
+        "archived"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0064",
+      "name": "Agreement - BHEL",
+      "clientId": "CLT-0079",
+      "clientName": "BHEL",
+      "type": "agreement",
+      "folder": "GST Returns",
+      "size": 1706851,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0012",
+      "uploadedAt": "2026-05-02",
+      "tags": [
+        "verified"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0065",
+      "name": "Agreement - HDFC Bank 2",
+      "clientId": "CLT-0114",
+      "clientName": "HDFC Bank 2",
+      "type": "agreement",
+      "folder": "Agreements",
+      "size": 1554549,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0012",
+      "uploadedAt": "2025-06-09",
+      "tags": [
+        "important"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0066",
+      "name": "Itr - Nalco",
+      "clientId": "CLT-0098",
+      "clientName": "Nalco",
+      "type": "itr",
+      "folder": "Invoices",
+      "size": 2193143,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0011",
+      "uploadedAt": "2025-03-02",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0067",
+      "name": "Balance Sheet - GAIL",
+      "clientId": "CLT-0101",
+      "clientName": "GAIL",
+      "type": "balance_sheet",
+      "folder": "GST Returns",
+      "size": 2156608,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0001",
+      "uploadedAt": "2026-06-01",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0068",
+      "name": "Bank Statement - Godrej Consumer",
+      "clientId": "CLT-0030",
+      "clientName": "Godrej Consumer",
+      "type": "bank_statement",
+      "folder": "Audit Reports",
+      "size": 4106743,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0001",
+      "uploadedAt": "2026-02-18",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0069",
+      "name": "Invoice - Infosys Ltd 2",
+      "clientId": "CLT-0111",
+      "clientName": "Infosys Ltd 2",
+      "type": "invoice",
+      "folder": "Audit Reports",
+      "size": 2154248,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0002",
+      "uploadedAt": "2026-05-24",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0070",
+      "name": "Bank Statement - NMDC",
+      "clientId": "CLT-0096",
+      "clientName": "NMDC",
+      "type": "bank_statement",
+      "folder": "Invoices",
+      "size": 445349,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0016",
+      "uploadedAt": "2025-07-25",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0071",
+      "name": "Other - Divis Laboratories",
+      "clientId": "CLT-0036",
+      "clientName": "Divis Laboratories",
+      "type": "other",
+      "folder": "GST Returns",
+      "size": 654901,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0018",
+      "uploadedAt": "2024-04-19",
+      "tags": [
+        "verified"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0072",
+      "name": "Bank Statement - Garden Reach Shipbuilders",
+      "clientId": "CLT-0082",
+      "clientName": "Garden Reach Shipbuilders",
+      "type": "bank_statement",
+      "folder": "Agreements",
+      "size": 3713282,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0011",
+      "uploadedAt": "2026-03-26",
+      "tags": [
+        "important"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0073",
+      "name": "Receipt - JSW Steel",
+      "clientId": "CLT-0091",
+      "clientName": "JSW Steel",
+      "type": "receipt",
+      "folder": "Invoices",
+      "size": 2408701,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0025",
+      "uploadedAt": "2026-04-02",
+      "tags": [
+        "verified"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0074",
+      "name": "Other - Indian Hotels",
+      "clientId": "CLT-0071",
+      "clientName": "Indian Hotels",
+      "type": "other",
+      "folder": "Receipts",
+      "size": 4144263,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0016",
+      "uploadedAt": "2024-05-10",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0075",
+      "name": "Itr - Sun Pharma",
+      "clientId": "CLT-0007",
+      "clientName": "Sun Pharma",
+      "type": "itr",
+      "folder": "Agreements",
+      "size": 864699,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0020",
+      "uploadedAt": "2026-02-21",
+      "tags": [
+        "verified"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0076",
+      "name": "Audit Report - Cipla",
+      "clientId": "CLT-0034",
+      "clientName": "Cipla",
+      "type": "audit_report",
+      "folder": "GST Returns",
+      "size": 967039,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0005",
+      "uploadedAt": "2026-05-10",
+      "tags": [
+        "archived"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0077",
+      "name": "Other - ACC Ltd",
+      "clientId": "CLT-0063",
+      "clientName": "ACC Ltd",
+      "type": "other",
+      "folder": "Receipts",
+      "size": 1698147,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0015",
+      "uploadedAt": "2026-03-08",
+      "tags": [
+        "verified"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0078",
+      "name": "Itr - NHPC",
+      "clientId": "CLT-0086",
+      "clientName": "NHPC",
+      "type": "itr",
+      "folder": "Audit Reports",
+      "size": 4070093,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0023",
+      "uploadedAt": "2025-06-24",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0079",
+      "name": "Itr - Rail Vikas Nigam",
+      "clientId": "CLT-0078",
+      "clientName": "Rail Vikas Nigam",
+      "type": "itr",
+      "folder": "GST Returns",
+      "size": 469385,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0005",
+      "uploadedAt": "2024-08-17",
+      "tags": [
+        "verified"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0080",
+      "name": "Agreement - Delhivery",
+      "clientId": "CLT-0042",
+      "clientName": "Delhivery",
+      "type": "agreement",
+      "folder": "Receipts",
+      "size": 3361184,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0003",
+      "uploadedAt": "2024-01-21",
+      "tags": [
+        "verified"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0081",
+      "name": "Invoice - Reliance Industries",
+      "clientId": "CLT-0003",
+      "clientName": "Reliance Industries",
+      "type": "invoice",
+      "folder": "Audit Reports",
+      "size": 780875,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0012",
+      "uploadedAt": "2024-08-12",
+      "tags": [
+        "archived"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0082",
+      "name": "Receipt - Wipro",
+      "clientId": "CLT-0008",
+      "clientName": "Wipro",
+      "type": "receipt",
+      "folder": "ITR Documents",
+      "size": 4512250,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0020",
+      "uploadedAt": "2026-04-07",
+      "tags": [
+        "verified"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0083",
+      "name": "Receipt - MOIL",
+      "clientId": "CLT-0097",
+      "clientName": "MOIL",
+      "type": "receipt",
+      "folder": "Agreements",
+      "size": 859175,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0013",
+      "uploadedAt": "2025-01-23",
+      "tags": [
+        "archived"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0084",
+      "name": "Pan Card - Ramco Cements",
+      "clientId": "CLT-0065",
+      "clientName": "Ramco Cements",
+      "type": "pan_card",
+      "folder": "Invoices",
+      "size": 4137544,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0023",
+      "uploadedAt": "2024-05-07",
+      "tags": [
+        "important"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0085",
+      "name": "Itr - Jubilant Foodworks",
+      "clientId": "CLT-0069",
+      "clientName": "Jubilant Foodworks",
+      "type": "itr",
+      "folder": "Agreements",
+      "size": 3578952,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0007",
+      "uploadedAt": "2025-03-07",
+      "tags": [
+        "important"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0086",
+      "name": "Gst Return - Vedanta Ltd",
+      "clientId": "CLT-0095",
+      "clientName": "Vedanta Ltd",
+      "type": "gst_return",
+      "folder": "GST Returns",
+      "size": 3102111,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0024",
+      "uploadedAt": "2025-01-20",
+      "tags": [
+        "important"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0087",
+      "name": "Receipt - Paytm",
+      "clientId": "CLT-0039",
+      "clientName": "Paytm",
+      "type": "receipt",
+      "folder": "Audit Reports",
+      "size": 4490177,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0007",
+      "uploadedAt": "2025-04-10",
+      "tags": [
+        "important"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0088",
+      "name": "Itr - Dixon Technologies",
+      "clientId": "CLT-0059",
+      "clientName": "Dixon Technologies",
+      "type": "itr",
+      "folder": "ITR Documents",
+      "size": 458228,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0012",
+      "uploadedAt": "2026-04-29",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0089",
+      "name": "Pan Card - Dabur India",
+      "clientId": "CLT-0032",
+      "clientName": "Dabur India",
+      "type": "pan_card",
+      "folder": "Agreements",
+      "size": 4715513,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0020",
+      "uploadedAt": "2024-05-10",
+      "tags": [
+        "archived"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0090",
+      "name": "Balance Sheet - Indraprastha Gas",
+      "clientId": "CLT-0103",
+      "clientName": "Indraprastha Gas",
+      "type": "balance_sheet",
+      "folder": "Invoices",
+      "size": 3556199,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0003",
+      "uploadedAt": "2024-02-22",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0091",
+      "name": "Itr - Mahanagar Gas",
+      "clientId": "CLT-0104",
+      "clientName": "Mahanagar Gas",
+      "type": "itr",
+      "folder": "ITR Documents",
+      "size": 4137701,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0013",
+      "uploadedAt": "2026-07-03",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0092",
+      "name": "Audit Report - Power Grid Corp",
+      "clientId": "CLT-0022",
+      "clientName": "Power Grid Corp",
+      "type": "audit_report",
+      "folder": "Audit Reports",
+      "size": 4557412,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0001",
+      "uploadedAt": "2024-02-22",
+      "tags": [
+        "verified"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0093",
+      "name": "Receipt - Petronet LNG",
+      "clientId": "CLT-0102",
+      "clientName": "Petronet LNG",
+      "type": "receipt",
+      "folder": "Audit Reports",
+      "size": 3050532,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0015",
+      "uploadedAt": "2026-05-08",
+      "tags": [
+        "verified"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0094",
+      "name": "Itr - NHPC",
+      "clientId": "CLT-0086",
+      "clientName": "NHPC",
+      "type": "itr",
+      "folder": "Receipts",
+      "size": 1168033,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0009",
+      "uploadedAt": "2025-06-24",
+      "tags": [
+        "archived"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0095",
+      "name": "Agreement - SJVN Ltd",
+      "clientId": "CLT-0087",
+      "clientName": "SJVN Ltd",
+      "type": "agreement",
+      "folder": "Agreements",
+      "size": 1400374,
+      "mimeType": "image/jpeg",
+      "uploadedBy": "EMP-0006",
+      "uploadedAt": "2025-05-15",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0096",
+      "name": "Pan Card - ICICI Bank",
+      "clientId": "CLT-0011",
+      "clientName": "ICICI Bank",
+      "type": "pan_card",
+      "folder": "Agreements",
+      "size": 2156837,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0021",
+      "uploadedAt": "2025-01-03",
+      "tags": [
+        "archived"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0097",
+      "name": "Other - Aster DM Healthcare",
+      "clientId": "CLT-0110",
+      "clientName": "Aster DM Healthcare",
+      "type": "other",
+      "folder": "GST Returns",
+      "size": 3119620,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0002",
+      "uploadedAt": "2024-01-06",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0098",
+      "name": "Itr - Indian Hotels",
+      "clientId": "CLT-0071",
+      "clientName": "Indian Hotels",
+      "type": "itr",
+      "folder": "Agreements",
+      "size": 1347250,
+      "mimeType": "application/vnd.ms-excel",
+      "uploadedBy": "EMP-0005",
+      "uploadedAt": "2024-08-06",
+      "tags": [
+        "pending_review"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "DOC-0099",
+      "name": "Agreement - Divis Laboratories",
+      "clientId": "CLT-0036",
+      "clientName": "Divis Laboratories",
+      "type": "agreement",
+      "folder": "Audit Reports",
+      "size": 4772438,
+      "mimeType": "application/pdf",
+      "uploadedBy": "EMP-0014",
+      "uploadedAt": "2025-08-25",
+      "tags": [
+        "archived"
+      ],
+      "status": "archived"
+    },
+    {
+      "id": "DOC-0100",
+      "name": "Other - RPG Enterprises",
+      "clientId": "CLT-0051",
+      "clientName": "RPG Enterprises",
+      "type": "other",
+      "folder": "Bank Statements",
+      "size": 1554653,
+      "mimeType": "image/png",
+      "uploadedBy": "EMP-0004",
+      "uploadedAt": "2024-08-02",
+      "tags": [
+        "archived"
+      ],
+      "status": "active"
+    }
+  ],
+  "total": 100
+}

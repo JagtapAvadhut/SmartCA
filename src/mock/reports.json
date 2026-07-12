@@ -1,0 +1,500 @@
+{
+  "revenue": [
+    {
+      "month": "Jan",
+      "revenue": 231133,
+      "expenses": 179187,
+      "profit": 51946
+    },
+    {
+      "month": "Feb",
+      "revenue": 687452,
+      "expenses": 211841,
+      "profit": 475611
+    },
+    {
+      "month": "Mar",
+      "revenue": 684785,
+      "expenses": 154399,
+      "profit": 530386
+    },
+    {
+      "month": "Apr",
+      "revenue": 531345,
+      "expenses": 244452,
+      "profit": 286893
+    },
+    {
+      "month": "May",
+      "revenue": 217681,
+      "expenses": 79378,
+      "profit": 138303
+    },
+    {
+      "month": "Jun",
+      "revenue": 503588,
+      "expenses": 138148,
+      "profit": 365440
+    },
+    {
+      "month": "Jul",
+      "revenue": 424399,
+      "expenses": 186127,
+      "profit": 238272
+    },
+    {
+      "month": "Aug",
+      "revenue": 222399,
+      "expenses": 175317,
+      "profit": 47082
+    },
+    {
+      "month": "Sep",
+      "revenue": 259273,
+      "expenses": 190156,
+      "profit": 69117
+    },
+    {
+      "month": "Oct",
+      "revenue": 588048,
+      "expenses": 82726,
+      "profit": 505322
+    },
+    {
+      "month": "Nov",
+      "revenue": 212987,
+      "expenses": 141901,
+      "profit": 71086
+    },
+    {
+      "month": "Dec",
+      "revenue": 622477,
+      "expenses": 76123,
+      "profit": 546354
+    }
+  ],
+  "gstFiled": [
+    {
+      "month": "Jan",
+      "filed": 39,
+      "pending": 3,
+      "overdue": 4
+    },
+    {
+      "month": "Feb",
+      "filed": 32,
+      "pending": 9,
+      "overdue": 4
+    },
+    {
+      "month": "Mar",
+      "filed": 37,
+      "pending": 8,
+      "overdue": 2
+    },
+    {
+      "month": "Apr",
+      "filed": 25,
+      "pending": 8,
+      "overdue": 0
+    },
+    {
+      "month": "May",
+      "filed": 21,
+      "pending": 2,
+      "overdue": 2
+    },
+    {
+      "month": "Jun",
+      "filed": 34,
+      "pending": 7,
+      "overdue": 2
+    },
+    {
+      "month": "Jul",
+      "filed": 31,
+      "pending": 7,
+      "overdue": 2
+    },
+    {
+      "month": "Aug",
+      "filed": 28,
+      "pending": 9,
+      "overdue": 2
+    },
+    {
+      "month": "Sep",
+      "filed": 29,
+      "pending": 5,
+      "overdue": 1
+    },
+    {
+      "month": "Oct",
+      "filed": 37,
+      "pending": 6,
+      "overdue": 1
+    },
+    {
+      "month": "Nov",
+      "filed": 29,
+      "pending": 5,
+      "overdue": 2
+    },
+    {
+      "month": "Dec",
+      "filed": 35,
+      "pending": 7,
+      "overdue": 0
+    }
+  ],
+  "itrFiled": [
+    {
+      "month": "Jan",
+      "filed": 6,
+      "pending": 6
+    },
+    {
+      "month": "Feb",
+      "filed": 18,
+      "pending": 2
+    },
+    {
+      "month": "Mar",
+      "filed": 15,
+      "pending": 2
+    },
+    {
+      "month": "Apr",
+      "filed": 24,
+      "pending": 6
+    },
+    {
+      "month": "May",
+      "filed": 18,
+      "pending": 3
+    },
+    {
+      "month": "Jun",
+      "filed": 6,
+      "pending": 6
+    },
+    {
+      "month": "Jul",
+      "filed": 22,
+      "pending": 6
+    },
+    {
+      "month": "Aug",
+      "filed": 9,
+      "pending": 5
+    },
+    {
+      "month": "Sep",
+      "filed": 14,
+      "pending": 6
+    },
+    {
+      "month": "Oct",
+      "filed": 18,
+      "pending": 5
+    },
+    {
+      "month": "Nov",
+      "filed": 10,
+      "pending": 2
+    },
+    {
+      "month": "Dec",
+      "filed": 12,
+      "pending": 8
+    }
+  ],
+  "clientGrowth": [
+    {
+      "month": "Jan",
+      "clients": 84,
+      "companies": 42
+    },
+    {
+      "month": "Feb",
+      "clients": 87,
+      "companies": 44
+    },
+    {
+      "month": "Mar",
+      "clients": 89,
+      "companies": 46
+    },
+    {
+      "month": "Apr",
+      "clients": 90,
+      "companies": 47
+    },
+    {
+      "month": "May",
+      "clients": 95,
+      "companies": 48
+    },
+    {
+      "month": "Jun",
+      "clients": 95,
+      "companies": 51
+    },
+    {
+      "month": "Jul",
+      "clients": 98,
+      "companies": 54
+    },
+    {
+      "month": "Aug",
+      "clients": 104,
+      "companies": 56
+    },
+    {
+      "month": "Sep",
+      "clients": 108,
+      "companies": 56
+    },
+    {
+      "month": "Oct",
+      "clients": 108,
+      "companies": 60
+    },
+    {
+      "month": "Nov",
+      "clients": 111,
+      "companies": 61
+    },
+    {
+      "month": "Dec",
+      "clients": 114,
+      "companies": 62
+    }
+  ],
+  "outstandingTrend": [
+    {
+      "month": "Jan",
+      "amount": 491942
+    },
+    {
+      "month": "Feb",
+      "amount": 135391
+    },
+    {
+      "month": "Mar",
+      "amount": 502394
+    },
+    {
+      "month": "Apr",
+      "amount": 162337
+    },
+    {
+      "month": "May",
+      "amount": 170629
+    },
+    {
+      "month": "Jun",
+      "amount": 235867
+    },
+    {
+      "month": "Jul",
+      "amount": 133649
+    },
+    {
+      "month": "Aug",
+      "amount": 251985
+    },
+    {
+      "month": "Sep",
+      "amount": 188668
+    },
+    {
+      "month": "Oct",
+      "amount": 291096
+    },
+    {
+      "month": "Nov",
+      "amount": 558304
+    },
+    {
+      "month": "Dec",
+      "amount": 465010
+    }
+  ],
+  "taskCompletion": [
+    {
+      "month": "Jan",
+      "completed": 23,
+      "pending": 11
+    },
+    {
+      "month": "Feb",
+      "completed": 52,
+      "pending": 14
+    },
+    {
+      "month": "Mar",
+      "completed": 41,
+      "pending": 10
+    },
+    {
+      "month": "Apr",
+      "completed": 30,
+      "pending": 12
+    },
+    {
+      "month": "May",
+      "completed": 36,
+      "pending": 6
+    },
+    {
+      "month": "Jun",
+      "completed": 48,
+      "pending": 18
+    },
+    {
+      "month": "Jul",
+      "completed": 21,
+      "pending": 15
+    },
+    {
+      "month": "Aug",
+      "completed": 30,
+      "pending": 9
+    },
+    {
+      "month": "Sep",
+      "completed": 51,
+      "pending": 9
+    },
+    {
+      "month": "Oct",
+      "completed": 30,
+      "pending": 12
+    },
+    {
+      "month": "Nov",
+      "completed": 49,
+      "pending": 18
+    },
+    {
+      "month": "Dec",
+      "completed": 55,
+      "pending": 11
+    }
+  ],
+  "serviceBreakdown": [
+    {
+      "service": "GST Filing",
+      "count": 21,
+      "revenue": 405572
+    },
+    {
+      "service": "ITR Filing",
+      "count": 24,
+      "revenue": 745415
+    },
+    {
+      "service": "TDS Return",
+      "count": 46,
+      "revenue": 579177
+    },
+    {
+      "service": "ROC Filing",
+      "count": 58,
+      "revenue": 835534
+    },
+    {
+      "service": "Audit",
+      "count": 16,
+      "revenue": 720880
+    },
+    {
+      "service": "Bookkeeping",
+      "count": 15,
+      "revenue": 1046916
+    },
+    {
+      "service": "Tax Planning",
+      "count": 14,
+      "revenue": 465456
+    },
+    {
+      "service": "Company Registration",
+      "count": 35,
+      "revenue": 457729
+    },
+    {
+      "service": "GST Registration",
+      "count": 41,
+      "revenue": 643343
+    },
+    {
+      "service": "Trademark Filing",
+      "count": 27,
+      "revenue": 213141
+    }
+  ],
+  "employeePerformance": [
+    {
+      "name": "Naveen Desai",
+      "tasksCompleted": 9,
+      "clientsManaged": 9,
+      "revenue": 549434
+    },
+    {
+      "name": "Kavita Desai",
+      "tasksCompleted": 8,
+      "clientsManaged": 11,
+      "revenue": 245917
+    },
+    {
+      "name": "Suresh Sharma",
+      "tasksCompleted": 7,
+      "clientsManaged": 6,
+      "revenue": 274587
+    },
+    {
+      "name": "Karthik Agarwal",
+      "tasksCompleted": 30,
+      "clientsManaged": 17,
+      "revenue": 110156
+    },
+    {
+      "name": "Deepa Bhat",
+      "tasksCompleted": 29,
+      "clientsManaged": 16,
+      "revenue": 183711
+    },
+    {
+      "name": "Lakshmi Desai",
+      "tasksCompleted": 15,
+      "clientsManaged": 15,
+      "revenue": 124728
+    },
+    {
+      "name": "Manoj Desai",
+      "tasksCompleted": 11,
+      "clientsManaged": 5,
+      "revenue": 423095
+    },
+    {
+      "name": "Amit Menon",
+      "tasksCompleted": 31,
+      "clientsManaged": 9,
+      "revenue": 64559
+    },
+    {
+      "name": "Anita Nair",
+      "tasksCompleted": 30,
+      "clientsManaged": 11,
+      "revenue": 545620
+    },
+    {
+      "name": "Vikram Mehta",
+      "tasksCompleted": 14,
+      "clientsManaged": 16,
+      "revenue": 110027
+    }
+  ]
+}

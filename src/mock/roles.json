@@ -1,0 +1,309 @@
+{
+  "data": [
+    {
+      "id": "super_admin",
+      "name": "Super Admin",
+      "level": 100,
+      "permissions": [
+        "dashboard.view",
+        "clients.view",
+        "clients.create",
+        "clients.edit",
+        "clients.delete",
+        "companies.view",
+        "companies.create",
+        "companies.edit",
+        "compliance.view",
+        "compliance.create",
+        "compliance.edit",
+        "compliance.delete",
+        "gst.view",
+        "itr.view",
+        "tds.view",
+        "roc.view",
+        "accounting.view",
+        "invoices.view",
+        "invoices.create",
+        "invoices.edit",
+        "invoices.delete",
+        "payments.view",
+        "payments.create",
+        "documents.view",
+        "documents.upload",
+        "documents.delete",
+        "tasks.view",
+        "tasks.create",
+        "tasks.edit",
+        "tasks.delete",
+        "reports.view",
+        "reports.export",
+        "employees.view",
+        "employees.create",
+        "employees.edit",
+        "ai.view",
+        "settings.view",
+        "settings.edit",
+        "settings.users",
+        "settings.roles",
+        "settings.security",
+        "settings.branding",
+        "settings.api"
+      ],
+      "userCount": 1
+    },
+    {
+      "id": "admin",
+      "name": "Admin",
+      "level": 90,
+      "permissions": [
+        "dashboard.view",
+        "clients.view",
+        "clients.create",
+        "clients.edit",
+        "clients.delete",
+        "companies.view",
+        "companies.create",
+        "companies.edit",
+        "compliance.view",
+        "compliance.create",
+        "compliance.edit",
+        "compliance.delete",
+        "gst.view",
+        "itr.view",
+        "tds.view",
+        "roc.view",
+        "accounting.view",
+        "invoices.view",
+        "invoices.create",
+        "invoices.edit",
+        "invoices.delete",
+        "payments.view",
+        "payments.create",
+        "documents.view",
+        "documents.upload",
+        "documents.delete",
+        "tasks.view",
+        "tasks.create",
+        "tasks.edit",
+        "tasks.delete",
+        "reports.view",
+        "reports.export",
+        "employees.view",
+        "employees.create",
+        "employees.edit",
+        "ai.view",
+        "settings.view",
+        "settings.edit",
+        "settings.users",
+        "settings.roles",
+        "settings.security",
+        "settings.branding"
+      ],
+      "userCount": 2
+    },
+    {
+      "id": "partner",
+      "name": "Partner",
+      "level": 80,
+      "permissions": [
+        "dashboard.view",
+        "clients.view",
+        "clients.create",
+        "clients.edit",
+        "companies.view",
+        "compliance.view",
+        "gst.view",
+        "itr.view",
+        "tds.view",
+        "roc.view",
+        "invoices.view",
+        "payments.view",
+        "documents.view",
+        "tasks.view",
+        "reports.view",
+        "reports.export",
+        "employees.view",
+        "ai.view",
+        "settings.view"
+      ],
+      "userCount": 3
+    },
+    {
+      "id": "ca",
+      "name": "CA",
+      "level": 70,
+      "permissions": [
+        "dashboard.view",
+        "clients.view",
+        "clients.edit",
+        "companies.view",
+        "compliance.view",
+        "compliance.create",
+        "compliance.edit",
+        "gst.view",
+        "itr.view",
+        "tds.view",
+        "roc.view",
+        "documents.view",
+        "documents.upload",
+        "tasks.view",
+        "tasks.create",
+        "tasks.edit",
+        "ai.view"
+      ],
+      "userCount": 4
+    },
+    {
+      "id": "senior_ca",
+      "name": "Senior CA",
+      "level": 65,
+      "permissions": [
+        "dashboard.view",
+        "clients.view",
+        "compliance.view",
+        "compliance.create",
+        "compliance.edit",
+        "gst.view",
+        "itr.view",
+        "tds.view",
+        "roc.view",
+        "documents.view",
+        "documents.upload",
+        "tasks.view",
+        "tasks.create",
+        "tasks.edit",
+        "ai.view"
+      ],
+      "userCount": 3
+    },
+    {
+      "id": "junior_ca",
+      "name": "Junior CA",
+      "level": 60,
+      "permissions": [
+        "dashboard.view",
+        "clients.view",
+        "compliance.view",
+        "gst.view",
+        "itr.view",
+        "tds.view",
+        "documents.view",
+        "tasks.view",
+        "tasks.create",
+        "ai.view"
+      ],
+      "userCount": 3
+    },
+    {
+      "id": "accountant",
+      "name": "Accountant",
+      "level": 55,
+      "permissions": [
+        "dashboard.view",
+        "clients.view",
+        "invoices.view",
+        "invoices.create",
+        "invoices.edit",
+        "payments.view",
+        "payments.create",
+        "documents.view",
+        "accounting.view"
+      ],
+      "userCount": 3
+    },
+    {
+      "id": "article_assistant",
+      "name": "Article Assistant",
+      "level": 40,
+      "permissions": [
+        "dashboard.view",
+        "clients.view",
+        "compliance.view",
+        "documents.view",
+        "tasks.view",
+        "tasks.create"
+      ],
+      "userCount": 3
+    },
+    {
+      "id": "receptionist",
+      "name": "Receptionist",
+      "level": 35,
+      "permissions": [
+        "dashboard.view",
+        "clients.view",
+        "clients.create",
+        "tasks.view",
+        "documents.view"
+      ],
+      "userCount": 2
+    },
+    {
+      "id": "auditor",
+      "name": "Auditor",
+      "level": 50,
+      "permissions": [
+        "dashboard.view",
+        "clients.view",
+        "companies.view",
+        "compliance.view",
+        "documents.view",
+        "reports.view"
+      ],
+      "userCount": 1
+    },
+    {
+      "id": "client",
+      "name": "Client",
+      "level": 10,
+      "permissions": [
+        "dashboard.view",
+        "invoices.view",
+        "payments.view",
+        "documents.view"
+      ],
+      "userCount": 2
+    },
+    {
+      "id": "hr",
+      "name": "HR",
+      "level": 45,
+      "permissions": [
+        "dashboard.view",
+        "employees.view",
+        "employees.create",
+        "employees.edit",
+        "tasks.view",
+        "settings.view"
+      ],
+      "userCount": 1
+    },
+    {
+      "id": "finance",
+      "name": "Finance",
+      "level": 55,
+      "permissions": [
+        "dashboard.view",
+        "invoices.view",
+        "payments.view",
+        "reports.view",
+        "reports.export",
+        "accounting.view"
+      ],
+      "userCount": 1
+    },
+    {
+      "id": "employee",
+      "name": "Employee",
+      "level": 30,
+      "permissions": [
+        "dashboard.view",
+        "tasks.view",
+        "tasks.create",
+        "documents.view"
+      ],
+      "userCount": 3
+    }
+  ],
+  "total": 14
+}

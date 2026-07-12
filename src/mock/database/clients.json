@@ -1,0 +1,3444 @@
+{
+  "data": [
+    {
+      "id": "CLT-0001",
+      "name": "Infosys Ltd",
+      "contactPerson": "Amit Kumar",
+      "email": "accounts@infosysltd.com",
+      "phone": "+91 9819333585",
+      "pan": "JOCJB9576R",
+      "gstin": "011VENG4E8AZZ9",
+      "type": "company",
+      "status": "active",
+      "address": "466, Industrial Area, Bangalore, West Bengal - 309592",
+      "city": "Bangalore",
+      "state": "West Bengal",
+      "pincode": "195231",
+      "assignedTo": "EMP-0004",
+      "services": [
+        "GST Filing",
+        "Tax Planning",
+        "GST Filing"
+      ],
+      "revenue": 172582,
+      "outstanding": 93588,
+      "createdAt": "2021-01-28",
+      "updatedAt": "2025-03-20",
+      "notes": "Client onboarded for ITR Filing services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0002",
+      "name": "TCS",
+      "contactPerson": "Deepa Rao",
+      "email": "accounts@tcs.com",
+      "phone": "+91 9019606724",
+      "pan": "DUAEY5280L",
+      "gstin": "16YO77C7APT1Z8",
+      "type": "individual",
+      "status": "active",
+      "address": "221, Tech Park, Chandigarh, Maharashtra - 390288",
+      "city": "Chandigarh",
+      "state": "Maharashtra",
+      "pincode": "535753",
+      "assignedTo": "EMP-0005",
+      "services": [
+        "Tax Planning",
+        "GST Registration",
+        "Company Registration",
+        "Trademark Filing"
+      ],
+      "revenue": 81831,
+      "outstanding": 4751,
+      "createdAt": "2021-03-17",
+      "updatedAt": "2023-01-27",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0003",
+      "name": "Reliance Industries",
+      "contactPerson": "Rajesh Iyer",
+      "email": "accounts@relianceindustries.com",
+      "phone": "+91 9330135353",
+      "pan": "OGPLN3025J",
+      "gstin": "302M889VGDS3Z6",
+      "type": "company",
+      "status": "active",
+      "address": "217, Business Park, Chennai, Rajasthan - 537519",
+      "city": "Chennai",
+      "state": "Rajasthan",
+      "pincode": "707971",
+      "assignedTo": "EMP-0024",
+      "services": [
+        "Audit"
+      ],
+      "revenue": 520058,
+      "outstanding": 36669,
+      "createdAt": "2024-01-18",
+      "updatedAt": "2025-04-01",
+      "notes": "Client onboarded for Trademark Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0004",
+      "name": "HDFC Bank",
+      "contactPerson": "Sanjay Menon",
+      "email": "accounts@hdfcbank.com",
+      "phone": "+91 9089600537",
+      "pan": "WCOBO1391D",
+      "gstin": "28VO356OFK1QZ9",
+      "type": "company",
+      "status": "active",
+      "address": "285, Business Park, Nagpur, West Bengal - 999961",
+      "city": "Nagpur",
+      "state": "West Bengal",
+      "pincode": "415150",
+      "assignedTo": "EMP-0020",
+      "services": [
+        "ITR Filing",
+        "Trademark Filing"
+      ],
+      "revenue": 354010,
+      "outstanding": 92999,
+      "createdAt": "2022-12-06",
+      "updatedAt": "2026-03-28",
+      "notes": "Client onboarded for Audit services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0005",
+      "name": "Mahindra & Mahindra",
+      "contactPerson": "Meera Iyer",
+      "email": "accounts@mahindramahindra.com",
+      "phone": "+91 9827242536",
+      "pan": "BLOGF3300S",
+      "gstin": "18L3L8Q7WVD6Z2",
+      "type": "individual",
+      "status": "active",
+      "address": "203, Business Park, Hyderabad, Punjab - 767874",
+      "city": "Hyderabad",
+      "state": "Punjab",
+      "pincode": "411024",
+      "assignedTo": "EMP-0006",
+      "services": [
+        "Company Registration",
+        "ITR Filing",
+        "GST Registration"
+      ],
+      "revenue": 248354,
+      "outstanding": 62565,
+      "createdAt": "2024-05-20",
+      "updatedAt": "2024-07-04",
+      "notes": "Client onboarded for TDS Return services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0006",
+      "name": "L&T",
+      "contactPerson": "Arun Pillai",
+      "email": "accounts@lt.com",
+      "phone": "+91 8969896590",
+      "pan": "PUPLS8294S",
+      "gstin": "291PZ1CEJ3B5Z6",
+      "type": "company",
+      "status": "active",
+      "address": "393, Tech Park, Chandigarh, Punjab - 699538",
+      "city": "Chandigarh",
+      "state": "Punjab",
+      "pincode": "464098",
+      "assignedTo": "EMP-0017",
+      "services": [
+        "Audit",
+        "Audit"
+      ],
+      "revenue": 355955,
+      "outstanding": 77852,
+      "createdAt": "2023-10-05",
+      "updatedAt": "2024-01-27",
+      "notes": "Client onboarded for ITR Filing services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0007",
+      "name": "Sun Pharma",
+      "contactPerson": "Karthik Chopra",
+      "email": "accounts@sunpharma.com",
+      "phone": "+91 8933407273",
+      "pan": "SSASS7133L",
+      "gstin": "16AMX65M94M9Z3",
+      "type": "company",
+      "status": "active",
+      "address": "373, Tech Park, Mumbai, Madhya Pradesh - 329445",
+      "city": "Mumbai",
+      "state": "Madhya Pradesh",
+      "pincode": "262748",
+      "assignedTo": "EMP-0017",
+      "services": [
+        "Bookkeeping",
+        "Company Registration",
+        "Bookkeeping",
+        "Company Registration"
+      ],
+      "revenue": 129532,
+      "outstanding": 76068,
+      "createdAt": "2023-04-20",
+      "updatedAt": "2024-09-30",
+      "notes": "Client onboarded for Audit services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0008",
+      "name": "Wipro",
+      "contactPerson": "Suresh Nair",
+      "email": "accounts@wipro.com",
+      "phone": "+91 9414293192",
+      "pan": "SQBPT1769O",
+      "gstin": "2422364DNAWEZ3",
+      "type": "company",
+      "status": "active",
+      "address": "402, Tech Park, Mumbai, Rajasthan - 643857",
+      "city": "Mumbai",
+      "state": "Rajasthan",
+      "pincode": "446584",
+      "assignedTo": "EMP-0022",
+      "services": [
+        "TDS Return",
+        "TDS Return",
+        "GST Filing"
+      ],
+      "revenue": 297313,
+      "outstanding": 27224,
+      "createdAt": "2024-11-11",
+      "updatedAt": "2025-10-20",
+      "notes": "Client onboarded for GST Filing services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0009",
+      "name": "Adani Enterprises",
+      "contactPerson": "Rajesh Pillai",
+      "email": "accounts@adanienterprises.com",
+      "phone": "+91 9024069632",
+      "pan": "HWMAI8507U",
+      "gstin": "154AUHBQZE37Z8",
+      "type": "company",
+      "status": "active",
+      "address": "162, Industrial Area, Delhi, West Bengal - 523313",
+      "city": "Delhi",
+      "state": "West Bengal",
+      "pincode": "162003",
+      "assignedTo": "EMP-0018",
+      "services": [
+        "Company Registration",
+        "ROC Filing",
+        "Trademark Filing"
+      ],
+      "revenue": 332875,
+      "outstanding": 36285,
+      "createdAt": "2021-12-11",
+      "updatedAt": "2024-11-05",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0010",
+      "name": "Tata Steel",
+      "contactPerson": "Vikram Mehta",
+      "email": "accounts@tatasteel.com",
+      "phone": "+91 8942795922",
+      "pan": "IJFVT6331E",
+      "gstin": "04P5QW0KFPE8Z1",
+      "type": "company",
+      "status": "active",
+      "address": "332, Industrial Area, Mumbai, Kerala - 192903",
+      "city": "Mumbai",
+      "state": "Kerala",
+      "pincode": "265324",
+      "assignedTo": "EMP-0014",
+      "services": [
+        "GST Registration",
+        "TDS Return"
+      ],
+      "revenue": 304813,
+      "outstanding": 47587,
+      "createdAt": "2020-02-22",
+      "updatedAt": "2021-10-22",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0011",
+      "name": "ICICI Bank",
+      "contactPerson": "Divya Menon",
+      "email": "accounts@icicibank.com",
+      "phone": "+91 9628804323",
+      "pan": "SXMNQ5077V",
+      "gstin": "25OG6FD4KU2RZ4",
+      "type": "company",
+      "status": "prospect",
+      "address": "295, Business Park, Kochi, Karnataka - 161135",
+      "city": "Kochi",
+      "state": "Karnataka",
+      "pincode": "300730",
+      "assignedTo": "EMP-0004",
+      "services": [
+        "TDS Return",
+        "ITR Filing",
+        "ITR Filing",
+        "ITR Filing"
+      ],
+      "revenue": 198722,
+      "outstanding": 4561,
+      "createdAt": "2022-11-04",
+      "updatedAt": "2024-06-02",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0012",
+      "name": "Bharti Airtel",
+      "contactPerson": "Deepa Joshi",
+      "email": "accounts@bhartiairtel.com",
+      "phone": "+91 9570733117",
+      "pan": "UPSNO1030W",
+      "gstin": "15OKTH1FLRQGZ8",
+      "type": "company",
+      "status": "active",
+      "address": "24, Business Park, Chennai, Uttar Pradesh - 785395",
+      "city": "Chennai",
+      "state": "Uttar Pradesh",
+      "pincode": "893359",
+      "assignedTo": "EMP-0005",
+      "services": [
+        "GST Filing",
+        "Company Registration"
+      ],
+      "revenue": 420050,
+      "outstanding": 94315,
+      "createdAt": "2020-11-07",
+      "updatedAt": "2025-09-21",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0013",
+      "name": "HCL Technologies",
+      "contactPerson": "Suresh Sharma",
+      "email": "accounts@hcltechnologies.com",
+      "phone": "+91 9453403760",
+      "pan": "VQHHB9143V",
+      "gstin": "284DJ9L5NOPAZ6",
+      "type": "company",
+      "status": "prospect",
+      "address": "364, Business Park, Lucknow, Punjab - 380847",
+      "city": "Lucknow",
+      "state": "Punjab",
+      "pincode": "504609",
+      "assignedTo": "EMP-0010",
+      "services": [
+        "ITR Filing",
+        "TDS Return",
+        "GST Filing"
+      ],
+      "revenue": 389559,
+      "outstanding": 5493,
+      "createdAt": "2023-07-09",
+      "updatedAt": "2024-11-11",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0014",
+      "name": "Asian Paints",
+      "contactPerson": "Shweta Shah",
+      "email": "accounts@asianpaints.com",
+      "phone": "+91 9569964489",
+      "pan": "MDSCV2732V",
+      "gstin": "246U64D3ML5KZ9",
+      "type": "company",
+      "status": "active",
+      "address": "75, Business Park, Lucknow, West Bengal - 109300",
+      "city": "Lucknow",
+      "state": "West Bengal",
+      "pincode": "451971",
+      "assignedTo": "EMP-0003",
+      "services": [
+        "Audit"
+      ],
+      "revenue": 295898,
+      "outstanding": 98298,
+      "createdAt": "2022-08-26",
+      "updatedAt": "2024-05-15",
+      "notes": "Client onboarded for Company Registration services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0015",
+      "name": "Maruti Suzuki",
+      "contactPerson": "Priya Chopra",
+      "email": "accounts@marutisuzuki.com",
+      "phone": "+91 9575096628",
+      "pan": "VJMHW3532V",
+      "gstin": "12JUX54WVX2GZ4",
+      "type": "individual",
+      "status": "active",
+      "address": "490, Tech Park, Hyderabad, West Bengal - 192355",
+      "city": "Hyderabad",
+      "state": "West Bengal",
+      "pincode": "828844",
+      "assignedTo": "EMP-0007",
+      "services": [
+        "GST Filing"
+      ],
+      "revenue": 171251,
+      "outstanding": 48356,
+      "createdAt": "2022-06-05",
+      "updatedAt": "2022-12-25",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0016",
+      "name": "Axis Bank",
+      "contactPerson": "Kavita Singh",
+      "email": "accounts@axisbank.com",
+      "phone": "+91 8943787931",
+      "pan": "OQCRJ8840Q",
+      "gstin": "0589EQVPTX9JZ2",
+      "type": "company",
+      "status": "inactive",
+      "address": "102, Commercial Complex, Pune, Uttar Pradesh - 725137",
+      "city": "Pune",
+      "state": "Uttar Pradesh",
+      "pincode": "851811",
+      "assignedTo": "EMP-0019",
+      "services": [
+        "ITR Filing",
+        "GST Registration",
+        "Audit",
+        "ROC Filing"
+      ],
+      "revenue": 418326,
+      "outstanding": 4970,
+      "createdAt": "2020-02-06",
+      "updatedAt": "2025-03-28",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0017",
+      "name": "Kotak Mahindra Bank",
+      "contactPerson": "Anita Kumar",
+      "email": "accounts@kotakmahindrabank.com",
+      "phone": "+91 9460245067",
+      "pan": "ULSIK4988Q",
+      "gstin": "07V2LG5865Z9Z7",
+      "type": "company",
+      "status": "active",
+      "address": "443, Commercial Complex, Delhi, Karnataka - 996187",
+      "city": "Delhi",
+      "state": "Karnataka",
+      "pincode": "709475",
+      "assignedTo": "EMP-0005",
+      "services": [
+        "Company Registration",
+        "GST Registration",
+        "GST Filing"
+      ],
+      "revenue": 468622,
+      "outstanding": 84786,
+      "createdAt": "2021-04-03",
+      "updatedAt": "2026-07-04",
+      "notes": "Client onboarded for Audit services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0018",
+      "name": "Bajaj Finance",
+      "contactPerson": "Shweta Kumar",
+      "email": "accounts@bajajfinance.com",
+      "phone": "+91 9556772189",
+      "pan": "UGMOP5744D",
+      "gstin": "19K68JSZTQ7YZ2",
+      "type": "individual",
+      "status": "active",
+      "address": "160, Business Park, Indore, Uttar Pradesh - 251853",
+      "city": "Indore",
+      "state": "Uttar Pradesh",
+      "pincode": "110971",
+      "assignedTo": "EMP-0009",
+      "services": [
+        "TDS Return",
+        "Company Registration"
+      ],
+      "revenue": 153579,
+      "outstanding": 17880,
+      "createdAt": "2024-08-21",
+      "updatedAt": "2024-12-14",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0019",
+      "name": "Titan Company",
+      "contactPerson": "Deepa Joshi",
+      "email": "accounts@titancompany.com",
+      "phone": "+91 9526530381",
+      "pan": "DGFEO4209R",
+      "gstin": "08ZKIZMPTYQ9Z6",
+      "type": "company",
+      "status": "inactive",
+      "address": "403, Industrial Area, Hyderabad, Kerala - 932102",
+      "city": "Hyderabad",
+      "state": "Kerala",
+      "pincode": "885775",
+      "assignedTo": "EMP-0005",
+      "services": [
+        "ROC Filing",
+        "Audit"
+      ],
+      "revenue": 508793,
+      "outstanding": 51300,
+      "createdAt": "2021-06-19",
+      "updatedAt": "2021-07-03",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0020",
+      "name": "UltraTech Cement",
+      "contactPerson": "Karthik Iyer",
+      "email": "accounts@ultratechcement.com",
+      "phone": "+91 9196583099",
+      "pan": "EHHXZ9073F",
+      "gstin": "09OLKDO0EU1FZ4",
+      "type": "company",
+      "status": "active",
+      "address": "55, Industrial Area, Kolkata, Punjab - 609633",
+      "city": "Kolkata",
+      "state": "Punjab",
+      "pincode": "744958",
+      "assignedTo": "EMP-0010",
+      "services": [
+        "ITR Filing",
+        "Tax Planning",
+        "Bookkeeping"
+      ],
+      "revenue": 374300,
+      "outstanding": 42755,
+      "createdAt": "2023-02-17",
+      "updatedAt": "2025-07-23",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0021",
+      "name": "Nestle India",
+      "contactPerson": "Anita Malhotra",
+      "email": "accounts@nestleindia.com",
+      "phone": "+91 9693796753",
+      "pan": "HSDWO5555X",
+      "gstin": "06UEP4E2R861Z0",
+      "type": "individual",
+      "status": "active",
+      "address": "472, Industrial Area, Chennai, Karnataka - 792205",
+      "city": "Chennai",
+      "state": "Karnataka",
+      "pincode": "871879",
+      "assignedTo": "EMP-0011",
+      "services": [
+        "GST Registration",
+        "Trademark Filing",
+        "Company Registration"
+      ],
+      "revenue": 193570,
+      "outstanding": 1151,
+      "createdAt": "2021-10-17",
+      "updatedAt": "2025-11-23",
+      "notes": "Client onboarded for Trademark Filing services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0022",
+      "name": "Power Grid Corp",
+      "contactPerson": "Rajesh Mehta",
+      "email": "accounts@powergridcorp.com",
+      "phone": "+91 9676903309",
+      "pan": "WDVBG3857Z",
+      "gstin": "19WNJXL4289AZ6",
+      "type": "company",
+      "status": "active",
+      "address": "79, Business Park, Kolkata, Gujarat - 803076",
+      "city": "Kolkata",
+      "state": "Gujarat",
+      "pincode": "533197",
+      "assignedTo": "EMP-0001",
+      "services": [
+        "Trademark Filing",
+        "Bookkeeping",
+        "Bookkeeping",
+        "TDS Return"
+      ],
+      "revenue": 223839,
+      "outstanding": 91633,
+      "createdAt": "2023-08-10",
+      "updatedAt": "2024-02-01",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0023",
+      "name": "NTPC",
+      "contactPerson": "Naveen Gupta",
+      "email": "accounts@ntpc.com",
+      "phone": "+91 9567961170",
+      "pan": "KWRHD6366E",
+      "gstin": "02X15YF57X39Z5",
+      "type": "company",
+      "status": "prospect",
+      "address": "155, Industrial Area, Indore, Gujarat - 430989",
+      "city": "Indore",
+      "state": "Gujarat",
+      "pincode": "605517",
+      "assignedTo": "EMP-0003",
+      "services": [
+        "Tax Planning",
+        "Audit",
+        "ROC Filing"
+      ],
+      "revenue": 78229,
+      "outstanding": 44434,
+      "createdAt": "2021-06-22",
+      "updatedAt": "2026-01-11",
+      "notes": "Client onboarded for TDS Return services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0024",
+      "name": "Coal India",
+      "contactPerson": "Arun Sharma",
+      "email": "accounts@coalindia.com",
+      "phone": "+91 9580903141",
+      "pan": "VSVML9120Z",
+      "gstin": "221V7QYSM9BIZ7",
+      "type": "individual",
+      "status": "active",
+      "address": "313, Tech Park, Pune, Tamil Nadu - 584544",
+      "city": "Pune",
+      "state": "Tamil Nadu",
+      "pincode": "908651",
+      "assignedTo": "EMP-0008",
+      "services": [
+        "Audit",
+        "TDS Return",
+        "ROC Filing",
+        "ITR Filing"
+      ],
+      "revenue": 150481,
+      "outstanding": 40331,
+      "createdAt": "2022-02-27",
+      "updatedAt": "2024-05-15",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0025",
+      "name": "ONGC",
+      "contactPerson": "Manoj Reddy",
+      "email": "accounts@ongc.com",
+      "phone": "+91 9777727463",
+      "pan": "URIJD2532E",
+      "gstin": "12IRM3NTA646Z1",
+      "type": "company",
+      "status": "active",
+      "address": "292, Business Park, Lucknow, Telangana - 542711",
+      "city": "Lucknow",
+      "state": "Telangana",
+      "pincode": "581579",
+      "assignedTo": "EMP-0025",
+      "services": [
+        "GST Registration",
+        "ITR Filing"
+      ],
+      "revenue": 250458,
+      "outstanding": 90151,
+      "createdAt": "2024-02-26",
+      "updatedAt": "2024-10-08",
+      "notes": "Client onboarded for Company Registration services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0026",
+      "name": "SBI",
+      "contactPerson": "Suresh Menon",
+      "email": "accounts@sbi.com",
+      "phone": "+91 9671617928",
+      "pan": "PATXD9772K",
+      "gstin": "11AV8PFRRXRFZ7",
+      "type": "company",
+      "status": "active",
+      "address": "71, Commercial Complex, Lucknow, Madhya Pradesh - 210712",
+      "city": "Lucknow",
+      "state": "Madhya Pradesh",
+      "pincode": "150932",
+      "assignedTo": "EMP-0004",
+      "services": [
+        "Trademark Filing",
+        "GST Filing",
+        "Audit"
+      ],
+      "revenue": 290438,
+      "outstanding": 33447,
+      "createdAt": "2024-07-08",
+      "updatedAt": "2024-12-21",
+      "notes": "Client onboarded for GST Filing services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0027",
+      "name": "ITC Ltd",
+      "contactPerson": "Amit Shah",
+      "email": "accounts@itcltd.com",
+      "phone": "+91 9812037140",
+      "pan": "CBJGN8917I",
+      "gstin": "23B7T6KV87U0Z0",
+      "type": "individual",
+      "status": "active",
+      "address": "87, Industrial Area, Ahmedabad, Delhi - 883314",
+      "city": "Ahmedabad",
+      "state": "Delhi",
+      "pincode": "215350",
+      "assignedTo": "EMP-0015",
+      "services": [
+        "ITR Filing",
+        "Company Registration",
+        "Company Registration",
+        "ROC Filing"
+      ],
+      "revenue": 315092,
+      "outstanding": 20043,
+      "createdAt": "2021-12-22",
+      "updatedAt": "2026-02-04",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0028",
+      "name": "Hindustan Unilever",
+      "contactPerson": "Meera Sharma",
+      "email": "accounts@hindustanunilever.com",
+      "phone": "+91 8850543199",
+      "pan": "VLTFC1214B",
+      "gstin": "183GY09YO462Z9",
+      "type": "company",
+      "status": "active",
+      "address": "198, Tech Park, Lucknow, Tamil Nadu - 458335",
+      "city": "Lucknow",
+      "state": "Tamil Nadu",
+      "pincode": "630859",
+      "assignedTo": "EMP-0002",
+      "services": [
+        "Audit"
+      ],
+      "revenue": 440692,
+      "outstanding": 86655,
+      "createdAt": "2023-04-02",
+      "updatedAt": "2023-06-01",
+      "notes": "Client onboarded for GST Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0029",
+      "name": "Britannia Industries",
+      "contactPerson": "Sneha Agarwal",
+      "email": "accounts@britanniaindustries.com",
+      "phone": "+91 9847532700",
+      "pan": "PVZOV8508F",
+      "gstin": "262NZ43QA5D1Z3",
+      "type": "company",
+      "status": "active",
+      "address": "394, Commercial Complex, Nagpur, Uttar Pradesh - 428487",
+      "city": "Nagpur",
+      "state": "Uttar Pradesh",
+      "pincode": "191772",
+      "assignedTo": "EMP-0022",
+      "services": [
+        "GST Registration",
+        "Bookkeeping",
+        "TDS Return"
+      ],
+      "revenue": 484122,
+      "outstanding": 68734,
+      "createdAt": "2021-06-29",
+      "updatedAt": "2021-10-15",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0030",
+      "name": "Godrej Consumer",
+      "contactPerson": "Deepa Malhotra",
+      "email": "accounts@godrejconsumer.com",
+      "phone": "+91 9032087793",
+      "pan": "ABJIW9912Y",
+      "gstin": "09PEFNZ88A47Z4",
+      "type": "company",
+      "status": "active",
+      "address": "274, Tech Park, Bangalore, Punjab - 962534",
+      "city": "Bangalore",
+      "state": "Punjab",
+      "pincode": "469213",
+      "assignedTo": "EMP-0002",
+      "services": [
+        "Trademark Filing",
+        "GST Filing"
+      ],
+      "revenue": 204683,
+      "outstanding": 6689,
+      "createdAt": "2022-03-25",
+      "updatedAt": "2024-03-03",
+      "notes": "Client onboarded for Audit services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0031",
+      "name": "Pidilite Industries",
+      "contactPerson": "Arun Malhotra",
+      "email": "accounts@pidiliteindustries.com",
+      "phone": "+91 8937282442",
+      "pan": "KRWTE7686D",
+      "gstin": "01XPB3D9F8GNZ8",
+      "type": "company",
+      "status": "active",
+      "address": "34, Industrial Area, Nagpur, Kerala - 441935",
+      "city": "Nagpur",
+      "state": "Kerala",
+      "pincode": "419091",
+      "assignedTo": "EMP-0005",
+      "services": [
+        "ROC Filing",
+        "GST Filing"
+      ],
+      "revenue": 358425,
+      "outstanding": 8422,
+      "createdAt": "2022-09-01",
+      "updatedAt": "2024-10-29",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0032",
+      "name": "Dabur India",
+      "contactPerson": "Vikram Verma",
+      "email": "accounts@daburindia.com",
+      "phone": "+91 9036322188",
+      "pan": "ICYHZ2171B",
+      "gstin": "14QJMPA7GUVXZ2",
+      "type": "company",
+      "status": "active",
+      "address": "326, Commercial Complex, Bangalore, Punjab - 113554",
+      "city": "Bangalore",
+      "state": "Punjab",
+      "pincode": "960643",
+      "assignedTo": "EMP-0004",
+      "services": [
+        "Company Registration",
+        "Tax Planning"
+      ],
+      "revenue": 174116,
+      "outstanding": 26058,
+      "createdAt": "2021-07-18",
+      "updatedAt": "2022-04-01",
+      "notes": "Client onboarded for Company Registration services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0033",
+      "name": "Berger Paints",
+      "contactPerson": "Karthik Chopra",
+      "email": "accounts@bergerpaints.com",
+      "phone": "+91 8999481845",
+      "pan": "NVNSG6246B",
+      "gstin": "14ZLQDIUOB59Z2",
+      "type": "company",
+      "status": "active",
+      "address": "448, Tech Park, Ahmedabad, Karnataka - 423180",
+      "city": "Ahmedabad",
+      "state": "Karnataka",
+      "pincode": "770619",
+      "assignedTo": "EMP-0003",
+      "services": [
+        "Trademark Filing",
+        "ITR Filing"
+      ],
+      "revenue": 379126,
+      "outstanding": 40682,
+      "createdAt": "2023-02-04",
+      "updatedAt": "2024-08-12",
+      "notes": "Client onboarded for Trademark Filing services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0034",
+      "name": "Cipla",
+      "contactPerson": "Kavita Singh",
+      "email": "accounts@cipla.com",
+      "phone": "+91 9718012339",
+      "pan": "RGDDR8073L",
+      "gstin": "01UWT42678WWZ4",
+      "type": "company",
+      "status": "prospect",
+      "address": "30, Tech Park, Jaipur, West Bengal - 944019",
+      "city": "Jaipur",
+      "state": "West Bengal",
+      "pincode": "255596",
+      "assignedTo": "EMP-0019",
+      "services": [
+        "Trademark Filing",
+        "Audit",
+        "Bookkeeping",
+        "Company Registration"
+      ],
+      "revenue": 64553,
+      "outstanding": 87427,
+      "createdAt": "2020-07-31",
+      "updatedAt": "2025-01-24",
+      "notes": "Client onboarded for Audit services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0035",
+      "name": "Dr Reddys Labs",
+      "contactPerson": "Sanjay Gupta",
+      "email": "accounts@drreddyslabs.com",
+      "phone": "+91 8951201849",
+      "pan": "YYDBZ2014C",
+      "gstin": "21QR8FZ4AW1SZ2",
+      "type": "company",
+      "status": "active",
+      "address": "152, Commercial Complex, Delhi, Gujarat - 595271",
+      "city": "Delhi",
+      "state": "Gujarat",
+      "pincode": "516606",
+      "assignedTo": "EMP-0019",
+      "services": [
+        "GST Filing",
+        "GST Registration",
+        "TDS Return",
+        "GST Registration"
+      ],
+      "revenue": 361340,
+      "outstanding": 33966,
+      "createdAt": "2020-08-10",
+      "updatedAt": "2022-04-19",
+      "notes": "Client onboarded for Company Registration services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0036",
+      "name": "Divis Laboratories",
+      "contactPerson": "Divya Joshi",
+      "email": "accounts@divislaboratories.com",
+      "phone": "+91 9546225189",
+      "pan": "EEKFG4514A",
+      "gstin": "16LQMO4QX0DZZ2",
+      "type": "individual",
+      "status": "active",
+      "address": "249, Tech Park, Delhi, Kerala - 657020",
+      "city": "Delhi",
+      "state": "Kerala",
+      "pincode": "521374",
+      "assignedTo": "EMP-0016",
+      "services": [
+        "GST Registration",
+        "Audit",
+        "Tax Planning"
+      ],
+      "revenue": 429676,
+      "outstanding": 52037,
+      "createdAt": "2022-03-01",
+      "updatedAt": "2025-01-15",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0037",
+      "name": "Apollo Hospitals",
+      "contactPerson": "Shweta Chopra",
+      "email": "accounts@apollohospitals.com",
+      "phone": "+91 9897187385",
+      "pan": "AVLPS1870H",
+      "gstin": "01ATAHHMGTOCZ3",
+      "type": "individual",
+      "status": "active",
+      "address": "71, Commercial Complex, Kolkata, Tamil Nadu - 733166",
+      "city": "Kolkata",
+      "state": "Tamil Nadu",
+      "pincode": "222960",
+      "assignedTo": "EMP-0014",
+      "services": [
+        "GST Registration",
+        "Trademark Filing"
+      ],
+      "revenue": 527872,
+      "outstanding": 35016,
+      "createdAt": "2023-10-22",
+      "updatedAt": "2025-10-23",
+      "notes": "Client onboarded for ITR Filing services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0038",
+      "name": "Zomato",
+      "contactPerson": "Arun Gupta",
+      "email": "accounts@zomato.com",
+      "phone": "+91 9620428981",
+      "pan": "MWAAX3277M",
+      "gstin": "05BP93WXHG5OZ2",
+      "type": "individual",
+      "status": "active",
+      "address": "312, Commercial Complex, Bangalore, Maharashtra - 136492",
+      "city": "Bangalore",
+      "state": "Maharashtra",
+      "pincode": "101948",
+      "assignedTo": "EMP-0005",
+      "services": [
+        "Trademark Filing",
+        "GST Registration",
+        "Audit",
+        "ITR Filing"
+      ],
+      "revenue": 288756,
+      "outstanding": 66259,
+      "createdAt": "2024-07-13",
+      "updatedAt": "2025-05-10",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0039",
+      "name": "Paytm",
+      "contactPerson": "Vikram Desai",
+      "email": "accounts@paytm.com",
+      "phone": "+91 8887761369",
+      "pan": "JENSN8443C",
+      "gstin": "16GP26Y516WKZ5",
+      "type": "company",
+      "status": "active",
+      "address": "118, Tech Park, Jaipur, Gujarat - 327073",
+      "city": "Jaipur",
+      "state": "Gujarat",
+      "pincode": "579836",
+      "assignedTo": "EMP-0024",
+      "services": [
+        "Trademark Filing"
+      ],
+      "revenue": 449473,
+      "outstanding": 9607,
+      "createdAt": "2020-11-23",
+      "updatedAt": "2024-09-22",
+      "notes": "Client onboarded for Trademark Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0040",
+      "name": "Nykaa",
+      "contactPerson": "Rajesh Malhotra",
+      "email": "accounts@nykaa.com",
+      "phone": "+91 9867577451",
+      "pan": "LKQLW6636V",
+      "gstin": "01X8XHUR7099Z6",
+      "type": "individual",
+      "status": "active",
+      "address": "91, Tech Park, Pune, Tamil Nadu - 723759",
+      "city": "Pune",
+      "state": "Tamil Nadu",
+      "pincode": "436225",
+      "assignedTo": "EMP-0002",
+      "services": [
+        "Audit",
+        "Trademark Filing"
+      ],
+      "revenue": 238237,
+      "outstanding": 74170,
+      "createdAt": "2024-03-22",
+      "updatedAt": "2024-05-26",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0041",
+      "name": "Policybazaar",
+      "contactPerson": "Vikram Rao",
+      "email": "accounts@policybazaar.com",
+      "phone": "+91 9532653757",
+      "pan": "UKKLN1621U",
+      "gstin": "30XZIUW6CXRAZ9",
+      "type": "individual",
+      "status": "inactive",
+      "address": "51, Business Park, Delhi, Madhya Pradesh - 703268",
+      "city": "Delhi",
+      "state": "Madhya Pradesh",
+      "pincode": "124302",
+      "assignedTo": "EMP-0015",
+      "services": [
+        "GST Filing",
+        "Audit"
+      ],
+      "revenue": 459097,
+      "outstanding": 26599,
+      "createdAt": "2021-12-05",
+      "updatedAt": "2023-05-31",
+      "notes": "Client onboarded for GST Filing services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0042",
+      "name": "Delhivery",
+      "contactPerson": "Priya Gupta",
+      "email": "accounts@delhivery.com",
+      "phone": "+91 9764077735",
+      "pan": "ABSZI2024H",
+      "gstin": "20G8QIPR92GMZ1",
+      "type": "individual",
+      "status": "active",
+      "address": "244, Tech Park, Nagpur, West Bengal - 151001",
+      "city": "Nagpur",
+      "state": "West Bengal",
+      "pincode": "304277",
+      "assignedTo": "EMP-0007",
+      "services": [
+        "Audit",
+        "Trademark Filing",
+        "TDS Return"
+      ],
+      "revenue": 231379,
+      "outstanding": 3406,
+      "createdAt": "2023-02-13",
+      "updatedAt": "2023-05-31",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0043",
+      "name": "Mphasis",
+      "contactPerson": "Manoj Sharma",
+      "email": "accounts@mphasis.com",
+      "phone": "+91 9737833453",
+      "pan": "MCKPZ3190B",
+      "gstin": "23DDR61KW1P6Z7",
+      "type": "company",
+      "status": "inactive",
+      "address": "4, Tech Park, Pune, Delhi - 579068",
+      "city": "Pune",
+      "state": "Delhi",
+      "pincode": "619917",
+      "assignedTo": "EMP-0008",
+      "services": [
+        "ITR Filing",
+        "Audit",
+        "GST Filing"
+      ],
+      "revenue": 243784,
+      "outstanding": 67094,
+      "createdAt": "2022-12-27",
+      "updatedAt": "2023-01-28",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0044",
+      "name": "Persistent Systems",
+      "contactPerson": "Vikram Shah",
+      "email": "accounts@persistentsystems.com",
+      "phone": "+91 8986163434",
+      "pan": "VREEO1185F",
+      "gstin": "05TAA66QYGPSZ6",
+      "type": "company",
+      "status": "active",
+      "address": "442, Tech Park, Indore, Maharashtra - 526714",
+      "city": "Indore",
+      "state": "Maharashtra",
+      "pincode": "171649",
+      "assignedTo": "EMP-0010",
+      "services": [
+        "ITR Filing",
+        "ROC Filing",
+        "ROC Filing"
+      ],
+      "revenue": 370492,
+      "outstanding": 36512,
+      "createdAt": "2023-08-03",
+      "updatedAt": "2024-04-15",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0045",
+      "name": "Coforge",
+      "contactPerson": "Arun Iyer",
+      "email": "accounts@coforge.com",
+      "phone": "+91 9031923880",
+      "pan": "FNPBB6992D",
+      "gstin": "19432YF1U462Z5",
+      "type": "company",
+      "status": "active",
+      "address": "293, Business Park, Kochi, Delhi - 228566",
+      "city": "Kochi",
+      "state": "Delhi",
+      "pincode": "425072",
+      "assignedTo": "EMP-0003",
+      "services": [
+        "Trademark Filing",
+        "Trademark Filing",
+        "Tax Planning"
+      ],
+      "revenue": 231856,
+      "outstanding": 27882,
+      "createdAt": "2021-01-18",
+      "updatedAt": "2023-12-22",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0046",
+      "name": "LTIMindtree",
+      "contactPerson": "Suresh Mehta",
+      "email": "accounts@ltimindtree.com",
+      "phone": "+91 9758818238",
+      "pan": "PZOUH1648Q",
+      "gstin": "06D5UCEZ70B4Z4",
+      "type": "individual",
+      "status": "active",
+      "address": "245, Commercial Complex, Chandigarh, Punjab - 488052",
+      "city": "Chandigarh",
+      "state": "Punjab",
+      "pincode": "359909",
+      "assignedTo": "EMP-0006",
+      "services": [
+        "Audit",
+        "GST Registration",
+        "Audit"
+      ],
+      "revenue": 235550,
+      "outstanding": 84141,
+      "createdAt": "2020-04-17",
+      "updatedAt": "2020-11-21",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0047",
+      "name": "Tech Mahindra",
+      "contactPerson": "Manoj Nair",
+      "email": "accounts@techmahindra.com",
+      "phone": "+91 9143259417",
+      "pan": "WPGYN1707Q",
+      "gstin": "14GLV3IG5T13Z2",
+      "type": "individual",
+      "status": "active",
+      "address": "311, Industrial Area, Surat, Kerala - 165865",
+      "city": "Surat",
+      "state": "Kerala",
+      "pincode": "797371",
+      "assignedTo": "EMP-0011",
+      "services": [
+        "ROC Filing",
+        "GST Filing",
+        "ITR Filing"
+      ],
+      "revenue": 509477,
+      "outstanding": 44826,
+      "createdAt": "2025-05-20",
+      "updatedAt": "2025-08-02",
+      "notes": "Client onboarded for TDS Return services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0048",
+      "name": "Birla Soft",
+      "contactPerson": "Priya Verma",
+      "email": "accounts@birlasoft.com",
+      "phone": "+91 8832801849",
+      "pan": "OQHRZ8118S",
+      "gstin": "19Z323SJJIPRZ4",
+      "type": "company",
+      "status": "active",
+      "address": "468, Tech Park, Indore, Telangana - 757686",
+      "city": "Indore",
+      "state": "Telangana",
+      "pincode": "417410",
+      "assignedTo": "EMP-0018",
+      "services": [
+        "ITR Filing",
+        "GST Registration",
+        "GST Registration"
+      ],
+      "revenue": 494303,
+      "outstanding": 9140,
+      "createdAt": "2024-03-21",
+      "updatedAt": "2025-06-10",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0049",
+      "name": "Cyient",
+      "contactPerson": "Amit Nair",
+      "email": "accounts@cyient.com",
+      "phone": "+91 9661142330",
+      "pan": "OYFUE1566V",
+      "gstin": "27SZ8Z2TS6VWZ7",
+      "type": "company",
+      "status": "active",
+      "address": "318, Business Park, Bangalore, Karnataka - 270635",
+      "city": "Bangalore",
+      "state": "Karnataka",
+      "pincode": "568891",
+      "assignedTo": "EMP-0019",
+      "services": [
+        "Tax Planning"
+      ],
+      "revenue": 106271,
+      "outstanding": 44306,
+      "createdAt": "2020-06-30",
+      "updatedAt": "2022-08-23",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0050",
+      "name": "Zensar Technologies",
+      "contactPerson": "Karthik Pillai",
+      "email": "accounts@zensartechnologies.com",
+      "phone": "+91 8927109535",
+      "pan": "SPPQQ2232C",
+      "gstin": "24PUZMP7AHUWZ8",
+      "type": "individual",
+      "status": "active",
+      "address": "254, Tech Park, Lucknow, Madhya Pradesh - 411456",
+      "city": "Lucknow",
+      "state": "Madhya Pradesh",
+      "pincode": "787224",
+      "assignedTo": "EMP-0021",
+      "services": [
+        "Company Registration",
+        "GST Filing",
+        "Audit",
+        "Audit"
+      ],
+      "revenue": 529363,
+      "outstanding": 52996,
+      "createdAt": "2023-07-16",
+      "updatedAt": "2025-05-01",
+      "notes": "Client onboarded for GST Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0051",
+      "name": "RPG Enterprises",
+      "contactPerson": "Karthik Gupta",
+      "email": "accounts@rpgenterprises.com",
+      "phone": "+91 9033743474",
+      "pan": "OTEDI7827G",
+      "gstin": "23EC7YPUFWSEZ9",
+      "type": "individual",
+      "status": "active",
+      "address": "131, Business Park, Surat, Karnataka - 399419",
+      "city": "Surat",
+      "state": "Karnataka",
+      "pincode": "306204",
+      "assignedTo": "EMP-0023",
+      "services": [
+        "ITR Filing",
+        "GST Filing"
+      ],
+      "revenue": 379081,
+      "outstanding": 90403,
+      "createdAt": "2024-05-18",
+      "updatedAt": "2024-11-14",
+      "notes": "Client onboarded for Trademark Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0052",
+      "name": "Voltas",
+      "contactPerson": "Arun Rao",
+      "email": "accounts@voltas.com",
+      "phone": "+91 9480577803",
+      "pan": "MZKCO4892Z",
+      "gstin": "206NATS09PW5Z7",
+      "type": "individual",
+      "status": "active",
+      "address": "209, Commercial Complex, Kochi, Madhya Pradesh - 205524",
+      "city": "Kochi",
+      "state": "Madhya Pradesh",
+      "pincode": "384884",
+      "assignedTo": "EMP-0024",
+      "services": [
+        "GST Filing",
+        "Company Registration",
+        "Company Registration",
+        "TDS Return"
+      ],
+      "revenue": 485279,
+      "outstanding": 5356,
+      "createdAt": "2023-11-17",
+      "updatedAt": "2025-11-09",
+      "notes": "Client onboarded for Audit services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0053",
+      "name": "Blue Star",
+      "contactPerson": "Shweta Verma",
+      "email": "accounts@bluestar.com",
+      "phone": "+91 8946356661",
+      "pan": "PEEXC9111J",
+      "gstin": "10OV1IEMMOGBZ1",
+      "type": "company",
+      "status": "inactive",
+      "address": "358, Commercial Complex, Nagpur, Uttar Pradesh - 676263",
+      "city": "Nagpur",
+      "state": "Uttar Pradesh",
+      "pincode": "292029",
+      "assignedTo": "EMP-0024",
+      "services": [
+        "ROC Filing"
+      ],
+      "revenue": 508152,
+      "outstanding": 24951,
+      "createdAt": "2024-06-04",
+      "updatedAt": "2026-05-18",
+      "notes": "Client onboarded for TDS Return services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0054",
+      "name": "Crompton Greaves",
+      "contactPerson": "Anita Menon",
+      "email": "accounts@cromptongreaves.com",
+      "phone": "+91 9517860386",
+      "pan": "WQCAX7687T",
+      "gstin": "072GXW6TLDQAZ9",
+      "type": "individual",
+      "status": "active",
+      "address": "365, Industrial Area, Jaipur, Kerala - 909320",
+      "city": "Jaipur",
+      "state": "Kerala",
+      "pincode": "962537",
+      "assignedTo": "EMP-0008",
+      "services": [
+        "ROC Filing",
+        "ITR Filing",
+        "ITR Filing"
+      ],
+      "revenue": 436207,
+      "outstanding": 50431,
+      "createdAt": "2021-10-19",
+      "updatedAt": "2022-06-16",
+      "notes": "Client onboarded for Company Registration services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0055",
+      "name": "Havells India",
+      "contactPerson": "Kavita Kumar",
+      "email": "accounts@havellsindia.com",
+      "phone": "+91 9093411482",
+      "pan": "NMCWN6653G",
+      "gstin": "104QG1OUISA7Z4",
+      "type": "individual",
+      "status": "active",
+      "address": "404, Tech Park, Delhi, Telangana - 160689",
+      "city": "Delhi",
+      "state": "Telangana",
+      "pincode": "890508",
+      "assignedTo": "EMP-0005",
+      "services": [
+        "Bookkeeping",
+        "Company Registration"
+      ],
+      "revenue": 541986,
+      "outstanding": 72552,
+      "createdAt": "2025-06-14",
+      "updatedAt": "2026-06-01",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0056",
+      "name": "Polycab India",
+      "contactPerson": "Arun Mehta",
+      "email": "accounts@polycabindia.com",
+      "phone": "+91 9018969474",
+      "pan": "QUISV5444V",
+      "gstin": "04GP0L2042CJZ9",
+      "type": "company",
+      "status": "prospect",
+      "address": "361, Commercial Complex, Chennai, Karnataka - 676066",
+      "city": "Chennai",
+      "state": "Karnataka",
+      "pincode": "509702",
+      "assignedTo": "EMP-0021",
+      "services": [
+        "Audit",
+        "Company Registration",
+        "TDS Return"
+      ],
+      "revenue": 478176,
+      "outstanding": 89750,
+      "createdAt": "2022-06-17",
+      "updatedAt": "2025-02-12",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0057",
+      "name": "KEI Industries",
+      "contactPerson": "Arun Iyer",
+      "email": "accounts@keiindustries.com",
+      "phone": "+91 9076943941",
+      "pan": "KOPNO9016X",
+      "gstin": "09WWPIJ1LT5SZ2",
+      "type": "individual",
+      "status": "active",
+      "address": "214, Commercial Complex, Indore, Delhi - 571965",
+      "city": "Indore",
+      "state": "Delhi",
+      "pincode": "712894",
+      "assignedTo": "EMP-0017",
+      "services": [
+        "ROC Filing",
+        "Audit"
+      ],
+      "revenue": 234633,
+      "outstanding": 58683,
+      "createdAt": "2023-05-20",
+      "updatedAt": "2026-04-28",
+      "notes": "Client onboarded for Audit services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0058",
+      "name": "Amber Enterprises",
+      "contactPerson": "Manoj Patel",
+      "email": "accounts@amberenterprises.com",
+      "phone": "+91 9092826311",
+      "pan": "CFRBD6919M",
+      "gstin": "147XS8NE994DZ5",
+      "type": "company",
+      "status": "active",
+      "address": "7, Business Park, Surat, Tamil Nadu - 854076",
+      "city": "Surat",
+      "state": "Tamil Nadu",
+      "pincode": "454423",
+      "assignedTo": "EMP-0024",
+      "services": [
+        "Company Registration"
+      ],
+      "revenue": 118852,
+      "outstanding": 91658,
+      "createdAt": "2023-05-19",
+      "updatedAt": "2024-05-18",
+      "notes": "Client onboarded for Company Registration services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0059",
+      "name": "Dixon Technologies",
+      "contactPerson": "Meera Chopra",
+      "email": "accounts@dixontechnologies.com",
+      "phone": "+91 9339196328",
+      "pan": "ATFJX2266T",
+      "gstin": "24F6VFWDQ9UWZ8",
+      "type": "individual",
+      "status": "active",
+      "address": "8, Business Park, Kochi, Punjab - 885084",
+      "city": "Kochi",
+      "state": "Punjab",
+      "pincode": "837255",
+      "assignedTo": "EMP-0017",
+      "services": [
+        "GST Registration",
+        "Bookkeeping",
+        "Tax Planning"
+      ],
+      "revenue": 498124,
+      "outstanding": 80558,
+      "createdAt": "2024-06-09",
+      "updatedAt": "2024-06-20",
+      "notes": "Client onboarded for ITR Filing services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0060",
+      "name": "Apar Industries",
+      "contactPerson": "Shweta Bhat",
+      "email": "accounts@aparindustries.com",
+      "phone": "+91 9558231566",
+      "pan": "KCKXC8795J",
+      "gstin": "25MCMULHC4EMZ4",
+      "type": "company",
+      "status": "active",
+      "address": "19, Industrial Area, Chennai, Madhya Pradesh - 247416",
+      "city": "Chennai",
+      "state": "Madhya Pradesh",
+      "pincode": "184916",
+      "assignedTo": "EMP-0020",
+      "services": [
+        "Company Registration",
+        "Tax Planning",
+        "TDS Return",
+        "Audit"
+      ],
+      "revenue": 304259,
+      "outstanding": 36172,
+      "createdAt": "2020-06-14",
+      "updatedAt": "2025-03-15",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0061",
+      "name": "Shree Cement",
+      "contactPerson": "Deepa Chopra",
+      "email": "accounts@shreecement.com",
+      "phone": "+91 8914964048",
+      "pan": "HEHCN9714N",
+      "gstin": "18UOIW1ADT69Z6",
+      "type": "company",
+      "status": "active",
+      "address": "218, Tech Park, Indore, West Bengal - 584056",
+      "city": "Indore",
+      "state": "West Bengal",
+      "pincode": "747541",
+      "assignedTo": "EMP-0006",
+      "services": [
+        "Tax Planning",
+        "ROC Filing"
+      ],
+      "revenue": 102075,
+      "outstanding": 91521,
+      "createdAt": "2020-01-08",
+      "updatedAt": "2022-01-27",
+      "notes": "Client onboarded for GST Filing services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0062",
+      "name": "Ambuja Cements",
+      "contactPerson": "Amit Reddy",
+      "email": "accounts@ambujacements.com",
+      "phone": "+91 9147280140",
+      "pan": "HWFXC8339Z",
+      "gstin": "10YU4XD4N7TFZ0",
+      "type": "company",
+      "status": "active",
+      "address": "154, Tech Park, Jaipur, Punjab - 269443",
+      "city": "Jaipur",
+      "state": "Punjab",
+      "pincode": "884126",
+      "assignedTo": "EMP-0008",
+      "services": [
+        "Trademark Filing",
+        "ROC Filing",
+        "GST Filing"
+      ],
+      "revenue": 176191,
+      "outstanding": 21685,
+      "createdAt": "2020-02-09",
+      "updatedAt": "2025-11-11",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0063",
+      "name": "ACC Ltd",
+      "contactPerson": "Suresh Bhat",
+      "email": "accounts@accltd.com",
+      "phone": "+91 8977346578",
+      "pan": "MEDVT9131R",
+      "gstin": "03T1HLYE8OH7Z5",
+      "type": "company",
+      "status": "active",
+      "address": "355, Industrial Area, Kolkata, Telangana - 549936",
+      "city": "Kolkata",
+      "state": "Telangana",
+      "pincode": "597611",
+      "assignedTo": "EMP-0011",
+      "services": [
+        "TDS Return",
+        "ITR Filing"
+      ],
+      "revenue": 116548,
+      "outstanding": 78313,
+      "createdAt": "2021-07-23",
+      "updatedAt": "2021-12-07",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0064",
+      "name": "JK Cement",
+      "contactPerson": "Shweta Menon",
+      "email": "accounts@jkcement.com",
+      "phone": "+91 9651711994",
+      "pan": "YKJVR6973U",
+      "gstin": "09CYLAN0QSE6Z4",
+      "type": "company",
+      "status": "prospect",
+      "address": "42, Commercial Complex, Lucknow, Delhi - 730529",
+      "city": "Lucknow",
+      "state": "Delhi",
+      "pincode": "529803",
+      "assignedTo": "EMP-0014",
+      "services": [
+        "GST Registration",
+        "ROC Filing",
+        "Trademark Filing"
+      ],
+      "revenue": 387895,
+      "outstanding": 90120,
+      "createdAt": "2025-06-27",
+      "updatedAt": "2025-09-23",
+      "notes": "Client onboarded for ITR Filing services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0065",
+      "name": "Ramco Cements",
+      "contactPerson": "Sneha Reddy",
+      "email": "accounts@ramcocements.com",
+      "phone": "+91 9358075980",
+      "pan": "DDJTA1267T",
+      "gstin": "30MIWKKO3I6LZ6",
+      "type": "individual",
+      "status": "active",
+      "address": "81, Business Park, Mumbai, Kerala - 631070",
+      "city": "Mumbai",
+      "state": "Kerala",
+      "pincode": "167247",
+      "assignedTo": "EMP-0005",
+      "services": [
+        "Audit",
+        "Audit"
+      ],
+      "revenue": 345139,
+      "outstanding": 78450,
+      "createdAt": "2021-03-09",
+      "updatedAt": "2026-01-29",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0066",
+      "name": "Tata Consumer",
+      "contactPerson": "Sanjay Menon",
+      "email": "accounts@tataconsumer.com",
+      "phone": "+91 9031809924",
+      "pan": "NMTPI6032Q",
+      "gstin": "05VA6Z3BTZE7Z2",
+      "type": "individual",
+      "status": "active",
+      "address": "114, Business Park, Kochi, Karnataka - 384005",
+      "city": "Kochi",
+      "state": "Karnataka",
+      "pincode": "813612",
+      "assignedTo": "EMP-0003",
+      "services": [
+        "ROC Filing",
+        "Tax Planning",
+        "TDS Return"
+      ],
+      "revenue": 516139,
+      "outstanding": 16097,
+      "createdAt": "2024-04-17",
+      "updatedAt": "2025-11-04",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0067",
+      "name": "Marico",
+      "contactPerson": "Suresh Menon",
+      "email": "accounts@marico.com",
+      "phone": "+91 9170583641",
+      "pan": "WEWBZ5660M",
+      "gstin": "11RI4SS5ZJE3Z1",
+      "type": "individual",
+      "status": "inactive",
+      "address": "299, Business Park, Chennai, Madhya Pradesh - 182886",
+      "city": "Chennai",
+      "state": "Madhya Pradesh",
+      "pincode": "639055",
+      "assignedTo": "EMP-0021",
+      "services": [
+        "Bookkeeping"
+      ],
+      "revenue": 336617,
+      "outstanding": 99201,
+      "createdAt": "2023-09-02",
+      "updatedAt": "2023-10-21",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0068",
+      "name": "Emami Ltd",
+      "contactPerson": "Naveen Reddy",
+      "email": "accounts@emamiltd.com",
+      "phone": "+91 9146234743",
+      "pan": "LFXIA9158C",
+      "gstin": "1033N6T6H07HZ1",
+      "type": "company",
+      "status": "active",
+      "address": "160, Industrial Area, Lucknow, Karnataka - 507114",
+      "city": "Lucknow",
+      "state": "Karnataka",
+      "pincode": "300680",
+      "assignedTo": "EMP-0025",
+      "services": [
+        "Trademark Filing"
+      ],
+      "revenue": 384215,
+      "outstanding": 45022,
+      "createdAt": "2020-12-10",
+      "updatedAt": "2021-08-28",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0069",
+      "name": "Jubilant Foodworks",
+      "contactPerson": "Lakshmi Sharma",
+      "email": "accounts@jubilantfoodworks.com",
+      "phone": "+91 8834588491",
+      "pan": "BQHTW9285S",
+      "gstin": "05D91B2OJ71EZ4",
+      "type": "company",
+      "status": "active",
+      "address": "460, Industrial Area, Pune, Maharashtra - 859904",
+      "city": "Pune",
+      "state": "Maharashtra",
+      "pincode": "209687",
+      "assignedTo": "EMP-0017",
+      "services": [
+        "ROC Filing",
+        "Audit",
+        "ITR Filing"
+      ],
+      "revenue": 352130,
+      "outstanding": 62611,
+      "createdAt": "2021-03-29",
+      "updatedAt": "2023-04-10",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0070",
+      "name": "Westlife Development",
+      "contactPerson": "Anita Nair",
+      "email": "accounts@westlifedevelopment.com",
+      "phone": "+91 9314455820",
+      "pan": "FHHKD4273Y",
+      "gstin": "12B4U9YRB6K1Z4",
+      "type": "company",
+      "status": "active",
+      "address": "201, Industrial Area, Lucknow, Delhi - 358872",
+      "city": "Lucknow",
+      "state": "Delhi",
+      "pincode": "851345",
+      "assignedTo": "EMP-0011",
+      "services": [
+        "ITR Filing"
+      ],
+      "revenue": 400886,
+      "outstanding": 48067,
+      "createdAt": "2020-05-27",
+      "updatedAt": "2021-03-01",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0071",
+      "name": "Indian Hotels",
+      "contactPerson": "Amit Rao",
+      "email": "accounts@indianhotels.com",
+      "phone": "+91 9722965823",
+      "pan": "ZSCVA8839G",
+      "gstin": "056JNQYEMYLEZ9",
+      "type": "individual",
+      "status": "active",
+      "address": "10, Tech Park, Pune, Madhya Pradesh - 841414",
+      "city": "Pune",
+      "state": "Madhya Pradesh",
+      "pincode": "652454",
+      "assignedTo": "EMP-0016",
+      "services": [
+        "Trademark Filing"
+      ],
+      "revenue": 139355,
+      "outstanding": 16298,
+      "createdAt": "2021-12-12",
+      "updatedAt": "2025-11-24",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0072",
+      "name": "Lemon Tree Hotels",
+      "contactPerson": "Lakshmi Menon",
+      "email": "accounts@lemontreehotels.com",
+      "phone": "+91 9778286170",
+      "pan": "GBWIP8976W",
+      "gstin": "23HH0HMVH3PTZ2",
+      "type": "company",
+      "status": "active",
+      "address": "336, Industrial Area, Kolkata, Rajasthan - 334211",
+      "city": "Kolkata",
+      "state": "Rajasthan",
+      "pincode": "129872",
+      "assignedTo": "EMP-0001",
+      "services": [
+        "TDS Return",
+        "ROC Filing",
+        "Company Registration",
+        "Bookkeeping"
+      ],
+      "revenue": 406111,
+      "outstanding": 24539,
+      "createdAt": "2022-11-30",
+      "updatedAt": "2024-08-22",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0073",
+      "name": "Chalet Hotels",
+      "contactPerson": "Manoj Kumar",
+      "email": "accounts@chalethotels.com",
+      "phone": "+91 9166470254",
+      "pan": "IECOL1085V",
+      "gstin": "30VYZBKA55MJZ5",
+      "type": "company",
+      "status": "active",
+      "address": "256, Business Park, Chennai, West Bengal - 675898",
+      "city": "Chennai",
+      "state": "West Bengal",
+      "pincode": "878700",
+      "assignedTo": "EMP-0013",
+      "services": [
+        "TDS Return"
+      ],
+      "revenue": 374913,
+      "outstanding": 98126,
+      "createdAt": "2020-12-24",
+      "updatedAt": "2026-06-04",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0074",
+      "name": "EIH Ltd",
+      "contactPerson": "Rahul Verma",
+      "email": "accounts@eihltd.com",
+      "phone": "+91 9493974210",
+      "pan": "JEBYE6939Y",
+      "gstin": "29N1R6ZIQ2OFZ5",
+      "type": "company",
+      "status": "inactive",
+      "address": "334, Commercial Complex, Chennai, Delhi - 263252",
+      "city": "Chennai",
+      "state": "Delhi",
+      "pincode": "210542",
+      "assignedTo": "EMP-0017",
+      "services": [
+        "GST Registration",
+        "GST Registration",
+        "TDS Return"
+      ],
+      "revenue": 151257,
+      "outstanding": 37348,
+      "createdAt": "2020-10-05",
+      "updatedAt": "2024-03-15",
+      "notes": "Client onboarded for TDS Return services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0075",
+      "name": "IRCTC",
+      "contactPerson": "Kavita Mehta",
+      "email": "accounts@irctc.com",
+      "phone": "+91 9876457180",
+      "pan": "UZJTN5907I",
+      "gstin": "057HGGQTKTYYZ8",
+      "type": "company",
+      "status": "active",
+      "address": "440, Business Park, Chandigarh, West Bengal - 415799",
+      "city": "Chandigarh",
+      "state": "West Bengal",
+      "pincode": "133598",
+      "assignedTo": "EMP-0006",
+      "services": [
+        "Audit",
+        "Trademark Filing"
+      ],
+      "revenue": 421784,
+      "outstanding": 49121,
+      "createdAt": "2022-10-29",
+      "updatedAt": "2026-05-08",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0076",
+      "name": "IRFC",
+      "contactPerson": "Shweta Bhat",
+      "email": "accounts@irfc.com",
+      "phone": "+91 9887041848",
+      "pan": "MWJGA5407A",
+      "gstin": "13F3K570P7PXZ4",
+      "type": "company",
+      "status": "active",
+      "address": "27, Commercial Complex, Surat, Karnataka - 560780",
+      "city": "Surat",
+      "state": "Karnataka",
+      "pincode": "441318",
+      "assignedTo": "EMP-0013",
+      "services": [
+        "Bookkeeping"
+      ],
+      "revenue": 482878,
+      "outstanding": 68018,
+      "createdAt": "2022-04-22",
+      "updatedAt": "2026-05-19",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0077",
+      "name": "RVNL",
+      "contactPerson": "Karthik Rao",
+      "email": "accounts@rvnl.com",
+      "phone": "+91 9455524364",
+      "pan": "CRRJU7358A",
+      "gstin": "26O54SSA5625Z6",
+      "type": "company",
+      "status": "active",
+      "address": "347, Tech Park, Kochi, Kerala - 685070",
+      "city": "Kochi",
+      "state": "Kerala",
+      "pincode": "793029",
+      "assignedTo": "EMP-0005",
+      "services": [
+        "Tax Planning",
+        "GST Filing"
+      ],
+      "revenue": 283988,
+      "outstanding": 39290,
+      "createdAt": "2023-08-02",
+      "updatedAt": "2023-08-16",
+      "notes": "Client onboarded for Audit services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0078",
+      "name": "Rail Vikas Nigam",
+      "contactPerson": "Meera Pillai",
+      "email": "accounts@railvikasnigam.com",
+      "phone": "+91 8919572279",
+      "pan": "GLGLD1516F",
+      "gstin": "03BP463AX7W9Z3",
+      "type": "company",
+      "status": "active",
+      "address": "379, Industrial Area, Ahmedabad, Punjab - 355620",
+      "city": "Ahmedabad",
+      "state": "Punjab",
+      "pincode": "415870",
+      "assignedTo": "EMP-0003",
+      "services": [
+        "ITR Filing"
+      ],
+      "revenue": 136487,
+      "outstanding": 90200,
+      "createdAt": "2025-01-09",
+      "updatedAt": "2025-09-05",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0079",
+      "name": "BHEL",
+      "contactPerson": "Vikram Mehta",
+      "email": "accounts@bhel.com",
+      "phone": "+91 8966059554",
+      "pan": "CGCGB7846F",
+      "gstin": "02PE6D7MC3WOZ5",
+      "type": "company",
+      "status": "inactive",
+      "address": "297, Commercial Complex, Hyderabad, Gujarat - 285954",
+      "city": "Hyderabad",
+      "state": "Gujarat",
+      "pincode": "416932",
+      "assignedTo": "EMP-0003",
+      "services": [
+        "Trademark Filing",
+        "Audit",
+        "ITR Filing"
+      ],
+      "revenue": 270154,
+      "outstanding": 99676,
+      "createdAt": "2022-03-29",
+      "updatedAt": "2025-06-17",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0080",
+      "name": "BEL",
+      "contactPerson": "Deepa Desai",
+      "email": "accounts@bel.com",
+      "phone": "+91 9654286413",
+      "pan": "NMYXI2593W",
+      "gstin": "129R2KPZTL19Z0",
+      "type": "individual",
+      "status": "active",
+      "address": "144, Tech Park, Pune, Uttar Pradesh - 133380",
+      "city": "Pune",
+      "state": "Uttar Pradesh",
+      "pincode": "237416",
+      "assignedTo": "EMP-0018",
+      "services": [
+        "GST Filing"
+      ],
+      "revenue": 423583,
+      "outstanding": 475,
+      "createdAt": "2023-10-16",
+      "updatedAt": "2025-08-14",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0081",
+      "name": "HAL",
+      "contactPerson": "Sanjay Pillai",
+      "email": "accounts@hal.com",
+      "phone": "+91 9768879901",
+      "pan": "ICWVU1432H",
+      "gstin": "01UB0M1X4VGCZ7",
+      "type": "individual",
+      "status": "active",
+      "address": "410, Business Park, Jaipur, Uttar Pradesh - 618658",
+      "city": "Jaipur",
+      "state": "Uttar Pradesh",
+      "pincode": "851297",
+      "assignedTo": "EMP-0005",
+      "services": [
+        "ROC Filing",
+        "Bookkeeping",
+        "ROC Filing"
+      ],
+      "revenue": 502678,
+      "outstanding": 91476,
+      "createdAt": "2025-06-15",
+      "updatedAt": "2025-07-19",
+      "notes": "Client onboarded for GST Filing services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0082",
+      "name": "Garden Reach Shipbuilders",
+      "contactPerson": "Divya Bhat",
+      "email": "accounts@gardenreachshipbuilders.com",
+      "phone": "+91 9831223941",
+      "pan": "EOLQS1411V",
+      "gstin": "03071NAW0RB3Z6",
+      "type": "individual",
+      "status": "active",
+      "address": "354, Commercial Complex, Nagpur, Rajasthan - 812986",
+      "city": "Nagpur",
+      "state": "Rajasthan",
+      "pincode": "610861",
+      "assignedTo": "EMP-0024",
+      "services": [
+        "GST Registration",
+        "TDS Return"
+      ],
+      "revenue": 147965,
+      "outstanding": 78386,
+      "createdAt": "2022-11-12",
+      "updatedAt": "2026-06-19",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0083",
+      "name": "Mazagon Dock",
+      "contactPerson": "Kavita Reddy",
+      "email": "accounts@mazagondock.com",
+      "phone": "+91 9659074288",
+      "pan": "RJMAC2503Q",
+      "gstin": "10IG6KRDYX1ZZ7",
+      "type": "individual",
+      "status": "active",
+      "address": "412, Commercial Complex, Chennai, Punjab - 964666",
+      "city": "Chennai",
+      "state": "Punjab",
+      "pincode": "635723",
+      "assignedTo": "EMP-0021",
+      "services": [
+        "Audit",
+        "Company Registration",
+        "ROC Filing",
+        "Audit"
+      ],
+      "revenue": 412492,
+      "outstanding": 57662,
+      "createdAt": "2023-03-28",
+      "updatedAt": "2024-09-18",
+      "notes": "Client onboarded for ITR Filing services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0084",
+      "name": "Cochin Shipyard",
+      "contactPerson": "Shweta Verma",
+      "email": "accounts@cochinshipyard.com",
+      "phone": "+91 9814406356",
+      "pan": "SVXVE2022D",
+      "gstin": "078HJTG10JEYZ5",
+      "type": "individual",
+      "status": "active",
+      "address": "486, Commercial Complex, Chennai, Telangana - 478764",
+      "city": "Chennai",
+      "state": "Telangana",
+      "pincode": "127028",
+      "assignedTo": "EMP-0009",
+      "services": [
+        "Tax Planning",
+        "TDS Return",
+        "ITR Filing",
+        "GST Filing"
+      ],
+      "revenue": 272930,
+      "outstanding": 98762,
+      "createdAt": "2020-10-14",
+      "updatedAt": "2024-06-20",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0085",
+      "name": "SJVN",
+      "contactPerson": "Manoj Sharma",
+      "email": "accounts@sjvn.com",
+      "phone": "+91 9792254711",
+      "pan": "LXVAZ8381B",
+      "gstin": "19ICI1YKQDWUZ1",
+      "type": "company",
+      "status": "inactive",
+      "address": "354, Tech Park, Hyderabad, Karnataka - 106743",
+      "city": "Hyderabad",
+      "state": "Karnataka",
+      "pincode": "998770",
+      "assignedTo": "EMP-0006",
+      "services": [
+        "Bookkeeping",
+        "Tax Planning",
+        "TDS Return",
+        "Tax Planning"
+      ],
+      "revenue": 133411,
+      "outstanding": 79291,
+      "createdAt": "2020-03-24",
+      "updatedAt": "2020-06-27",
+      "notes": "Client onboarded for Trademark Filing services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0086",
+      "name": "NHPC",
+      "contactPerson": "Pooja Reddy",
+      "email": "accounts@nhpc.com",
+      "phone": "+91 8997873648",
+      "pan": "BFNNH5034H",
+      "gstin": "11CBLPCT4JABZ2",
+      "type": "company",
+      "status": "active",
+      "address": "132, Commercial Complex, Ahmedabad, Punjab - 513067",
+      "city": "Ahmedabad",
+      "state": "Punjab",
+      "pincode": "969962",
+      "assignedTo": "EMP-0009",
+      "services": [
+        "Audit",
+        "Company Registration"
+      ],
+      "revenue": 122521,
+      "outstanding": 63506,
+      "createdAt": "2022-10-22",
+      "updatedAt": "2025-12-16",
+      "notes": "Client onboarded for Company Registration services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0087",
+      "name": "SJVN Ltd",
+      "contactPerson": "Karthik Pillai",
+      "email": "accounts@sjvnltd.com",
+      "phone": "+91 9338889373",
+      "pan": "CHEBJ7823N",
+      "gstin": "17ZE7P7CRRAJZ2",
+      "type": "company",
+      "status": "active",
+      "address": "111, Industrial Area, Pune, Madhya Pradesh - 296632",
+      "city": "Pune",
+      "state": "Madhya Pradesh",
+      "pincode": "885072",
+      "assignedTo": "EMP-0016",
+      "services": [
+        "TDS Return",
+        "GST Registration",
+        "TDS Return",
+        "Tax Planning"
+      ],
+      "revenue": 251297,
+      "outstanding": 97249,
+      "createdAt": "2022-05-03",
+      "updatedAt": "2024-08-17",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0088",
+      "name": "Torrent Power",
+      "contactPerson": "Meera Joshi",
+      "email": "accounts@torrentpower.com",
+      "phone": "+91 9468110210",
+      "pan": "UIXUZ8540A",
+      "gstin": "1149AN1W9THEZ1",
+      "type": "company",
+      "status": "active",
+      "address": "223, Tech Park, Bangalore, Kerala - 887491",
+      "city": "Bangalore",
+      "state": "Kerala",
+      "pincode": "760422",
+      "assignedTo": "EMP-0005",
+      "services": [
+        "TDS Return",
+        "ITR Filing",
+        "Company Registration",
+        "Audit"
+      ],
+      "revenue": 117896,
+      "outstanding": 91579,
+      "createdAt": "2025-05-27",
+      "updatedAt": "2025-12-28",
+      "notes": "Client onboarded for Company Registration services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0089",
+      "name": "Tata Power",
+      "contactPerson": "Anita Patel",
+      "email": "accounts@tatapower.com",
+      "phone": "+91 9427410082",
+      "pan": "QEGWD3857O",
+      "gstin": "03FAXI2G44BDZ9",
+      "type": "individual",
+      "status": "active",
+      "address": "184, Industrial Area, Hyderabad, Punjab - 221995",
+      "city": "Hyderabad",
+      "state": "Punjab",
+      "pincode": "723456",
+      "assignedTo": "EMP-0022",
+      "services": [
+        "Company Registration",
+        "Tax Planning",
+        "Bookkeeping"
+      ],
+      "revenue": 438695,
+      "outstanding": 56748,
+      "createdAt": "2020-05-11",
+      "updatedAt": "2024-05-04",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0090",
+      "name": "Adani Power",
+      "contactPerson": "Pooja Chopra",
+      "email": "accounts@adanipower.com",
+      "phone": "+91 9146946146",
+      "pan": "MEGTA8207Z",
+      "gstin": "29P9RSKM5BLUZ9",
+      "type": "company",
+      "status": "active",
+      "address": "39, Tech Park, Chandigarh, West Bengal - 803341",
+      "city": "Chandigarh",
+      "state": "West Bengal",
+      "pincode": "997896",
+      "assignedTo": "EMP-0010",
+      "services": [
+        "GST Registration"
+      ],
+      "revenue": 313253,
+      "outstanding": 5085,
+      "createdAt": "2023-10-09",
+      "updatedAt": "2026-02-26",
+      "notes": "Client onboarded for ITR Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0091",
+      "name": "JSW Steel",
+      "contactPerson": "Divya Shah",
+      "email": "accounts@jswsteel.com",
+      "phone": "+91 9878581791",
+      "pan": "SNLEF6290E",
+      "gstin": "297IAPW81S6JZ4",
+      "type": "company",
+      "status": "inactive",
+      "address": "299, Commercial Complex, Lucknow, Rajasthan - 652332",
+      "city": "Lucknow",
+      "state": "Rajasthan",
+      "pincode": "763797",
+      "assignedTo": "EMP-0023",
+      "services": [
+        "ITR Filing",
+        "ITR Filing",
+        "Tax Planning",
+        "Tax Planning"
+      ],
+      "revenue": 424316,
+      "outstanding": 48105,
+      "createdAt": "2023-05-01",
+      "updatedAt": "2025-10-24",
+      "notes": "Client onboarded for Audit services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0092",
+      "name": "Jindal Steel",
+      "contactPerson": "Vikram Mehta",
+      "email": "accounts@jindalsteel.com",
+      "phone": "+91 9420279508",
+      "pan": "KGVXJ6732H",
+      "gstin": "09VOCEXJW7F0Z5",
+      "type": "company",
+      "status": "active",
+      "address": "228, Business Park, Delhi, Madhya Pradesh - 835530",
+      "city": "Delhi",
+      "state": "Madhya Pradesh",
+      "pincode": "202764",
+      "assignedTo": "EMP-0006",
+      "services": [
+        "Bookkeeping",
+        "GST Filing",
+        "Trademark Filing"
+      ],
+      "revenue": 154517,
+      "outstanding": 27377,
+      "createdAt": "2024-02-28",
+      "updatedAt": "2024-12-26",
+      "notes": "Client onboarded for GST Filing services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0093",
+      "name": "SAIL",
+      "contactPerson": "Rahul Kumar",
+      "email": "accounts@sail.com",
+      "phone": "+91 9870759684",
+      "pan": "QKXPE1545Q",
+      "gstin": "1462TGP2PAH4Z9",
+      "type": "individual",
+      "status": "active",
+      "address": "350, Industrial Area, Indore, Punjab - 675896",
+      "city": "Indore",
+      "state": "Punjab",
+      "pincode": "221068",
+      "assignedTo": "EMP-0001",
+      "services": [
+        "TDS Return",
+        "ROC Filing",
+        "Trademark Filing",
+        "TDS Return"
+      ],
+      "revenue": 169832,
+      "outstanding": 21308,
+      "createdAt": "2023-09-29",
+      "updatedAt": "2025-02-28",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0094",
+      "name": "Hindalco",
+      "contactPerson": "Amit Desai",
+      "email": "accounts@hindalco.com",
+      "phone": "+91 8951508565",
+      "pan": "AJKEC9193C",
+      "gstin": "0853771W50F0Z9",
+      "type": "company",
+      "status": "active",
+      "address": "468, Industrial Area, Mumbai, Rajasthan - 360623",
+      "city": "Mumbai",
+      "state": "Rajasthan",
+      "pincode": "273968",
+      "assignedTo": "EMP-0024",
+      "services": [
+        "GST Filing",
+        "Audit",
+        "ROC Filing"
+      ],
+      "revenue": 449797,
+      "outstanding": 71829,
+      "createdAt": "2020-07-24",
+      "updatedAt": "2023-11-09",
+      "notes": "Client onboarded for GST Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0095",
+      "name": "Vedanta Ltd",
+      "contactPerson": "Rahul Menon",
+      "email": "accounts@vedantaltd.com",
+      "phone": "+91 9568805669",
+      "pan": "JLHBZ8633X",
+      "gstin": "03IR7ZDICCTCZ7",
+      "type": "company",
+      "status": "active",
+      "address": "412, Industrial Area, Mumbai, Maharashtra - 455650",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "pincode": "390668",
+      "assignedTo": "EMP-0024",
+      "services": [
+        "Tax Planning",
+        "Tax Planning",
+        "Trademark Filing",
+        "GST Registration"
+      ],
+      "revenue": 240835,
+      "outstanding": 28415,
+      "createdAt": "2021-10-28",
+      "updatedAt": "2025-03-24",
+      "notes": "Client onboarded for GST Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0096",
+      "name": "NMDC",
+      "contactPerson": "Sneha Kumar",
+      "email": "accounts@nmdc.com",
+      "phone": "+91 9061437644",
+      "pan": "BDAIJ3563F",
+      "gstin": "01C1U9VO8TGEZ5",
+      "type": "individual",
+      "status": "active",
+      "address": "112, Industrial Area, Pune, Telangana - 906988",
+      "city": "Pune",
+      "state": "Telangana",
+      "pincode": "280817",
+      "assignedTo": "EMP-0012",
+      "services": [
+        "GST Filing",
+        "Trademark Filing",
+        "Audit",
+        "TDS Return"
+      ],
+      "revenue": 531142,
+      "outstanding": 22958,
+      "createdAt": "2024-08-11",
+      "updatedAt": "2025-06-21",
+      "notes": "Client onboarded for Trademark Filing services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0097",
+      "name": "MOIL",
+      "contactPerson": "Meera Chopra",
+      "email": "accounts@moil.com",
+      "phone": "+91 8991640884",
+      "pan": "CFSGG9469O",
+      "gstin": "14H94JBWH2XYZ0",
+      "type": "company",
+      "status": "active",
+      "address": "450, Business Park, Mumbai, Uttar Pradesh - 796288",
+      "city": "Mumbai",
+      "state": "Uttar Pradesh",
+      "pincode": "838836",
+      "assignedTo": "EMP-0017",
+      "services": [
+        "ROC Filing",
+        "Bookkeeping"
+      ],
+      "revenue": 482223,
+      "outstanding": 55385,
+      "createdAt": "2024-09-09",
+      "updatedAt": "2025-05-09",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0098",
+      "name": "Nalco",
+      "contactPerson": "Kavita Patel",
+      "email": "accounts@nalco.com",
+      "phone": "+91 9310603054",
+      "pan": "YGYRY5432F",
+      "gstin": "0933OD65OQDHZ9",
+      "type": "company",
+      "status": "active",
+      "address": "402, Business Park, Jaipur, Telangana - 172282",
+      "city": "Jaipur",
+      "state": "Telangana",
+      "pincode": "428470",
+      "assignedTo": "EMP-0014",
+      "services": [
+        "Trademark Filing",
+        "Trademark Filing",
+        "GST Registration"
+      ],
+      "revenue": 402513,
+      "outstanding": 1970,
+      "createdAt": "2022-01-18",
+      "updatedAt": "2023-12-15",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0099",
+      "name": "Hindustan Zinc",
+      "contactPerson": "Sneha Iyer",
+      "email": "accounts@hindustanzinc.com",
+      "phone": "+91 9198754112",
+      "pan": "QRBDI5352V",
+      "gstin": "10GPX6VT9THOZ0",
+      "type": "individual",
+      "status": "active",
+      "address": "120, Commercial Complex, Indore, Delhi - 939600",
+      "city": "Indore",
+      "state": "Delhi",
+      "pincode": "671275",
+      "assignedTo": "EMP-0010",
+      "services": [
+        "TDS Return",
+        "Company Registration",
+        "GST Filing",
+        "Trademark Filing"
+      ],
+      "revenue": 111365,
+      "outstanding": 2207,
+      "createdAt": "2023-03-31",
+      "updatedAt": "2025-03-11",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0100",
+      "name": "National Aluminium",
+      "contactPerson": "Amit Bhat",
+      "email": "accounts@nationalaluminium.com",
+      "phone": "+91 9154752654",
+      "pan": "AUGCW4366Q",
+      "gstin": "14DIDZCKIR53Z3",
+      "type": "company",
+      "status": "active",
+      "address": "49, Business Park, Delhi, Gujarat - 439832",
+      "city": "Delhi",
+      "state": "Gujarat",
+      "pincode": "131569",
+      "assignedTo": "EMP-0015",
+      "services": [
+        "GST Filing",
+        "GST Registration",
+        "Audit",
+        "Tax Planning"
+      ],
+      "revenue": 494122,
+      "outstanding": 41193,
+      "createdAt": "2022-03-09",
+      "updatedAt": "2022-09-09",
+      "notes": "Client onboarded for Company Registration services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0101",
+      "name": "GAIL",
+      "contactPerson": "Deepa Sharma",
+      "email": "accounts@gail.com",
+      "phone": "+91 8939421013",
+      "pan": "GKZHY4970Z",
+      "gstin": "23AEKZ6P11U1Z6",
+      "type": "company",
+      "status": "active",
+      "address": "18, Business Park, Kochi, Maharashtra - 814552",
+      "city": "Kochi",
+      "state": "Maharashtra",
+      "pincode": "152539",
+      "assignedTo": "EMP-0013",
+      "services": [
+        "Company Registration",
+        "ROC Filing",
+        "Trademark Filing",
+        "Company Registration"
+      ],
+      "revenue": 355775,
+      "outstanding": 69849,
+      "createdAt": "2024-10-07",
+      "updatedAt": "2025-03-01",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0102",
+      "name": "Petronet LNG",
+      "contactPerson": "Amit Joshi",
+      "email": "accounts@petronetlng.com",
+      "phone": "+91 8961784215",
+      "pan": "LSGXI6350L",
+      "gstin": "22P91ROGQIYAZ6",
+      "type": "company",
+      "status": "active",
+      "address": "446, Industrial Area, Nagpur, Gujarat - 240161",
+      "city": "Nagpur",
+      "state": "Gujarat",
+      "pincode": "826117",
+      "assignedTo": "EMP-0025",
+      "services": [
+        "ROC Filing",
+        "ROC Filing"
+      ],
+      "revenue": 493743,
+      "outstanding": 17239,
+      "createdAt": "2022-11-28",
+      "updatedAt": "2026-03-05",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0103",
+      "name": "Indraprastha Gas",
+      "contactPerson": "Kavita Rao",
+      "email": "accounts@indraprasthagas.com",
+      "phone": "+91 9111507669",
+      "pan": "ZNASF7761I",
+      "gstin": "08AETCITGJCRZ8",
+      "type": "company",
+      "status": "active",
+      "address": "173, Industrial Area, Ahmedabad, Rajasthan - 969251",
+      "city": "Ahmedabad",
+      "state": "Rajasthan",
+      "pincode": "329840",
+      "assignedTo": "EMP-0015",
+      "services": [
+        "Tax Planning",
+        "Company Registration",
+        "GST Filing",
+        "ROC Filing"
+      ],
+      "revenue": 175876,
+      "outstanding": 72298,
+      "createdAt": "2023-09-24",
+      "updatedAt": "2024-04-26",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0104",
+      "name": "Mahanagar Gas",
+      "contactPerson": "Deepa Malhotra",
+      "email": "accounts@mahanagargas.com",
+      "phone": "+91 9395787678",
+      "pan": "GYQCF5819D",
+      "gstin": "15VT3GOHK4BKZ2",
+      "type": "individual",
+      "status": "active",
+      "address": "464, Business Park, Chennai, Maharashtra - 168338",
+      "city": "Chennai",
+      "state": "Maharashtra",
+      "pincode": "607724",
+      "assignedTo": "EMP-0006",
+      "services": [
+        "ITR Filing"
+      ],
+      "revenue": 407210,
+      "outstanding": 32881,
+      "createdAt": "2021-09-18",
+      "updatedAt": "2022-12-17",
+      "notes": "Client onboarded for TDS Return services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0105",
+      "name": "Gujarat Gas",
+      "contactPerson": "Karthik Pillai",
+      "email": "accounts@gujaratgas.com",
+      "phone": "+91 9468426900",
+      "pan": "JWRUP1252A",
+      "gstin": "054GRD1I0TVQZ1",
+      "type": "company",
+      "status": "prospect",
+      "address": "389, Tech Park, Delhi, Punjab - 212629",
+      "city": "Delhi",
+      "state": "Punjab",
+      "pincode": "145427",
+      "assignedTo": "EMP-0007",
+      "services": [
+        "Tax Planning",
+        "TDS Return"
+      ],
+      "revenue": 152602,
+      "outstanding": 63698,
+      "createdAt": "2020-01-28",
+      "updatedAt": "2026-06-07",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0106",
+      "name": "Star Health",
+      "contactPerson": "Lakshmi Rao",
+      "email": "accounts@starhealth.com",
+      "phone": "+91 9832052390",
+      "pan": "DMVTT5523W",
+      "gstin": "14KQL6G6PBUNZ7",
+      "type": "company",
+      "status": "active",
+      "address": "401, Business Park, Chennai, West Bengal - 620870",
+      "city": "Chennai",
+      "state": "West Bengal",
+      "pincode": "587458",
+      "assignedTo": "EMP-0007",
+      "services": [
+        "GST Filing",
+        "ITR Filing",
+        "Tax Planning"
+      ],
+      "revenue": 536359,
+      "outstanding": 55535,
+      "createdAt": "2024-11-15",
+      "updatedAt": "2025-12-18",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0107",
+      "name": "Max Healthcare",
+      "contactPerson": "Suresh Nair",
+      "email": "accounts@maxhealthcare.com",
+      "phone": "+91 9563399697",
+      "pan": "AAWCD3932C",
+      "gstin": "22JYL7GM5GZUZ9",
+      "type": "individual",
+      "status": "active",
+      "address": "381, Tech Park, Delhi, Maharashtra - 339874",
+      "city": "Delhi",
+      "state": "Maharashtra",
+      "pincode": "591299",
+      "assignedTo": "EMP-0021",
+      "services": [
+        "ITR Filing",
+        "Trademark Filing",
+        "Trademark Filing",
+        "GST Filing"
+      ],
+      "revenue": 468954,
+      "outstanding": 76321,
+      "createdAt": "2021-12-08",
+      "updatedAt": "2026-04-17",
+      "notes": "Client onboarded for GST Filing services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0108",
+      "name": "Fortis Healthcare",
+      "contactPerson": "Naveen Malhotra",
+      "email": "accounts@fortishealthcare.com",
+      "phone": "+91 9520531435",
+      "pan": "LNFBR6405N",
+      "gstin": "26J5TKRQK3SZZ5",
+      "type": "individual",
+      "status": "prospect",
+      "address": "388, Business Park, Indore, Rajasthan - 100137",
+      "city": "Indore",
+      "state": "Rajasthan",
+      "pincode": "328899",
+      "assignedTo": "EMP-0006",
+      "services": [
+        "Bookkeeping",
+        "GST Registration",
+        "Trademark Filing"
+      ],
+      "revenue": 387174,
+      "outstanding": 33530,
+      "createdAt": "2023-12-13",
+      "updatedAt": "2026-05-09",
+      "notes": "Client onboarded for ITR Filing services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0109",
+      "name": "Narayana Hrudayalaya",
+      "contactPerson": "Vikram Sharma",
+      "email": "accounts@narayanahrudayalaya.com",
+      "phone": "+91 9532124808",
+      "pan": "YFZVN1571X",
+      "gstin": "1652WVBGLI2GZ9",
+      "type": "company",
+      "status": "active",
+      "address": "471, Tech Park, Chandigarh, Delhi - 177208",
+      "city": "Chandigarh",
+      "state": "Delhi",
+      "pincode": "511203",
+      "assignedTo": "EMP-0008",
+      "services": [
+        "TDS Return",
+        "Company Registration"
+      ],
+      "revenue": 218801,
+      "outstanding": 42450,
+      "createdAt": "2025-03-28",
+      "updatedAt": "2025-08-02",
+      "notes": "Client onboarded for Trademark Filing services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0110",
+      "name": "Aster DM Healthcare",
+      "contactPerson": "Amit Patel",
+      "email": "accounts@asterdmhealthcare.com",
+      "phone": "+91 9456752669",
+      "pan": "GJBCD1566U",
+      "gstin": "22ESQ0ZZ8LBHZ8",
+      "type": "company",
+      "status": "active",
+      "address": "225, Tech Park, Mumbai, Telangana - 894642",
+      "city": "Mumbai",
+      "state": "Telangana",
+      "pincode": "763846",
+      "assignedTo": "EMP-0011",
+      "services": [
+        "Audit",
+        "Company Registration",
+        "Tax Planning"
+      ],
+      "revenue": 204938,
+      "outstanding": 60472,
+      "createdAt": "2021-06-27",
+      "updatedAt": "2021-11-28",
+      "notes": "Client onboarded for Tax Planning services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0111",
+      "name": "Infosys Ltd 2",
+      "contactPerson": "Kavita Menon",
+      "email": "accounts@infosysltd2.com",
+      "phone": "+91 9743433579",
+      "pan": "ROBMD3098U",
+      "gstin": "110V7EKHQ0JZZ4",
+      "type": "company",
+      "status": "active",
+      "address": "280, Commercial Complex, Hyderabad, Maharashtra - 138992",
+      "city": "Hyderabad",
+      "state": "Maharashtra",
+      "pincode": "259847",
+      "assignedTo": "EMP-0012",
+      "services": [
+        "GST Filing",
+        "Trademark Filing",
+        "ITR Filing"
+      ],
+      "revenue": 382272,
+      "outstanding": 29686,
+      "createdAt": "2020-03-17",
+      "updatedAt": "2023-09-15",
+      "notes": "Client onboarded for ITR Filing services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0112",
+      "name": "TCS 2",
+      "contactPerson": "Kavita Joshi",
+      "email": "accounts@tcs2.com",
+      "phone": "+91 9645130446",
+      "pan": "QQDWD6690X",
+      "gstin": "27TI7NEX77P2Z1",
+      "type": "company",
+      "status": "active",
+      "address": "175, Industrial Area, Pune, Uttar Pradesh - 345118",
+      "city": "Pune",
+      "state": "Uttar Pradesh",
+      "pincode": "199903",
+      "assignedTo": "EMP-0005",
+      "services": [
+        "GST Registration"
+      ],
+      "revenue": 225001,
+      "outstanding": 88918,
+      "createdAt": "2024-07-20",
+      "updatedAt": "2026-01-16",
+      "notes": "Client onboarded for Company Registration services.",
+      "tags": [
+        "regular"
+      ]
+    },
+    {
+      "id": "CLT-0113",
+      "name": "Reliance Industries 2",
+      "contactPerson": "Deepa Iyer",
+      "email": "accounts@relianceindustries2.com",
+      "phone": "+91 9142269017",
+      "pan": "BBQMZ8338O",
+      "gstin": "138K5RKFGC2RZ5",
+      "type": "individual",
+      "status": "active",
+      "address": "443, Tech Park, Chandigarh, Rajasthan - 346690",
+      "city": "Chandigarh",
+      "state": "Rajasthan",
+      "pincode": "783229",
+      "assignedTo": "EMP-0017",
+      "services": [
+        "TDS Return",
+        "TDS Return",
+        "Company Registration"
+      ],
+      "revenue": 130701,
+      "outstanding": 13769,
+      "createdAt": "2022-11-25",
+      "updatedAt": "2026-01-09",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "premium"
+      ]
+    },
+    {
+      "id": "CLT-0114",
+      "name": "HDFC Bank 2",
+      "contactPerson": "Priya Rao",
+      "email": "accounts@hdfcbank2.com",
+      "phone": "+91 9142487647",
+      "pan": "AHNNF7988R",
+      "gstin": "23XT16DNAKPDZ6",
+      "type": "individual",
+      "status": "active",
+      "address": "146, Industrial Area, Chandigarh, Punjab - 756635",
+      "city": "Chandigarh",
+      "state": "Punjab",
+      "pincode": "269224",
+      "assignedTo": "EMP-0010",
+      "services": [
+        "GST Registration",
+        "ROC Filing",
+        "Trademark Filing"
+      ],
+      "revenue": 105104,
+      "outstanding": 47302,
+      "createdAt": "2025-05-31",
+      "updatedAt": "2026-05-06",
+      "notes": "Client onboarded for ROC Filing services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0115",
+      "name": "Mahindra & Mahindra 2",
+      "contactPerson": "Meera Menon",
+      "email": "accounts@mahindramahindra2.com",
+      "phone": "+91 8935533854",
+      "pan": "YROMA1023I",
+      "gstin": "13HD0U29OQTBZ9",
+      "type": "company",
+      "status": "active",
+      "address": "410, Commercial Complex, Indore, Madhya Pradesh - 737286",
+      "city": "Indore",
+      "state": "Madhya Pradesh",
+      "pincode": "392843",
+      "assignedTo": "EMP-0003",
+      "services": [
+        "Trademark Filing"
+      ],
+      "revenue": 251909,
+      "outstanding": 91494,
+      "createdAt": "2020-09-13",
+      "updatedAt": "2021-12-14",
+      "notes": "Client onboarded for Audit services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0116",
+      "name": "L&T 2",
+      "contactPerson": "Vikram Gupta",
+      "email": "accounts@lt2.com",
+      "phone": "+91 9712103998",
+      "pan": "QQKJD8167M",
+      "gstin": "16SXH6BWCWRSZ3",
+      "type": "company",
+      "status": "active",
+      "address": "64, Tech Park, Jaipur, Telangana - 817282",
+      "city": "Jaipur",
+      "state": "Telangana",
+      "pincode": "122883",
+      "assignedTo": "EMP-0024",
+      "services": [
+        "GST Filing",
+        "GST Registration",
+        "Tax Planning",
+        "Tax Planning"
+      ],
+      "revenue": 494805,
+      "outstanding": 69447,
+      "createdAt": "2025-05-27",
+      "updatedAt": "2026-05-25",
+      "notes": "Client onboarded for TDS Return services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0117",
+      "name": "Sun Pharma 2",
+      "contactPerson": "Rahul Desai",
+      "email": "accounts@sunpharma2.com",
+      "phone": "+91 9049664555",
+      "pan": "OAOOY3794J",
+      "gstin": "30NFZ70MMKUNZ6",
+      "type": "individual",
+      "status": "active",
+      "address": "71, Business Park, Nagpur, Madhya Pradesh - 951002",
+      "city": "Nagpur",
+      "state": "Madhya Pradesh",
+      "pincode": "382447",
+      "assignedTo": "EMP-0012",
+      "services": [
+        "Trademark Filing",
+        "GST Registration",
+        "Trademark Filing"
+      ],
+      "revenue": 188196,
+      "outstanding": 34751,
+      "createdAt": "2024-05-08",
+      "updatedAt": "2025-09-09",
+      "notes": "Client onboarded for Company Registration services.",
+      "tags": [
+        "vip"
+      ]
+    },
+    {
+      "id": "CLT-0118",
+      "name": "Wipro 2",
+      "contactPerson": "Manoj Chopra",
+      "email": "accounts@wipro2.com",
+      "phone": "+91 9817611321",
+      "pan": "TGFHW8959H",
+      "gstin": "21BUO0JK25OPZ7",
+      "type": "company",
+      "status": "active",
+      "address": "38, Business Park, Jaipur, Gujarat - 811472",
+      "city": "Jaipur",
+      "state": "Gujarat",
+      "pincode": "989336",
+      "assignedTo": "EMP-0008",
+      "services": [
+        "GST Registration"
+      ],
+      "revenue": 492698,
+      "outstanding": 27268,
+      "createdAt": "2023-01-13",
+      "updatedAt": "2024-06-20",
+      "notes": "Client onboarded for Bookkeeping services.",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "CLT-0119",
+      "name": "Adani Enterprises 2",
+      "contactPerson": "Arun Shah",
+      "email": "accounts@adanienterprises2.com",
+      "phone": "+91 9484678380",
+      "pan": "LQTME7168L",
+      "gstin": "15A8D30EGRAAZ0",
+      "type": "company",
+      "status": "active",
+      "address": "348, Commercial Complex, Mumbai, Kerala - 299340",
+      "city": "Mumbai",
+      "state": "Kerala",
+      "pincode": "920675",
+      "assignedTo": "EMP-0018",
+      "services": [
+        "Tax Planning",
+        "TDS Return",
+        "Trademark Filing"
+      ],
+      "revenue": 341077,
+      "outstanding": 13020,
+      "createdAt": "2025-05-16",
+      "updatedAt": "2025-05-25",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "referral"
+      ]
+    },
+    {
+      "id": "CLT-0120",
+      "name": "Tata Steel 2",
+      "contactPerson": "Kavita Shah",
+      "email": "accounts@tatasteel2.com",
+      "phone": "+91 9784186349",
+      "pan": "FXYUY7414W",
+      "gstin": "28O9CK7DNTGKZ3",
+      "type": "company",
+      "status": "active",
+      "address": "485, Business Park, Hyderabad, Karnataka - 966814",
+      "city": "Hyderabad",
+      "state": "Karnataka",
+      "pincode": "669462",
+      "assignedTo": "EMP-0015",
+      "services": [
+        "Tax Planning",
+        "GST Filing",
+        "TDS Return"
+      ],
+      "revenue": 524113,
+      "outstanding": 67740,
+      "createdAt": "2020-04-11",
+      "updatedAt": "2024-04-14",
+      "notes": "Client onboarded for GST Registration services.",
+      "tags": [
+        "premium"
+      ]
+    }
+  ],
+  "total": 120
+}

@@ -1,0 +1,111 @@
+{
+  "organization": {
+    "id": "ORG-001",
+    "name": "Sharma & Associates Chartered Accountants",
+    "legalName": "Sharma & Associates CA Firm LLP",
+    "registrationNumber": "FRN-012345N",
+    "pan": "AABCS1234F",
+    "gstin": "27AABCS1234F1Z5",
+    "email": "info@smartca.in",
+    "phone": "+91 22 1234 5678",
+    "website": "https://smartca.in",
+    "address": "501, Business Tower, Bandra Kurla Complex",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "country": "India",
+    "pincode": "400051",
+    "financialYearStart": "01-04",
+    "financialYearEnd": "31-03",
+    "currency": "INR",
+    "timezone": "Asia/Kolkata",
+    "logo": null,
+    "foundedYear": 1998,
+    "employeeCount": 30,
+    "clientCount": 120,
+    "branches": [
+      {
+        "id": "BR-1",
+        "name": "Mumbai HQ",
+        "city": "Mumbai"
+      },
+      {
+        "id": "BR-2",
+        "name": "Delhi Branch",
+        "city": "Delhi"
+      },
+      {
+        "id": "BR-3",
+        "name": "Bangalore Branch",
+        "city": "Bangalore"
+      },
+      {
+        "id": "BR-4",
+        "name": "Chennai Branch",
+        "city": "Chennai"
+      },
+      {
+        "id": "BR-5",
+        "name": "Pune Branch",
+        "city": "Hyderabad"
+      }
+    ]
+  },
+  "branding": {
+    "primaryColor": "#4f46e5",
+    "logo": null,
+    "favicon": null,
+    "appName": "Smart CA"
+  },
+  "notifications": {
+    "email": {
+      "enabled": true,
+      "gstReminders": true,
+      "paymentAlerts": true,
+      "taskAssignments": true
+    },
+    "sms": {
+      "enabled": false,
+      "provider": null
+    },
+    "whatsapp": {
+      "enabled": false,
+      "provider": null
+    },
+    "inApp": {
+      "enabled": true,
+      "sound": true
+    }
+  },
+  "security": {
+    "twoFactor": false,
+    "sessionTimeout": 30,
+    "ipWhitelist": false,
+    "passwordPolicy": {
+      "minLength": 8,
+      "requireSpecial": true
+    }
+  },
+  "email": {
+    "smtpHost": "",
+    "smtpPort": 587,
+    "fromEmail": "noreply@smartca.in",
+    "fromName": "Smart CA"
+  },
+  "sms": {
+    "provider": "twilio",
+    "apiKey": "",
+    "senderId": "SMARTCA"
+  },
+  "whatsapp": {
+    "provider": "meta",
+    "apiKey": "",
+    "phoneNumberId": ""
+  },
+  "apiKeys": [],
+  "appearance": {
+    "theme": "system",
+    "language": "en",
+    "sidebarCollapsed": false,
+    "compactMode": false
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "sessions": [
+    {
+      "id": "CHAT-001",
+      "title": "GST filing requirements for FY 2025-26",
+      "createdAt": "2025-06-29",
+      "messages": [
+        {
+          "id": "1",
+          "role": "user",
+          "content": "What are the GST filing deadlines for Q1 FY 2025-26?",
+          "timestamp": "2026-07-06T15:00:06.855Z"
+        },
+        {
+          "id": "2",
+          "role": "assistant",
+          "content": "For Q1 FY 2025-26 (April-June 2025):\n\n**GSTR-1**: 11th of the following month\n**GSTR-3B**: 20th of the following month\n**GSTR-9 (Annual)**: 31st December 2025\n\nFor businesses with turnover > ₹5 Cr, GSTR-1 must be filed by 11th and GSTR-3B by 20th of the following month.",
+          "timestamp": "2026-07-06T15:00:06.855Z"
+        }
+      ]
+    },
+    {
+      "id": "CHAT-002",
+      "title": "TDS rate on professional fees",
+      "createdAt": "2025-10-15",
+      "messages": [
+        {
+          "id": "1",
+          "role": "user",
+          "content": "What are the GST filing deadlines for Q1 FY 2025-26?",
+          "timestamp": "2026-07-06T15:00:06.855Z"
+        },
+        {
+          "id": "2",
+          "role": "assistant",
+          "content": "For Q1 FY 2025-26 (April-June 2025):\n\n**GSTR-1**: 11th of the following month\n**GSTR-3B**: 20th of the following month\n**GSTR-9 (Annual)**: 31st December 2025\n\nFor businesses with turnover > ₹5 Cr, GSTR-1 must be filed by 11th and GSTR-3B by 20th of the following month.",
+          "timestamp": "2026-07-06T15:00:06.855Z"
+        }
+      ]
+    },
+    {
+      "id": "CHAT-003",
+      "title": "TDS rate on professional fees",
+      "createdAt": "2026-01-30",
+      "messages": [
+        {
+          "id": "1",
+          "role": "user",
+          "content": "What are the GST filing deadlines for Q1 FY 2025-26?",
+          "timestamp": "2026-07-06T15:00:06.855Z"
+        },
+        {
+          "id": "2",
+          "role": "assistant",
+          "content": "For Q1 FY 2025-26 (April-June 2025):\n\n**GSTR-1**: 11th of the following month\n**GSTR-3B**: 20th of the following month\n**GSTR-9 (Annual)**: 31st December 2025\n\nFor businesses with turnover > ₹5 Cr, GSTR-1 must be filed by 11th and GSTR-3B by 20th of the following month.",
+          "timestamp": "2026-07-06T15:00:06.855Z"
+        }
+      ]
+    },
+    {
+      "id": "CHAT-004",
+      "title": "GST input tax credit rules",
+      "createdAt": "2026-03-24",
+      "messages": [
+        {
+          "id": "1",
+          "role": "user",
+          "content": "What are the GST filing deadlines for Q1 FY 2025-26?",
+          "timestamp": "2026-07-06T15:00:06.855Z"
+        },
+        {
+          "id": "2",
+          "role": "assistant",
+          "content": "For Q1 FY 2025-26 (April-June 2025):\n\n**GSTR-1**: 11th of the following month\n**GSTR-3B**: 20th of the following month\n**GSTR-9 (Annual)**: 31st December 2025\n\nFor businesses with turnover > ₹5 Cr, GSTR-1 must be filed by 11th and GSTR-3B by 20th of the following month.",
+          "timestamp": "2026-07-06T15:00:06.855Z"
+        }
+      ]
+    },
+    {
+      "id": "CHAT-005",
+      "title": "Advance tax calculation",
+      "createdAt": "2026-01-16",
+      "messages": [
+        {
+          "id": "1",
+          "role": "user",
+          "content": "What are the GST filing deadlines for Q1 FY 2025-26?",
+          "timestamp": "2026-07-06T15:00:06.856Z"
+        },
+        {
+          "id": "2",
+          "role": "assistant",
+          "content": "For Q1 FY 2025-26 (April-June 2025):\n\n**GSTR-1**: 11th of the following month\n**GSTR-3B**: 20th of the following month\n**GSTR-9 (Annual)**: 31st December 2025\n\nFor businesses with turnover > ₹5 Cr, GSTR-1 must be filed by 11th and GSTR-3B by 20th of the following month.",
+          "timestamp": "2026-07-06T15:00:06.856Z"
+        }
+      ]
+    },
+    {
+      "id": "CHAT-006",
+      "title": "GST input tax credit rules",
+      "createdAt": "2025-12-13",
+      "messages": [
+        {
+          "id": "1",
+          "role": "user",
+          "content": "What are the GST filing deadlines for Q1 FY 2025-26?",
+          "timestamp": "2026-07-06T15:00:06.856Z"
+        },
+        {
+          "id": "2",
+          "role": "assistant",
+          "content": "For Q1 FY 2025-26 (April-June 2025):\n\n**GSTR-1**: 11th of the following month\n**GSTR-3B**: 20th of the following month\n**GSTR-9 (Annual)**: 31st December 2025\n\nFor businesses with turnover > ₹5 Cr, GSTR-1 must be filed by 11th and GSTR-3B by 20th of the following month.",
+          "timestamp": "2026-07-06T15:00:06.856Z"
+        }
+      ]
+    },
+    {
+      "id": "CHAT-007",
+      "title": "GST filing requirements for FY 2025-26",
+      "createdAt": "2025-01-08",
+      "messages": [
+        {
+          "id": "1",
+          "role": "user",
+          "content": "What are the GST filing deadlines for Q1 FY 2025-26?",
+          "timestamp": "2026-07-06T15:00:06.856Z"
+        },
+        {
+          "id": "2",
+          "role": "assistant",
+          "content": "For Q1 FY 2025-26 (April-June 2025):\n\n**GSTR-1**: 11th of the following month\n**GSTR-3B**: 20th of the following month\n**GSTR-9 (Annual)**: 31st December 2025\n\nFor businesses with turnover > ₹5 Cr, GSTR-1 must be filed by 11th and GSTR-3B by 20th of the following month.",
+          "timestamp": "2026-07-06T15:00:06.856Z"
+        }
+      ]
+    },
+    {
+      "id": "CHAT-008",
+      "title": "Company incorporation process",
+      "createdAt": "2026-02-16",
+      "messages": [
+        {
+          "id": "1",
+          "role": "user",
+          "content": "What are the GST filing deadlines for Q1 FY 2025-26?",
+          "timestamp": "2026-07-06T15:00:06.856Z"
+        },
+        {
+          "id": "2",
+          "role": "assistant",
+          "content": "For Q1 FY 2025-26 (April-June 2025):\n\n**GSTR-1**: 11th of the following month\n**GSTR-3B**: 20th of the following month\n**GSTR-9 (Annual)**: 31st December 2025\n\nFor businesses with turnover > ₹5 Cr, GSTR-1 must be filed by 11th and GSTR-3B by 20th of the following month.",
+          "timestamp": "2026-07-06T15:00:06.856Z"
+        }
+      ]
+    },
+    {
+      "id": "CHAT-009",
+      "title": "GST filing requirements for FY 2025-26",
+      "createdAt": "2026-05-10",
+      "messages": [
+        {
+          "id": "1",
+          "role": "user",
+          "content": "What are the GST filing deadlines for Q1 FY 2025-26?",
+          "timestamp": "2026-07-06T15:00:06.856Z"
+        },
+        {
+          "id": "2",
+          "role": "assistant",
+          "content": "For Q1 FY 2025-26 (April-June 2025):\n\n**GSTR-1**: 11th of the following month\n**GSTR-3B**: 20th of the following month\n**GSTR-9 (Annual)**: 31st December 2025\n\nFor businesses with turnover > ₹5 Cr, GSTR-1 must be filed by 11th and GSTR-3B by 20th of the following month.",
+          "timestamp": "2026-07-06T15:00:06.856Z"
+        }
+      ]
+    },
+    {
+      "id": "CHAT-010",
+      "title": "Advance tax calculation",
+      "createdAt": "2025-02-10",
+      "messages": [
+        {
+          "id": "1",
+          "role": "user",
+          "content": "What are the GST filing deadlines for Q1 FY 2025-26?",
+          "timestamp": "2026-07-06T15:00:06.856Z"
+        },
+        {
+          "id": "2",
+          "role": "assistant",
+          "content": "For Q1 FY 2025-26 (April-June 2025):\n\n**GSTR-1**: 11th of the following month\n**GSTR-3B**: 20th of the following month\n**GSTR-9 (Annual)**: 31st December 2025\n\nFor businesses with turnover > ₹5 Cr, GSTR-1 must be filed by 11th and GSTR-3B by 20th of the following month.",
+          "timestamp": "2026-07-06T15:00:06.856Z"
+        }
+      ]
+    }
+  ]
+}

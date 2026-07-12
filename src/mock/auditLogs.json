@@ -1,0 +1,505 @@
+{
+  "data": [
+    {
+      "id": "AUD-0001",
+      "userId": "USR-0007",
+      "userName": "Anita Nair",
+      "action": "login",
+      "module": "invoices",
+      "details": "Logged in",
+      "ip": "192.168.1.125",
+      "timestamp": "2025-11-19T12:00:00Z"
+    },
+    {
+      "id": "AUD-0002",
+      "userId": "USR-0030",
+      "userName": "Anita Nair",
+      "action": "export",
+      "module": "clients",
+      "details": "Created new client",
+      "ip": "192.168.1.235",
+      "timestamp": "2025-08-18T12:00:00Z"
+    },
+    {
+      "id": "AUD-0003",
+      "userId": "USR-0020",
+      "userName": "Kavita Singh",
+      "action": "delete",
+      "module": "users",
+      "details": "Filed GST return",
+      "ip": "192.168.1.43",
+      "timestamp": "2025-02-22T12:00:00Z"
+    },
+    {
+      "id": "AUD-0004",
+      "userId": "USR-0005",
+      "userName": "Suresh Gupta",
+      "action": "update",
+      "module": "documents",
+      "details": "Updated invoice status",
+      "ip": "192.168.1.130",
+      "timestamp": "2025-09-15T12:00:00Z"
+    },
+    {
+      "id": "AUD-0005",
+      "userId": "USR-0005",
+      "userName": "Rajesh Sharma",
+      "action": "update",
+      "module": "settings",
+      "details": "Uploaded document",
+      "ip": "192.168.1.121",
+      "timestamp": "2026-03-29T12:00:00Z"
+    },
+    {
+      "id": "AUD-0006",
+      "userId": "USR-0021",
+      "userName": "Arun Mehta",
+      "action": "logout",
+      "module": "settings",
+      "details": "Logged in",
+      "ip": "192.168.1.179",
+      "timestamp": "2025-08-09T12:00:00Z"
+    },
+    {
+      "id": "AUD-0007",
+      "userId": "USR-0008",
+      "userName": "Lakshmi Chopra",
+      "action": "create",
+      "module": "clients",
+      "details": "Logged in",
+      "ip": "192.168.1.35",
+      "timestamp": "2025-10-06T12:00:00Z"
+    },
+    {
+      "id": "AUD-0008",
+      "userId": "USR-0009",
+      "userName": "Karthik Bhat",
+      "action": "update",
+      "module": "users",
+      "details": "Uploaded document",
+      "ip": "192.168.1.228",
+      "timestamp": "2025-08-17T12:00:00Z"
+    },
+    {
+      "id": "AUD-0009",
+      "userId": "USR-0019",
+      "userName": "Aditya Tiwari",
+      "action": "export",
+      "module": "compliance",
+      "details": "Exported report",
+      "ip": "192.168.1.104",
+      "timestamp": "2026-01-01T12:00:00Z"
+    },
+    {
+      "id": "AUD-0010",
+      "userId": "USR-0023",
+      "userName": "Rahul Joshi",
+      "action": "logout",
+      "module": "invoices",
+      "details": "Logged in",
+      "ip": "192.168.1.43",
+      "timestamp": "2025-06-26T12:00:00Z"
+    },
+    {
+      "id": "AUD-0011",
+      "userId": "USR-0029",
+      "userName": "Meera Desai",
+      "action": "export",
+      "module": "clients",
+      "details": "Filed GST return",
+      "ip": "192.168.1.169",
+      "timestamp": "2026-03-01T12:00:00Z"
+    },
+    {
+      "id": "AUD-0012",
+      "userId": "USR-0030",
+      "userName": "Gaurav Sethi",
+      "action": "view",
+      "module": "settings",
+      "details": "Logged in",
+      "ip": "192.168.1.128",
+      "timestamp": "2025-01-12T12:00:00Z"
+    },
+    {
+      "id": "AUD-0013",
+      "userId": "USR-0020",
+      "userName": "Ritu Khanna",
+      "action": "login",
+      "module": "documents",
+      "details": "Updated invoice status",
+      "ip": "192.168.1.167",
+      "timestamp": "2026-05-16T12:00:00Z"
+    },
+    {
+      "id": "AUD-0014",
+      "userId": "USR-0012",
+      "userName": "Anjali Pandey",
+      "action": "delete",
+      "module": "users",
+      "details": "Filed GST return",
+      "ip": "192.168.1.165",
+      "timestamp": "2025-09-22T12:00:00Z"
+    },
+    {
+      "id": "AUD-0015",
+      "userId": "USR-0025",
+      "userName": "Pooja Agarwal",
+      "action": "export",
+      "module": "documents",
+      "details": "Exported report",
+      "ip": "192.168.1.209",
+      "timestamp": "2026-06-13T12:00:00Z"
+    },
+    {
+      "id": "AUD-0016",
+      "userId": "USR-0015",
+      "userName": "Ritu Khanna",
+      "action": "view",
+      "module": "clients",
+      "details": "Filed GST return",
+      "ip": "192.168.1.209",
+      "timestamp": "2025-09-21T12:00:00Z"
+    },
+    {
+      "id": "AUD-0017",
+      "userId": "USR-0008",
+      "userName": "Arun Mehta",
+      "action": "create",
+      "module": "clients",
+      "details": "Created new client",
+      "ip": "192.168.1.232",
+      "timestamp": "2025-04-24T12:00:00Z"
+    },
+    {
+      "id": "AUD-0018",
+      "userId": "USR-0003",
+      "userName": "Kiran Mishra",
+      "action": "view",
+      "module": "clients",
+      "details": "Exported report",
+      "ip": "192.168.1.63",
+      "timestamp": "2025-03-09T12:00:00Z"
+    },
+    {
+      "id": "AUD-0019",
+      "userId": "USR-0005",
+      "userName": "Sneha Reddy",
+      "action": "create",
+      "module": "clients",
+      "details": "Created new client",
+      "ip": "192.168.1.30",
+      "timestamp": "2026-02-13T12:00:00Z"
+    },
+    {
+      "id": "AUD-0020",
+      "userId": "USR-0026",
+      "userName": "Sanjay Verma",
+      "action": "delete",
+      "module": "clients",
+      "details": "Created new client",
+      "ip": "192.168.1.110",
+      "timestamp": "2025-09-18T12:00:00Z"
+    },
+    {
+      "id": "AUD-0021",
+      "userId": "USR-0008",
+      "userName": "Shweta Shah",
+      "action": "view",
+      "module": "settings",
+      "details": "Logged in",
+      "ip": "192.168.1.91",
+      "timestamp": "2025-08-21T12:00:00Z"
+    },
+    {
+      "id": "AUD-0022",
+      "userId": "USR-0022",
+      "userName": "Varun Dubey",
+      "action": "logout",
+      "module": "settings",
+      "details": "Created new client",
+      "ip": "192.168.1.153",
+      "timestamp": "2026-02-28T12:00:00Z"
+    },
+    {
+      "id": "AUD-0023",
+      "userId": "USR-0024",
+      "userName": "Suresh Gupta",
+      "action": "update",
+      "module": "users",
+      "details": "Uploaded document",
+      "ip": "192.168.1.67",
+      "timestamp": "2026-03-28T12:00:00Z"
+    },
+    {
+      "id": "AUD-0024",
+      "userId": "USR-0013",
+      "userName": "Rahul Joshi",
+      "action": "update",
+      "module": "compliance",
+      "details": "Uploaded document",
+      "ip": "192.168.1.211",
+      "timestamp": "2026-05-08T12:00:00Z"
+    },
+    {
+      "id": "AUD-0025",
+      "userId": "USR-0015",
+      "userName": "Sneha Reddy",
+      "action": "delete",
+      "module": "clients",
+      "details": "Filed GST return",
+      "ip": "192.168.1.190",
+      "timestamp": "2025-01-19T12:00:00Z"
+    },
+    {
+      "id": "AUD-0026",
+      "userId": "USR-0006",
+      "userName": "Divya Pillai",
+      "action": "update",
+      "module": "settings",
+      "details": "Logged in",
+      "ip": "192.168.1.122",
+      "timestamp": "2026-06-18T12:00:00Z"
+    },
+    {
+      "id": "AUD-0027",
+      "userId": "USR-0008",
+      "userName": "Kiran Mishra",
+      "action": "create",
+      "module": "invoices",
+      "details": "Logged in",
+      "ip": "192.168.1.73",
+      "timestamp": "2026-01-10T12:00:00Z"
+    },
+    {
+      "id": "AUD-0028",
+      "userId": "USR-0027",
+      "userName": "Varun Dubey",
+      "action": "export",
+      "module": "users",
+      "details": "Created new client",
+      "ip": "192.168.1.131",
+      "timestamp": "2026-07-01T12:00:00Z"
+    },
+    {
+      "id": "AUD-0029",
+      "userId": "USR-0025",
+      "userName": "Rahul Joshi",
+      "action": "delete",
+      "module": "documents",
+      "details": "Logged in",
+      "ip": "192.168.1.244",
+      "timestamp": "2026-03-07T12:00:00Z"
+    },
+    {
+      "id": "AUD-0030",
+      "userId": "USR-0005",
+      "userName": "Rahul Joshi",
+      "action": "update",
+      "module": "settings",
+      "details": "Uploaded document",
+      "ip": "192.168.1.170",
+      "timestamp": "2025-02-15T12:00:00Z"
+    },
+    {
+      "id": "AUD-0031",
+      "userId": "USR-0023",
+      "userName": "Harsh Bose",
+      "action": "export",
+      "module": "documents",
+      "details": "Uploaded document",
+      "ip": "192.168.1.39",
+      "timestamp": "2026-02-03T12:00:00Z"
+    },
+    {
+      "id": "AUD-0032",
+      "userId": "USR-0026",
+      "userName": "Priya Patel",
+      "action": "view",
+      "module": "compliance",
+      "details": "Filed GST return",
+      "ip": "192.168.1.100",
+      "timestamp": "2025-04-09T12:00:00Z"
+    },
+    {
+      "id": "AUD-0033",
+      "userId": "USR-0030",
+      "userName": "Shweta Shah",
+      "action": "export",
+      "module": "compliance",
+      "details": "Logged in",
+      "ip": "192.168.1.19",
+      "timestamp": "2025-11-19T12:00:00Z"
+    },
+    {
+      "id": "AUD-0034",
+      "userId": "USR-0025",
+      "userName": "Divya Pillai",
+      "action": "delete",
+      "module": "settings",
+      "details": "Updated invoice status",
+      "ip": "192.168.1.45",
+      "timestamp": "2025-08-20T12:00:00Z"
+    },
+    {
+      "id": "AUD-0035",
+      "userId": "USR-0013",
+      "userName": "Varun Dubey",
+      "action": "login",
+      "module": "clients",
+      "details": "Logged in",
+      "ip": "192.168.1.142",
+      "timestamp": "2026-01-14T12:00:00Z"
+    },
+    {
+      "id": "AUD-0036",
+      "userId": "USR-0006",
+      "userName": "Pooja Agarwal",
+      "action": "view",
+      "module": "settings",
+      "details": "Logged in",
+      "ip": "192.168.1.111",
+      "timestamp": "2025-10-21T12:00:00Z"
+    },
+    {
+      "id": "AUD-0037",
+      "userId": "USR-0028",
+      "userName": "Meera Desai",
+      "action": "view",
+      "module": "users",
+      "details": "Uploaded document",
+      "ip": "192.168.1.99",
+      "timestamp": "2026-01-27T12:00:00Z"
+    },
+    {
+      "id": "AUD-0038",
+      "userId": "USR-0017",
+      "userName": "Naveen Menon",
+      "action": "delete",
+      "module": "users",
+      "details": "Created new client",
+      "ip": "192.168.1.184",
+      "timestamp": "2026-04-10T12:00:00Z"
+    },
+    {
+      "id": "AUD-0039",
+      "userId": "USR-0021",
+      "userName": "Harsh Bose",
+      "action": "logout",
+      "module": "invoices",
+      "details": "Uploaded document",
+      "ip": "192.168.1.196",
+      "timestamp": "2025-01-28T12:00:00Z"
+    },
+    {
+      "id": "AUD-0040",
+      "userId": "USR-0028",
+      "userName": "Naveen Menon",
+      "action": "update",
+      "module": "clients",
+      "details": "Filed GST return",
+      "ip": "192.168.1.96",
+      "timestamp": "2026-06-09T12:00:00Z"
+    },
+    {
+      "id": "AUD-0041",
+      "userId": "USR-0030",
+      "userName": "Divya Pillai",
+      "action": "export",
+      "module": "clients",
+      "details": "Uploaded document",
+      "ip": "192.168.1.5",
+      "timestamp": "2025-02-03T12:00:00Z"
+    },
+    {
+      "id": "AUD-0042",
+      "userId": "USR-0004",
+      "userName": "Divya Pillai",
+      "action": "delete",
+      "module": "clients",
+      "details": "Created new client",
+      "ip": "192.168.1.165",
+      "timestamp": "2025-01-09T12:00:00Z"
+    },
+    {
+      "id": "AUD-0043",
+      "userId": "USR-0019",
+      "userName": "Varun Dubey",
+      "action": "export",
+      "module": "invoices",
+      "details": "Filed GST return",
+      "ip": "192.168.1.159",
+      "timestamp": "2025-11-08T12:00:00Z"
+    },
+    {
+      "id": "AUD-0044",
+      "userId": "USR-0009",
+      "userName": "Sneha Reddy",
+      "action": "export",
+      "module": "invoices",
+      "details": "Exported report",
+      "ip": "192.168.1.158",
+      "timestamp": "2026-06-02T12:00:00Z"
+    },
+    {
+      "id": "AUD-0045",
+      "userId": "USR-0016",
+      "userName": "Naveen Menon",
+      "action": "update",
+      "module": "invoices",
+      "details": "Filed GST return",
+      "ip": "192.168.1.210",
+      "timestamp": "2025-03-30T12:00:00Z"
+    },
+    {
+      "id": "AUD-0046",
+      "userId": "USR-0015",
+      "userName": "Isha Das",
+      "action": "delete",
+      "module": "users",
+      "details": "Exported report",
+      "ip": "192.168.1.165",
+      "timestamp": "2025-07-06T12:00:00Z"
+    },
+    {
+      "id": "AUD-0047",
+      "userId": "USR-0020",
+      "userName": "Manoj Malhotra",
+      "action": "export",
+      "module": "settings",
+      "details": "Changed settings",
+      "ip": "192.168.1.169",
+      "timestamp": "2025-12-06T12:00:00Z"
+    },
+    {
+      "id": "AUD-0048",
+      "userId": "USR-0014",
+      "userName": "Rahul Joshi",
+      "action": "update",
+      "module": "invoices",
+      "details": "Changed settings",
+      "ip": "192.168.1.244",
+      "timestamp": "2025-07-24T12:00:00Z"
+    },
+    {
+      "id": "AUD-0049",
+      "userId": "USR-0016",
+      "userName": "Arun Mehta",
+      "action": "logout",
+      "module": "users",
+      "details": "Changed settings",
+      "ip": "192.168.1.240",
+      "timestamp": "2025-12-23T12:00:00Z"
+    },
+    {
+      "id": "AUD-0050",
+      "userId": "USR-0007",
+      "userName": "Divya Pillai",
+      "action": "create",
+      "module": "settings",
+      "details": "Changed settings",
+      "ip": "192.168.1.198",
+      "timestamp": "2026-06-02T12:00:00Z"
+    }
+  ],
+  "total": 50
+}

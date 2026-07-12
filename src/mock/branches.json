@@ -1,0 +1,30 @@
+{
+  "data": [
+    {
+      "id": "BR-1",
+      "name": "Mumbai HQ",
+      "city": "Mumbai"
+    },
+    {
+      "id": "BR-2",
+      "name": "Delhi Branch",
+      "city": "Delhi"
+    },
+    {
+      "id": "BR-3",
+      "name": "Bangalore Branch",
+      "city": "Bangalore"
+    },
+    {
+      "id": "BR-4",
+      "name": "Chennai Branch",
+      "city": "Chennai"
+    },
+    {
+      "id": "BR-5",
+      "name": "Pune Branch",
+      "city": "Hyderabad"
+    }
+  ],
+  "total": 5
+}

@@ -14,7 +14,7 @@ import { AuthService } from '@/services/authService'
 import { runDataIntegrityCheck, repairDerivedData, getIntegrityAuditLog } from '@/services/reconciliationService'
 import { useAuth } from '@/hooks/useAuth'
 import { useThemeStore } from '@/store'
-import { PageHeader, Card, CardTitle, Input, Button, Badge, Modal } from '@/components/common'
+import { PageHeader, Card, CardTitle, Input, Button, Badge, Modal, SwitchField } from '@/components/common'
 import { formatRelativeTime, cn } from '@/utils'
 import { applyBrandingFromSettings } from '@/utils/branding'
 import type { Permission, ThemeMode } from '@/types/auth'
@@ -60,20 +60,6 @@ const passwordSchema = z.object({
   newPassword: z.string().min(8, 'Password must be at least 8 characters'),
   confirmPassword: z.string(),
 }).refine((d) => d.newPassword === d.confirmPassword, { message: 'Passwords do not match', path: ['confirmPassword'] })
-
-function Toggle({ enabled, onChange, label, desc }: { enabled: boolean; onChange: (v: boolean) => void; label: string; desc?: string }) {
-  return (
-    <div className="flex items-center justify-between gap-4 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
-      <div className="min-w-0">
-        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{label}</p>
-        {desc && <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{desc}</p>}
-      </div>
-      <button type="button" onClick={() => onChange(!enabled)} className={cn('w-11 h-6 rounded-full transition-colors relative shrink-0', enabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700')} aria-label={label}>
-        <span className={cn('absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform', enabled ? 'translate-x-5' : 'translate-x-0.5')} />
-      </button>
-    </div>
-  )
-}
 
 type SettingsShape = {
   branding?: { appName?: string; primaryColor?: string; logo?: string; favicon?: string }
@@ -340,17 +326,46 @@ export default function SettingsPage() {
   })
 
   const persistNotifications = async (patch: Record<string, unknown>) => {
-    const current = settingsData?.notifications || {}
-    await SettingsService.updateSettings('notifications', { ...current, ...patch })
+    const current = (settingsData?.notifications || {}) as Record<string, unknown>
+    const next: Record<string, unknown> = { ...current, ...patch }
+    if (patch.inApp && typeof patch.inApp === 'object') {
+      next.inApp = {
+        ...((typeof current.inApp === 'object' && current.inApp) ? current.inApp as object : {}),
+        ...(patch.inApp as object),
+      }
+    }
+    // Optimistic update so controlled Switch thumbs move immediately
+    queryClient.setQueryData(['settings'], (old: unknown) => {
+      if (!old || typeof old !== 'object') return old
+      return { ...(old as Record<string, unknown>), notifications: next }
+    })
+    try {
+      await SettingsService.updateSettings('notifications', next)
+      toast.success('Notification settings saved')
+    } catch (e) {
+      queryClient.invalidateQueries({ queryKey: ['settings'] })
+      toast.error(e instanceof Error ? e.message : 'Failed to save notifications')
+      return
+    }
     queryClient.invalidateQueries({ queryKey: ['settings'] })
-    toast.success('Notification settings saved')
   }
 
   const persistSecurity = async (patch: Record<string, unknown>) => {
-    const current = settingsData?.security || {}
-    await SettingsService.updateSettings('security', { ...current, ...patch })
+    const current = (settingsData?.security || {}) as Record<string, unknown>
+    const next = { ...current, ...patch }
+    queryClient.setQueryData(['settings'], (old: unknown) => {
+      if (!old || typeof old !== 'object') return old
+      return { ...(old as Record<string, unknown>), security: next }
+    })
+    try {
+      await SettingsService.updateSettings('security', next)
+      toast.success('Security settings saved')
+    } catch (e) {
+      queryClient.invalidateQueries({ queryKey: ['settings'] })
+      toast.error(e instanceof Error ? e.message : 'Failed to save security settings')
+      return
+    }
     queryClient.invalidateQueries({ queryKey: ['settings'] })
-    toast.success('Security settings saved')
   }
 
   const changePassword = async (data: z.infer<typeof passwordSchema>) => {
@@ -651,11 +666,11 @@ export default function SettingsPage() {
             <Card>
               <CardTitle className="mb-6">Notification Preferences</CardTitle>
               <div className="space-y-3">
-                <Toggle enabled={inAppEnabled} onChange={(v) => void persistNotifications({ inApp: { enabled: v, sound: soundEnabled } })} label="In-App Notifications" desc="Show notifications within the app" />
-                <Toggle enabled={soundEnabled} onChange={(v) => void persistNotifications({ inApp: { enabled: inAppEnabled, sound: v } })} label="Notification Sound" desc="Play sound for new notifications" />
-                <Toggle enabled={emailNotif} onChange={(v) => void persistNotifications({ email: { enabled: v } })} label="Email Notifications" desc="Receive notifications via email" />
-                <Toggle enabled={smsNotif} onChange={(v) => void persistNotifications({ sms: { enabled: v } })} label="SMS Notifications" desc="Receive SMS alerts" />
-                <Toggle enabled={waNotif} onChange={(v) => void persistNotifications({ whatsapp: { enabled: v } })} label="WhatsApp Notifications" desc="Receive WhatsApp messages" />
+                <SwitchField checked={inAppEnabled} onChange={(v) => void persistNotifications({ inApp: { enabled: v, sound: soundEnabled } })} label="In-App Notifications" description="Show notifications within the app" />
+                <SwitchField checked={soundEnabled} onChange={(v) => void persistNotifications({ inApp: { enabled: inAppEnabled, sound: v } })} label="Notification Sound" description="Play sound for new notifications" />
+                <SwitchField checked={emailNotif} onChange={(v) => void persistNotifications({ email: { enabled: v } })} label="Email Notifications" description="Receive notifications via email" />
+                <SwitchField checked={smsNotif} onChange={(v) => void persistNotifications({ sms: { enabled: v } })} label="SMS Notifications" description="Receive SMS alerts" />
+                <SwitchField checked={waNotif} onChange={(v) => void persistNotifications({ whatsapp: { enabled: v } })} label="WhatsApp Notifications" description="Receive WhatsApp messages" />
               </div>
             </Card>
           )}
@@ -664,7 +679,7 @@ export default function SettingsPage() {
             <Card>
               <CardTitle className="mb-6">Security Settings</CardTitle>
               <div className="space-y-3">
-                <Toggle enabled={twoFactor} onChange={(v) => void persistSecurity({ twoFactor: v })} label="Two-Factor Authentication" desc="Add an extra layer of security" />
+                <SwitchField checked={twoFactor} onChange={(v) => void persistSecurity({ twoFactor: v })} label="Two-Factor Authentication" description="Add an extra layer of security" />
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
                   <div><p className="text-sm font-medium text-gray-900 dark:text-gray-100">Session Timeout</p><p className="text-xs text-gray-500">Auto logout after inactivity</p></div>
                   <select

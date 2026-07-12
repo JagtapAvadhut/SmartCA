@@ -74,9 +74,37 @@ async function run() {
   await page.waitForTimeout(800)
   await shot(page, '09-settings')
 
+  await page.goto(`${BASE}/settings?tab=notifications`)
+  await page.waitForTimeout(600)
+  await page.getByRole('button', { name: /^Notifications$/i }).click().catch(() => {})
+  await page.waitForTimeout(500)
+  const firstSwitch = page.getByRole('switch').first()
+  if (await firstSwitch.count()) {
+    if ((await firstSwitch.getAttribute('aria-checked')) === 'true') await firstSwitch.click()
+    await page.waitForTimeout(200)
+    await shot(page, '11-switch-light-off')
+    await firstSwitch.click()
+    await page.waitForTimeout(200)
+    await shot(page, '12-switch-light-on')
+  }
+
   await page.getByRole('button', { name: /theme/i }).click()
   await page.getByRole('button', { name: /^Dark$/i }).click()
   await page.waitForTimeout(500)
+  await page.goto(`${BASE}/settings?tab=notifications`)
+  await page.waitForTimeout(600)
+  await page.getByRole('button', { name: /^Notifications$/i }).click().catch(() => {})
+  await page.waitForTimeout(400)
+  const darkSwitch = page.getByRole('switch').first()
+  if (await darkSwitch.count()) {
+    if ((await darkSwitch.getAttribute('aria-checked')) === 'true') await darkSwitch.click()
+    await page.waitForTimeout(200)
+    await shot(page, '13-switch-dark-off')
+    await darkSwitch.click()
+    await page.waitForTimeout(200)
+    await shot(page, '14-switch-dark-on')
+  }
+
   await page.goto(`${BASE}/`)
   await page.waitForTimeout(800)
   await shot(page, '10-dashboard-dark')

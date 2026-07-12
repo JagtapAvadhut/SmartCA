@@ -574,15 +574,27 @@ async function run() {
     await fillName(page, 'name', `QA Doc ${unique}`)
     const clientSelect = page.locator('select[name="clientId"]')
     const opts = await clientSelect.locator('option').allTextContents()
-    const m = opts.find((o) => o.includes(clientName))
+    const m = opts.find((o) => o.includes(clientName)) || opts.find((o) => o && o !== 'Select...')
     if (m) {
       await clientSelect.selectOption({ label: m })
-      await waitSyncedName(page, 'clientName', clientName)
+      await waitSyncedName(page, 'clientName', m)
     }
-    await page.locator('[role=dialog]').getByRole('button', { name: /Upload/i }).click()
+    const typeSelect = page.locator('select[name="type"]')
+    if (await typeSelect.count()) {
+      const typeOpts = await typeSelect.locator('option').allTextContents()
+      const t = typeOpts.find((o) => o && o !== 'Select...')
+      if (t) await typeSelect.selectOption({ label: t })
+    }
+    const folderSelect = page.locator('select[name="folder"]')
+    if (await folderSelect.count()) {
+      const folderOpts = await folderSelect.locator('option').allTextContents()
+      const f = folderOpts.find((o) => o && o !== 'Select...')
+      if (f) await folderSelect.selectOption({ label: f })
+    }
+    await page.locator('[role=dialog]').getByRole('button', { name: /Upload|Save/i }).click()
     await page.waitForTimeout(1500)
     const ok = await page.getByText(`QA Doc ${unique}`).first().isVisible().catch(() => false)
-    record('CRUD document upload', ok ? 'PASS' : 'FAIL')
+    record('CRUD document upload', ok ? 'PASS' : 'FAIL', ok ? '' : 'doc not visible after save')
     if (ok) {
       const fav = page.getByRole('button', { name: /favourite|favorite|star/i }).first()
       if (await fav.count()) {
@@ -749,6 +761,139 @@ async function run() {
     record('SETTINGS theme persists after refresh', stillDark ? 'PASS' : 'FAIL')
   } catch (e) {
     record('SETTINGS theme persists after refresh', 'FAIL', e.message)
+  }
+
+  // -------- SWITCH / TOGGLE REGRESSION --------
+  async function measureSwitch(page, switchLocator) {
+    return switchLocator.evaluate((sw) => {
+      const thumb = sw.querySelector('span')
+      if (!thumb) return { ok: false, reason: 'no thumb' }
+      const sr = sw.getBoundingClientRect()
+      const tr = thumb.getBoundingClientRect()
+      const pad = 0.75
+      const within =
+        tr.left >= sr.left - pad &&
+        tr.right <= sr.right + pad &&
+        tr.top >= sr.top - pad &&
+        tr.bottom <= sr.bottom + pad
+      return {
+        ok: within,
+        checked: sw.getAttribute('aria-checked'),
+        trackW: Math.round(sr.width),
+        trackH: Math.round(sr.height),
+        thumbW: Math.round(tr.width),
+        thumbH: Math.round(tr.height),
+        leftGap: Math.round((tr.left - sr.left) * 10) / 10,
+        rightGap: Math.round((sr.right - tr.right) * 10) / 10,
+      }
+    })
+  }
+
+  try {
+    await gotoPage(page, '/settings?tab=notifications')
+    await page.getByRole('button', { name: /^Notifications$/i }).click().catch(() => {})
+    await page.waitForTimeout(600)
+    const switches = page.getByRole('switch')
+    const count = await switches.count()
+    record('SWITCH instances on notifications tab', count >= 5 ? 'PASS' : 'FAIL', `count=${count}`)
+
+    const first = switches.first()
+    await first.waitFor({ state: 'visible', timeout: 8000 })
+    // Force known OFF then ON for geometry
+    for (let i = 0; i < 2; i++) {
+      if ((await first.getAttribute('aria-checked')) === 'true') {
+        await first.click()
+        await page.waitForTimeout(200)
+      }
+    }
+    const offGeo = await measureSwitch(page, first)
+    record(
+      'SWITCH geometry OFF thumb inside track',
+      offGeo.ok && offGeo.checked === 'false' ? 'PASS' : 'FAIL',
+      JSON.stringify(offGeo),
+    )
+
+    await first.click()
+    await page.waitForTimeout(200)
+    await page.waitForFunction(
+      () => {
+        const sw = document.querySelector('[role="switch"]')
+        const thumb = sw?.querySelector('span')
+        if (!sw || !thumb || sw.getAttribute('aria-checked') !== 'true') return false
+        const sr = sw.getBoundingClientRect()
+        const tr = thumb.getBoundingClientRect()
+        return tr.left - sr.left >= 18
+      },
+      null,
+      { timeout: 4000 },
+    ).catch(() => {})
+    await page.waitForTimeout(100)
+    const onGeo = await measureSwitch(page, first)
+    record(
+      'SWITCH geometry ON thumb inside track',
+      onGeo.ok && onGeo.checked === 'true' && (onGeo.leftGap ?? 0) >= 18 ? 'PASS' : 'FAIL',
+      JSON.stringify(onGeo),
+    )
+
+    const symmetric =
+      offGeo.ok &&
+      onGeo.ok &&
+      offGeo.checked === 'false' &&
+      onGeo.checked === 'true' &&
+      Math.abs((offGeo.leftGap ?? 0) - (onGeo.rightGap ?? 0)) <= 2 &&
+      Math.abs((offGeo.rightGap ?? 0) - (onGeo.leftGap ?? 0)) <= 2
+    record('SWITCH travel geometry symmetric', symmetric ? 'PASS' : 'FAIL', JSON.stringify({ off: offGeo, on: onGeo }))
+
+    // Keyboard: Space / Enter on focused switch
+    await first.click() // ensure known state flip from ON -> toward OFF for baseline
+    await page.waitForTimeout(150)
+    await first.focus()
+    const before = await first.getAttribute('aria-checked')
+    await page.keyboard.press('Space')
+    await page.waitForTimeout(250)
+    let after = await first.getAttribute('aria-checked')
+    if (before === after) {
+      await page.keyboard.press('Enter')
+      await page.waitForTimeout(250)
+      after = await first.getAttribute('aria-checked')
+    }
+    record('SWITCH keyboard Space toggles', before && after && before !== after ? 'PASS' : 'FAIL', `${before}->${after}`)
+
+    // Persist notification sound across refresh (wait for async LocalStorage write)
+    await gotoPage(page, '/settings?tab=notifications')
+    await page.waitForTimeout(500)
+    const sound = page.getByRole('switch', { name: /Notification Sound/i })
+    await sound.waitFor({ state: 'visible', timeout: 8000 })
+    // Force OFF
+    if ((await sound.getAttribute('aria-checked')) === 'true') {
+      await sound.click()
+      await page.waitForTimeout(900)
+    }
+    // Force ON (value we will assert after reload)
+    if ((await sound.getAttribute('aria-checked')) !== 'true') {
+      await sound.click()
+      await page.waitForTimeout(900)
+    }
+    const expected = await sound.getAttribute('aria-checked')
+    record('SWITCH notification set before refresh', expected === 'true' ? 'PASS' : 'FAIL', `expected=${expected}`)
+    await page.reload()
+    await page.waitForTimeout(1200)
+    await page.getByRole('button', { name: /^Notifications$/i }).click().catch(() => {})
+    await page.waitForTimeout(600)
+    const afterReload = await page.getByRole('switch', { name: /Notification Sound/i }).getAttribute('aria-checked')
+    record('SWITCH notification preference persists', expected === afterReload && afterReload === 'true' ? 'PASS' : 'FAIL', `expected=${expected} actual=${afterReload}`)
+
+    // Dark mode geometry
+    await page.evaluate(() => document.documentElement.classList.add('dark'))
+    await page.waitForTimeout(200)
+    const darkSw = page.getByRole('switch').first()
+    if ((await darkSw.getAttribute('aria-checked')) !== 'true') await darkSw.click()
+    await page.waitForTimeout(200)
+    const darkOn = await measureSwitch(page, darkSw)
+    record('SWITCH dark mode ON geometry', darkOn.ok ? 'PASS' : 'FAIL', JSON.stringify(darkOn))
+    await page.evaluate(() => document.documentElement.classList.remove('dark'))
+  } catch (e) {
+    record('SWITCH regression suite', 'FAIL', e.message)
   }
 
   // -------- AI page --------

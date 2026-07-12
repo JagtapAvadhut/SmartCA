@@ -50,10 +50,12 @@ A **Demo Mode** banner is shown in the authenticated shell for the same reason.
 - Recycle Bin (restore / permanent delete / bulk)
 - Global search + Command Palette (Ctrl/Cmd+K)
 - Notifications, Dark Mode, Branding (CSS variables), Session timeout from settings
+- Shared **Switch** control (Headless UI + correct thumb geometry) used in Settings notifications/security
 - Users / Roles / Permission matrix (LocalStorage)
 - Mock auth + RBAC (protected routes, role-filtered nav)
 - Responsive layouts; DataTable search/sort/export/column visibility
 - Data Integrity check + Repair Derived Data (Settings)
+- Accessibility: focus-visible, labelled switches, keyboard Space/Enter on switches, reduced-motion
 
 ---
 
@@ -73,6 +75,10 @@ Screenshots are captured from the running demo app (mock data only).
 | Reports | ![Reports](docs/screenshots/08-reports.png) |
 | Settings | ![Settings](docs/screenshots/09-settings.png) |
 | Dark mode | ![Dark mode](docs/screenshots/10-dashboard-dark.png) |
+| Switch OFF (light) | ![Switch off](docs/screenshots/11-switch-light-off.png) |
+| Switch ON (light) | ![Switch on](docs/screenshots/12-switch-light-on.png) |
+| Switch OFF (dark) | ![Switch dark off](docs/screenshots/13-switch-dark-off.png) |
+| Switch ON (dark) | ![Switch dark on](docs/screenshots/14-switch-dark-on.png) |
 
 Regenerate locally (dev server required):
 
@@ -270,13 +276,13 @@ Latest verified runs (see [docs/QA_REPORT.md](docs/QA_REPORT.md)):
 
 | Suite | Command | Result |
 |-------|---------|--------|
-| Browser regression | `npm run qa:browser` | **99 PASS / 0 FAIL** |
+| Browser regression | `npm run qa:browser` | **112 PASS / 0 FAIL** |
 | Business logic | `npm run qa:business` | **24 PASS / 0 FAIL** |
 | Production build | `npm run build` | **PASS** (`tsc -b` + Vite) |
 
-Coverage highlights: page loads, dark mode, viewports, CRUD flows, Clientâ†’Invoiceâ†’Payment exact outstanding deltas, payment validation, accounting balance invariants, integrity repair.
+Coverage highlights: page loads, dark mode, viewports, CRUD flows, Client→Invoice→Payment exact outstanding deltas, payment validation, accounting balance invariants, integrity repair, **Switch geometry / keyboard / persistence** (Settings notifications & security).
 
-Notable fixes during QA: form reset wiping inputs; `partially_paid` status; payment overpay rejection; orphan payment cleanup; live accounting engine; Data Integrity settings.
+Notable fixes during QA: form reset wiping inputs; `partially_paid` status; payment overpay rejection; orphan payment cleanup; live accounting engine; Data Integrity settings; **switch thumb overflow** (absolute thumb without fixed inset + async controlled state).
 
 ---
 
@@ -286,11 +292,18 @@ Playwright overflow checks were run at viewports including **320, 375, 390, 414,
 
 ---
 
-## Dark mode and branding
+## Dark mode, theming, and shared controls
 
-- Theme: light / dark / system via Zustand (`smart-ca-theme`), available from the topbar
-- Branding: Settings â†’ Branding applies primary color via injected CSS variables (`applyBrandingFromSettings`)
+- Theme: light / dark / system via Zustand (`smart-ca-theme`), available from the topbar and Settings → Appearance
+- Branding: Settings → Branding applies primary color via injected CSS variables (`applyBrandingFromSettings`)
 - Language preference is stored for future i18n (UI strings remain English in v1.0)
+- **Switch / toggle:** one shared `Switch` + `SwitchField` (`src/components/common/Switch.tsx`) built on Headless UI
+  - Track 44×24, thumb 20×20, padding 2px → travel **20px** (`translate-x-5` from `left-0.5`)
+  - Thumb stays inside the track in OFF and ON (verified in Playwright geometry assertions)
+  - Keyboard Space/Enter, focus-visible ring, disabled state, Light/Dark, `motion-reduce`
+  - Settings notification/security toggles use optimistic LocalStorage updates so the thumb does not snap back while `simulateDelay` runs
+- Status badges use paired Light/Dark semantic tokens (`src/constants/status.ts`)
+- Demo Mode banner remains visible in the authenticated shell
 
 ---
 

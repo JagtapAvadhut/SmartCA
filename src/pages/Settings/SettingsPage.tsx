@@ -123,7 +123,7 @@ export default function SettingsPage() {
   const [roleModal, setRoleModal] = useState<'create' | 'edit' | null>(null)
   const [editingRole, setEditingRole] = useState<{ id: string; name: string; level: number; permissions: string[] } | null>(null)
   const [roleForm, setRoleForm] = useState({ name: '', level: 40, permissions: ['dashboard.view'] as string[] })
-  const [integrityReport, setIntegrityReport] = useState<ReturnType<typeof runDataIntegrityCheck> | null>(null)
+  const [integrityReport, setIntegrityReport] = useState<Awaited<ReturnType<typeof runDataIntegrityCheck>> | null>(null)
 
   const { data: roles } = useQuery({
     queryKey: ['roles'],
@@ -846,9 +846,10 @@ export default function SettingsPage() {
               <div className="flex flex-wrap gap-2 mb-4">
                 <Button
                   onClick={() => {
-                    const report = runDataIntegrityCheck()
-                    toast.success(`Integrity check: ${report.errorCount} errors, ${report.warningCount} warnings`)
-                    setIntegrityReport(report)
+                    void runDataIntegrityCheck().then((report) => {
+                      toast.success(`Integrity check: ${report.errorCount} errors, ${report.warningCount} warnings`)
+                      setIntegrityReport(report)
+                    })
                   }}
                 >
                   Run Data Integrity Check
@@ -856,9 +857,10 @@ export default function SettingsPage() {
                 <Button
                   variant="outline"
                   onClick={() => {
-                    const result = repairDerivedData()
-                    toast.success(`Repaired ${result.repaired} derived records`)
-                    setIntegrityReport(result.report)
+                    void repairDerivedData().then((result) => {
+                      toast.success(`Repaired ${result.repaired} derived records`)
+                      setIntegrityReport(result.report)
+                    })
                   }}
                 >
                   Repair Derived Data
@@ -965,7 +967,7 @@ export default function SettingsPage() {
         </div>
         <div className="mt-6 flex justify-end gap-2">
           <Button variant="outline" onClick={() => setRoleModal(null)}>Cancel</Button>
-          <Button onClick={() => void saveRole()}>{roleModal === 'create' ? 'Create' : 'Save'}</Button>
+          <Button onClick={() => void saveRole()}>{roleModal === 'create' ? 'Create Role' : 'Save Role'}</Button>
         </div>
       </Modal>
     </div>

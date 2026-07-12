@@ -1,10 +1,7 @@
 import { createCrudService } from './crudFactory'
-import { COLLECTION, getCollection } from '@/db'
-import { simulateDelay } from './api'
 import type { Employee } from '@/types'
 
-const base = createCrudService<Employee>(COLLECTION.employees, {
-  searchFields: ['firstName', 'lastName', 'email', 'designation', 'department'],
+const base = createCrudService<Employee>('employees', {
   beforeCreate: (data) => {
     const firstName = data.firstName || 'New'
     const lastName = data.lastName || 'Employee'
@@ -31,10 +28,8 @@ const base = createCrudService<Employee>(COLLECTION.employees, {
 export const EmployeeService = {
   ...base,
   async getBirthdays() {
-    await simulateDelay()
     const now = new Date()
-    return getCollection<Employee>(COLLECTION.employees)
-      .find()
-      .filter((e) => new Date(e.dateOfBirth).getMonth() === now.getMonth())
+    const all = await base.find()
+    return all.filter((e) => new Date(e.dateOfBirth).getMonth() === now.getMonth())
   },
 }

@@ -1,14 +1,6 @@
 import { create } from 'zustand'
-import { COLLECTION, getCollection } from '@/db'
+import { NotificationService } from '@/services/miscService'
 import type { Notification } from '@/types'
-
-function loadNotifications(): Notification[] {
-  try {
-    return getCollection<Notification>(COLLECTION.notifications).find() as Notification[]
-  } catch {
-    return []
-  }
-}
 
 interface NotificationState {
   notifications: Notification[]
@@ -22,52 +14,43 @@ interface NotificationState {
   addNotification: (notification: Omit<Notification, 'id' | 'createdAt'>) => void
 }
 
-export const useNotificationStore = create<NotificationState>()((set) => ({
+function applyList(set: (partial: Partial<NotificationState>) => void, data: Notification[]) {
+  set({ notifications: data, unreadCount: data.filter((n) => !n.read).length })
+}
+
+export const useNotificationStore = create<NotificationState>()((set, get) => ({
   notifications: [],
   unreadCount: 0,
 
   initialize: () => {
-    const data = loadNotifications()
-    set({ notifications: data, unreadCount: data.filter((n) => !n.read).length })
+    void NotificationService.getAll()
+      .then((data) => applyList(set, data))
+      .catch(() => applyList(set, []))
   },
 
   refresh: () => {
-    const data = loadNotifications()
-    set({ notifications: data, unreadCount: data.filter((n) => !n.read).length })
+    void NotificationService.getAll()
+      .then((data) => applyList(set, data))
+      .catch(() => applyList(set, []))
   },
 
   markAsRead: (id) => {
-    getCollection(COLLECTION.notifications).update(id, { read: true })
-    const data = loadNotifications()
-    set({ notifications: data, unreadCount: data.filter((n) => !n.read).length })
+    void NotificationService.markRead(id).then(() => get().refresh())
   },
 
   markAllAsRead: () => {
-    const col = getCollection(COLLECTION.notifications)
-    col.find({ filter: { read: false } }).forEach((n) => col.update(n.id, { read: true }))
-    const data = loadNotifications()
-    set({ notifications: data, unreadCount: 0 })
+    void NotificationService.markAllRead().then(() => get().refresh())
   },
 
   archive: (id) => {
-    getCollection(COLLECTION.notifications).archive(id)
-    const data = loadNotifications()
-    set({ notifications: data, unreadCount: data.filter((n) => !n.read).length })
+    void NotificationService.archive(id).then(() => get().refresh())
   },
 
   deleteNotification: (id) => {
-    getCollection(COLLECTION.notifications).delete(id)
-    const data = loadNotifications()
-    set({ notifications: data, unreadCount: data.filter((n) => !n.read).length })
+    void NotificationService.delete(id).then(() => get().refresh())
   },
 
   addNotification: (notification) => {
-    getCollection(COLLECTION.notifications).insert({
-      ...notification,
-      createdAt: new Date().toISOString(),
-      read: false,
-    })
-    const data = loadNotifications()
-    set({ notifications: data, unreadCount: data.filter((n) => !n.read).length })
+    void NotificationService.create(notification).then(() => get().refresh())
   },
 }))

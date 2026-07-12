@@ -1,7 +1,26 @@
 import toast from 'react-hot-toast'
-import { getCollection, type CollectionKey } from '@/db'
+import { http } from '@/services/httpClient'
+import type { CollectionKey } from '@/db'
 
 const UNDO_KEY = 'smart-ca-undo-stack'
+
+const API_PATH: Partial<Record<CollectionKey, string>> = {
+  clients: '/clients',
+  companies: '/companies',
+  employees: '/employees',
+  invoices: '/invoices',
+  payments: '/payments',
+  documents: '/documents',
+  tasks: '/tasks',
+  notes: '/notes',
+  calendar: '/calendar-events',
+  gst: '/gst',
+  itr: '/itr',
+  tds: '/tds',
+  roc: '/roc',
+  compliance: '/compliance',
+  notifications: '/notifications',
+}
 
 export interface UndoSnapshot {
   id: string
@@ -35,34 +54,40 @@ export function pushUndo(snapshot: Omit<UndoSnapshot, 'id' | 'expiresAt'>) {
   return item
 }
 
-export function restoreUndo(id: string): boolean {
+export async function restoreUndo(id: string): Promise<boolean> {
   const stack = readStack()
   const item = stack.find((s) => s.id === id)
   if (!item) return false
   writeStack(stack.filter((s) => s.id !== id))
-  const col = getCollection(item.collection)
-  const existing = col.findById(String(item.record.id))
-  if (existing) {
-    col.update(String(item.record.id), { ...item.record, archived: false })
-  } else {
-    col.insert({ ...item.record })
+  const path = API_PATH[item.collection]
+  if (!path) return false
+  const recordId = String(item.record.id)
+  try {
+    // Prefer restore if soft-deleted; otherwise recreate
+    try {
+      await http.post(`${path}/${recordId}/restore`)
+      return true
+    } catch {
+      await http.post(path, { ...item.record, archived: false })
+      return true
+    }
+  } catch {
+    return false
   }
-  return true
 }
 
 export function deleteWithUndo(options: {
   collection: CollectionKey
   record: Record<string, unknown> & { id: string }
   label: string
-  performDelete: () => void
+  performDelete: () => void | Promise<void>
   onRestored: () => void
-}) {
+}): Promise<void> {
   const snapshot = pushUndo({
     collection: options.collection,
     record: options.record,
     label: options.label,
   })
-  options.performDelete()
 
   toast.custom(
     (t) => (
@@ -72,11 +97,13 @@ export function deleteWithUndo(options: {
           type="button"
           className="font-semibold text-primary-600 hover:text-primary-700"
           onClick={() => {
-            if (restoreUndo(snapshot.id)) {
-              options.onRestored()
-              toast.dismiss(t.id)
-              toast.success('Restored')
-            }
+            void restoreUndo(snapshot.id).then((ok) => {
+              if (ok) {
+                options.onRestored()
+                toast.dismiss(t.id)
+                toast.success('Restored')
+              }
+            })
           }}
         >
           Undo
@@ -91,6 +118,8 @@ export function deleteWithUndo(options: {
         </button>
       </div>
     ),
-    { duration: 10000, id: snapshot.id }
+    { duration: 10000, id: snapshot.id },
   )
+
+  return Promise.resolve(options.performDelete())
 }

@@ -1,10 +1,7 @@
 import { createCrudService } from './crudFactory'
-import { COLLECTION, getCollection } from '@/db'
-import { simulateDelay } from './api'
 import type { Task } from '@/types'
 
-const base = createCrudService<Task>(COLLECTION.tasks, {
-  searchFields: ['title', 'clientName', 'assignedToName', 'category'],
+const base = createCrudService<Task>('tasks', {
   beforeCreate: (data) => ({
     description: data.description || data.title || '',
     priority: 'medium',
@@ -19,10 +16,7 @@ const base = createCrudService<Task>(COLLECTION.tasks, {
 export const TaskService = {
   ...base,
   async getTodays() {
-    await simulateDelay()
-    return getCollection<Task>(COLLECTION.tasks)
-      .find()
-      .filter((t) => t.status !== 'completed')
-      .slice(0, 10)
+    const all = await base.find()
+    return all.filter((t) => t.status !== 'completed').slice(0, 10)
   },
 }

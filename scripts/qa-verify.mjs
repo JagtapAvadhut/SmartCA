@@ -414,21 +414,15 @@ async function run() {
     await page.waitForTimeout(700)
     const row = page.locator('tr').filter({ hasText: clientName }).first()
     const rowText = await row.innerText().catch(() => '')
-    const invMatch = rowText.match(/INV[-\w]+/i)
+    const invMatch = rowText.match(/SCA\/\d{4}-\d{2}\/\d+/i) || rowText.match(/INV[-\w]+/i)
     createdInvoiceNumber = invMatch ? invMatch[0] : null
     if (!createdInvoiceNumber) {
-      // fallback: read from localStorage
+      // fallback: read invoice number from API-backed table cells
       createdInvoiceNumber = await page.evaluate((cname) => {
-        for (const k of Object.keys(localStorage)) {
-          if (!k.includes('invoice')) continue
-          try {
-            const data = JSON.parse(localStorage.getItem(k) || '[]')
-            const arr = Array.isArray(data) ? data : data?.data || []
-            const hit = [...arr].reverse().find((i) => i && i.clientName === cname)
-            return hit?.invoiceNumber || null
-          } catch { /* continue */ }
-        }
-        return null
+        const rows = [...document.querySelectorAll('tbody tr')]
+        const hit = rows.find((r) => (r.textContent || '').includes(cname))
+        const m = (hit?.textContent || '').match(/SCA\/\d{4}-\d{2}\/\d+/i)
+        return m ? m[0] : null
       }, clientName)
     }
     record('CRUD invoice create', rowText.includes(clientName) || !!createdInvoiceNumber ? 'PASS' : 'FAIL', rowText.slice(0, 100) || createdInvoiceNumber || 'row missing')
@@ -521,6 +515,8 @@ async function run() {
     await page.waitForTimeout(500)
     const stillInTable = await page.locator('tbody tr').filter({ hasText: `QA-PAY-${unique}` }).count()
     record('CRUD payment delete', stillInTable === 0 ? 'PASS' : 'FAIL', `rowsLeft=${stillInTable}`)
+    // Give dashboard aggregation a moment after payment/invoice sync
+    await page.waitForTimeout(800)
     outstandingAfterDelete = await readOutstandingFromDashboard(page)
     record(
       'REL outstanding rollback after payment delete',
@@ -741,8 +737,15 @@ async function run() {
     await page.waitForTimeout(500)
     await clickVisible(page, /Create Role/i)
     await fillByLabel(page, 'Role Name', `QA Role ${unique}`)
-    await page.getByRole('button', { name: /^Create$/i }).click()
-    await page.waitForTimeout(1000)
+    const dialog = page.getByRole('dialog')
+    await dialog.getByRole('button', { name: /Create Role/i }).click()
+    await page.waitForTimeout(1500)
+    // Roles list may paginate; search if available
+    const search = page.getByPlaceholder(/search/i).first()
+    if (await search.count()) {
+      await search.fill(`QA Role ${unique}`)
+      await page.waitForTimeout(500)
+    }
     const roleOk = await page.getByText(`QA Role ${unique}`).first().isVisible().catch(() => false)
     record('SETTINGS create role', roleOk ? 'PASS' : 'FAIL')
   } catch (e) {

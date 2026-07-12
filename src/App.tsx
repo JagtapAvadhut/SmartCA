@@ -6,7 +6,6 @@ import { router } from '@/routes'
 import { ErrorBoundary } from '@/components/common'
 import { useThemeStore } from '@/store'
 import { useNotificationStore } from '@/store/notificationStore'
-import { initDatabase } from '@/db'
 import { applyBrandingFromSettings } from '@/utils/branding'
 
 const queryClient = new QueryClient({
@@ -20,7 +19,6 @@ function AppProviders({ children }: { children: React.ReactNode }) {
   const initNotifications = useNotificationStore((s) => s.initialize)
 
   useEffect(() => {
-    initDatabase()
     initTheme()
     initNotifications()
     applyBrandingFromSettings()

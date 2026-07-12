@@ -4,7 +4,7 @@ import { type ColumnDef } from '@tanstack/react-table'
 import { Plus } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { ComplianceService } from '@/services'
-import { COLLECTION, getCollection } from '@/db'
+import { COLLECTION } from '@/db'
 import {
   PageHeader, DataTable, Badge, Button, Can, EntityFormModal, ConfirmDialog, RowActions, type FormField,
 } from '@/components/common'
@@ -71,20 +71,37 @@ function ComplianceTablePage({
   const { data, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFn })
   const invalidate = () => invalidateAfterMutation(queryClient, [queryKey])
 
+  const mutateCreate = async (payload: Partial<GSTFiling>) => {
+    if (collection === COLLECTION.gst) return ComplianceService.createGST(payload)
+    if (collection === COLLECTION.itr) return ComplianceService.createITR(payload as never)
+    if (collection === COLLECTION.tds) return ComplianceService.createTDS(payload as never)
+    return ComplianceService.createROC(payload as never)
+  }
+  const mutateUpdate = async (id: string, payload: Partial<GSTFiling>) => {
+    if (collection === COLLECTION.gst) return ComplianceService.updateGST(id, payload)
+    if (collection === COLLECTION.itr) return ComplianceService.updateITR(id, payload as never)
+    if (collection === COLLECTION.tds) return ComplianceService.updateTDS(id, payload as never)
+    return ComplianceService.updateROC(id, payload as never)
+  }
+  const mutateDelete = async (id: string) => {
+    if (collection === COLLECTION.gst) return ComplianceService.deleteGST(id)
+    if (collection === COLLECTION.itr) return ComplianceService.deleteITR(id)
+    if (collection === COLLECTION.tds) return ComplianceService.deleteTDS(id)
+    return ComplianceService.deleteROC(id)
+  }
+
   const handleSubmit = async (form: FilingForm) => {
     setSaving(true)
     try {
-      const col = getCollection(collection)
       if (editing) {
-        col.update(editing.id, form)
+        await mutateUpdate(editing.id, form)
         toast.success('Filing updated')
       } else {
-        col.insert({
+        await mutateCreate({
           ...form,
           clientId: '',
           filedDate: null,
-          acknowledgmentNumber: null,
-        })
+        } as Partial<GSTFiling>)
         toast.success('Filing created')
       }
       setFormOpen(false)
@@ -104,7 +121,9 @@ function ComplianceTablePage({
         collection,
         record,
         label: `${deleting.returnType} · ${deleting.clientName}`,
-        performDelete: () => { getCollection(collection).delete(deleting.id) },
+        performDelete: async () => {
+          await mutateDelete(deleting.id)
+        },
         onRestored: invalidate,
       })
       setDeleting(null)

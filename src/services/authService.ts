@@ -1,116 +1,80 @@
-import { COLLECTION, getCollection } from '@/db'
-import { simulateDelay, setAuthToken } from './api'
+import { http, setAuthToken } from './httpClient'
 import type { AuthUser, LoginCredentials, Session } from '@/types/auth'
-import { SESSION_TIMEOUT_MS } from '@/types/auth'
-import { ActivityService } from './miscService'
-
-type UserRecord = AuthUser & { password: string }
-
-function generateToken(): string {
-  return `sca_${Date.now()}_${Math.random().toString(36).slice(2, 15)}`
-}
-
-function sanitizeUser(user: UserRecord): AuthUser {
-  const { password: _, ...safe } = user
-  return safe as AuthUser
-}
 
 export const AuthService = {
-  async login(credentials: LoginCredentials): Promise<{ user: AuthUser; token: string; session: Session }> {
-    await simulateDelay(600)
-    const { identifier, password, rememberMe } = credentials
-    const id = identifier.trim().toLowerCase()
-    const users = getCollection<UserRecord>(COLLECTION.users).find({ includeArchived: true })
-    const user = users.find(
-      (u) =>
-        u.email.toLowerCase() === id ||
-        u.username.toLowerCase() === id ||
-        u.loginId.toLowerCase() === id
+  async login(
+    credentials: LoginCredentials,
+  ): Promise<{ user: AuthUser; token: string; session: Session }> {
+    const device = navigator.userAgent.includes('Mobile') ? 'Mobile Browser' : 'Desktop Browser'
+    const result = await http.post<{ user: AuthUser; token: string; session: Session }>(
+      '/auth/login',
+      {
+        identifier: credentials.identifier,
+        password: credentials.password,
+        rememberMe: !!credentials.rememberMe,
+        device,
+      },
+      { skipAuthRedirect: true },
     )
-
-    if (!user) throw new Error('Invalid email, username, or login ID')
-    if (user.password !== password) throw new Error('Incorrect password')
-    if (user.status !== 'active') throw new Error('Your account has been deactivated. Contact administrator.')
-
-    const token = generateToken()
-    const session: Session = {
-      id: `SES-${Date.now()}`,
-      userId: user.id,
-      token,
-      device: navigator.userAgent.includes('Mobile') ? 'Mobile Browser' : 'Desktop Browser',
-      ip: '127.0.0.1',
-      createdAt: new Date().toISOString(),
-      expiresAt: new Date(Date.now() + (rememberMe ? 7 * 86400000 : SESSION_TIMEOUT_MS)).toISOString(),
-      active: true,
-    }
-
-    getCollection(COLLECTION.users).update(user.id, { lastLogin: new Date().toISOString() } as Partial<UserRecord>)
-    getCollection(COLLECTION.loginHistory).insert({
-      userId: user.id,
-      userName: user.fullName,
-      email: user.email,
-      success: true,
-      ip: '127.0.0.1',
-      device: session.device,
-      timestamp: new Date().toISOString(),
-    })
-
-    setAuthToken(token)
-    await ActivityService.log(`${user.fullName} logged in`, 'login', '', '', user.id, user.fullName)
-    return { user: sanitizeUser(user), token, session }
+    setAuthToken(result.token)
+    return result
   },
 
   async logout(): Promise<void> {
-    await simulateDelay(200)
+    try {
+      await http.post('/auth/logout')
+    } catch {
+      /* ignore — always clear local token */
+    }
     setAuthToken(null)
   },
 
   async forgotPassword(email: string): Promise<{ message: string }> {
-    await simulateDelay(800)
-    const user = getCollection<UserRecord>(COLLECTION.users)
-      .find()
-      .find((u) => u.email.toLowerCase() === email.trim().toLowerCase())
-    if (!user) throw new Error('No account found with this email address')
-    return { message: 'Password reset link has been sent to your email address.' }
+    return http.post<{ message: string }>(
+      '/auth/forgot-password',
+      { email },
+      { skipAuthRedirect: true },
+    )
   },
 
-  async resetPassword(_token: string, newPassword: string): Promise<{ message: string }> {
-    await simulateDelay(600)
-    if (newPassword.length < 8) throw new Error('Password must be at least 8 characters')
-    return { message: 'Password has been reset successfully. You can now sign in.' }
+  async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
+    return http.post<{ message: string }>(
+      '/auth/reset-password',
+      { token, newPassword },
+      { skipAuthRedirect: true },
+    )
   },
 
-  async getCurrentUser(userId: string): Promise<AuthUser> {
-    await simulateDelay(200)
-    const user = getCollection<UserRecord>(COLLECTION.users).findById(userId)
-    if (!user) throw new Error('User not found')
-    return sanitizeUser(user)
+  async getCurrentUser(_userId?: string): Promise<AuthUser> {
+    return http.get<AuthUser>('/auth/me')
   },
 
-  async getAllUsers() {
-    await simulateDelay()
-    return getCollection<UserRecord>(COLLECTION.users).find().map(sanitizeUser)
+  async getAllUsers(): Promise<AuthUser[]> {
+    const res = await http.get<{ data: AuthUser[]; total: number }>('/users', {
+      params: { page: 1, pageSize: 100000 },
+    })
+    return Array.isArray(res) ? (res as unknown as AuthUser[]) : res.data
   },
 
   async updateProfile(userId: string, data: Partial<AuthUser>) {
-    await simulateDelay(300)
-    const updated = getCollection<UserRecord>(COLLECTION.users).update(userId, data as Partial<UserRecord>)
-    return sanitizeUser(updated)
+    return http.patch<AuthUser>(`/users/${userId}`, data)
   },
 
   async getLoginHistory(userId?: string) {
-    await simulateDelay()
-    const history = getCollection(COLLECTION.loginHistory).find()
-    return userId ? history.filter((h) => h.userId === userId) : history
+    // loginHistory is not exposed as a dedicated list route; use audit-logs as a stand-in when needed
+    const res = await http.get<{ data: Array<Record<string, unknown>>; total: number }>(
+      '/audit-logs',
+      { params: { page: 1, pageSize: 200 } },
+    )
+    const rows = Array.isArray(res) ? (res as unknown as Array<Record<string, unknown>>) : res.data || []
+    if (!userId) return rows
+    return rows.filter((h) => h.userId === userId)
   },
 
-  async changePassword(userId: string, currentPassword: string, newPassword: string) {
-    await simulateDelay(500)
-    const user = getCollection<UserRecord>(COLLECTION.users).findById(userId)
-    if (!user) throw new Error('User not found')
-    if (user.password !== currentPassword) throw new Error('Current password is incorrect')
-    if (newPassword.length < 8) throw new Error('New password must be at least 8 characters')
-    getCollection<UserRecord>(COLLECTION.users).update(userId, { password: newPassword })
-    return { message: 'Password changed successfully' }
+  async changePassword(_userId: string, currentPassword: string, newPassword: string) {
+    return http.post<{ message: string }>('/auth/change-password', {
+      currentPassword,
+      newPassword,
+    })
   },
 }

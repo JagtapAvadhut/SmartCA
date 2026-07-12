@@ -1,10 +1,8 @@
 import { createCrudService } from './crudFactory'
-import { COLLECTION, getCollection } from '@/db'
-import { simulateDelay } from './api'
+import { http, type PaginatedResult } from './httpClient'
 import type { Company, Notification, ChatSession, CalendarEvent, Activity } from '@/types'
 
-const companyBase = createCrudService<Company>(COLLECTION.companies, {
-  searchFields: ['name', 'cin', 'industry', 'gstin'],
+const companyBase = createCrudService<Company>('companies', {
   beforeCreate: (data) => ({
     incorporationDate: new Date().toISOString().split('T')[0],
     registeredAddress: '',
@@ -23,37 +21,35 @@ const companyBase = createCrudService<Company>(COLLECTION.companies, {
 export const CompanyService = {
   ...companyBase,
   async getByClient(clientId: string) {
-    await simulateDelay()
-    return getCollection<Company>(COLLECTION.companies).find({ filter: { clientId } })
+    return companyBase.find({ clientId })
   },
 }
 
 export const NotificationService = {
   async getAll() {
-    await simulateDelay()
-    return getCollection<Notification>(COLLECTION.notifications).find()
+    const res = await http.get<PaginatedResult<Notification>>('/notifications', {
+      params: { page: 1, pageSize: 100000 },
+    })
+    return res.data
   },
   async getUnread() {
-    await simulateDelay()
-    return getCollection<Notification>(COLLECTION.notifications).find({ filter: { read: false } })
+    const all = await this.getAll()
+    return all.filter((n) => !n.read)
   },
   async markRead(id: string) {
-    await simulateDelay(100)
-    return getCollection<Notification>(COLLECTION.notifications).update(id, { read: true })
+    return http.patch<Notification>(`/notifications/${id}`, { read: true })
   },
   async markAllRead() {
-    await simulateDelay(100)
-    const col = getCollection<Notification>(COLLECTION.notifications)
-    col.find({ filter: { read: false } }).forEach((n) => col.update(n.id, { read: true }))
+    const unread = await this.getUnread()
+    await Promise.all(unread.map((n) => this.markRead(n.id)))
     return { success: true }
   },
   async delete(id: string) {
-    await simulateDelay(100)
-    getCollection<Notification>(COLLECTION.notifications).delete(id)
+    await http.del(`/notifications/${id}`)
     return { success: true }
   },
   async create(data: Partial<Notification>) {
-    return getCollection<Notification>(COLLECTION.notifications).insert({
+    return http.post<Notification>('/notifications', {
       title: 'Notification',
       message: '',
       type: 'info',
@@ -61,35 +57,39 @@ export const NotificationService = {
       link: '/',
       createdAt: new Date().toISOString(),
       ...data,
-    } as Omit<Notification, 'id'> & { id?: string })
+    })
+  },
+  async archive(id: string) {
+    await http.post(`/notifications/${id}/archive`)
+    return { success: true }
   },
 }
 
 export const ChatService = {
   async getSessions() {
-    await simulateDelay()
-    return getCollection<ChatSession>(COLLECTION.chat).find()
+    const res = await http.get<PaginatedResult<ChatSession>>('/chat', {
+      params: { page: 1, pageSize: 100000 },
+    })
+    return res.data
   },
   async getSession(id: string) {
-    await simulateDelay()
-    const session = getCollection<ChatSession>(COLLECTION.chat).findById(id)
-    if (!session) throw new Error('Chat session not found')
-    return session
+    return http.get<ChatSession>(`/chat/${id}`)
   },
   async createSession(title: string) {
-    await simulateDelay(200)
-    return getCollection<ChatSession>(COLLECTION.chat).insert({
+    return http.post<ChatSession>('/chat', {
       title,
       createdAt: new Date().toISOString().split('T')[0],
       messages: [],
-    } as Omit<ChatSession, 'id'> & { id?: string })
+    })
   },
   async sendMessage(sessionId: string, content: string) {
-    await simulateDelay(800)
-    const col = getCollection<ChatSession>(COLLECTION.chat)
-    const session = col.findById(sessionId)
-    if (!session) throw new Error('Chat session not found')
-    const userMsg = { id: String(Date.now()), role: 'user' as const, content, timestamp: new Date().toISOString() }
+    const session = await this.getSession(sessionId)
+    const userMsg = {
+      id: String(Date.now()),
+      role: 'user' as const,
+      content,
+      timestamp: new Date().toISOString(),
+    }
     const assistantMsg = {
       id: String(Date.now() + 1),
       role: 'assistant' as const,
@@ -98,27 +98,27 @@ export const ChatService = {
       timestamp: new Date().toISOString(),
     }
     const messages = [...(session.messages || []), userMsg, assistantMsg]
-    col.update(sessionId, { messages })
+    await http.patch(`/chat/${sessionId}`, { messages })
     return { userMsg, assistantMsg }
   },
   async deleteSession(id: string) {
-    await simulateDelay(200)
-    getCollection<ChatSession>(COLLECTION.chat).delete(id)
+    await http.del(`/chat/${id}`)
     return { success: true }
   },
 }
 
 export const CalendarService = {
   async getAll() {
-    await simulateDelay()
-    return getCollection<CalendarEvent>(COLLECTION.calendar).find({ sortBy: 'date', sortOrder: 'asc', pageSize: 100000 })
+    const res = await http.get<PaginatedResult<CalendarEvent>>('/calendar-events', {
+      params: { page: 1, pageSize: 100000, sortBy: 'date', sortOrder: 'asc' },
+    })
+    return res.data
   },
   async getEvents() {
     return this.getAll()
   },
   async create(data: Partial<CalendarEvent>) {
-    await simulateDelay(200)
-    return getCollection<CalendarEvent>(COLLECTION.calendar).insert({
+    return http.post<CalendarEvent>('/calendar-events', {
       date: new Date().toISOString().split('T')[0],
       time: '10:00',
       duration: 60,
@@ -128,26 +128,26 @@ export const CalendarService = {
       clientName: null,
       assignedTo: '',
       ...data,
-    } as Omit<CalendarEvent, 'id'> & { id?: string })
+    })
   },
   async update(id: string, data: Partial<CalendarEvent>) {
-    await simulateDelay(200)
-    return getCollection<CalendarEvent>(COLLECTION.calendar).update(id, data)
+    return http.patch<CalendarEvent>(`/calendar-events/${id}`, data)
   },
   async delete(id: string) {
-    await simulateDelay(200)
-    getCollection<CalendarEvent>(COLLECTION.calendar).delete(id)
+    await http.del(`/calendar-events/${id}`)
     return { success: true }
   },
 }
 
 export const ActivityService = {
   async getAll() {
-    await simulateDelay()
-    return getCollection<Activity>(COLLECTION.activities).find()
+    const res = await http.get<PaginatedResult<Activity>>('/activities', {
+      params: { page: 1, pageSize: 100000 },
+    })
+    return res.data
   },
   async log(message: string, type: string, clientId = '', clientName = '', userId = '', userName = '') {
-    return getCollection<Activity>(COLLECTION.activities).insert({
+    return http.post<Activity>('/activities', {
       type,
       message,
       clientId,
@@ -155,6 +155,6 @@ export const ActivityService = {
       userId,
       userName,
       timestamp: new Date().toISOString(),
-    } as Omit<Activity, 'id'> & { id?: string })
+    })
   },
 }

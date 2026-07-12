@@ -68,7 +68,11 @@ export default function CompaniesPage() {
     }
   }
 
-  const deleteImpact = deleting ? companyRepository.getDeleteImpact(deleting.id) : null
+  const { data: deleteImpact = null } = useQuery({
+    queryKey: ['company-delete-impact', deleting?.id],
+    queryFn: () => companyRepository.getDeleteImpact(deleting!.id),
+    enabled: !!deleting,
+  })
 
   const handleDelete = () => {
     if (!deleting) return
@@ -77,16 +81,18 @@ export default function CompaniesPage() {
       collection: COLLECTION.companies,
       record,
       label: deleting.name,
-      performDelete: () => { CompanyService.delete(deleting.id) },
+      performDelete: async () => {
+        await CompanyService.delete(deleting.id)
+      },
       onRestored: invalidate,
     })
     setDeleting(null)
     invalidate()
   }
 
-  const handleArchive = () => {
+  const handleArchive = async () => {
     if (!deleting) return
-    companyRepository.archive(deleting.id)
+    await companyRepository.archive(deleting.id)
     toast.success(`${deleting.name} archived`)
     setDeleting(null)
     invalidate()

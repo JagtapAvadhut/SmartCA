@@ -6,12 +6,11 @@ import { ClientService, InvoiceService, PaymentService, EmployeeService, TaskSer
 import { computeDashboard, computeReports } from '@/services/analyticsService'
 import { getAccountingSnapshot, postManualJournal, assertBalanced } from '@/services/accountingEngine'
 import { runDataIntegrityCheck, repairDerivedData } from '@/services/reconciliationService'
-import { COLLECTION, getCollection, resetDatabase } from '@/db'
+import { http } from '@/services/httpClient'
 import { invoiceRemaining } from '@/utils/money'
-import type { Client, Invoice, Payment } from '@/types'
 
 export const qaApi = {
-  resetDatabase,
+  resetDatabase: async () => http.post('/demo/reset'),
   ClientService,
   InvoiceService,
   PaymentService,
@@ -24,15 +23,14 @@ export const qaApi = {
   assertBalanced,
   runDataIntegrityCheck,
   repairDerivedData,
-  getClient: (id: string) => getCollection<Client>(COLLECTION.clients).findById(id),
-  getInvoice: (id: string) => getCollection<Invoice>(COLLECTION.invoices).findById(id),
-  getPayment: (id: string) => getCollection<Payment>(COLLECTION.payments).findById(id),
+  getClient: (id: string) => ClientService.getById(id),
+  getInvoice: (id: string) => InvoiceService.getById(id),
+  getPayment: (id: string) => PaymentService.getById(id),
   invoiceRemaining,
-  /** Snapshot outstanding from dashboard + named client */
-  readOutstanding(clientId?: string) {
-    const dash = computeDashboard().kpis.outstanding.value
-    const client = clientId ? getCollection<Client>(COLLECTION.clients).findById(clientId) : null
-    return { dashboard: dash, client: client?.outstanding ?? null }
+  async readOutstanding(clientId?: string) {
+    const dash = await computeDashboard()
+    const client = clientId ? await ClientService.getById(clientId).catch(() => null) : null
+    return { dashboard: dash.kpis.outstanding.value, client: client?.outstanding ?? null }
   },
 }
 

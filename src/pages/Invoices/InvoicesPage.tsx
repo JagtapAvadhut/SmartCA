@@ -196,10 +196,11 @@ export default function InvoicesPage() {
         onConfirm={() => deleteMutation.mutate()}
         onArchive={() => {
           if (!deleting) return
-          invoiceRepository.archive(deleting.id)
-          toast.success(`${deleting.invoiceNumber} archived`)
-          setDeleting(null)
-          invalidate()
+          void invoiceRepository.archive(deleting.id).then(() => {
+            toast.success(`${deleting.invoiceNumber} archived`)
+            setDeleting(null)
+            invalidate()
+          })
         }}
         title="Remove Invoice"
         message={`Delete ${deleting?.invoiceNumber}? Archive keeps it in Recycle Bin.`}

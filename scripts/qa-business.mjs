@@ -55,7 +55,7 @@ async function run() {
   // ---------- SCENARIO 1: Exact outstanding chain ----------
   const s1 = await qa(page, async () => {
     const api = window.__SMART_CA_QA__
-    const before = api.readOutstanding()
+    const before = (await api.readOutstanding())
     const client = await api.ClientService.create({
       name: `BizQA Client ${Date.now().toString().slice(-6)}`,
       contactPerson: 'Biz QA',
@@ -75,7 +75,7 @@ async function run() {
   // Create with valid PAN via evaluate carefully
   const scenario = await qa(page, async ({ stamp, pan, gstin }) => {
     const api = window.__SMART_CA_QA__
-    const beforeDash = api.computeDashboard().kpis.outstanding.value
+    const beforeDash = (await api.computeDashboard()).kpis.outstanding.value
 
     const client = await api.ClientService.create({
       name: `BizQA Client ${stamp}`,
@@ -90,8 +90,8 @@ async function run() {
       state: 'Maharashtra',
     })
 
-    const afterClient = api.getClient(client.id)
-    const dashAfterClient = api.computeDashboard().kpis.outstanding.value
+    const afterClient = (await api.getClient(client.id))
+    const dashAfterClient = (await api.computeDashboard()).kpis.outstanding.value
 
     // Invoice total EXACTLY 100000 (explicit tax breakdown, no auto GST bump)
     const inv = await api.InvoiceService.create({
@@ -106,9 +106,9 @@ async function run() {
       paidAmount: 0,
     })
 
-    const inv1 = api.getInvoice(inv.id)
-    const clientAfterInv = api.getClient(client.id)
-    const dashAfterInv = api.computeDashboard().kpis.outstanding.value
+    const inv1 = (await api.getInvoice(inv.id))
+    const clientAfterInv = (await api.getClient(client.id))
+    const dashAfterInv = (await api.computeDashboard()).kpis.outstanding.value
 
     const pay1 = await api.PaymentService.create({
       clientId: client.id,
@@ -122,9 +122,9 @@ async function run() {
       paymentDate: new Date().toISOString().split('T')[0],
     })
 
-    const invAfterP1 = api.getInvoice(inv.id)
-    const clientAfterP1 = api.getClient(client.id)
-    const dashAfterP1 = api.computeDashboard().kpis.outstanding.value
+    const invAfterP1 = (await api.getInvoice(inv.id))
+    const clientAfterP1 = (await api.getClient(client.id))
+    const dashAfterP1 = (await api.computeDashboard()).kpis.outstanding.value
 
     const pay2 = await api.PaymentService.create({
       clientId: client.id,
@@ -138,23 +138,23 @@ async function run() {
       paymentDate: new Date().toISOString().split('T')[0],
     })
 
-    const invAfterP2 = api.getInvoice(inv.id)
-    const clientAfterP2 = api.getClient(client.id)
-    const dashAfterP2 = api.computeDashboard().kpis.outstanding.value
+    const invAfterP2 = (await api.getInvoice(inv.id))
+    const clientAfterP2 = (await api.getClient(client.id))
+    const dashAfterP2 = (await api.computeDashboard()).kpis.outstanding.value
 
     await api.PaymentService.delete(pay2.id)
-    const invAfterDelP2 = api.getInvoice(inv.id)
-    const clientAfterDelP2 = api.getClient(client.id)
-    const dashAfterDelP2 = api.computeDashboard().kpis.outstanding.value
+    const invAfterDelP2 = (await api.getInvoice(inv.id))
+    const clientAfterDelP2 = (await api.getClient(client.id))
+    const dashAfterDelP2 = (await api.computeDashboard()).kpis.outstanding.value
 
     await api.PaymentService.delete(pay1.id)
-    const invAfterDelP1 = api.getInvoice(inv.id)
-    const clientAfterDelP1 = api.getClient(client.id)
-    const dashAfterDelP1 = api.computeDashboard().kpis.outstanding.value
+    const invAfterDelP1 = (await api.getInvoice(inv.id))
+    const clientAfterDelP1 = (await api.getClient(client.id))
+    const dashAfterDelP1 = (await api.computeDashboard()).kpis.outstanding.value
 
     await api.InvoiceService.delete(inv.id)
-    const clientAfterDelInv = api.getClient(client.id)
-    const dashAfterDelInv = api.computeDashboard().kpis.outstanding.value
+    const clientAfterDelInv = (await api.getClient(client.id))
+    const dashAfterDelInv = (await api.computeDashboard()).kpis.outstanding.value
 
     return {
       beforeDash,
@@ -374,7 +374,7 @@ async function run() {
     }
     // edit payment amount
     await api.PaymentService.update(okPay.id, { amount: 2500 })
-    const afterEdit = api.getInvoice(inv.id)
+    const afterEdit = (await api.getInvoice(inv.id))
     results.afterEditPaid = afterEdit.paidAmount
     results.afterEditRem = afterEdit.remainingAmount
     results.afterEditStatus = afterEdit.status
@@ -414,7 +414,7 @@ async function run() {
     })
     let unbalanced = null
     try {
-      api.postManualJournal({
+      await api.postManualJournal({
         date: '2026-07-12',
         narration: 'Unbalanced test',
         lines: [
@@ -426,7 +426,7 @@ async function run() {
     } catch (e) {
       unbalanced = e.message
     }
-    const balanced = api.postManualJournal({
+    const balanced = await api.postManualJournal({
       date: '2026-07-12',
       narration: `Balanced ${stamp}`,
       lines: [
@@ -434,7 +434,7 @@ async function run() {
         { account: 'Bank', debit: 0, credit: 1000 },
       ],
     })
-    const snap = api.getAccountingSnapshot()
+    const snap = await api.getAccountingSnapshot()
     return {
       unbalanced,
       balancedId: balanced.id,
@@ -457,9 +457,9 @@ async function run() {
   // ---------- INTEGRITY REPAIR ----------
   const integ = await qa(page, async () => {
     const api = window.__SMART_CA_QA__
-    const before = api.runDataIntegrityCheck()
-    const repair = api.repairDerivedData()
-    const after = api.runDataIntegrityCheck()
+    const before = (await api.runDataIntegrityCheck())
+    const repair = (await api.repairDerivedData())
+    const after = (await api.runDataIntegrityCheck())
     return {
       beforeErrors: before.errorCount,
       afterErrors: after.errorCount,
@@ -490,7 +490,7 @@ async function run() {
     const inv = await api.InvoiceService.create({
       clientId: client.id, clientName: client.name, subtotal: 10000, status: 'sent',
     })
-    const row = api.getInvoice(inv.id)
+    const row = (await api.getInvoice(inv.id))
     return { subtotal: row.subtotal, cgst: row.cgst, sgst: row.sgst, total: row.total }
   })
 

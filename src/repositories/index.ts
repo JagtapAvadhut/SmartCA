@@ -1,6 +1,9 @@
 import { BaseRepository } from './BaseRepository'
-import { COLLECTION, getCollection } from '@/db'
+import { http, type PaginatedResult } from '@/services/httpClient'
 import type { Client, Invoice, Payment, Company, Task, Document } from '@/types'
+
+export type { Entity } from './BaseRepository'
+export { BaseRepository } from './BaseRepository'
 
 export interface DeleteImpact {
   canHardDelete: boolean
@@ -18,16 +21,22 @@ export interface DeleteImpact {
 
 export class ClientRepository extends BaseRepository<Client> {
   constructor() {
-    super(COLLECTION.clients, ['name', 'email', 'pan', 'gstin', 'contactPerson', 'city'])
+    super('clients', ['name', 'email', 'pan', 'gstin', 'contactPerson', 'city'])
   }
 
-  getDeleteImpact(clientId: string): DeleteImpact {
-    const invoices = getCollection(COLLECTION.invoices).count({ filter: { clientId } })
-    const payments = getCollection(COLLECTION.payments).count({ filter: { clientId } })
-    const documents = getCollection(COLLECTION.documents).count({ filter: { clientId } })
-    const companies = getCollection(COLLECTION.companies).count({ filter: { clientId } })
-    const tasks = getCollection(COLLECTION.tasks).count({ filter: { clientId } })
-    const compliance = getCollection(COLLECTION.compliance).count({ filter: { clientId } })
+  async getDeleteImpact(clientId: string): Promise<DeleteImpact> {
+    const [invoices, payments, documents, companies, tasks, compliance] = await Promise.all([
+      new InvoiceRepository().count({ clientId }),
+      new PaymentRepository().count({ clientId }),
+      new DocumentRepository().count({ clientId }),
+      new CompanyRepository().count({ clientId }),
+      new TaskRepository().count({ clientId }),
+      http
+        .get<PaginatedResult<{ clientId?: string }>>('/compliance', {
+          params: { page: 1, pageSize: 100000 },
+        })
+        .then((r) => r.data.filter((row) => row.clientId === clientId).length),
+    ])
 
     const warnings: string[] = []
     if (invoices) warnings.push(`${invoices} linked invoice(s)`)
@@ -46,50 +55,44 @@ export class ClientRepository extends BaseRepository<Client> {
     }
   }
 
-  /** Soft-delete preferred when relationships exist */
-  safeDelete(clientId: string, mode: 'delete' | 'archive' = 'archive'): { mode: string; record: Client | null } {
-    const impact = this.getDeleteImpact(clientId)
-    if (mode === 'delete' && impact.canHardDelete) {
-      this.delete(clientId)
-      return { mode: 'deleted', record: null }
-    }
-    const record = this.archive(clientId)
-    return { mode: 'archived', record }
+  async isDuplicatePan(pan: string, excludeId?: string): Promise<boolean> {
+    const all = await this.findAll()
+    return all.some((c) => c.pan === pan && c.id !== excludeId)
   }
 
-  isDuplicatePan(pan: string, excludeId?: string): boolean {
-    return this.findAll().some((c) => c.pan === pan && c.id !== excludeId)
-  }
-
-  isDuplicateGstin(gstin: string, excludeId?: string): boolean {
-    return this.findAll().some((c) => c.gstin === gstin && c.id !== excludeId)
+  async isDuplicateGstin(gstin: string, excludeId?: string): Promise<boolean> {
+    const all = await this.findAll()
+    return all.some((c) => c.gstin === gstin && c.id !== excludeId)
   }
 }
 
 export class InvoiceRepository extends BaseRepository<Invoice> {
   constructor() {
-    super(COLLECTION.invoices, ['invoiceNumber', 'clientName', 'status'])
+    super('invoices', ['invoiceNumber', 'clientName', 'status'])
   }
 
-  findByClient(clientId: string) {
+  async findByClient(clientId: string) {
     return this.filter({ clientId })
   }
 }
 
 export class PaymentRepository extends BaseRepository<Payment> {
   constructor() {
-    super(COLLECTION.payments, ['reference', 'clientName', 'invoiceNumber'])
+    super('payments', ['reference', 'clientName', 'invoiceNumber'])
   }
 }
 
 export class CompanyRepository extends BaseRepository<Company> {
   constructor() {
-    super(COLLECTION.companies, ['name', 'cin', 'industry', 'gstin'])
+    super('companies', ['name', 'cin', 'industry', 'gstin'])
   }
 
-  getDeleteImpact(companyId: string) {
-    const company = this.findById(companyId)
-    const roc = getCollection(COLLECTION.roc).count({ filter: { companyId } })
+  async getDeleteImpact(companyId: string) {
+    const company = await this.findById(companyId)
+    const rocRes = await http.get<PaginatedResult<{ companyId?: string }>>('/roc', {
+      params: { page: 1, pageSize: 100000 },
+    })
+    const roc = rocRes.data.filter((r) => r.companyId === companyId).length
     const warnings: string[] = []
     if (roc) warnings.push(`${roc} ROC filing(s) will remain linked`)
     if (company?.clientId) warnings.push('Client relationship will be preserved on invoices')
@@ -99,25 +102,27 @@ export class CompanyRepository extends BaseRepository<Company> {
 
 export class TaskRepository extends BaseRepository<Task> {
   constructor() {
-    super(COLLECTION.tasks, ['title', 'clientName', 'assignedToName', 'category'])
+    super('tasks', ['title', 'clientName', 'assignedToName', 'category'])
   }
 
-  reassignFromEmployee(employeeId: string, toEmployeeId: string, toName: string) {
-    this.filter({ assignedTo: employeeId }).forEach((task) => {
-      this.update(task.id, { assignedTo: toEmployeeId, assignedToName: toName })
-    })
+  async reassignFromEmployee(employeeId: string, toEmployeeId: string, toName: string) {
+    const tasks = await this.filter({ assignedTo: employeeId })
+    await Promise.all(
+      tasks.map((task) => this.update(task.id, { assignedTo: toEmployeeId, assignedToName: toName })),
+    )
   }
 
-  unassignFromEmployee(employeeId: string) {
-    this.filter({ assignedTo: employeeId }).forEach((task) => {
-      this.update(task.id, { assignedTo: '', assignedToName: 'Unassigned' })
-    })
+  async unassignFromEmployee(employeeId: string) {
+    const tasks = await this.filter({ assignedTo: employeeId })
+    await Promise.all(
+      tasks.map((task) => this.update(task.id, { assignedTo: '', assignedToName: 'Unassigned' })),
+    )
   }
 }
 
 export class DocumentRepository extends BaseRepository<Document> {
   constructor() {
-    super(COLLECTION.documents, ['name', 'clientName', 'folder', 'type'])
+    super('documents', ['name', 'clientName', 'folder', 'type'])
   }
 }
 
@@ -129,34 +134,35 @@ export class EmployeeRepository extends BaseRepository<{
   archived?: boolean
 }> {
   constructor() {
-    super(COLLECTION.employees, ['firstName', 'lastName', 'email', 'designation', 'department'])
+    super('employees', ['firstName', 'lastName', 'email', 'designation', 'department'])
   }
 
-  getAssignedTaskCount(employeeId: string) {
-    return getCollection(COLLECTION.tasks).count({ filter: { assignedTo: employeeId } })
+  async getAssignedTaskCount(employeeId: string) {
+    return new TaskRepository().count({ assignedTo: employeeId })
   }
 }
 
 export class SettingsRepository {
-  get() {
-    const row = getCollection(COLLECTION.settings).findById('SETTINGS-001')
-    return row
+  async get() {
+    return http.get<Record<string, unknown>>('/settings')
   }
 
-  update(section: string, data: Record<string, unknown> | unknown[]) {
-    const current = getCollection(COLLECTION.settings).findById('SETTINGS-001') || { id: 'SETTINGS-001' }
-    const existing = (current as Record<string, unknown>)[section]
+  async update(section: string, data: Record<string, unknown> | unknown[]) {
+    const current = await this.get()
+    const existing = current[section]
     const merged = Array.isArray(data)
       ? data
-      : { ...((typeof existing === 'object' && existing && !Array.isArray(existing) ? existing : {}) as object), ...data }
-    return getCollection(COLLECTION.settings).update('SETTINGS-001', {
-      ...current,
-      [section]: merged,
-    })
+      : {
+          ...((typeof existing === 'object' && existing && !Array.isArray(existing)
+            ? existing
+            : {}) as object),
+          ...data,
+        }
+    return http.patch('/settings', { [section]: merged })
   }
 
-  updateOrganization(data: Record<string, unknown>) {
-    return getCollection(COLLECTION.organization).update('ORG-001', data)
+  async updateOrganization(data: Record<string, unknown>) {
+    return http.patch('/settings/organization', data)
   }
 }
 
@@ -168,7 +174,7 @@ export class NotificationRepository extends BaseRepository<{
   archived?: boolean
 }> {
   constructor() {
-    super(COLLECTION.notifications, ['title', 'message'])
+    super('notifications', ['title', 'message'])
   }
 }
 

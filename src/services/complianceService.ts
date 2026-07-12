@@ -1,10 +1,8 @@
 import { createCrudService } from './crudFactory'
-import { COLLECTION, getCollection } from '@/db'
-import { simulateDelay, type QueryParams } from './api'
+import type { QueryParams } from './httpClient'
 import type { ComplianceRecord, GSTFiling, ITRFiling, TDSRecord, ROCFiling } from '@/types'
 
-const complianceBase = createCrudService<ComplianceRecord>(COLLECTION.compliance, {
-  searchFields: ['clientName', 'service', 'assignedToName'],
+const complianceBase = createCrudService<ComplianceRecord>('compliance', {
   beforeCreate: (data) => ({
     priority: 'medium',
     status: 'upcoming',
@@ -15,24 +13,15 @@ const complianceBase = createCrudService<ComplianceRecord>(COLLECTION.compliance
   }),
 })
 
-const gstBase = createCrudService<GSTFiling>(COLLECTION.gst, {
-  searchFields: ['clientName', 'gstin', 'returnType', 'period'],
-})
-const itrBase = createCrudService<ITRFiling>(COLLECTION.itr, {
-  searchFields: ['clientName', 'pan', 'itrForm'],
-})
-const tdsBase = createCrudService<TDSRecord>(COLLECTION.tds, {
-  searchFields: ['clientName', 'tan', 'form', 'quarter'],
-})
-const rocBase = createCrudService<ROCFiling>(COLLECTION.roc, {
-  searchFields: ['companyName', 'cin', 'formType'],
-})
+const gstBase = createCrudService<GSTFiling>('gst')
+const itrBase = createCrudService<ITRFiling>('itr')
+const tdsBase = createCrudService<TDSRecord>('tds')
+const rocBase = createCrudService<ROCFiling>('roc')
 
 export const ComplianceService = {
   ...complianceBase,
   async getKanban() {
-    await simulateDelay()
-    const all = getCollection<ComplianceRecord>(COLLECTION.compliance).find()
+    const all = await complianceBase.find()
     return {
       upcoming: all.filter((c) => c.status === 'upcoming'),
       in_progress: all.filter((c) => c.status === 'in_progress'),
@@ -41,8 +30,7 @@ export const ComplianceService = {
     }
   },
   async updateStatus(id: string, status: ComplianceRecord['status']) {
-    await simulateDelay(200)
-    return getCollection<ComplianceRecord>(COLLECTION.compliance).update(id, { status })
+    return complianceBase.update(id, { status })
   },
   async getGST(params?: QueryParams) {
     return gstBase.getAll(params)

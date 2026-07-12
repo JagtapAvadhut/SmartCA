@@ -4,8 +4,8 @@ import { ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
 import dayjs from 'dayjs'
-import { CalendarService } from '@/services'
-import { COLLECTION, getCollection } from '@/db'
+import { CalendarService, ComplianceService } from '@/services'
+import { COLLECTION } from '@/db'
 import {
   PageHeader, Card, Button, Can, EntityFormModal, ConfirmDialog, Badge, type FormField,
 } from '@/components/common'
@@ -60,24 +60,28 @@ export default function CalendarPage() {
     queryFn: () => CalendarService.getAll(),
   })
 
+  const { data: complianceRows = [] } = useQuery({
+    queryKey: ['calendar-compliance'],
+    queryFn: async () => {
+      const res = await ComplianceService.getAll({ page: 1, pageSize: 50 })
+      return res.data.filter((c) => c.status !== 'completed').slice(0, 12)
+    },
+  })
+
   const complianceEvents = useMemo(() => {
-    return getCollection(COLLECTION.compliance)
-      .find({ pageSize: 50 })
-      .filter((c) => c.status !== 'completed')
-      .slice(0, 12)
-      .map((c) => ({
-        id: `cmp-${c.id}`,
-        title: String(c.service),
-        date: String(c.dueDate),
-        time: '09:00',
-        duration: 60,
-        type: 'compliance',
-        clientName: String(c.clientName),
-        clientId: String(c.clientId || ''),
-        assignedTo: '',
-        color: '#8b5cf6',
-      })) as CalendarEvent[]
-  }, [data])
+    return complianceRows.map((c) => ({
+      id: `cmp-${c.id}`,
+      title: String(c.service),
+      date: String(c.dueDate),
+      time: '09:00',
+      duration: 60,
+      type: 'compliance',
+      clientName: String(c.clientName),
+      clientId: String(c.clientId || ''),
+      assignedTo: '',
+      color: '#8b5cf6',
+    })) as CalendarEvent[]
+  }, [complianceRows])
 
   const allEvents = useMemo(() => [...data, ...complianceEvents], [data, complianceEvents])
 

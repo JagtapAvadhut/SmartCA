@@ -59,10 +59,10 @@ export default function ClientsPage() {
   const handleSubmit = async (form: ClientForm) => {
     setSaving(true)
     try {
-      if (clientRepository.isDuplicatePan(form.pan, editing?.id)) {
+      if (await clientRepository.isDuplicatePan(form.pan, editing?.id)) {
         throw new Error(`Client with PAN ${form.pan} already exists`)
       }
-      if (clientRepository.isDuplicateGstin(form.gstin, editing?.id)) {
+      if (await clientRepository.isDuplicateGstin(form.gstin, editing?.id)) {
         throw new Error(`Client with GSTIN ${form.gstin} already exists`)
       }
 
@@ -93,20 +93,25 @@ export default function ClientsPage() {
     }
   }
 
-  const deleteImpact = deleting ? clientRepository.getDeleteImpact(deleting.id) : null
+  const { data: deleteImpact = null } = useQuery({
+    queryKey: ['client-delete-impact', deleting?.id],
+    queryFn: () => clientRepository.getDeleteImpact(deleting!.id),
+    enabled: !!deleting,
+  })
 
-  const handleHardDelete = () => {
+  const handleHardDelete = async () => {
     if (!deleting) return
+    const impact = deleteImpact || (await clientRepository.getDeleteImpact(deleting.id))
     const record = { ...deleting } as unknown as Record<string, unknown> & { id: string }
     deleteWithUndo({
       collection: COLLECTION.clients,
       record,
       label: deleting.name,
-      performDelete: () => {
-        if (deleteImpact && !deleteImpact.canHardDelete) {
-          clientRepository.archive(deleting.id)
+      performDelete: async () => {
+        if (impact && !impact.canHardDelete) {
+          await clientRepository.archive(deleting.id)
         } else {
-          ClientService.delete(deleting.id)
+          await ClientService.delete(deleting.id)
         }
       },
       onRestored: invalidate,
@@ -115,9 +120,9 @@ export default function ClientsPage() {
     invalidate()
   }
 
-  const handleArchive = () => {
+  const handleArchive = async () => {
     if (!deleting) return
-    clientRepository.archive(deleting.id)
+    await clientRepository.archive(deleting.id)
     toast.success(`${deleting.name} archived`)
     setDeleting(null)
     invalidate()

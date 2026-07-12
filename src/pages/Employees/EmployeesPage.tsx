@@ -70,30 +70,35 @@ export default function EmployeesPage() {
     }
   }
 
-  const taskCount = deleting ? employeeRepository.getAssignedTaskCount(deleting.id) : 0
+  const { data: taskCount = 0 } = useQuery({
+    queryKey: ['employee-task-count', deleting?.id],
+    queryFn: () => employeeRepository.getAssignedTaskCount(deleting!.id),
+    enabled: !!deleting,
+  })
 
   const handleDelete = () => {
     if (!deleting) return
     const record = { ...deleting } as unknown as Record<string, unknown> & { id: string }
     const name = `${deleting.firstName} ${deleting.lastName}`
+    const count = taskCount
     deleteWithUndo({
       collection: COLLECTION.employees,
       record,
       label: name,
-      performDelete: () => {
-        if (taskCount > 0) {
+      performDelete: async () => {
+        if (count > 0) {
           if (reassignTo) {
             const target = (data?.data || []).find((e) => e.id === reassignTo)
-            taskRepository.reassignFromEmployee(
+            await taskRepository.reassignFromEmployee(
               deleting.id,
               reassignTo,
-              target ? `${target.firstName} ${target.lastName}` : 'Team member'
+              target ? `${target.firstName} ${target.lastName}` : 'Team member',
             )
           } else {
-            taskRepository.unassignFromEmployee(deleting.id)
+            await taskRepository.unassignFromEmployee(deleting.id)
           }
         }
-        EmployeeService.delete(deleting.id)
+        await EmployeeService.delete(deleting.id)
       },
       onRestored: invalidate,
     })
@@ -102,9 +107,9 @@ export default function EmployeesPage() {
     invalidate()
   }
 
-  const handleArchive = () => {
+  const handleArchive = async () => {
     if (!deleting) return
-    employeeRepository.archive(deleting.id)
+    await employeeRepository.archive(deleting.id)
     toast.success(`${deleting.firstName} archived`)
     setDeleting(null)
     invalidate()

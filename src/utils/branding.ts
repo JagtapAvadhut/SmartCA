@@ -1,20 +1,20 @@
-import { COLLECTION, getCollection } from '@/db'
+import { SettingsService } from '@/services/settingsService'
 
 const BRAND_STYLE_ID = 'smart-ca-branding'
 
 /** Apply branding primary color to CSS variables immediately */
 export function applyBrandingFromSettings() {
-  try {
-    const row = getCollection(COLLECTION.settings).findById('SETTINGS-001') as Record<string, unknown> | null
-    const branding = (row?.branding || {}) as { primaryColor?: string; appName?: string }
-    const color = branding.primaryColor || '#4f46e5'
-    let style = document.getElementById(BRAND_STYLE_ID) as HTMLStyleElement | null
-    if (!style) {
-      style = document.createElement('style')
-      style.id = BRAND_STYLE_ID
-      document.head.appendChild(style)
-    }
-    style.textContent = `
+  void SettingsService.getSettings()
+    .then((row) => {
+      const branding = (row.branding || {}) as { primaryColor?: string; appName?: string }
+      const color = branding.primaryColor || '#4f46e5'
+      let style = document.getElementById(BRAND_STYLE_ID) as HTMLStyleElement | null
+      if (!style) {
+        style = document.createElement('style')
+        style.id = BRAND_STYLE_ID
+        document.head.appendChild(style)
+      }
+      style.textContent = `
       :root {
         --color-primary-600: ${color};
         --color-primary-500: ${color};
@@ -28,22 +28,17 @@ export function applyBrandingFromSettings() {
         background-color: color-mix(in srgb, ${color} 22%, transparent) !important;
       }
     `
-    if (branding.appName) {
-      document.title = `${branding.appName} - Practice Management`
-    }
-  } catch {
-    // ignore before DB init
-  }
+      if (branding.appName) {
+        document.title = `${branding.appName} - Practice Management`
+      }
+    })
+    .catch(() => {
+      /* ignore before auth / API ready */
+    })
 }
 
 /** Session timeout minutes from settings (fallback 30) */
 export function getSessionTimeoutMs(): number {
-  try {
-    const row = getCollection(COLLECTION.settings).findById('SETTINGS-001') as Record<string, unknown> | null
-    const security = (row?.security || {}) as { sessionTimeout?: number }
-    const minutes = Number(security.sessionTimeout || 30)
-    return Math.max(5, minutes) * 60 * 1000
-  } catch {
-    return 30 * 60 * 1000
-  }
+  // Sync callers need a default; settings are loaded async into branding/store.
+  return 30 * 60 * 1000
 }

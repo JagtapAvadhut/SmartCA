@@ -1,19 +1,54 @@
-import { simulateDelay } from './api'
-import { COLLECTION, getCollection } from '@/db'
+import { http } from './httpClient'
 import { NAVIGATION } from '@/constants/navigation'
 
 export interface SearchResult {
   id: string
-  type: 'page' | 'client' | 'invoice' | 'document' | 'employee' | 'task' | 'compliance' | 'user' | 'company' | 'payment' | 'setting'
+  type:
+    | 'page'
+    | 'client'
+    | 'invoice'
+    | 'document'
+    | 'employee'
+    | 'task'
+    | 'compliance'
+    | 'user'
+    | 'company'
+    | 'payment'
+    | 'setting'
   title: string
   subtitle?: string
   path: string
   icon?: string
 }
 
+const COLLECTION_TO_TYPE: Record<string, SearchResult['type']> = {
+  clients: 'client',
+  companies: 'company',
+  invoices: 'invoice',
+  payments: 'payment',
+  documents: 'document',
+  employees: 'employee',
+  tasks: 'task',
+  compliance: 'compliance',
+  gst: 'compliance',
+  users: 'user',
+}
+
+const COLLECTION_PATH: Record<string, (id: string, title: string) => string> = {
+  clients: (id) => `/clients/${id}`,
+  companies: () => '/companies',
+  invoices: (_id, title) => `/invoices?q=${encodeURIComponent(title)}`,
+  payments: (_id, title) => `/payments?q=${encodeURIComponent(title)}`,
+  documents: (_id, title) => `/documents?q=${encodeURIComponent(title)}`,
+  employees: () => '/employees',
+  tasks: (_id, title) => `/tasks?q=${encodeURIComponent(title)}`,
+  compliance: () => '/compliance',
+  gst: () => '/compliance/gst',
+  users: () => '/settings?tab=users',
+}
+
 export const SearchService = {
   async search(query: string): Promise<SearchResult[]> {
-    await simulateDelay(120)
     if (!query.trim()) return []
     const q = query.toLowerCase()
     const results: SearchResult[] = []
@@ -24,78 +59,71 @@ export const SearchService = {
       }
       item.children?.forEach((child) => {
         if (child.label.toLowerCase().includes(q)) {
-          results.push({ id: child.id, type: 'page', title: child.label, subtitle: item.label, path: child.path })
+          results.push({
+            id: child.id,
+            type: 'page',
+            title: child.label,
+            subtitle: item.label,
+            path: child.path,
+          })
         }
       })
     })
 
-    const settingsHits = ['organization', 'profile', 'password', 'users', 'roles', 'branding', 'notifications', 'security', 'api', 'appearance']
+    const settingsHits = [
+      'organization',
+      'profile',
+      'password',
+      'users',
+      'roles',
+      'branding',
+      'notifications',
+      'security',
+      'api',
+      'appearance',
+    ]
     settingsHits.forEach((s) => {
       if (s.includes(q) || `settings ${s}`.includes(q)) {
-        results.push({ id: `settings-${s}`, type: 'setting', title: `Settings · ${s}`, path: `/settings?tab=${s}` })
+        results.push({
+          id: `settings-${s}`,
+          type: 'setting',
+          title: `Settings · ${s}`,
+          path: `/settings?tab=${s}`,
+        })
       }
     })
 
-    getCollection(COLLECTION.clients)
-      .find({ search: q, searchFields: ['name', 'email', 'pan', 'gstin', 'contactPerson'], pageSize: 6 })
-      .forEach((c) => {
-        results.push({ id: c.id, type: 'client', title: String(c.name), subtitle: String(c.contactPerson || ''), path: `/clients/${c.id}` })
-      })
+    try {
+      const api = await http.get<{
+        query: string
+        results: Array<{ collection: string; id: string; title: string; record?: Record<string, unknown> }>
+      }>('/search', { params: { q: query } })
 
-    getCollection(COLLECTION.invoices)
-      .find({ search: q, searchFields: ['invoiceNumber', 'clientName', 'status'], pageSize: 5 })
-      .forEach((inv) => {
-        results.push({ id: inv.id, type: 'invoice', title: String(inv.invoiceNumber), subtitle: String(inv.clientName), path: `/invoices?q=${encodeURIComponent(String(inv.invoiceNumber))}` })
-      })
+      for (const hit of api.results || []) {
+        const type = COLLECTION_TO_TYPE[hit.collection] || 'client'
+        const pathFn = COLLECTION_PATH[hit.collection]
+        const title = hit.title || hit.id
+        results.push({
+          id: hit.id,
+          type,
+          title,
+          subtitle: hit.collection,
+          path: pathFn ? pathFn(hit.id, title) : '/',
+        })
+      }
+    } catch {
+      /* navigation/settings hits still returned */
+    }
 
-    getCollection(COLLECTION.payments)
-      .find({ search: q, searchFields: ['reference', 'clientName', 'invoiceNumber'], pageSize: 5 })
-      .forEach((p) => {
-        results.push({ id: p.id, type: 'payment', title: String(p.reference), subtitle: String(p.clientName), path: `/payments?q=${encodeURIComponent(String(p.reference))}` })
-      })
+    // de-dupe by id+type
+    const seen = new Set<string>()
+    const unique = results.filter((r) => {
+      const k = `${r.type}:${r.id}`
+      if (seen.has(k)) return false
+      seen.add(k)
+      return true
+    })
 
-    getCollection(COLLECTION.documents)
-      .find({ search: q, searchFields: ['name', 'clientName', 'folder', 'tags'], pageSize: 5 })
-      .forEach((doc) => {
-        results.push({ id: doc.id, type: 'document', title: String(doc.name), subtitle: String(doc.clientName), path: `/documents?q=${encodeURIComponent(String(doc.name))}` })
-      })
-
-    getCollection(COLLECTION.employees)
-      .find({ search: q, searchFields: ['firstName', 'lastName', 'email'], pageSize: 4 })
-      .forEach((emp) => {
-        results.push({ id: emp.id, type: 'employee', title: `${emp.firstName} ${emp.lastName}`, subtitle: String(emp.designation), path: '/employees' })
-      })
-
-    getCollection(COLLECTION.tasks)
-      .find({ search: q, searchFields: ['title', 'clientName'], pageSize: 4 })
-      .forEach((task) => {
-        results.push({ id: task.id, type: 'task', title: String(task.title), subtitle: String(task.clientName), path: `/tasks?q=${encodeURIComponent(String(task.title))}` })
-      })
-
-    getCollection(COLLECTION.companies)
-      .find({ search: q, searchFields: ['name', 'cin'], pageSize: 4 })
-      .forEach((c) => {
-        results.push({ id: c.id, type: 'company', title: String(c.name), subtitle: String(c.industry), path: '/companies' })
-      })
-
-    getCollection(COLLECTION.compliance)
-      .find({ search: q, searchFields: ['clientName', 'service'], pageSize: 4 })
-      .forEach((c) => {
-        results.push({ id: c.id, type: 'compliance', title: String(c.service), subtitle: String(c.clientName), path: '/compliance' })
-      })
-
-    getCollection(COLLECTION.gst)
-      .find({ search: q, searchFields: ['clientName', 'gstin', 'returnType'], pageSize: 3 })
-      .forEach((g) => {
-        results.push({ id: g.id, type: 'compliance', title: `GST ${g.returnType}`, subtitle: String(g.clientName), path: '/compliance/gst' })
-      })
-
-    getCollection(COLLECTION.users)
-      .find({ search: q, searchFields: ['fullName', 'email', 'roleName'], pageSize: 3 })
-      .forEach((u) => {
-        results.push({ id: u.id, type: 'user', title: String(u.fullName || u.email), subtitle: String(u.roleName), path: '/settings?tab=users' })
-      })
-
-    return results.slice(0, 25)
+    return unique.slice(0, 25)
   },
 }

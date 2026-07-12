@@ -1,10 +1,8 @@
-import { simulateDelay } from './api'
-import { computeReports } from './analyticsService'
+import { http } from './httpClient'
 import type { ReportData } from '@/types'
 
 export const ReportService = {
   async getData(): Promise<ReportData> {
-    await simulateDelay(120)
-    return computeReports()
+    return http.get<ReportData>('/reports/summary')
   },
 }

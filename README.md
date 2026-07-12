@@ -1,10 +1,32 @@
 ﻿# Smart CA
 
-**CA Practice Management System â€” Version 1.0 Demo Release**
+**CA Practice Management System — Version 1.0 Demo Release**
 
-Smart CA is a **frontend-only** practice management demo for Chartered Accountant firms. It simulates enterprise SaaS workflowsâ€”clients, invoicing, payments, compliance, documents, calendar, accounting views, RBAC, and settingsâ€”using **React**, **TypeScript**, seeded mock JSON, and **browser LocalStorage** persistence.
+Smart CA is a CA practice management UI (React + TypeScript) backed by the **Go REST API** in `../Go` (`http://localhost:8080/api/v1`).
+
+> **Requires the Go backend.** Business data is **not** stored in a LocalStorage MockDatabase. Restarting the Go process reloads the deterministic seed (in-memory; no durable DB).
 
 > **Demo status:** Ready for client walkthroughs. **Not** production-ready for real customer data or statutory filings.
+
+### Run both (local demo)
+
+```bash
+# Terminal 1 — Go API
+cd ../Go
+cp .env.example .env   # if needed
+go run ./cmd/api       # http://localhost:8080
+
+# Terminal 2 — React UI
+cd ../saas
+cp .env.example .env   # must set VITE_API_BASE_URL
+npm install && npm run dev
+```
+
+| Setting | Value |
+|---------|-------|
+| `VITE_API_BASE_URL` | `http://localhost:8080/api/v1` |
+| Demo password | `SmartCA@2025` |
+| Example admin | `rajesh.sharma@smartca.in` |
 
 ---
 
@@ -12,11 +34,11 @@ Smart CA is a **frontend-only** practice management demo for Chartered Accountan
 
 | | |
 |---|---|
-| **What** | End-to-end CA practice UI with live-feeling CRUD and relational financial sync |
+| **What** | End-to-end CA practice UI with live CRUD via Go API |
 | **Problem** | Firms need a clear product vision before investing in backend, integrations, and compliance ops |
 | **Users** | CA partners, practice managers, accountants, article assistants (role-gated demo users) |
-| **Why** | Demonstrate product depth, UX, and data workflows without requiring a live API |
-| **Release** | **v1.0 Demo Release** â€” stabilized UI + browser QA + business-logic QA |
+| **Why** | Demonstrate product depth, UX, and data workflows against a real API contract |
+| **Release** | **v1.0 Demo Release** — UI + Go in-memory backend |
 
 Repository: [JagtapAvadhut/SmartCA](https://github.com/JagtapAvadhut/SmartCA)
 
@@ -24,12 +46,15 @@ Repository: [JagtapAvadhut/SmartCA](https://github.com/JagtapAvadhut/SmartCA)
 
 ## Important demo disclaimer
 
-- **No production backend** is connected.
-- **Authentication is simulated** (plaintext demo passwords in LocalStorage / seed JSON).
-- **All mutable data** lives in the browserâ€™s **LocalStorage** (`smart-ca-db:*` keys).
-- **AI replies are canned / simulated** â€” not a real LLM.
+- **Go backend required** (`cd ../Go && go run ./cmd/api`). UI alone will not serve business entities.
+- Set `VITE_API_BASE_URL=http://localhost:8080/api/v1` (see `.env.example`).
+- **Authentication** uses Bearer tokens from `POST /api/v1/auth/login` (opaque in-memory sessions on the API).
+- **Business data** comes from the Go API seed. There is **no** LocalStorage business DB (`smart-ca-db:*` collections are not the source of truth).
+- **Restarting the Go server resets demo data** to the embedded seed (in-memory store).
+- Allowed LocalStorage keys (UI only): `smart-ca-theme`, `smart-ca-app`, `smart-ca-token`, `smart-ca-auth`, `smart-ca-draft:*`, undo stack.
+- **AI replies are canned / simulated** — not a real LLM.
 - **Document upload/download/preview** are metadata + mock content simulations.
-- **Email / SMS / WhatsApp** settings persist UI state only â€” nothing is delivered.
+- **Email / SMS / WhatsApp** settings persist UI state only — nothing is delivered.
 - **Do not** store real client PII or use this app for real GST/ITR/TDS/ROC filings.
 
 A **Demo Mode** banner is shown in the authenticated shell for the same reason.
@@ -38,23 +63,23 @@ A **Demo Mode** banner is shown in the authenticated shell for the same reason.
 
 ## Key features (verified in this codebase)
 
-- Dashboard with **LocalStorage-derived** KPIs (not static-only charts)
-- Clients, Companies, Employees â€” CRUD, archive/restore paths
-- Invoices & Payments with **relational sync** (payment â†’ invoice `paidAmount` / status â†’ client outstanding)
+- Dashboard KPIs from `GET /dashboard`
+- Clients, Companies, Employees — CRUD, archive/restore via API
+- Invoices & Payments with **backend** relational sync
 - Status model includes **`partially_paid`** and **`remainingAmount`**
 - Compliance kanban + GST / ITR / TDS / ROC tables
 - Documents DMS simulation (metadata, tags, favourites, versions, archive)
 - Tasks, Notes, Calendar (Month / Week / Day + drag-and-drop)
-- Accounting demo: live system journals from invoices/payments + balanced manual journals, GL / TB / P&amp;L / Balance Sheet
-- Reports from live aggregations
-- Recycle Bin (restore / permanent delete / bulk)
+- Accounting: journals + statements from `/accounting/*`
+- Reports from `GET /reports/summary`
+- Recycle Bin via `/archive`
 - Global search + Command Palette (Ctrl/Cmd+K)
 - Notifications, Dark Mode, Branding (CSS variables), Session timeout from settings
 - Shared **Switch** control (Headless UI + correct thumb geometry) used in Settings notifications/security
-- Users / Roles / Permission matrix (LocalStorage)
-- Mock auth + RBAC (protected routes, role-filtered nav)
+- Users / Roles / Permission matrix (API-backed)
+- Auth + RBAC (protected routes, role-filtered nav)
 - Responsive layouts; DataTable search/sort/export/column visibility
-- Data Integrity check + Repair Derived Data (Settings)
+- Data Integrity check (client-side against API data)
 - Accessibility: focus-visible, labelled switches, keyboard Space/Enter on switches, reduced-motion
 
 ---
@@ -107,7 +132,8 @@ Versions from `package.json` (v1.0.0):
 | Charts | `recharts` | ^3.9.2 |
 | UI primitives | `@headlessui/react`, `lucide-react` | ^2.2.10 / ^1.23.0 |
 | QA | `playwright` / `@playwright/test` | ^1.61.1 |
-| Persistence | LocalStorage MockDatabase | in-app |
+| API | Go REST (`../Go`) | in-memory demo |
+| Persistence | Go seed (restart resets) | not LocalStorage business DB |
 
 ---
 
@@ -115,15 +141,13 @@ Versions from `package.json` (v1.0.0):
 
 ```
 UI (Pages / Layout)
-  â†’ Components (tables, forms, modals)
-  â†’ Hooks / Zustand stores (auth, theme, notifications)
-  â†’ Services (domain rules, analytics, accounting, reconciliation)
-  â†’ Repositories (collection access, delete impact helpers)
-  â†’ MockDatabase (CRUD, archive, restore, search, pagination)
-  â†’ LocalStorage (`smart-ca-db:*`) + initial JSON seed (`src/mock`)
+  → Components (tables, forms, modals)
+  → Hooks / Zustand stores (auth, theme, notifications)
+  → Services / repositories (HTTP via VITE_API_BASE_URL)
+  → Go REST API (/api/v1) → in-memory store + embedded seed
 ```
 
-This layering keeps UI free of storage details so a future REST/GraphQL backend can replace repositories/services without rewriting every page. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+See backend docs in [`../Go/README.md`](../Go/README.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ---
 
@@ -158,23 +182,23 @@ smart-ca/
 
 ---
 
-## Mock data and persistence
+## Data and persistence
 
-1. On first load (or DB version mismatch / Reset Database), seed JSON under `src/mock` is loaded into LocalStorage.
-2. CRUD goes through services â†’ repositories/collections â†’ LocalStorage.
-3. Refreshing the browser keeps mutations.
-4. Static JSON files in the repo are **not** rewritten by the browser at runtime.
+1. Start the Go backend; it loads the embedded deterministic seed into memory.
+2. CRUD goes through frontend services → HTTP → Go handlers/services/store.
+3. Browser refresh keeps the session token; **server restart reloads seed** (mutations are not durable).
+4. Use `POST /api/v1/demo/reset` (super_admin + `DEMO_RESET_ENABLED`) to reset without restarting when enabled.
 
 ---
 
 ## Authentication and RBAC
 
-- Mock login against seeded users
-- Session in Zustand + LocalStorage (`smart-ca-auth`)
-- Remember Me + idle **session timeout** (minutes from Settings â†’ Security)
+- Login against Go `POST /api/v1/auth/login` (bcrypt `passwordHash` on the API)
+- Token in LocalStorage / Zustand (`smart-ca-token` / `smart-ca-auth`); API holds opaque sessions
+- Remember Me + idle **session timeout** (minutes from Settings → Security)
 - `ProtectedRoute` / guest routes
-- ~14 roles / permission strings; nav filtered by permission
-- Settings â†’ Roles permission matrix; Users CRUD (demo)
+- Roles / permissions from API; nav filtered by permission
+- Settings → Roles permission matrix; Users CRUD (demo)
 
 ### Demo credentials
 
@@ -182,13 +206,13 @@ smart-ca/
 |-----------|------------|----------|
 | Admin (example) | `rajesh.sharma@smartca.in` | `SmartCA@2025` |
 
-**Warning:** These are **demo-only** credentials stored in plaintext for LocalStorage simulation. Never reuse them in production. Never commit real secrets.
+**Warning:** Demo-only credentials. Never reuse them in production. Never commit real secrets.
 
 ---
 
 ## CRUD and relational behaviour
 
-Supported patterns across modules: create, read, update, delete, duplicate (where implemented), archive, restore (Recycle Bin), search, sort, filter, pagination, CSV export, LocalStorage persistence.
+Supported patterns across modules: create, read, update, delete, duplicate (where implemented), archive, restore (Recycle Bin), search, sort, filter, pagination, CSV export (via API-backed data; not LocalStorage business DB).
 
 **Verified financial relationship:**
 
@@ -224,7 +248,7 @@ Default invoice tax: `total = subtotal + round(subtotal Ã— 0.18)` (CGST/SGST 
 | Recycle Bin | Restore / purge | Working |
 | AI Assistant | Chat UI | Simulated replies |
 | Settings | Org, users, roles, branding, integrity | Working |
-| Auth | Login / logout / forgot stub | Simulated |
+| Auth | Login / logout / forgot stub | API-backed (demo) |
 
 ---
 
@@ -234,16 +258,18 @@ Default invoice tax: `total = subtotal + round(subtotal Ã— 0.18)` (CGST/SGST 
 
 - Node.js 20+ recommended
 - npm
+- Go 1.22+ (for `../Go`; developed with go1.26.5)
 
 ### Clone & install
 
 ```bash
 git clone https://github.com/JagtapAvadhut/SmartCA.git
-cd SmartCA
+cd SmartCA/saas
 npm install
+cp .env.example .env   # VITE_API_BASE_URL=http://localhost:8080/api/v1
 ```
 
-Optional: copy `.env.example` to `.env` (not required for demo).
+Start the Go API from `../Go` before (or alongside) the UI — see **Run both** above.
 
 ### Run
 
@@ -251,7 +277,7 @@ Optional: copy `.env.example` to `.env` (not required for demo).
 npm run dev
 ```
 
-Open the URL Vite prints (typically `http://localhost:5173/`).
+Open the URL Vite prints (typically `http://localhost:5173/`). The Go API must be listening on port 8080.
 
 ### Build & preview
 
@@ -313,11 +339,11 @@ See the full script in [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md).
 
 Short path:
 
-1. Login with demo admin
+1. Start Go API (`../Go`) then login with demo admin
 2. Dashboard KPIs
-3. Create Client â†’ Invoice â†’ Payment
-4. Confirm outstanding / invoice status / refresh persistence
-5. Documents â†’ Recycle Bin restore
+3. Create Client → Invoice → Payment
+4. Confirm outstanding / invoice status (restarting Go resets seed)
+5. Documents → Recycle Bin restore
 6. Calendar + Accounting
 7. Settings branding / users / roles / Data Integrity
 8. Dark mode + Ctrl/Cmd+K search
@@ -326,16 +352,16 @@ Short path:
 
 ## Current limitations
 
-See [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md).
+See [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md) and [`../Go/README.md`](../Go/README.md).
 
-Highlights: no backend API; plaintext demo auth; no real object storage; no real AI; no email/SMS/WhatsApp delivery; no government portal filing; LocalStorage quotas; accounting is practice-demo oriented.
+Highlights: Go API is **in-memory only** (restart resets seed); demo credentials; no real object storage; no real AI; no email/SMS/WhatsApp delivery; no government portal filing; accounting is practice-demo oriented. **Not** production-ready for real customer data.
 
 ---
 
 ## Roadmap (realistic)
 
-1. Spring Boot (or similar) API + PostgreSQL
-2. Secure auth (hashed passwords, JWT/sessions, HTTPS)
+1. Durable database (e.g. PostgreSQL) behind the existing Go API
+2. Hardened auth (HTTPS, hardened session/JWT policy, secret management)
 3. Multi-tenant firm isolation
 4. Object storage for documents
 5. Server-side audit logging
@@ -348,7 +374,7 @@ Highlights: no backend API; plaintext demo auth; no real object storage; no real
 ## Contributing
 
 1. Fork / branch from `main`
-2. `npm install` && `npm run dev`
+2. Start `../Go` API; `npm install` && `npm run dev` in `saas`
 3. Prefer small PRs; keep demo disclaimers accurate
 4. Run `npm run build` and relevant `npm run qa:*` before opening a PR
 5. Do not commit `.env`, secrets, `node_modules`, or `dist`

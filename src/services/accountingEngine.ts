@@ -1,5 +1,4 @@
-import { COLLECTION, getCollection } from '@/db'
-import type { Invoice, Payment } from '@/types'
+import { http } from './httpClient'
 import { roundMoney } from '@/utils/money'
 
 export interface JournalLine {
@@ -26,21 +25,9 @@ export interface LedgerRow {
   balance: number
 }
 
-const JOURNAL_KEY = 'smart-ca-db:journals'
-
-export function readManualJournals(): JournalEntry[] {
-  try {
-    return (JSON.parse(localStorage.getItem(JOURNAL_KEY) || '[]') as JournalEntry[]).filter((j) => !j.archived)
-  } catch {
-    return []
-  }
-}
-
-export function writeManualJournals(rows: JournalEntry[]) {
-  localStorage.setItem(JOURNAL_KEY, JSON.stringify(rows))
-}
-
-export function assertBalanced(lines: JournalLine[]): { ok: true; debit: number; credit: number } | { ok: false; message: string; debit: number; credit: number } {
+export function assertBalanced(
+  lines: JournalLine[],
+): { ok: true; debit: number; credit: number } | { ok: false; message: string; debit: number; credit: number } {
   const debit = roundMoney(lines.reduce((s, l) => s + Number(l.debit || 0), 0))
   const credit = roundMoney(lines.reduce((s, l) => s + Number(l.credit || 0), 0))
   if (debit !== credit) {
@@ -52,55 +39,24 @@ export function assertBalanced(lines: JournalLine[]): { ok: true; debit: number;
   return { ok: true, debit, credit }
 }
 
-/** System-derived books from invoices/payments — never mixed as duplicate AR with the same invoice twice. */
-export function buildSystemJournals(): JournalEntry[] {
-  const invoices = getCollection<Invoice>(COLLECTION.invoices)
-    .find({ pageSize: 100000 })
-    .filter((i) => !['draft', 'cancelled'].includes(String(i.status)))
-  const payments = getCollection<Payment>(COLLECTION.payments)
-    .find({ pageSize: 100000 })
-    .filter((p) => p.status === 'completed')
-
-  const fromInvoices: JournalEntry[] = invoices.map((inv) => ({
-    id: `SYS-INV-${inv.id}`,
-    date: inv.issueDate,
-    narration: `Invoice ${inv.invoiceNumber} — ${inv.clientName}`,
-    source: 'invoice' as const,
-    sourceId: inv.id,
-    createdAt: inv.createdAt || inv.issueDate,
-    lines: [
-      { account: 'Accounts Receivable', debit: Number(inv.total || 0), credit: 0 },
-      { account: 'Professional Fees', debit: 0, credit: Number(inv.total || 0) },
-    ],
-  }))
-
-  const fromPayments: JournalEntry[] = payments.map((p) => ({
-    id: `SYS-PAY-${p.id}`,
-    date: p.paymentDate,
-    narration: `Payment ${p.reference} — ${p.clientName}`,
-    source: 'payment' as const,
-    sourceId: p.id,
-    createdAt: p.paymentDate,
-    lines: [
-      { account: 'Bank', debit: Number(p.amount || 0), credit: 0 },
-      { account: 'Accounts Receivable', debit: 0, credit: Number(p.amount || 0) },
-    ],
-  }))
-
-  return [...fromInvoices, ...fromPayments]
+export async function getAllJournals(): Promise<JournalEntry[]> {
+  return http.get<JournalEntry[]>('/accounting/journals')
 }
 
-export function getAllJournals(includeManual = true): JournalEntry[] {
-  const system = buildSystemJournals()
-  const manual = includeManual ? readManualJournals().filter((j) => j.source !== 'invoice' && j.source !== 'payment') : []
-  return [...system, ...manual]
+/** @deprecated Prefer getAllJournals(); kept for UI that listed manual-only rows. */
+export async function readManualJournals(): Promise<JournalEntry[]> {
+  const all = await getAllJournals()
+  return all.filter((j) => j.source === 'manual' || (!j.source && !String(j.id).startsWith('SYS-')))
 }
 
-export function postManualJournal(input: { date: string; narration: string; lines: JournalLine[] }): JournalEntry {
+export async function postManualJournal(input: {
+  date: string
+  narration: string
+  lines: JournalLine[]
+}): Promise<JournalEntry> {
   const check = assertBalanced(input.lines)
   if (!check.ok) throw new Error(check.message)
-  const entry: JournalEntry = {
-    id: `JRN-${Date.now()}`,
+  return http.post<JournalEntry>('/accounting/journals', {
     date: input.date,
     narration: input.narration,
     lines: input.lines.map((l) => ({
@@ -108,16 +64,33 @@ export function postManualJournal(input: { date: string; narration: string; line
       debit: roundMoney(l.debit),
       credit: roundMoney(l.credit),
     })),
-    source: 'manual',
-    createdAt: new Date().toISOString(),
-  }
-  const all = readManualJournals()
-  all.unshift(entry)
-  writeManualJournals(all)
-  return entry
+  })
 }
 
-export function buildLedger(journals = getAllJournals()): LedgerRow[] {
+export type AccountingSnapshot = {
+  journals: JournalEntry[]
+  ledger: LedgerRow[]
+  trial: {
+    rows: LedgerRow[]
+    totalDebit: number
+    totalCredit: number
+    balanced: boolean
+  }
+  pnl: { revenue: number; expenses: number; profit: number }
+  balance: {
+    assets: number
+    liabilities: number
+    equity: number
+    retainedEarnings: number
+    balanced: boolean
+  }
+}
+
+export async function getAccountingSnapshot(): Promise<AccountingSnapshot> {
+  return http.get<AccountingSnapshot>('/accounting/statements')
+}
+
+export function buildLedger(journals: JournalEntry[]): LedgerRow[] {
   const map = new Map<string, { debit: number; credit: number }>()
   journals.forEach((j) => {
     j.lines.forEach((l) => {
@@ -137,7 +110,7 @@ export function buildLedger(journals = getAllJournals()): LedgerRow[] {
     .sort((a, b) => a.account.localeCompare(b.account))
 }
 
-export function buildTrialBalance(ledger = buildLedger()) {
+export function buildTrialBalance(ledger: LedgerRow[]) {
   const totalDebit = roundMoney(ledger.reduce((s, r) => s + r.debit, 0))
   const totalCredit = roundMoney(ledger.reduce((s, r) => s + r.credit, 0))
   return {
@@ -148,7 +121,7 @@ export function buildTrialBalance(ledger = buildLedger()) {
   }
 }
 
-export function buildProfitAndLoss(ledger = buildLedger()) {
+export function buildProfitAndLoss(ledger: LedgerRow[]) {
   const revenue = roundMoney(
     ledger
       .filter((r) => /fee|income|revenue|professional/i.test(r.account))
@@ -159,7 +132,6 @@ export function buildProfitAndLoss(ledger = buildLedger()) {
       .filter((r) => /expense|salary|rent|utility/i.test(r.account))
       .reduce((s, r) => s + Math.max(0, r.debit - r.credit), 0),
   )
-  // If no explicit expense accounts, treat nothing as expense (do not invent 28%)
   return {
     revenue,
     expenses,
@@ -167,7 +139,7 @@ export function buildProfitAndLoss(ledger = buildLedger()) {
   }
 }
 
-export function buildBalanceSheet(ledger = buildLedger(), pnl = buildProfitAndLoss(ledger)) {
+export function buildBalanceSheet(ledger: LedgerRow[], pnl = buildProfitAndLoss(ledger)) {
   const assets = roundMoney(
     ledger
       .filter((r) => /bank|receivable|cash|asset/i.test(r.account))
@@ -178,7 +150,6 @@ export function buildBalanceSheet(ledger = buildLedger(), pnl = buildProfitAndLo
       .filter((r) => /payable|liability|loan/i.test(r.account))
       .reduce((s, r) => s + Math.max(0, -r.balance), 0),
   )
-  // Equity balancing figure so Assets = Liabilities + Equity (includes retained profit)
   const equity = roundMoney(assets - liabilities)
   return {
     assets,
@@ -187,13 +158,4 @@ export function buildBalanceSheet(ledger = buildLedger(), pnl = buildProfitAndLo
     retainedEarnings: pnl.profit,
     balanced: roundMoney(assets) === roundMoney(liabilities + equity),
   }
-}
-
-export function getAccountingSnapshot() {
-  const journals = getAllJournals()
-  const ledger = buildLedger(journals)
-  const trial = buildTrialBalance(ledger)
-  const pnl = buildProfitAndLoss(ledger)
-  const balance = buildBalanceSheet(ledger, pnl)
-  return { journals, ledger, trial, pnl, balance }
 }

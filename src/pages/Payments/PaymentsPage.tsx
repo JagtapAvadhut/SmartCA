@@ -86,15 +86,19 @@ export default function PaymentsPage() {
     mutationFn: async () => {
       if (!deleting) return
       const record = { ...deleting } as unknown as Record<string, unknown> & { id: string }
-      deleteWithUndo({
+      await deleteWithUndo({
         collection: COLLECTION.payments,
         record,
         label: deleting.reference,
-        performDelete: () => { PaymentService.delete(deleting.id) },
-        onRestored: invalidate,
+        performDelete: async () => { await PaymentService.delete(deleting.id) },
+        onRestored: () => {
+          invalidate()
+          invalidateAfterMutation(queryClient, ['payments', 'invoices', 'clients', 'dashboard', 'reports'])
+        },
       })
       setDeleting(null)
       invalidate()
+      invalidateAfterMutation(queryClient, ['payments', 'invoices', 'clients', 'dashboard', 'reports'])
     },
   })
 

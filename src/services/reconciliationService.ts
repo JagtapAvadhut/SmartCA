@@ -1,8 +1,6 @@
-import { COLLECTION, getCollection } from '@/db'
-import type { Client, Invoice, Payment, Task, Document, ComplianceRecord } from '@/types'
+import { http, type PaginatedResult } from './httpClient'
+import type { Client, Invoice, Payment, Task, Document, ComplianceRecord, DashboardData } from '@/types'
 import { invoiceRemaining, isOutstandingStatus, roundMoney } from '@/utils/money'
-import { syncInvoiceFromPayments, recalcClientFinancials } from './relations'
-import { computeDashboard } from './analyticsService'
 
 export interface IntegrityIssue {
   id: string
@@ -23,7 +21,7 @@ export interface IntegrityReport {
   issues: IntegrityIssue[]
 }
 
-const AUDIT_KEY = 'smart-ca-db:integrity-audit'
+const AUDIT_KEY = 'smart-ca-integrity-audit'
 
 function invoiceBalance(inv: Invoice) {
   return invoiceRemaining(Number(inv.total || 0), Number(inv.paidAmount || 0))
@@ -33,17 +31,26 @@ function pushIssue(list: IntegrityIssue[], issue: Omit<IntegrityIssue, 'id'>) {
   list.push({ ...issue, id: `ISSUE-${list.length + 1}` })
 }
 
-export function runDataIntegrityCheck(): IntegrityReport {
+async function listAll<T>(path: string): Promise<T[]> {
+  const res = await http.get<PaginatedResult<T>>(path, { params: { page: 1, pageSize: 100000 } })
+  return res.data
+}
+
+export async function runDataIntegrityCheck(): Promise<IntegrityReport> {
   const issues: IntegrityIssue[] = []
-  const clients = getCollection<Client>(COLLECTION.clients).find({ pageSize: 100000 })
-  const invoices = getCollection<Invoice>(COLLECTION.invoices).find({ pageSize: 100000 })
-  const payments = getCollection<Payment>(COLLECTION.payments).find({ pageSize: 100000 })
-  const tasks = getCollection<Task>(COLLECTION.tasks).find({ pageSize: 100000 })
-  const documents = getCollection<Document>(COLLECTION.documents).find({ pageSize: 100000 })
-  const compliance = getCollection<ComplianceRecord>(COLLECTION.compliance).find({ pageSize: 100000 })
-  const users = getCollection(COLLECTION.users).find({ pageSize: 100000 })
-  const roles = getCollection(COLLECTION.roles).find({ pageSize: 100000 })
-  const employees = getCollection(COLLECTION.employees).find({ pageSize: 100000 })
+  const [clients, invoices, payments, tasks, documents, compliance, users, roles, employees, dash] =
+    await Promise.all([
+      listAll<Client>('/clients'),
+      listAll<Invoice>('/invoices'),
+      listAll<Payment>('/payments'),
+      listAll<Task>('/tasks'),
+      listAll<Document>('/documents'),
+      listAll<ComplianceRecord>('/compliance'),
+      listAll<Record<string, unknown> & { id: string }>('/users'),
+      listAll<Record<string, unknown> & { id: string }>('/roles'),
+      listAll<Record<string, unknown> & { id: string }>('/employees'),
+      http.get<DashboardData>('/dashboard'),
+    ])
 
   const clientIds = new Set(clients.map((c) => c.id))
   const invoiceIds = new Set(invoices.map((i) => i.id))
@@ -208,7 +215,6 @@ export function runDataIntegrityCheck(): IntegrityReport {
     }
   })
 
-  const dash = computeDashboard()
   const expectedOutstanding = roundMoney(
     invoices.filter((i) => isOutstandingStatus(String(i.status))).reduce((s, i) => s + invoiceBalance(i), 0),
   )
@@ -234,25 +240,21 @@ export function runDataIntegrityCheck(): IntegrityReport {
   }
 }
 
-export function repairDerivedData(): { repaired: number; report: IntegrityReport; auditId: string } {
-  const invoices = getCollection<Invoice>(COLLECTION.invoices).find({ pageSize: 100000 })
-  const clients = getCollection<Client>(COLLECTION.clients).find({ pageSize: 100000 })
-  let repaired = 0
-
-  invoices.forEach((inv) => {
-    syncInvoiceFromPayments(inv.id)
-    repaired += 1
-  })
-  clients.forEach((c) => {
-    recalcClientFinancials(c.id)
-    repaired += 1
-  })
-
-  const report = runDataIntegrityCheck()
+/**
+ * Derived financial fields are repaired by the Go invoice/payment services.
+ * This re-fetches an integrity report after noting that repair is server-owned.
+ */
+export async function repairDerivedData(): Promise<{
+  repaired: number
+  report: IntegrityReport
+  auditId: string
+}> {
+  const report = await runDataIntegrityCheck()
   const audit = {
     id: `AUDIT-${Date.now()}`,
     action: 'repair_derived_data',
-    repaired,
+    repaired: 0,
+    note: 'Derived amounts are owned by the Go API; re-check completed',
     errorCount: report.errorCount,
     warningCount: report.warningCount,
     at: new Date().toISOString(),
@@ -265,7 +267,7 @@ export function repairDerivedData(): { repaired: number; report: IntegrityReport
     /* ignore */
   }
 
-  return { repaired, report, auditId: audit.id }
+  return { repaired: 0, report, auditId: audit.id }
 }
 
 export function getIntegrityAuditLog() {

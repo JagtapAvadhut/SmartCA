@@ -1,85 +1,90 @@
-import { getCollection, type CollectionKey } from '@/db'
-import type { QueryOptions, PaginatedResult } from '@/db'
-import { simulateDelay, type QueryParams } from '@/services/api'
-
-function toQueryOptions(params?: QueryParams): QueryOptions {
-  return {
-    page: params?.page,
-    pageSize: params?.pageSize,
-    search: params?.search,
-    sortBy: params?.sortBy,
-    sortOrder: params?.sortOrder,
-    filter: params?.status ? { status: params.status } : undefined,
-    includeArchived: false,
-  }
-}
+import { http, type QueryParams, type PaginatedResult } from '@/services/httpClient'
 
 export function createCrudService<T extends { id: string }>(
-  collectionName: CollectionKey,
+  path: string,
   options?: {
-    searchFields?: string[]
-    idPrefix?: string
     beforeCreate?: (data: Partial<T>) => Partial<T>
-  }
+  },
 ) {
-  const col = () => getCollection<T>(collectionName)
+  const base = path.startsWith('/') ? path : `/${path}`
 
   return {
     async getAll(params?: QueryParams): Promise<PaginatedResult<T>> {
-      await simulateDelay()
-      return col().findMany({
-        ...toQueryOptions(params),
-        searchFields: options?.searchFields,
-      })
+      return http.get<PaginatedResult<T>>(base, { params })
     },
 
     async getById(id: string): Promise<T> {
-      await simulateDelay()
-      const row = col().findById(id)
-      if (!row) throw new Error('Record not found')
-      return row
+      return http.get<T>(`${base}/${id}`)
     },
 
     async create(data: Partial<T>): Promise<T> {
-      await simulateDelay(300)
       const prepared = options?.beforeCreate ? options.beforeCreate(data) : data
-      return col().insert(prepared as Partial<T> & { id?: string })
+      return http.post<T>(base, prepared)
     },
 
     async update(id: string, data: Partial<T>): Promise<T> {
-      await simulateDelay(300)
-      return col().update(id, data)
+      return http.patch<T>(`${base}/${id}`, data)
     },
 
+    /**
+     * Permanent delete (Go: DELETE /{path}/{id}).
+     * Soft-delete / Recycle Bin uses archive().
+     */
     async delete(id: string): Promise<{ success: boolean }> {
-      await simulateDelay(200)
-      col().delete(id)
+      await http.del(`${base}/${id}`)
       return { success: true }
     },
 
+    /** Soft-delete (Go: POST /{path}/{id}/archive). */
     async archive(id: string): Promise<T> {
-      await simulateDelay(200)
-      return col().archive(id)
+      await http.post(`${base}/${id}/archive`)
+      try {
+        return await http.get<T>(`${base}/${id}`)
+      } catch {
+        return { id, archived: true } as unknown as T
+      }
     },
 
     async restore(id: string): Promise<T> {
-      await simulateDelay(200)
-      return col().restore(id)
+      await http.post(`${base}/${id}/restore`)
+      return http.get<T>(`${base}/${id}`)
     },
 
     async duplicate(id: string, overrides?: Partial<T>): Promise<T> {
-      await simulateDelay(300)
-      return col().duplicate(id, overrides)
+      const copy = await http.post<T>(`${base}/${id}/duplicate`)
+      if (overrides && Object.keys(overrides).length > 0) {
+        return http.patch<T>(`${base}/${copy.id}`, overrides)
+      }
+      return copy
     },
 
     async find(filter?: Record<string, unknown>): Promise<T[]> {
-      await simulateDelay()
-      return col().find({ filter, pageSize: 100000 })
+      const params: QueryParams = { page: 1, pageSize: 100000 }
+      if (filter) {
+        for (const [k, v] of Object.entries(filter)) {
+          if (v !== undefined && v !== null && v !== '') {
+            params[k] = typeof v === 'number' ? v : String(v)
+          }
+        }
+      }
+      const res = await http.get<PaginatedResult<T>>(base, { params })
+      // Backend list only supports status as a first-class filter; apply rest client-side.
+      if (!filter) return res.data
+      return res.data.filter((row) =>
+        Object.entries(filter).every(([k, expected]) => {
+          if (expected === undefined || expected === null || expected === '') return true
+          return (row as Record<string, unknown>)[k] === expected
+        }),
+      )
     },
 
     async count(filter?: Record<string, unknown>): Promise<number> {
-      await simulateDelay(100)
-      return col().count({ filter })
+      if (!filter || Object.keys(filter).length === 0) {
+        const res = await http.get<PaginatedResult<T>>(base, { params: { page: 1, pageSize: 1 } })
+        return res.total
+      }
+      const rows = await this.find(filter)
+      return rows.length
     },
   }
 }

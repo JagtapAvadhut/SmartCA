@@ -1,10 +1,7 @@
 import { createCrudService } from './crudFactory'
-import { COLLECTION, getCollection } from '@/db'
-import { simulateDelay } from './api'
 import type { Client } from '@/types'
 
-const base = createCrudService<Client>(COLLECTION.clients, {
-  searchFields: ['name', 'email', 'pan', 'gstin', 'contactPerson', 'city'],
+const base = createCrudService<Client>('clients', {
   beforeCreate: (data) => ({
     type: 'company',
     status: 'active',
@@ -26,8 +23,7 @@ const base = createCrudService<Client>(COLLECTION.clients, {
 export const ClientService = {
   ...base,
   async getStats() {
-    await simulateDelay()
-    const all = getCollection<Client>(COLLECTION.clients).find()
+    const all = await base.find()
     return {
       total: all.length,
       active: all.filter((c) => c.status === 'active').length,

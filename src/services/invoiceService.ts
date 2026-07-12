@@ -1,14 +1,9 @@
 import { createCrudService } from './crudFactory'
-import { COLLECTION, getCollection } from '@/db'
-import { simulateDelay } from './api'
-import { recalcClientFinancials, logActivity, syncInvoiceFromPayments } from './relations'
-import { withTransactionAsync } from '@/utils/transaction'
 import { computeInvoiceTax, invoiceRemaining, roundMoney } from '@/utils/money'
-import type { Invoice, Payment } from '@/types'
+import type { Invoice } from '@/types'
 
 function buildTotals(data: Partial<Invoice>) {
   const subtotal = roundMoney(Number(data.subtotal || 0))
-  // Allow exact totals when caller supplies a complete tax breakdown (demo / QA / interstate)
   if (
     data.total != null &&
     (data.cgst != null || data.sgst != null || data.igst != null) &&
@@ -44,8 +39,7 @@ function buildTotals(data: Partial<Invoice>) {
   }
 }
 
-const base = createCrudService<Invoice>(COLLECTION.invoices, {
-  searchFields: ['invoiceNumber', 'clientName', 'status'],
+const base = createCrudService<Invoice>('invoices', {
   beforeCreate: (data) => {
     const amount = data.subtotal || 0
     const totals = buildTotals({ ...data, subtotal: amount })
@@ -70,77 +64,34 @@ export const InvoiceService = {
   ...base,
   computeTotals: buildTotals,
   async create(data: Partial<Invoice>) {
-    return withTransactionAsync(async () => {
-      const inv = await base.create(data)
-      if (inv.clientId) recalcClientFinancials(inv.clientId)
-      logActivity({
-        type: 'invoice_created',
-        message: `Invoice ${inv.invoiceNumber} created for ${inv.clientName || 'client'}`,
-        clientId: inv.clientId,
-        clientName: inv.clientName,
-      })
-      return inv
-    }, [COLLECTION.invoices, COLLECTION.clients, COLLECTION.activities])
+    return base.create(data)
   },
   async update(id: string, data: Partial<Invoice>) {
-    return withTransactionAsync(async () => {
-      const before = getCollection<Invoice>(COLLECTION.invoices).findById(id)
-      if (!before) throw new Error('Invoice not found')
-
-      const merged = { ...before, ...data }
-      const totals =
-        data.subtotal != null || data.discount != null || data.roundOff != null || data.igst != null
-          ? buildTotals(merged)
-          : null
-
-      const inv = await base.update(id, totals ? { ...data, ...totals } : data)
-
-      // Always resync paidAmount from payments after structural edits
-      syncInvoiceFromPayments(inv.id)
-
-      if (before.clientId && before.clientId !== inv.clientId) {
-        recalcClientFinancials(before.clientId)
-      }
-      if (inv.clientId) recalcClientFinancials(inv.clientId)
-      return getCollection<Invoice>(COLLECTION.invoices).findById(id)!
-    }, [COLLECTION.invoices, COLLECTION.clients, COLLECTION.payments])
+    const before = await base.getById(id)
+    const merged = { ...before, ...data }
+    const totals =
+      data.subtotal != null || data.discount != null || data.roundOff != null || data.igst != null
+        ? buildTotals(merged)
+        : null
+    return base.update(id, totals ? { ...data, ...totals } : data)
   },
   async delete(id: string) {
-    return withTransactionAsync(async () => {
-      const before = getCollection<Invoice>(COLLECTION.invoices).findById(id)
-      if (!before) return { success: false }
-
-      // Remove linked payments to avoid orphans, then recalc client
-      const payments = getCollection<Payment>(COLLECTION.payments)
-        .find({ filter: { invoiceId: id }, pageSize: 100000 })
-      payments.forEach((p) => getCollection<Payment>(COLLECTION.payments).delete(p.id))
-
-      const result = await base.delete(id)
-      if (before.clientId) recalcClientFinancials(before.clientId)
-      return result
-    }, [COLLECTION.invoices, COLLECTION.payments, COLLECTION.clients])
+    return base.delete(id)
   },
   async duplicate(id: string) {
-    return withTransactionAsync(async () => {
-      const source = getCollection<Invoice>(COLLECTION.invoices).findById(id)
-      if (!source) throw new Error('Invoice not found')
-      const copy = await base.duplicate(id, {
-        invoiceNumber: `SCA/2025-26/${Date.now().toString().slice(-4)}`,
-        status: 'draft',
-        paidAmount: 0,
-        remainingAmount: source.total,
-      })
-      if (copy.clientId) recalcClientFinancials(copy.clientId)
-      return copy
-    }, [COLLECTION.invoices, COLLECTION.clients])
+    const source = await base.getById(id)
+    return base.duplicate(id, {
+      invoiceNumber: `SCA/2025-26/${Date.now().toString().slice(-4)}`,
+      status: 'draft',
+      paidAmount: 0,
+      remainingAmount: source.total,
+    } as Partial<Invoice>)
   },
   async getByClient(clientId: string) {
-    await simulateDelay()
-    return getCollection<Invoice>(COLLECTION.invoices).find({ filter: { clientId } })
+    return base.find({ clientId })
   },
   async getStats() {
-    await simulateDelay()
-    const all = getCollection<Invoice>(COLLECTION.invoices).find()
+    const all = await base.find()
     return {
       total: all.length,
       paid: all.filter((i) => i.status === 'paid').length,

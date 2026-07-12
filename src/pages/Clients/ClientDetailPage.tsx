@@ -8,8 +8,8 @@ import {
 import toast from 'react-hot-toast'
 import {
   ClientService, InvoiceService, PaymentService, DocumentService, TaskService,
+  ComplianceService, ActivityService,
 } from '@/services'
-import { COLLECTION, getCollection } from '@/db'
 import { Button, Card, CardTitle, Badge, Avatar, TableSkeleton, Input, EntityFormModal, type FormField } from '@/components/common'
 import { formatCurrency, formatDate, formatRelativeTime, invalidateAfterMutation, cn } from '@/utils'
 import { z } from 'zod'
@@ -55,17 +55,23 @@ export default function ClientDetailPage() {
   const { data: documents } = useQuery({ queryKey: ['client-documents', id], queryFn: () => DocumentService.getByClient(id!), enabled: !!id })
   const { data: tasks } = useQuery({
     queryKey: ['client-tasks', id],
-    queryFn: async () => getCollection(COLLECTION.tasks).find({ filter: { clientId: id }, pageSize: 100 }),
+    queryFn: async () => TaskService.find({ clientId: id }),
     enabled: !!id,
   })
   const { data: compliance } = useQuery({
     queryKey: ['client-compliance', id],
-    queryFn: async () => getCollection(COLLECTION.compliance).find({ filter: { clientId: id }, pageSize: 100 }),
+    queryFn: async () => ComplianceService.find({ clientId: id }),
     enabled: !!id,
   })
   const { data: activities } = useQuery({
     queryKey: ['client-activity', id],
-    queryFn: async () => getCollection(COLLECTION.activities).find({ filter: { clientId: id }, sortBy: 'timestamp', sortOrder: 'desc', pageSize: 30 }),
+    queryFn: async () => {
+      const all = await ActivityService.getAll()
+      return all
+        .filter((a) => a.clientId === id)
+        .sort((a, b) => String(b.timestamp).localeCompare(String(a.timestamp)))
+        .slice(0, 30)
+    },
     enabled: !!id,
   })
 

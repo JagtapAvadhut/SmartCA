@@ -104,7 +104,7 @@ export default function RecycleBinPage() {
     <div className="space-y-6">
       <PageHeader
         title="Recycle Bin"
-        description="Restore archived records or permanently delete them. All actions persist in LocalStorage."
+        description="Restore archived records or permanently delete them. All actions persist on the Go API."
         actions={
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" disabled={!selectedItems.length} onClick={() => bulkRestore.mutate()} loading={bulkRestore.isPending}>

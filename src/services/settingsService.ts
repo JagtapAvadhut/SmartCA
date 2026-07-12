@@ -188,8 +188,10 @@ export const SettingsService = {
   },
 
   async getLoginHistory() {
-    // No dedicated login-history route; return empty for UI compatibility
-    return [] as Array<Record<string, unknown>>
+    const res = await http.get<PaginatedResult<Record<string, unknown>>>('/login-history', {
+      params: { page: 1, pageSize: 100000 },
+    })
+    return res.data
   },
 
   async logAudit(action: string, module: string, details: string, userId = '', userName = '') {

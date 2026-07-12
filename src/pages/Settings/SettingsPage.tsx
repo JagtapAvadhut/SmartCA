@@ -481,11 +481,16 @@ export default function SettingsPage() {
               </div>
               <div className="mt-6 flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
                 <Button variant="outline" onClick={async () => {
-                  const { resetDatabase } = await import('@/db')
-                  if (confirm('Reset all mock data to factory defaults? Your local changes will be lost.')) {
-                    resetDatabase()
-                    toast.success('Database reset. Reloading...')
+                  if (!confirm('Reset all demo data on the Go backend to seed defaults? Local UI preferences (theme) are kept.')) {
+                    return
+                  }
+                  try {
+                    const { http } = await import('@/services/httpClient')
+                    await http.post('/demo/reset')
+                    toast.success('Demo data reset on server. Reloading…')
                     setTimeout(() => window.location.reload(), 800)
+                  } catch (e) {
+                    toast.error(e instanceof Error ? e.message : 'Demo reset failed (requires Super Admin)')
                   }
                 }}>Reset Database</Button>
                 <Button onClick={async () => {

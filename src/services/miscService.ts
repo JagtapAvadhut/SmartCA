@@ -40,9 +40,7 @@ export const NotificationService = {
     return http.patch<Notification>(`/notifications/${id}`, { read: true })
   },
   async markAllRead() {
-    const unread = await this.getUnread()
-    await Promise.all(unread.map((n) => this.markRead(n.id)))
-    return { success: true }
+    return http.post<{ updated?: number }>('/notifications/mark-all-read')
   },
   async delete(id: string) {
     await http.del(`/notifications/${id}`)

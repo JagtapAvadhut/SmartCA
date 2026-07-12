@@ -1,4 +1,4 @@
-import { http, setAuthToken } from './httpClient'
+import { http, setAuthToken, type PaginatedResult } from './httpClient'
 import type { AuthUser, LoginCredentials, Session } from '@/types/auth'
 
 export const AuthService = {
@@ -61,12 +61,10 @@ export const AuthService = {
   },
 
   async getLoginHistory(userId?: string) {
-    // loginHistory is not exposed as a dedicated list route; use audit-logs as a stand-in when needed
-    const res = await http.get<{ data: Array<Record<string, unknown>>; total: number }>(
-      '/audit-logs',
-      { params: { page: 1, pageSize: 200 } },
-    )
-    const rows = Array.isArray(res) ? (res as unknown as Array<Record<string, unknown>>) : res.data || []
+    const res = await http.get<PaginatedResult<Record<string, unknown>>>('/login-history', {
+      params: { page: 1, pageSize: 200 },
+    })
+    const rows = res.data || []
     if (!userId) return rows
     return rows.filter((h) => h.userId === userId)
   },

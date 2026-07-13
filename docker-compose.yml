@@ -1,0 +1,81 @@
+# Smart CA full-stack Compose (modern Compose Specification — no obsolete top-level version)
+#
+# Workspace layout (required):
+#   SmartCA/
+#     Go/                 backend (build context)
+#     saas/               frontend (build context; folder name is lowercase)
+#     docker-compose.yml  this file
+#
+# Browser → web (:8080) → /api/* proxied to api:8080 → in-memory Go store
+#
+# Docker Compose was NOT executed in the authoring environment (Docker unavailable).
+# Intended commands on a Docker-capable host:
+#   docker compose build
+#   docker compose up -d
+#   docker compose ps
+#   docker compose logs -f
+#   docker compose down
+#
+# No PostgreSQL / Redis / volumes for business data — restart resets in-memory state.
+
+name: smartca
+
+services:
+  api:
+    build:
+      context: ./Go
+      dockerfile: Dockerfile
+    image: smartca-api:local
+    environment:
+      APP_ENV: production
+      HTTP_HOST: "0.0.0.0"
+      HTTP_PORT: "8080"
+      # Browser Origin is the published web URL (same-origin /api proxy).
+      FRONTEND_ORIGIN: "http://localhost:8080,http://127.0.0.1:8080"
+      LOG_LEVEL: info
+      SESSION_TTL: 30m
+      DEMO_RESET_ENABLED: "true"
+    # API is reached via the Compose network only (nginx upstream). No host publish.
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD", "/app/smartca-api", "-healthcheck"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  web:
+    build:
+      context: ./saas
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /api/v1
+        VITE_APP_NAME: Smart CA
+    image: smartca-web:local
+    ports:
+      - "8080:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    # nginx needs writable cache/pid paths; prefer not read_only for web
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL

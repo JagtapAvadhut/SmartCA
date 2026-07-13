@@ -1,0 +1,51 @@
+# Git / VCS
+.git
+.gitignore
+.gitattributes
+
+# Dependencies & builds (reinstalled/produced in image)
+node_modules
+dist
+dist-ssr
+build
+coverage
+*.tsbuildinfo
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.key
+credentials.json
+secrets.*
+
+# Docs / QA / Playwright (not needed for production build)
+docs/
+scripts/
+*.md
+qa-results.json
+business-qa-results.json
+*.har
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+traces/
+
+# IDE / OS / caches
+.idea/
+.vscode/
+.vite/
+.cache/
+tmp/
+temp/
+*.log
+.DS_Store
+Thumbs.db
+
+# Docker meta
+Dockerfile
+.dockerignore
+docker-compose*.yml

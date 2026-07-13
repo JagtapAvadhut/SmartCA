@@ -1,0 +1,43 @@
+# Git / VCS
+.git
+.gitignore
+.gitattributes
+
+# Env / secrets — never bake into images
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local binaries / build output
+/bin/
+/dist/
+*.exe
+*.test
+*.out
+coverage*
+*.prof
+*.pprof
+trace.out
+
+# Docs & reports (not required for compile; seed JSON is go:embed under internal/seed/data)
+*.md
+docs/
+*.txt
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs / temp
+*.log
+tmp/
+temp/
+
+# Docker meta
+Dockerfile
+.dockerignore

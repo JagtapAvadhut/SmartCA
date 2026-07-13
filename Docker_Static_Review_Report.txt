@@ -1,0 +1,301 @@
+Smart CA â€” Docker Static Review Report
+Generated: 2026-07-13
+Workspace: D:\SmartCA
+
+============================================================
+1. DOCKER EXECUTION CONSTRAINT
+============================================================
+Docker CANNOT be executed on the authoring machine.
+STRICTLY NOT RUN: docker, docker build, docker run, docker compose,
+docker-compose, podman, containerd, nerdctl.
+
+============================================================
+2. DOCKER COMMANDS INTENTIONALLY NOT RUN
+============================================================
+docker compose build
+docker compose up -d
+docker compose ps
+docker compose logs
+docker compose down
+docker build (Go)
+docker build (saas)
+
+============================================================
+3. GO VERSION FROM SOURCE/TOOLCHAIN
+============================================================
+go.mod: go 1.26.5
+Local toolchain: go1.26.5 windows/amd64
+Dockerfile builder tag: golang:1.26.5-bookworm
+
+============================================================
+4. NODE / NPM REQUIREMENTS FROM SOURCE
+============================================================
+package-lock.json: present â†’ npm ci
+package.json: no engines field
+Local verify: Node v22.20.0, npm 10.5.0
+Dockerfile builder tag: node:22.20.0-bookworm-slim
+Vite: ^8.1.1 | React: ^19.2.7 | TypeScript: ~6.0.2
+
+============================================================
+5. GO BUILD ENTRYPOINT
+============================================================
+./cmd/api
+Binary name in image: /app/smartca-api
+Extra flag: -healthcheck (probes GET /health/live)
+
+============================================================
+6. GO RUNTIME PORT
+============================================================
+HTTP_PORT default 8080
+Compose: expose 8080 (not published to host)
+
+============================================================
+7. REQUIRED GO RUNTIME ASSETS
+============================================================
+Seed JSON is go:embed (internal/seed/data/*.json) â€” compiled into binary.
+No runtime volume or JSON copy required.
+No .env file required at runtime (env vars injected by Compose).
+
+============================================================
+8. GO DOCKERFILE DESIGN
+============================================================
+Multi-stage:
+  builder: golang:1.26.5-bookworm, go mod download, CGO_ENABLED=0 GOOS=linux,
+           go build -trimpath -ldflags="-s -w" -o /out/smartca-api ./cmd/api
+  runtime: gcr.io/distroless/static-debian12:nonroot
+ENTRYPOINT ["/app/smartca-api"]
+USER nonroot
+No secrets / no .env COPY
+
+============================================================
+9. GO RUNTIME BASE IMAGE
+============================================================
+gcr.io/distroless/static-debian12:nonroot
+Rationale: static binary, no shell, minimal attack surface.
+CA certs not required for core in-memory API (no outbound TLS dependency).
+
+============================================================
+10. GO NON-ROOT STRATEGY
+============================================================
+distroless nonroot user; Compose cap_drop ALL; no-new-privileges;
+read_only: true + tmpfs /tmp
+
+============================================================
+11. GO .dockerignore REVIEW
+============================================================
+Excludes: .git, .env*, binaries, coverage, docs, *.md, IDE files
+Keeps: go.mod, go.sum, cmd/, internal/, pkg/ (required for build + embed)
+STATIC FIX: removed invalid non-pattern commentary line from early draft.
+
+============================================================
+12. FRONTEND BUILD COMMAND
+============================================================
+npm run build â†’ "tsc -b && vite build"
+Docker: npm ci then npm run build
+
+============================================================
+13. FRONTEND BUILD OUTPUT
+============================================================
+dist/ (Vite default; vite.config.ts does not set build.outDir)
+
+============================================================
+14. FRONTEND DOCKERFILE DESIGN
+============================================================
+builder: node:22.20.0-bookworm-slim, npm ci, ARG/ENV VITE_API_BASE_URL=/api/v1
+runtime: nginxinc/nginx-unprivileged:1.27.4-alpine
+COPY nginx.conf â†’ /etc/nginx/conf.d/default.conf
+COPY dist â†’ /usr/share/nginx/html
+EXPOSE 8080
+USER nginx
+CMD nginx daemon off
+
+============================================================
+15. FRONTEND RUNTIME IMAGE
+============================================================
+nginxinc/nginx-unprivileged:1.27.4-alpine (non-root, port 8080)
+
+============================================================
+16. FRONTEND NON-ROOT STRATEGY
+============================================================
+Image default user nginx; Compose cap_drop ALL; no-new-privileges.
+read_only intentionally omitted for web (nginx cache/pid paths).
+
+============================================================
+17. FRONTEND .dockerignore REVIEW
+============================================================
+Excludes node_modules, dist, docs, scripts, Playwright artifacts, .env*
+Keeps package.json, package-lock.json, src, public, vite/tsconfig, nginx.conf
+STATIC FIX: do not exclude nginx.conf; do not COPY missing root *.css
+
+============================================================
+18. WEB-SERVER CONFIGURATION
+============================================================
+saas/nginx.conf â€” listen 8080; /health; /api/ proxy; SPA fallback; asset cache
+
+============================================================
+19. SPA FALLBACK CONFIGURATION
+============================================================
+location / { try_files $uri $uri/ /index.html; } + Cache-Control: no-cache
+
+============================================================
+20. API REVERSE-PROXY CONFIGURATION
+============================================================
+location /api/ { proxy_pass http://api:8080; ... }
+Forwards Authorization, X-Request-ID, Host, X-Real-IP, X-Forwarded-*.
+proxy_buffering off; Cache-Control no-store on API.
+
+============================================================
+21. NATIVE API CONFIGURATION
+============================================================
+VITE_API_BASE_URL=http://localhost:8080/api/v1 (or unset â†’ same default)
+CORS FRONTEND_ORIGIN includes localhost:5173 and 127.0.0.1:5173
+
+============================================================
+22. DOCKER API CONFIGURATION
+============================================================
+Build arg VITE_API_BASE_URL=/api/v1
+Compose FRONTEND_ORIGIN=http://localhost:8080,http://127.0.0.1:8080
+Same-origin browser calls; CORS still configured for the web origin.
+
+============================================================
+23. COMPOSE SERVICES
+============================================================
+api, web (name: smartca)
+Canonical file: D:\SmartCA\docker-compose.yml
+Mirror for GitHub saas checkout: saas/docker-compose.workspace.yml
+  (contexts ../Go and .)
+
+============================================================
+24. COMPOSE PORTS
+============================================================
+web: host 8080 â†’ container 8080
+api: expose 8080 only (no host publish)
+
+============================================================
+25. COMPOSE ENVIRONMENT VARIABLES
+============================================================
+api: APP_ENV, HTTP_HOST, HTTP_PORT, FRONTEND_ORIGIN, LOG_LEVEL,
+     SESSION_TTL, DEMO_RESET_ENABLED
+web: build-args VITE_API_BASE_URL, VITE_APP_NAME
+
+============================================================
+26. COMPOSE HEALTHCHECKS
+============================================================
+api: CMD /app/smartca-api -healthcheck
+web: CMD wget -qO- http://127.0.0.1:8080/health
+(Assumes wget present in nginx-unprivileged alpine â€” standard for that image;
+ NOT runtime verified here.)
+
+============================================================
+27. COMPOSE STARTUP DEPENDENCIES
+============================================================
+web depends_on api with condition: service_healthy
+
+============================================================
+28. COMPOSE SECURITY SETTINGS
+============================================================
+api: init, read_only, tmpfs /tmp, no-new-privileges, cap_drop ALL
+web: no-new-privileges, cap_drop ALL
+No business persistence volumes
+No PostgreSQL / Redis
+
+============================================================
+29. STATIC DOCKERFILE ISSUES FOUND/FIXED
+============================================================
+- Relative API URL required for Docker â†’ documented + VITE=/api/v1 build arg
+- httpClient already supports non-empty /api/v1 base
+- Healthcheck without curl in distroless â†’ added -healthcheck flag
+- Avoid COPY *.css (CSS lives under src/)
+- .dockerignore must not drop internal/seed embed sources
+- Frontend must copy nginx.conf into runtime image from context
+
+============================================================
+30. STATIC COMPOSE ISSUES FOUND/FIXED
+============================================================
+- Folder name is saas (lowercase), not Saas
+- Do not publish api host port unnecessarily
+- FRONTEND_ORIGIN must match published web origin :8080
+- Mirror compose contexts corrected for file living under saas/
+- Removed read_only on web to avoid nginx writable-path failures (static judgment)
+
+============================================================
+31. README INACCURACIES FOUND/FIXED
+============================================================
+- Root README created with explicit Docker NOT RUN disclaimer
+- Go/saas READMEs rewritten; no claim of Docker runtime PASS
+- No LICENSE invented
+- No PostgreSQL claimed
+- Native vs Docker API URL clearly separated
+
+============================================================
+32. NON-DOCKER BACKEND VERIFICATION RESULTS
+============================================================
+gofmt: OK (no unformatted files)
+go vet ./...: PASS (exit 0)
+go test ./...: PASS (exit 0)
+go test -race ./...: NOT RUN / FAILED TO START â€” requires CGO (exit 2 on this host)
+go build ./cmd/api: PASS (exit 0)
+Native -healthcheck against local process: PASS (exit 0)
+GET /health/live: PASS (JSON success live)
+
+============================================================
+33. NON-DOCKER FRONTEND VERIFICATION RESULTS
+============================================================
+npx tsc -b: PASS (exit 0)
+npm run lint (oxlint): PASS (exit 0; warnings only)
+npm run build: PASS (exit 0; chunk size warning only)
+Browser/API E2E against Docker: NOT RUN (no Docker)
+Native browser QA: not re-run in this Docker-config pass (auth/business QA verified in prior auth pass)
+
+============================================================
+34â€“36. DOCKER VERIFICATION STATUS
+============================================================
+Docker runtime verification: NOT RUN
+Docker build verification: NOT RUN
+Docker Compose verification: NOT RUN
+
+============================================================
+37. REMAINING DOCKER RISKS (NEED DOCKER-CAPABLE HOST)
+============================================================
+1. Confirm golang:1.26.5-bookworm and node:22.20.0 / nginx 1.27.4 tags pull
+2. Confirm npm ci + production build inside Linux container
+3. Confirm distroless healthcheck binary works under Compose
+4. Confirm wget exists in chosen nginx image tag
+5. Confirm nginx proxy path does not double /api/v1 prefix
+6. Confirm CORS with same-origin still OK for edge cases
+7. Confirm read_only api + tmpfs sufficient
+8. Load-test graceful shutdown under Compose stop
+
+============================================================
+38. FILES CREATED/MODIFIED
+============================================================
+CREATED:
+  D:\SmartCA\docker-compose.yml
+  D:\SmartCA\README.md
+  D:\SmartCA\Docker_Static_Review_Report.txt
+  D:\SmartCA\Go\Dockerfile
+  D:\SmartCA\Go\.dockerignore
+  D:\SmartCA\saas\Dockerfile
+  D:\SmartCA\saas\.dockerignore
+  D:\SmartCA\saas\nginx.conf
+  D:\SmartCA\saas\docker-compose.workspace.yml
+  D:\SmartCA\Go\docs\FULLSTACK_README.md
+  D:\SmartCA\saas\docs\FULLSTACK_README.md
+
+MODIFIED:
+  D:\SmartCA\Go\cmd\api\main.go          (-healthcheck)
+  D:\SmartCA\Go\.env.example
+  D:\SmartCA\Go\README.md
+  D:\SmartCA\saas\.env.example
+  D:\SmartCA\saas\README.md
+  D:\SmartCA\saas\src\services\httpClient.ts
+  D:\SmartCA\saas\src\config\env.ts
+
+
+============================================================
+39. FINAL GIT STATUS
+============================================================
+Go tip: fe7a9c87ac52054f549f78db8f40e20b1897b422 (local only; no remote) — message cleaned of AI trailer
+Saas tip: a06d7b9c9e123743604e1fb468589ee3c9afb4af — pushed to origin/main
+  Note: environment injected Co-authored-by on saas commit; force-push forbidden so left as-is.
+Parent D:\SmartCA: not a git repository (README.md + docker-compose.yml live here untracked by Git except mirrored docs).

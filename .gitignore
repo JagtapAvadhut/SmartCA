@@ -1,62 +1,41 @@
-# Dependencies & builds
-node_modules
-dist
-dist-ssr
-build
-coverage
-*.tsbuildinfo
-
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-# Environment & secrets
-.env
-.env.*
-!.env.example
-*.pem
-*.p12
-*.key
-credentials.json
-secrets.*
-
-# Editor / OS
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Root monorepo ignores
 .DS_Store
 Thumbs.db
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-*~
+*.log
+.idea/
+.vscode/
+*.swp
 
-# Vite
-.vite
-*.local
+# Nested repo backups (do not commit)
+**/.git.bak/
+**/.git.bak/**
 
-# Playwright / test artifacts
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-traces/
-**/trace.zip
+# Env / secrets
+.env
+.env.local
+*.pem
+*.key
 
-# Temporary QA outputs (summaries live in docs/)
-qa-results.json
-business-qa-results.json
-qa-client-debug.png
-*.har
+# Go
+Go/bin/
+Go/dist/
+Go/*.exe
+Go/*.test
+Go/coverage*
+Go/vendor/
 
-# Misc
-.cache
-tmp
-temp
+# Frontend
+saas/node_modules/
+saas/dist/
+saas/dist-ssr/
+saas/build/
+saas/coverage/
+saas/*.tsbuildinfo
+saas/.vite/
+saas/qa-results.json
+saas/business-qa-results.json
+saas/qa-client-debug.png
+saas/test-results/
+saas/playwright-report/
+saas/blob-report/
+saas/playwright/.cache/

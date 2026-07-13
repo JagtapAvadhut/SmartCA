@@ -1,0 +1,45 @@
+# Binaries / build output
+/bin/
+/dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test / coverage
+*.test
+*.out
+coverage.html
+coverage.out
+coverage/
+*.coverprofile
+
+# Profiles (pprof / CPU / heap / traces)
+*.prof
+*.pprof
+cpu.prof
+mem.prof
+heap.prof
+block.prof
+mutex.prof
+trace.out
+
+# Go
+vendor/
+
+# Env / secrets
+.env
+.env.local
+*.pem
+*.key
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

@@ -1,0 +1,3755 @@
+{
+  "data": [
+    {
+      "id": "INV-00001",
+      "invoiceNumber": "SCA/2025-26/0001",
+      "clientId": "CLT-0006",
+      "clientName": "L&T",
+      "issueDate": "2025-06-19",
+      "dueDate": "2025-08-30",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 45371,
+          "amount": 45371
+        }
+      ],
+      "subtotal": 45371,
+      "cgst": 4083.5,
+      "sgst": 4083.5,
+      "total": 53538,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2025-06-19"
+    },
+    {
+      "id": "INV-00002",
+      "invoiceNumber": "SCA/2025-26/0002",
+      "clientId": "CLT-0091",
+      "clientName": "JSW Steel",
+      "issueDate": "2025-04-28",
+      "dueDate": "2025-11-14",
+      "status": "draft",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 22368,
+          "amount": 22368
+        }
+      ],
+      "subtotal": 22368,
+      "cgst": 2013,
+      "sgst": 2013,
+      "total": 26394,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0009",
+      "createdAt": "2025-04-28"
+    },
+    {
+      "id": "INV-00003",
+      "invoiceNumber": "SCA/2025-26/0003",
+      "clientId": "CLT-0075",
+      "clientName": "IRCTC",
+      "issueDate": "2025-04-16",
+      "dueDate": "2025-07-05",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Company Registration",
+          "quantity": 1,
+          "rate": 201495,
+          "amount": 201495
+        }
+      ],
+      "subtotal": 201495,
+      "cgst": 18134.5,
+      "sgst": 18134.5,
+      "total": 237764,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0023",
+      "createdAt": "2025-04-16"
+    },
+    {
+      "id": "INV-00004",
+      "invoiceNumber": "SCA/2025-26/0004",
+      "clientId": "CLT-0108",
+      "clientName": "Fortis Healthcare",
+      "issueDate": "2025-02-19",
+      "dueDate": "2025-03-20",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 158824,
+          "amount": 158824
+        }
+      ],
+      "subtotal": 158824,
+      "cgst": 14294,
+      "sgst": 14294,
+      "total": 187412,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0007",
+      "createdAt": "2025-02-19"
+    },
+    {
+      "id": "INV-00005",
+      "invoiceNumber": "SCA/2025-26/0005",
+      "clientId": "CLT-0048",
+      "clientName": "Birla Soft",
+      "issueDate": "2024-12-30",
+      "dueDate": "2025-02-01",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 174800,
+          "amount": 174800
+        }
+      ],
+      "subtotal": 174800,
+      "cgst": 15732,
+      "sgst": 15732,
+      "total": 206264,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0018",
+      "createdAt": "2024-12-30"
+    },
+    {
+      "id": "INV-00006",
+      "invoiceNumber": "SCA/2025-26/0006",
+      "clientId": "CLT-0109",
+      "clientName": "Narayana Hrudayalaya",
+      "issueDate": "2025-02-28",
+      "dueDate": "2025-09-25",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Company Registration",
+          "quantity": 1,
+          "rate": 17079,
+          "amount": 17079
+        }
+      ],
+      "subtotal": 17079,
+      "cgst": 1537,
+      "sgst": 1537,
+      "total": 20153,
+      "paidAmount": 20153,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0004",
+      "createdAt": "2025-02-28"
+    },
+    {
+      "id": "INV-00007",
+      "invoiceNumber": "SCA/2025-26/0007",
+      "clientId": "CLT-0096",
+      "clientName": "NMDC",
+      "issueDate": "2024-03-12",
+      "dueDate": "2024-05-24",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 29565,
+          "amount": 29565
+        }
+      ],
+      "subtotal": 29565,
+      "cgst": 2661,
+      "sgst": 2661,
+      "total": 34887,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0010",
+      "createdAt": "2024-03-12"
+    },
+    {
+      "id": "INV-00008",
+      "invoiceNumber": "SCA/2025-26/0008",
+      "clientId": "CLT-0093",
+      "clientName": "SAIL",
+      "issueDate": "2024-10-08",
+      "dueDate": "2025-07-18",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Audit",
+          "quantity": 1,
+          "rate": 93016,
+          "amount": 93016
+        }
+      ],
+      "subtotal": 93016,
+      "cgst": 8371.5,
+      "sgst": 8371.5,
+      "total": 109759,
+      "paidAmount": 109759,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0021",
+      "createdAt": "2024-10-08"
+    },
+    {
+      "id": "INV-00009",
+      "invoiceNumber": "SCA/2025-26/0009",
+      "clientId": "CLT-0069",
+      "clientName": "Jubilant Foodworks",
+      "issueDate": "2024-08-27",
+      "dueDate": "2025-07-20",
+      "status": "draft",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 52919,
+          "amount": 52919
+        }
+      ],
+      "subtotal": 52919,
+      "cgst": 4762.5,
+      "sgst": 4762.5,
+      "total": 62444,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0003",
+      "createdAt": "2024-08-27"
+    },
+    {
+      "id": "INV-00010",
+      "invoiceNumber": "SCA/2025-26/0010",
+      "clientId": "CLT-0031",
+      "clientName": "Pidilite Industries",
+      "issueDate": "2024-01-02",
+      "dueDate": "2024-03-26",
+      "status": "sent",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 184152,
+          "amount": 184152
+        }
+      ],
+      "subtotal": 184152,
+      "cgst": 16573.5,
+      "sgst": 16573.5,
+      "total": 217299,
+      "paidAmount": 191624,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0003",
+      "createdAt": "2024-01-02"
+    },
+    {
+      "id": "INV-00011",
+      "invoiceNumber": "SCA/2025-26/0011",
+      "clientId": "CLT-0072",
+      "clientName": "Lemon Tree Hotels",
+      "issueDate": "2025-03-18",
+      "dueDate": "2025-06-11",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 73884,
+          "amount": 73884
+        }
+      ],
+      "subtotal": 73884,
+      "cgst": 6649.5,
+      "sgst": 6649.5,
+      "total": 87183,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0008",
+      "createdAt": "2025-03-18"
+    },
+    {
+      "id": "INV-00012",
+      "invoiceNumber": "SCA/2025-26/0012",
+      "clientId": "CLT-0049",
+      "clientName": "Cyient",
+      "issueDate": "2025-04-03",
+      "dueDate": "2025-09-14",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 145519,
+          "amount": 145519
+        }
+      ],
+      "subtotal": 145519,
+      "cgst": 13096.5,
+      "sgst": 13096.5,
+      "total": 171712,
+      "paidAmount": 171712,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0015",
+      "createdAt": "2025-04-03"
+    },
+    {
+      "id": "INV-00013",
+      "invoiceNumber": "SCA/2025-26/0013",
+      "clientId": "CLT-0033",
+      "clientName": "Berger Paints",
+      "issueDate": "2025-04-06",
+      "dueDate": "2025-04-19",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 52097,
+          "amount": 52097
+        }
+      ],
+      "subtotal": 52097,
+      "cgst": 4688.5,
+      "sgst": 4688.5,
+      "total": 61474,
+      "paidAmount": 61474,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0022",
+      "createdAt": "2025-04-06"
+    },
+    {
+      "id": "INV-00014",
+      "invoiceNumber": "SCA/2025-26/0014",
+      "clientId": "CLT-0092",
+      "clientName": "Jindal Steel",
+      "issueDate": "2024-11-07",
+      "dueDate": "2025-10-05",
+      "status": "sent",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 37919,
+          "amount": 37919
+        }
+      ],
+      "subtotal": 37919,
+      "cgst": 3412.5,
+      "sgst": 3412.5,
+      "total": 44744,
+      "paidAmount": 32942,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0004",
+      "createdAt": "2024-11-07"
+    },
+    {
+      "id": "INV-00015",
+      "invoiceNumber": "SCA/2025-26/0015",
+      "clientId": "CLT-0104",
+      "clientName": "Mahanagar Gas",
+      "issueDate": "2024-11-22",
+      "dueDate": "2025-08-26",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 187794,
+          "amount": 187794
+        }
+      ],
+      "subtotal": 187794,
+      "cgst": 16901.5,
+      "sgst": 16901.5,
+      "total": 221597,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0013",
+      "createdAt": "2024-11-22"
+    },
+    {
+      "id": "INV-00016",
+      "invoiceNumber": "SCA/2025-26/0016",
+      "clientId": "CLT-0085",
+      "clientName": "SJVN",
+      "issueDate": "2024-08-08",
+      "dueDate": "2025-05-10",
+      "status": "draft",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 177165,
+          "amount": 177165
+        }
+      ],
+      "subtotal": 177165,
+      "cgst": 15945,
+      "sgst": 15945,
+      "total": 209055,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0014",
+      "createdAt": "2024-08-08"
+    },
+    {
+      "id": "INV-00017",
+      "invoiceNumber": "SCA/2025-26/0017",
+      "clientId": "CLT-0059",
+      "clientName": "Dixon Technologies",
+      "issueDate": "2024-02-05",
+      "dueDate": "2025-11-23",
+      "status": "paid",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 137870,
+          "amount": 137870
+        }
+      ],
+      "subtotal": 137870,
+      "cgst": 12408.5,
+      "sgst": 12408.5,
+      "total": 162687,
+      "paidAmount": 162687,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0003",
+      "createdAt": "2024-02-05"
+    },
+    {
+      "id": "INV-00018",
+      "invoiceNumber": "SCA/2025-26/0018",
+      "clientId": "CLT-0058",
+      "clientName": "Amber Enterprises",
+      "issueDate": "2024-06-11",
+      "dueDate": "2025-06-02",
+      "status": "sent",
+      "items": [
+        {
+          "description": "GST Filing",
+          "quantity": 1,
+          "rate": 128031,
+          "amount": 128031
+        }
+      ],
+      "subtotal": 128031,
+      "cgst": 11523,
+      "sgst": 11523,
+      "total": 151077,
+      "paidAmount": 16244,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0024",
+      "createdAt": "2024-06-11"
+    },
+    {
+      "id": "INV-00019",
+      "invoiceNumber": "SCA/2025-26/0019",
+      "clientId": "CLT-0106",
+      "clientName": "Star Health",
+      "issueDate": "2024-01-13",
+      "dueDate": "2024-11-27",
+      "status": "paid",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 44616,
+          "amount": 44616
+        }
+      ],
+      "subtotal": 44616,
+      "cgst": 4015.5,
+      "sgst": 4015.5,
+      "total": 52647,
+      "paidAmount": 52647,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0018",
+      "createdAt": "2024-01-13"
+    },
+    {
+      "id": "INV-00020",
+      "invoiceNumber": "SCA/2025-26/0020",
+      "clientId": "CLT-0084",
+      "clientName": "Cochin Shipyard",
+      "issueDate": "2025-03-24",
+      "dueDate": "2025-09-25",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 83511,
+          "amount": 83511
+        }
+      ],
+      "subtotal": 83511,
+      "cgst": 7516,
+      "sgst": 7516,
+      "total": 98543,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0019",
+      "createdAt": "2025-03-24"
+    },
+    {
+      "id": "INV-00021",
+      "invoiceNumber": "SCA/2025-26/0021",
+      "clientId": "CLT-0062",
+      "clientName": "Ambuja Cements",
+      "issueDate": "2025-05-12",
+      "dueDate": "2025-09-08",
+      "status": "paid",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 67787,
+          "amount": 67787
+        }
+      ],
+      "subtotal": 67787,
+      "cgst": 6101,
+      "sgst": 6101,
+      "total": 79989,
+      "paidAmount": 79989,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0009",
+      "createdAt": "2025-05-12"
+    },
+    {
+      "id": "INV-00022",
+      "invoiceNumber": "SCA/2025-26/0022",
+      "clientId": "CLT-0005",
+      "clientName": "Mahindra & Mahindra",
+      "issueDate": "2024-07-07",
+      "dueDate": "2024-11-25",
+      "status": "sent",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 31645,
+          "amount": 31645
+        }
+      ],
+      "subtotal": 31645,
+      "cgst": 2848,
+      "sgst": 2848,
+      "total": 37341,
+      "paidAmount": 29929,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0004",
+      "createdAt": "2024-07-07"
+    },
+    {
+      "id": "INV-00023",
+      "invoiceNumber": "SCA/2025-26/0023",
+      "clientId": "CLT-0049",
+      "clientName": "Cyient",
+      "issueDate": "2024-09-04",
+      "dueDate": "2025-12-16",
+      "status": "paid",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 171163,
+          "amount": 171163
+        }
+      ],
+      "subtotal": 171163,
+      "cgst": 15404.5,
+      "sgst": 15404.5,
+      "total": 201972,
+      "paidAmount": 201972,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0010",
+      "createdAt": "2024-09-04"
+    },
+    {
+      "id": "INV-00024",
+      "invoiceNumber": "SCA/2025-26/0024",
+      "clientId": "CLT-0086",
+      "clientName": "NHPC",
+      "issueDate": "2024-10-08",
+      "dueDate": "2025-02-06",
+      "status": "paid",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 41083,
+          "amount": 41083
+        }
+      ],
+      "subtotal": 41083,
+      "cgst": 3697.5,
+      "sgst": 3697.5,
+      "total": 48478,
+      "paidAmount": 48478,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2024-10-08"
+    },
+    {
+      "id": "INV-00025",
+      "invoiceNumber": "SCA/2025-26/0025",
+      "clientId": "CLT-0052",
+      "clientName": "Voltas",
+      "issueDate": "2025-03-21",
+      "dueDate": "2025-07-27",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 86633,
+          "amount": 86633
+        }
+      ],
+      "subtotal": 86633,
+      "cgst": 7797,
+      "sgst": 7797,
+      "total": 102227,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0022",
+      "createdAt": "2025-03-21"
+    },
+    {
+      "id": "INV-00026",
+      "invoiceNumber": "SCA/2025-26/0026",
+      "clientId": "CLT-0009",
+      "clientName": "Adani Enterprises",
+      "issueDate": "2025-02-23",
+      "dueDate": "2025-12-01",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Audit",
+          "quantity": 1,
+          "rate": 181557,
+          "amount": 181557
+        }
+      ],
+      "subtotal": 181557,
+      "cgst": 16340,
+      "sgst": 16340,
+      "total": 214237,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0003",
+      "createdAt": "2025-02-23"
+    },
+    {
+      "id": "INV-00027",
+      "invoiceNumber": "SCA/2025-26/0027",
+      "clientId": "CLT-0013",
+      "clientName": "HCL Technologies",
+      "issueDate": "2024-10-07",
+      "dueDate": "2025-03-04",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Audit",
+          "quantity": 1,
+          "rate": 27654,
+          "amount": 27654
+        }
+      ],
+      "subtotal": 27654,
+      "cgst": 2489,
+      "sgst": 2489,
+      "total": 32632,
+      "paidAmount": 32632,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0004",
+      "createdAt": "2024-10-07"
+    },
+    {
+      "id": "INV-00028",
+      "invoiceNumber": "SCA/2025-26/0028",
+      "clientId": "CLT-0097",
+      "clientName": "MOIL",
+      "issueDate": "2024-10-17",
+      "dueDate": "2025-05-19",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 124169,
+          "amount": 124169
+        }
+      ],
+      "subtotal": 124169,
+      "cgst": 11175,
+      "sgst": 11175,
+      "total": 146519,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2024-10-17"
+    },
+    {
+      "id": "INV-00029",
+      "invoiceNumber": "SCA/2025-26/0029",
+      "clientId": "CLT-0001",
+      "clientName": "Infosys Ltd",
+      "issueDate": "2024-10-22",
+      "dueDate": "2025-08-28",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 158048,
+          "amount": 158048
+        }
+      ],
+      "subtotal": 158048,
+      "cgst": 14224.5,
+      "sgst": 14224.5,
+      "total": 186497,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0015",
+      "createdAt": "2024-10-22"
+    },
+    {
+      "id": "INV-00030",
+      "invoiceNumber": "SCA/2025-26/0030",
+      "clientId": "CLT-0100",
+      "clientName": "National Aluminium",
+      "issueDate": "2024-10-17",
+      "dueDate": "2025-10-14",
+      "status": "sent",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 167101,
+          "amount": 167101
+        }
+      ],
+      "subtotal": 167101,
+      "cgst": 15039,
+      "sgst": 15039,
+      "total": 197179,
+      "paidAmount": 140320,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0023",
+      "createdAt": "2024-10-17"
+    },
+    {
+      "id": "INV-00031",
+      "invoiceNumber": "SCA/2025-26/0031",
+      "clientId": "CLT-0029",
+      "clientName": "Britannia Industries",
+      "issueDate": "2025-05-05",
+      "dueDate": "2025-09-03",
+      "status": "sent",
+      "items": [
+        {
+          "description": "GST Filing",
+          "quantity": 1,
+          "rate": 109052,
+          "amount": 109052
+        }
+      ],
+      "subtotal": 109052,
+      "cgst": 9814.5,
+      "sgst": 9814.5,
+      "total": 128681,
+      "paidAmount": 81273,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0012",
+      "createdAt": "2025-05-05"
+    },
+    {
+      "id": "INV-00032",
+      "invoiceNumber": "SCA/2025-26/0032",
+      "clientId": "CLT-0025",
+      "clientName": "ONGC",
+      "issueDate": "2025-02-19",
+      "dueDate": "2025-04-24",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "GST Filing",
+          "quantity": 1,
+          "rate": 5298,
+          "amount": 5298
+        }
+      ],
+      "subtotal": 5298,
+      "cgst": 477,
+      "sgst": 477,
+      "total": 6252,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0008",
+      "createdAt": "2025-02-19"
+    },
+    {
+      "id": "INV-00033",
+      "invoiceNumber": "SCA/2025-26/0033",
+      "clientId": "CLT-0025",
+      "clientName": "ONGC",
+      "issueDate": "2024-06-23",
+      "dueDate": "2025-12-17",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Company Registration",
+          "quantity": 1,
+          "rate": 141862,
+          "amount": 141862
+        }
+      ],
+      "subtotal": 141862,
+      "cgst": 12767.5,
+      "sgst": 12767.5,
+      "total": 167397,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0002",
+      "createdAt": "2024-06-23"
+    },
+    {
+      "id": "INV-00034",
+      "invoiceNumber": "SCA/2025-26/0034",
+      "clientId": "CLT-0063",
+      "clientName": "ACC Ltd",
+      "issueDate": "2024-01-16",
+      "dueDate": "2024-04-10",
+      "status": "sent",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 141777,
+          "amount": 141777
+        }
+      ],
+      "subtotal": 141777,
+      "cgst": 12760,
+      "sgst": 12760,
+      "total": 167297,
+      "paidAmount": 6524,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0022",
+      "createdAt": "2024-01-16"
+    },
+    {
+      "id": "INV-00035",
+      "invoiceNumber": "SCA/2025-26/0035",
+      "clientId": "CLT-0076",
+      "clientName": "IRFC",
+      "issueDate": "2025-03-25",
+      "dueDate": "2025-11-24",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 156469,
+          "amount": 156469
+        }
+      ],
+      "subtotal": 156469,
+      "cgst": 14082,
+      "sgst": 14082,
+      "total": 184633,
+      "paidAmount": 184633,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0006",
+      "createdAt": "2025-03-25"
+    },
+    {
+      "id": "INV-00036",
+      "invoiceNumber": "SCA/2025-26/0036",
+      "clientId": "CLT-0054",
+      "clientName": "Crompton Greaves",
+      "issueDate": "2024-06-02",
+      "dueDate": "2025-12-27",
+      "status": "draft",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 166143,
+          "amount": 166143
+        }
+      ],
+      "subtotal": 166143,
+      "cgst": 14953,
+      "sgst": 14953,
+      "total": 196049,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0017",
+      "createdAt": "2024-06-02"
+    },
+    {
+      "id": "INV-00037",
+      "invoiceNumber": "SCA/2025-26/0037",
+      "clientId": "CLT-0106",
+      "clientName": "Star Health",
+      "issueDate": "2025-01-12",
+      "dueDate": "2025-12-17",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Company Registration",
+          "quantity": 1,
+          "rate": 118651,
+          "amount": 118651
+        }
+      ],
+      "subtotal": 118651,
+      "cgst": 10678.5,
+      "sgst": 10678.5,
+      "total": 140008,
+      "paidAmount": 140008,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0002",
+      "createdAt": "2025-01-12"
+    },
+    {
+      "id": "INV-00038",
+      "invoiceNumber": "SCA/2025-26/0038",
+      "clientId": "CLT-0037",
+      "clientName": "Apollo Hospitals",
+      "issueDate": "2024-09-25",
+      "dueDate": "2025-03-26",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 137415,
+          "amount": 137415
+        }
+      ],
+      "subtotal": 137415,
+      "cgst": 12367.5,
+      "sgst": 12367.5,
+      "total": 162150,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0021",
+      "createdAt": "2024-09-25"
+    },
+    {
+      "id": "INV-00039",
+      "invoiceNumber": "SCA/2025-26/0039",
+      "clientId": "CLT-0007",
+      "clientName": "Sun Pharma",
+      "issueDate": "2025-03-02",
+      "dueDate": "2025-10-31",
+      "status": "sent",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 60779,
+          "amount": 60779
+        }
+      ],
+      "subtotal": 60779,
+      "cgst": 5470,
+      "sgst": 5470,
+      "total": 71719,
+      "paidAmount": 47281,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0024",
+      "createdAt": "2025-03-02"
+    },
+    {
+      "id": "INV-00040",
+      "invoiceNumber": "SCA/2025-26/0040",
+      "clientId": "CLT-0105",
+      "clientName": "Gujarat Gas",
+      "issueDate": "2025-02-11",
+      "dueDate": "2025-02-28",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 16123,
+          "amount": 16123
+        }
+      ],
+      "subtotal": 16123,
+      "cgst": 1451,
+      "sgst": 1451,
+      "total": 19025,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0014",
+      "createdAt": "2025-02-11"
+    },
+    {
+      "id": "INV-00041",
+      "invoiceNumber": "SCA/2025-26/0041",
+      "clientId": "CLT-0112",
+      "clientName": "TCS 2",
+      "issueDate": "2024-01-06",
+      "dueDate": "2024-10-11",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 70124,
+          "amount": 70124
+        }
+      ],
+      "subtotal": 70124,
+      "cgst": 6311,
+      "sgst": 6311,
+      "total": 82746,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0021",
+      "createdAt": "2024-01-06"
+    },
+    {
+      "id": "INV-00042",
+      "invoiceNumber": "SCA/2025-26/0042",
+      "clientId": "CLT-0018",
+      "clientName": "Bajaj Finance",
+      "issueDate": "2025-05-09",
+      "dueDate": "2025-10-31",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 40615,
+          "amount": 40615
+        }
+      ],
+      "subtotal": 40615,
+      "cgst": 3655.5,
+      "sgst": 3655.5,
+      "total": 47926,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0022",
+      "createdAt": "2025-05-09"
+    },
+    {
+      "id": "INV-00043",
+      "invoiceNumber": "SCA/2025-26/0043",
+      "clientId": "CLT-0004",
+      "clientName": "HDFC Bank",
+      "issueDate": "2025-01-02",
+      "dueDate": "2025-11-19",
+      "status": "sent",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 122768,
+          "amount": 122768
+        }
+      ],
+      "subtotal": 122768,
+      "cgst": 11049,
+      "sgst": 11049,
+      "total": 144866,
+      "paidAmount": 72798,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0022",
+      "createdAt": "2025-01-02"
+    },
+    {
+      "id": "INV-00044",
+      "invoiceNumber": "SCA/2025-26/0044",
+      "clientId": "CLT-0096",
+      "clientName": "NMDC",
+      "issueDate": "2024-05-10",
+      "dueDate": "2025-12-21",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "GST Filing",
+          "quantity": 1,
+          "rate": 97168,
+          "amount": 97168
+        }
+      ],
+      "subtotal": 97168,
+      "cgst": 8745,
+      "sgst": 8745,
+      "total": 114658,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0003",
+      "createdAt": "2024-05-10"
+    },
+    {
+      "id": "INV-00045",
+      "invoiceNumber": "SCA/2025-26/0045",
+      "clientId": "CLT-0006",
+      "clientName": "L&T",
+      "issueDate": "2025-03-05",
+      "dueDate": "2025-04-08",
+      "status": "paid",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 17244,
+          "amount": 17244
+        }
+      ],
+      "subtotal": 17244,
+      "cgst": 1552,
+      "sgst": 1552,
+      "total": 20348,
+      "paidAmount": 20348,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0018",
+      "createdAt": "2025-03-05"
+    },
+    {
+      "id": "INV-00046",
+      "invoiceNumber": "SCA/2025-26/0046",
+      "clientId": "CLT-0079",
+      "clientName": "BHEL",
+      "issueDate": "2024-02-17",
+      "dueDate": "2025-02-24",
+      "status": "draft",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 29546,
+          "amount": 29546
+        }
+      ],
+      "subtotal": 29546,
+      "cgst": 2659,
+      "sgst": 2659,
+      "total": 34864,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0018",
+      "createdAt": "2024-02-17"
+    },
+    {
+      "id": "INV-00047",
+      "invoiceNumber": "SCA/2025-26/0047",
+      "clientId": "CLT-0103",
+      "clientName": "Indraprastha Gas",
+      "issueDate": "2025-01-29",
+      "dueDate": "2025-07-28",
+      "status": "sent",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 162052,
+          "amount": 162052
+        }
+      ],
+      "subtotal": 162052,
+      "cgst": 14584.5,
+      "sgst": 14584.5,
+      "total": 191221,
+      "paidAmount": 70428,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0013",
+      "createdAt": "2025-01-29"
+    },
+    {
+      "id": "INV-00048",
+      "invoiceNumber": "SCA/2025-26/0048",
+      "clientId": "CLT-0080",
+      "clientName": "BEL",
+      "issueDate": "2024-01-30",
+      "dueDate": "2025-05-29",
+      "status": "sent",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 91945,
+          "amount": 91945
+        }
+      ],
+      "subtotal": 91945,
+      "cgst": 8275,
+      "sgst": 8275,
+      "total": 108495,
+      "paidAmount": 9208,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0018",
+      "createdAt": "2024-01-30"
+    },
+    {
+      "id": "INV-00049",
+      "invoiceNumber": "SCA/2025-26/0049",
+      "clientId": "CLT-0080",
+      "clientName": "BEL",
+      "issueDate": "2024-09-02",
+      "dueDate": "2025-12-28",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 83405,
+          "amount": 83405
+        }
+      ],
+      "subtotal": 83405,
+      "cgst": 7506.5,
+      "sgst": 7506.5,
+      "total": 98418,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0004",
+      "createdAt": "2024-09-02"
+    },
+    {
+      "id": "INV-00050",
+      "invoiceNumber": "SCA/2025-26/0050",
+      "clientId": "CLT-0050",
+      "clientName": "Zensar Technologies",
+      "issueDate": "2024-08-29",
+      "dueDate": "2024-10-03",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 201957,
+          "amount": 201957
+        }
+      ],
+      "subtotal": 201957,
+      "cgst": 18176,
+      "sgst": 18176,
+      "total": 238309,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0025",
+      "createdAt": "2024-08-29"
+    },
+    {
+      "id": "INV-00051",
+      "invoiceNumber": "SCA/2025-26/0051",
+      "clientId": "CLT-0119",
+      "clientName": "Adani Enterprises 2",
+      "issueDate": "2024-05-23",
+      "dueDate": "2025-06-25",
+      "status": "sent",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 28726,
+          "amount": 28726
+        }
+      ],
+      "subtotal": 28726,
+      "cgst": 2585.5,
+      "sgst": 2585.5,
+      "total": 33897,
+      "paidAmount": 15196,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0016",
+      "createdAt": "2024-05-23"
+    },
+    {
+      "id": "INV-00052",
+      "invoiceNumber": "SCA/2025-26/0052",
+      "clientId": "CLT-0008",
+      "clientName": "Wipro",
+      "issueDate": "2024-07-16",
+      "dueDate": "2025-06-14",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 36502,
+          "amount": 36502
+        }
+      ],
+      "subtotal": 36502,
+      "cgst": 3285,
+      "sgst": 3285,
+      "total": 43072,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2024-07-16"
+    },
+    {
+      "id": "INV-00053",
+      "invoiceNumber": "SCA/2025-26/0053",
+      "clientId": "CLT-0030",
+      "clientName": "Godrej Consumer",
+      "issueDate": "2024-11-06",
+      "dueDate": "2025-08-23",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 55748,
+          "amount": 55748
+        }
+      ],
+      "subtotal": 55748,
+      "cgst": 5017.5,
+      "sgst": 5017.5,
+      "total": 65783,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0023",
+      "createdAt": "2024-11-06"
+    },
+    {
+      "id": "INV-00054",
+      "invoiceNumber": "SCA/2025-26/0054",
+      "clientId": "CLT-0025",
+      "clientName": "ONGC",
+      "issueDate": "2025-04-21",
+      "dueDate": "2025-06-13",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 33328,
+          "amount": 33328
+        }
+      ],
+      "subtotal": 33328,
+      "cgst": 2999.5,
+      "sgst": 2999.5,
+      "total": 39327,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0021",
+      "createdAt": "2025-04-21"
+    },
+    {
+      "id": "INV-00055",
+      "invoiceNumber": "SCA/2025-26/0055",
+      "clientId": "CLT-0111",
+      "clientName": "Infosys Ltd 2",
+      "issueDate": "2025-05-12",
+      "dueDate": "2025-10-09",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 97098,
+          "amount": 97098
+        }
+      ],
+      "subtotal": 97098,
+      "cgst": 8739,
+      "sgst": 8739,
+      "total": 114576,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0024",
+      "createdAt": "2025-05-12"
+    },
+    {
+      "id": "INV-00056",
+      "invoiceNumber": "SCA/2025-26/0056",
+      "clientId": "CLT-0108",
+      "clientName": "Fortis Healthcare",
+      "issueDate": "2024-02-17",
+      "dueDate": "2025-08-05",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 202282,
+          "amount": 202282
+        }
+      ],
+      "subtotal": 202282,
+      "cgst": 18205.5,
+      "sgst": 18205.5,
+      "total": 238693,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0009",
+      "createdAt": "2024-02-17"
+    },
+    {
+      "id": "INV-00057",
+      "invoiceNumber": "SCA/2025-26/0057",
+      "clientId": "CLT-0031",
+      "clientName": "Pidilite Industries",
+      "issueDate": "2025-03-11",
+      "dueDate": "2025-04-15",
+      "status": "paid",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 91234,
+          "amount": 91234
+        }
+      ],
+      "subtotal": 91234,
+      "cgst": 8211,
+      "sgst": 8211,
+      "total": 107656,
+      "paidAmount": 107656,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0002",
+      "createdAt": "2025-03-11"
+    },
+    {
+      "id": "INV-00058",
+      "invoiceNumber": "SCA/2025-26/0058",
+      "clientId": "CLT-0108",
+      "clientName": "Fortis Healthcare",
+      "issueDate": "2024-10-04",
+      "dueDate": "2025-07-06",
+      "status": "sent",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 63403,
+          "amount": 63403
+        }
+      ],
+      "subtotal": 63403,
+      "cgst": 5706.5,
+      "sgst": 5706.5,
+      "total": 74816,
+      "paidAmount": 69939,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0001",
+      "createdAt": "2024-10-04"
+    },
+    {
+      "id": "INV-00059",
+      "invoiceNumber": "SCA/2025-26/0059",
+      "clientId": "CLT-0018",
+      "clientName": "Bajaj Finance",
+      "issueDate": "2024-05-18",
+      "dueDate": "2024-06-19",
+      "status": "draft",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 22629,
+          "amount": 22629
+        }
+      ],
+      "subtotal": 22629,
+      "cgst": 2036.5,
+      "sgst": 2036.5,
+      "total": 26702,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0006",
+      "createdAt": "2024-05-18"
+    },
+    {
+      "id": "INV-00060",
+      "invoiceNumber": "SCA/2025-26/0060",
+      "clientId": "CLT-0064",
+      "clientName": "JK Cement",
+      "issueDate": "2024-06-30",
+      "dueDate": "2024-11-20",
+      "status": "draft",
+      "items": [
+        {
+          "description": "GST Filing",
+          "quantity": 1,
+          "rate": 45952,
+          "amount": 45952
+        }
+      ],
+      "subtotal": 45952,
+      "cgst": 4135.5,
+      "sgst": 4135.5,
+      "total": 54223,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0024",
+      "createdAt": "2024-06-30"
+    },
+    {
+      "id": "INV-00061",
+      "invoiceNumber": "SCA/2025-26/0061",
+      "clientId": "CLT-0111",
+      "clientName": "Infosys Ltd 2",
+      "issueDate": "2024-05-21",
+      "dueDate": "2025-08-26",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 142061,
+          "amount": 142061
+        }
+      ],
+      "subtotal": 142061,
+      "cgst": 12785.5,
+      "sgst": 12785.5,
+      "total": 167632,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0018",
+      "createdAt": "2024-05-21"
+    },
+    {
+      "id": "INV-00062",
+      "invoiceNumber": "SCA/2025-26/0062",
+      "clientId": "CLT-0010",
+      "clientName": "Tata Steel",
+      "issueDate": "2025-03-24",
+      "dueDate": "2025-05-27",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Company Registration",
+          "quantity": 1,
+          "rate": 193735,
+          "amount": 193735
+        }
+      ],
+      "subtotal": 193735,
+      "cgst": 17436,
+      "sgst": 17436,
+      "total": 228607,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0014",
+      "createdAt": "2025-03-24"
+    },
+    {
+      "id": "INV-00063",
+      "invoiceNumber": "SCA/2025-26/0063",
+      "clientId": "CLT-0081",
+      "clientName": "HAL",
+      "issueDate": "2024-02-27",
+      "dueDate": "2025-03-09",
+      "status": "sent",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 58408,
+          "amount": 58408
+        }
+      ],
+      "subtotal": 58408,
+      "cgst": 5256.5,
+      "sgst": 5256.5,
+      "total": 68921,
+      "paidAmount": 2739,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0019",
+      "createdAt": "2024-02-27"
+    },
+    {
+      "id": "INV-00064",
+      "invoiceNumber": "SCA/2025-26/0064",
+      "clientId": "CLT-0084",
+      "clientName": "Cochin Shipyard",
+      "issueDate": "2024-01-07",
+      "dueDate": "2024-10-17",
+      "status": "paid",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 85683,
+          "amount": 85683
+        }
+      ],
+      "subtotal": 85683,
+      "cgst": 7711.5,
+      "sgst": 7711.5,
+      "total": 101106,
+      "paidAmount": 101106,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0017",
+      "createdAt": "2024-01-07"
+    },
+    {
+      "id": "INV-00065",
+      "invoiceNumber": "SCA/2025-26/0065",
+      "clientId": "CLT-0058",
+      "clientName": "Amber Enterprises",
+      "issueDate": "2024-01-01",
+      "dueDate": "2025-05-16",
+      "status": "paid",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 182412,
+          "amount": 182412
+        }
+      ],
+      "subtotal": 182412,
+      "cgst": 16417,
+      "sgst": 16417,
+      "total": 215246,
+      "paidAmount": 215246,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2024-01-01"
+    },
+    {
+      "id": "INV-00066",
+      "invoiceNumber": "SCA/2025-26/0066",
+      "clientId": "CLT-0090",
+      "clientName": "Adani Power",
+      "issueDate": "2024-06-15",
+      "dueDate": "2025-09-22",
+      "status": "draft",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 110630,
+          "amount": 110630
+        }
+      ],
+      "subtotal": 110630,
+      "cgst": 9956.5,
+      "sgst": 9956.5,
+      "total": 130543,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0002",
+      "createdAt": "2024-06-15"
+    },
+    {
+      "id": "INV-00067",
+      "invoiceNumber": "SCA/2025-26/0067",
+      "clientId": "CLT-0089",
+      "clientName": "Tata Power",
+      "issueDate": "2024-05-03",
+      "dueDate": "2024-06-11",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 40621,
+          "amount": 40621
+        }
+      ],
+      "subtotal": 40621,
+      "cgst": 3656,
+      "sgst": 3656,
+      "total": 47933,
+      "paidAmount": 47933,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0016",
+      "createdAt": "2024-05-03"
+    },
+    {
+      "id": "INV-00068",
+      "invoiceNumber": "SCA/2025-26/0068",
+      "clientId": "CLT-0110",
+      "clientName": "Aster DM Healthcare",
+      "issueDate": "2024-01-19",
+      "dueDate": "2025-03-31",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 159090,
+          "amount": 159090
+        }
+      ],
+      "subtotal": 159090,
+      "cgst": 14318,
+      "sgst": 14318,
+      "total": 187726,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0002",
+      "createdAt": "2024-01-19"
+    },
+    {
+      "id": "INV-00069",
+      "invoiceNumber": "SCA/2025-26/0069",
+      "clientId": "CLT-0015",
+      "clientName": "Maruti Suzuki",
+      "issueDate": "2024-01-06",
+      "dueDate": "2025-06-24",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Company Registration",
+          "quantity": 1,
+          "rate": 170950,
+          "amount": 170950
+        }
+      ],
+      "subtotal": 170950,
+      "cgst": 15385.5,
+      "sgst": 15385.5,
+      "total": 201721,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0001",
+      "createdAt": "2024-01-06"
+    },
+    {
+      "id": "INV-00070",
+      "invoiceNumber": "SCA/2025-26/0070",
+      "clientId": "CLT-0105",
+      "clientName": "Gujarat Gas",
+      "issueDate": "2024-09-09",
+      "dueDate": "2025-12-04",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 22871,
+          "amount": 22871
+        }
+      ],
+      "subtotal": 22871,
+      "cgst": 2058.5,
+      "sgst": 2058.5,
+      "total": 26988,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0004",
+      "createdAt": "2024-09-09"
+    },
+    {
+      "id": "INV-00071",
+      "invoiceNumber": "SCA/2025-26/0071",
+      "clientId": "CLT-0039",
+      "clientName": "Paytm",
+      "issueDate": "2025-06-08",
+      "dueDate": "2025-08-26",
+      "status": "sent",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 194152,
+          "amount": 194152
+        }
+      ],
+      "subtotal": 194152,
+      "cgst": 17473.5,
+      "sgst": 17473.5,
+      "total": 229099,
+      "paidAmount": 35973,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0021",
+      "createdAt": "2025-06-08"
+    },
+    {
+      "id": "INV-00072",
+      "invoiceNumber": "SCA/2025-26/0072",
+      "clientId": "CLT-0050",
+      "clientName": "Zensar Technologies",
+      "issueDate": "2024-12-03",
+      "dueDate": "2025-02-22",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 196400,
+          "amount": 196400
+        }
+      ],
+      "subtotal": 196400,
+      "cgst": 17676,
+      "sgst": 17676,
+      "total": 231752,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0016",
+      "createdAt": "2024-12-03"
+    },
+    {
+      "id": "INV-00073",
+      "invoiceNumber": "SCA/2025-26/0073",
+      "clientId": "CLT-0095",
+      "clientName": "Vedanta Ltd",
+      "issueDate": "2024-10-28",
+      "dueDate": "2025-03-06",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 69384,
+          "amount": 69384
+        }
+      ],
+      "subtotal": 69384,
+      "cgst": 6244.5,
+      "sgst": 6244.5,
+      "total": 81873,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0025",
+      "createdAt": "2024-10-28"
+    },
+    {
+      "id": "INV-00074",
+      "invoiceNumber": "SCA/2025-26/0074",
+      "clientId": "CLT-0042",
+      "clientName": "Delhivery",
+      "issueDate": "2024-07-13",
+      "dueDate": "2025-02-10",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 29552,
+          "amount": 29552
+        }
+      ],
+      "subtotal": 29552,
+      "cgst": 2659.5,
+      "sgst": 2659.5,
+      "total": 34871,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0017",
+      "createdAt": "2024-07-13"
+    },
+    {
+      "id": "INV-00075",
+      "invoiceNumber": "SCA/2025-26/0075",
+      "clientId": "CLT-0064",
+      "clientName": "JK Cement",
+      "issueDate": "2025-02-28",
+      "dueDate": "2025-07-03",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 95249,
+          "amount": 95249
+        }
+      ],
+      "subtotal": 95249,
+      "cgst": 8572.5,
+      "sgst": 8572.5,
+      "total": 112394,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0023",
+      "createdAt": "2025-02-28"
+    },
+    {
+      "id": "INV-00076",
+      "invoiceNumber": "SCA/2025-26/0076",
+      "clientId": "CLT-0116",
+      "clientName": "L&T 2",
+      "issueDate": "2025-05-07",
+      "dueDate": "2025-11-10",
+      "status": "draft",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 162532,
+          "amount": 162532
+        }
+      ],
+      "subtotal": 162532,
+      "cgst": 14628,
+      "sgst": 14628,
+      "total": 191788,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0008",
+      "createdAt": "2025-05-07"
+    },
+    {
+      "id": "INV-00077",
+      "invoiceNumber": "SCA/2025-26/0077",
+      "clientId": "CLT-0055",
+      "clientName": "Havells India",
+      "issueDate": "2024-03-18",
+      "dueDate": "2025-01-23",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Audit",
+          "quantity": 1,
+          "rate": 183381,
+          "amount": 183381
+        }
+      ],
+      "subtotal": 183381,
+      "cgst": 16504.5,
+      "sgst": 16504.5,
+      "total": 216390,
+      "paidAmount": 216390,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0016",
+      "createdAt": "2024-03-18"
+    },
+    {
+      "id": "INV-00078",
+      "invoiceNumber": "SCA/2025-26/0078",
+      "clientId": "CLT-0099",
+      "clientName": "Hindustan Zinc",
+      "issueDate": "2024-04-21",
+      "dueDate": "2024-08-16",
+      "status": "draft",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 165879,
+          "amount": 165879
+        }
+      ],
+      "subtotal": 165879,
+      "cgst": 14929,
+      "sgst": 14929,
+      "total": 195737,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0015",
+      "createdAt": "2024-04-21"
+    },
+    {
+      "id": "INV-00079",
+      "invoiceNumber": "SCA/2025-26/0079",
+      "clientId": "CLT-0068",
+      "clientName": "Emami Ltd",
+      "issueDate": "2024-02-29",
+      "dueDate": "2024-05-06",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 112535,
+          "amount": 112535
+        }
+      ],
+      "subtotal": 112535,
+      "cgst": 10128,
+      "sgst": 10128,
+      "total": 132791,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0011",
+      "createdAt": "2024-02-29"
+    },
+    {
+      "id": "INV-00080",
+      "invoiceNumber": "SCA/2025-26/0080",
+      "clientId": "CLT-0117",
+      "clientName": "Sun Pharma 2",
+      "issueDate": "2024-10-30",
+      "dueDate": "2025-12-27",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 191780,
+          "amount": 191780
+        }
+      ],
+      "subtotal": 191780,
+      "cgst": 17260,
+      "sgst": 17260,
+      "total": 226300,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0004",
+      "createdAt": "2024-10-30"
+    },
+    {
+      "id": "INV-00081",
+      "invoiceNumber": "SCA/2025-26/0081",
+      "clientId": "CLT-0120",
+      "clientName": "Tata Steel 2",
+      "issueDate": "2025-02-26",
+      "dueDate": "2025-08-13",
+      "status": "sent",
+      "items": [
+        {
+          "description": "Audit",
+          "quantity": 1,
+          "rate": 131406,
+          "amount": 131406
+        }
+      ],
+      "subtotal": 131406,
+      "cgst": 11826.5,
+      "sgst": 11826.5,
+      "total": 155059,
+      "paidAmount": 78338,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0011",
+      "createdAt": "2025-02-26"
+    },
+    {
+      "id": "INV-00082",
+      "invoiceNumber": "SCA/2025-26/0082",
+      "clientId": "CLT-0039",
+      "clientName": "Paytm",
+      "issueDate": "2025-04-28",
+      "dueDate": "2025-09-02",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 51528,
+          "amount": 51528
+        }
+      ],
+      "subtotal": 51528,
+      "cgst": 4637.5,
+      "sgst": 4637.5,
+      "total": 60803,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0008",
+      "createdAt": "2025-04-28"
+    },
+    {
+      "id": "INV-00083",
+      "invoiceNumber": "SCA/2025-26/0083",
+      "clientId": "CLT-0083",
+      "clientName": "Mazagon Dock",
+      "issueDate": "2024-02-09",
+      "dueDate": "2025-11-26",
+      "status": "draft",
+      "items": [
+        {
+          "description": "GST Filing",
+          "quantity": 1,
+          "rate": 61589,
+          "amount": 61589
+        }
+      ],
+      "subtotal": 61589,
+      "cgst": 5543,
+      "sgst": 5543,
+      "total": 72675,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0020",
+      "createdAt": "2024-02-09"
+    },
+    {
+      "id": "INV-00084",
+      "invoiceNumber": "SCA/2025-26/0084",
+      "clientId": "CLT-0113",
+      "clientName": "Reliance Industries 2",
+      "issueDate": "2024-08-07",
+      "dueDate": "2025-08-08",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 150655,
+          "amount": 150655
+        }
+      ],
+      "subtotal": 150655,
+      "cgst": 13559,
+      "sgst": 13559,
+      "total": 177773,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0008",
+      "createdAt": "2024-08-07"
+    },
+    {
+      "id": "INV-00085",
+      "invoiceNumber": "SCA/2025-26/0085",
+      "clientId": "CLT-0030",
+      "clientName": "Godrej Consumer",
+      "issueDate": "2025-02-23",
+      "dueDate": "2025-06-03",
+      "status": "draft",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 158548,
+          "amount": 158548
+        }
+      ],
+      "subtotal": 158548,
+      "cgst": 14269.5,
+      "sgst": 14269.5,
+      "total": 187087,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0010",
+      "createdAt": "2025-02-23"
+    },
+    {
+      "id": "INV-00086",
+      "invoiceNumber": "SCA/2025-26/0086",
+      "clientId": "CLT-0030",
+      "clientName": "Godrej Consumer",
+      "issueDate": "2024-03-21",
+      "dueDate": "2024-06-18",
+      "status": "sent",
+      "items": [
+        {
+          "description": "Company Registration",
+          "quantity": 1,
+          "rate": 131830,
+          "amount": 131830
+        }
+      ],
+      "subtotal": 131830,
+      "cgst": 11864.5,
+      "sgst": 11864.5,
+      "total": 155559,
+      "paidAmount": 75586,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0011",
+      "createdAt": "2024-03-21"
+    },
+    {
+      "id": "INV-00087",
+      "invoiceNumber": "SCA/2025-26/0087",
+      "clientId": "CLT-0080",
+      "clientName": "BEL",
+      "issueDate": "2024-04-12",
+      "dueDate": "2025-10-25",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Company Registration",
+          "quantity": 1,
+          "rate": 67778,
+          "amount": 67778
+        }
+      ],
+      "subtotal": 67778,
+      "cgst": 6100,
+      "sgst": 6100,
+      "total": 79978,
+      "paidAmount": 79978,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0008",
+      "createdAt": "2024-04-12"
+    },
+    {
+      "id": "INV-00088",
+      "invoiceNumber": "SCA/2025-26/0088",
+      "clientId": "CLT-0007",
+      "clientName": "Sun Pharma",
+      "issueDate": "2025-06-09",
+      "dueDate": "2025-11-21",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 63718,
+          "amount": 63718
+        }
+      ],
+      "subtotal": 63718,
+      "cgst": 5734.5,
+      "sgst": 5734.5,
+      "total": 75187,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0002",
+      "createdAt": "2025-06-09"
+    },
+    {
+      "id": "INV-00089",
+      "invoiceNumber": "SCA/2025-26/0089",
+      "clientId": "CLT-0074",
+      "clientName": "EIH Ltd",
+      "issueDate": "2024-03-29",
+      "dueDate": "2024-11-12",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 200583,
+          "amount": 200583
+        }
+      ],
+      "subtotal": 200583,
+      "cgst": 18052.5,
+      "sgst": 18052.5,
+      "total": 236688,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0018",
+      "createdAt": "2024-03-29"
+    },
+    {
+      "id": "INV-00090",
+      "invoiceNumber": "SCA/2025-26/0090",
+      "clientId": "CLT-0049",
+      "clientName": "Cyient",
+      "issueDate": "2024-12-06",
+      "dueDate": "2025-02-27",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 65954,
+          "amount": 65954
+        }
+      ],
+      "subtotal": 65954,
+      "cgst": 5936,
+      "sgst": 5936,
+      "total": 77826,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0015",
+      "createdAt": "2024-12-06"
+    },
+    {
+      "id": "INV-00091",
+      "invoiceNumber": "SCA/2025-26/0091",
+      "clientId": "CLT-0038",
+      "clientName": "Zomato",
+      "issueDate": "2025-03-06",
+      "dueDate": "2025-04-15",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 13137,
+          "amount": 13137
+        }
+      ],
+      "subtotal": 13137,
+      "cgst": 1182.5,
+      "sgst": 1182.5,
+      "total": 15502,
+      "paidAmount": 15502,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0009",
+      "createdAt": "2025-03-06"
+    },
+    {
+      "id": "INV-00092",
+      "invoiceNumber": "SCA/2025-26/0092",
+      "clientId": "CLT-0057",
+      "clientName": "KEI Industries",
+      "issueDate": "2025-04-01",
+      "dueDate": "2025-05-29",
+      "status": "paid",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 105620,
+          "amount": 105620
+        }
+      ],
+      "subtotal": 105620,
+      "cgst": 9506,
+      "sgst": 9506,
+      "total": 124632,
+      "paidAmount": 124632,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2025-04-01"
+    },
+    {
+      "id": "INV-00093",
+      "invoiceNumber": "SCA/2025-26/0093",
+      "clientId": "CLT-0098",
+      "clientName": "Nalco",
+      "issueDate": "2024-12-25",
+      "dueDate": "2025-08-30",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 176613,
+          "amount": 176613
+        }
+      ],
+      "subtotal": 176613,
+      "cgst": 15895,
+      "sgst": 15895,
+      "total": 208403,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0022",
+      "createdAt": "2024-12-25"
+    },
+    {
+      "id": "INV-00094",
+      "invoiceNumber": "SCA/2025-26/0094",
+      "clientId": "CLT-0043",
+      "clientName": "Mphasis",
+      "issueDate": "2024-10-08",
+      "dueDate": "2025-07-05",
+      "status": "sent",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 108670,
+          "amount": 108670
+        }
+      ],
+      "subtotal": 108670,
+      "cgst": 9780.5,
+      "sgst": 9780.5,
+      "total": 128231,
+      "paidAmount": 78675,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0013",
+      "createdAt": "2024-10-08"
+    },
+    {
+      "id": "INV-00095",
+      "invoiceNumber": "SCA/2025-26/0095",
+      "clientId": "CLT-0057",
+      "clientName": "KEI Industries",
+      "issueDate": "2024-04-26",
+      "dueDate": "2025-12-26",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Company Registration",
+          "quantity": 1,
+          "rate": 61555,
+          "amount": 61555
+        }
+      ],
+      "subtotal": 61555,
+      "cgst": 5540,
+      "sgst": 5540,
+      "total": 72635,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0002",
+      "createdAt": "2024-04-26"
+    },
+    {
+      "id": "INV-00096",
+      "invoiceNumber": "SCA/2025-26/0096",
+      "clientId": "CLT-0039",
+      "clientName": "Paytm",
+      "issueDate": "2024-04-23",
+      "dueDate": "2024-12-18",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 186360,
+          "amount": 186360
+        }
+      ],
+      "subtotal": 186360,
+      "cgst": 16772.5,
+      "sgst": 16772.5,
+      "total": 219905,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0020",
+      "createdAt": "2024-04-23"
+    },
+    {
+      "id": "INV-00097",
+      "invoiceNumber": "SCA/2025-26/0097",
+      "clientId": "CLT-0010",
+      "clientName": "Tata Steel",
+      "issueDate": "2024-04-10",
+      "dueDate": "2024-09-15",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Audit",
+          "quantity": 1,
+          "rate": 30679,
+          "amount": 30679
+        }
+      ],
+      "subtotal": 30679,
+      "cgst": 2761,
+      "sgst": 2761,
+      "total": 36201,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0022",
+      "createdAt": "2024-04-10"
+    },
+    {
+      "id": "INV-00098",
+      "invoiceNumber": "SCA/2025-26/0098",
+      "clientId": "CLT-0077",
+      "clientName": "RVNL",
+      "issueDate": "2024-11-22",
+      "dueDate": "2025-05-28",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 18200,
+          "amount": 18200
+        }
+      ],
+      "subtotal": 18200,
+      "cgst": 1638,
+      "sgst": 1638,
+      "total": 21476,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0001",
+      "createdAt": "2024-11-22"
+    },
+    {
+      "id": "INV-00099",
+      "invoiceNumber": "SCA/2025-26/0099",
+      "clientId": "CLT-0061",
+      "clientName": "Shree Cement",
+      "issueDate": "2024-12-31",
+      "dueDate": "2025-05-16",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 195623,
+          "amount": 195623
+        }
+      ],
+      "subtotal": 195623,
+      "cgst": 17606,
+      "sgst": 17606,
+      "total": 230835,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0012",
+      "createdAt": "2024-12-31"
+    },
+    {
+      "id": "INV-00100",
+      "invoiceNumber": "SCA/2025-26/0100",
+      "clientId": "CLT-0021",
+      "clientName": "Nestle India",
+      "issueDate": "2024-03-11",
+      "dueDate": "2024-05-04",
+      "status": "sent",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 140071,
+          "amount": 140071
+        }
+      ],
+      "subtotal": 140071,
+      "cgst": 12606.5,
+      "sgst": 12606.5,
+      "total": 165284,
+      "paidAmount": 105828,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0019",
+      "createdAt": "2024-03-11"
+    },
+    {
+      "id": "INV-00101",
+      "invoiceNumber": "SCA/2025-26/0101",
+      "clientId": "CLT-0057",
+      "clientName": "KEI Industries",
+      "issueDate": "2024-12-18",
+      "dueDate": "2025-12-18",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 101926,
+          "amount": 101926
+        }
+      ],
+      "subtotal": 101926,
+      "cgst": 9173.5,
+      "sgst": 9173.5,
+      "total": 120273,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0010",
+      "createdAt": "2024-12-18"
+    },
+    {
+      "id": "INV-00102",
+      "invoiceNumber": "SCA/2025-26/0102",
+      "clientId": "CLT-0063",
+      "clientName": "ACC Ltd",
+      "issueDate": "2025-06-10",
+      "dueDate": "2025-12-09",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 184102,
+          "amount": 184102
+        }
+      ],
+      "subtotal": 184102,
+      "cgst": 16569,
+      "sgst": 16569,
+      "total": 217240,
+      "paidAmount": 217240,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0017",
+      "createdAt": "2025-06-10"
+    },
+    {
+      "id": "INV-00103",
+      "invoiceNumber": "SCA/2025-26/0103",
+      "clientId": "CLT-0104",
+      "clientName": "Mahanagar Gas",
+      "issueDate": "2024-01-11",
+      "dueDate": "2025-10-17",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 47473,
+          "amount": 47473
+        }
+      ],
+      "subtotal": 47473,
+      "cgst": 4272.5,
+      "sgst": 4272.5,
+      "total": 56018,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0009",
+      "createdAt": "2024-01-11"
+    },
+    {
+      "id": "INV-00104",
+      "invoiceNumber": "SCA/2025-26/0104",
+      "clientId": "CLT-0097",
+      "clientName": "MOIL",
+      "issueDate": "2025-01-17",
+      "dueDate": "2025-01-31",
+      "status": "sent",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 158340,
+          "amount": 158340
+        }
+      ],
+      "subtotal": 158340,
+      "cgst": 14250.5,
+      "sgst": 14250.5,
+      "total": 186841,
+      "paidAmount": 85588,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0001",
+      "createdAt": "2025-01-17"
+    },
+    {
+      "id": "INV-00105",
+      "invoiceNumber": "SCA/2025-26/0105",
+      "clientId": "CLT-0086",
+      "clientName": "NHPC",
+      "issueDate": "2024-01-07",
+      "dueDate": "2024-08-02",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 66999,
+          "amount": 66999
+        }
+      ],
+      "subtotal": 66999,
+      "cgst": 6030,
+      "sgst": 6030,
+      "total": 79059,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0021",
+      "createdAt": "2024-01-07"
+    },
+    {
+      "id": "INV-00106",
+      "invoiceNumber": "SCA/2025-26/0106",
+      "clientId": "CLT-0052",
+      "clientName": "Voltas",
+      "issueDate": "2025-04-28",
+      "dueDate": "2025-07-30",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 194357,
+          "amount": 194357
+        }
+      ],
+      "subtotal": 194357,
+      "cgst": 17492,
+      "sgst": 17492,
+      "total": 229341,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0009",
+      "createdAt": "2025-04-28"
+    },
+    {
+      "id": "INV-00107",
+      "invoiceNumber": "SCA/2025-26/0107",
+      "clientId": "CLT-0092",
+      "clientName": "Jindal Steel",
+      "issueDate": "2025-01-02",
+      "dueDate": "2025-04-06",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 154851,
+          "amount": 154851
+        }
+      ],
+      "subtotal": 154851,
+      "cgst": 13936.5,
+      "sgst": 13936.5,
+      "total": 182724,
+      "paidAmount": 182724,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0016",
+      "createdAt": "2025-01-02"
+    },
+    {
+      "id": "INV-00108",
+      "invoiceNumber": "SCA/2025-26/0108",
+      "clientId": "CLT-0047",
+      "clientName": "Tech Mahindra",
+      "issueDate": "2025-05-26",
+      "dueDate": "2025-06-06",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 65507,
+          "amount": 65507
+        }
+      ],
+      "subtotal": 65507,
+      "cgst": 5895.5,
+      "sgst": 5895.5,
+      "total": 77298,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0022",
+      "createdAt": "2025-05-26"
+    },
+    {
+      "id": "INV-00109",
+      "invoiceNumber": "SCA/2025-26/0109",
+      "clientId": "CLT-0101",
+      "clientName": "GAIL",
+      "issueDate": "2024-12-08",
+      "dueDate": "2025-12-09",
+      "status": "sent",
+      "items": [
+        {
+          "description": "Audit",
+          "quantity": 1,
+          "rate": 125877,
+          "amount": 125877
+        }
+      ],
+      "subtotal": 125877,
+      "cgst": 11329,
+      "sgst": 11329,
+      "total": 148535,
+      "paidAmount": 86158,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0025",
+      "createdAt": "2024-12-08"
+    },
+    {
+      "id": "INV-00110",
+      "invoiceNumber": "SCA/2025-26/0110",
+      "clientId": "CLT-0085",
+      "clientName": "SJVN",
+      "issueDate": "2025-04-22",
+      "dueDate": "2025-07-01",
+      "status": "draft",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 22430,
+          "amount": 22430
+        }
+      ],
+      "subtotal": 22430,
+      "cgst": 2018.5,
+      "sgst": 2018.5,
+      "total": 26467,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2025-04-22"
+    },
+    {
+      "id": "INV-00111",
+      "invoiceNumber": "SCA/2025-26/0111",
+      "clientId": "CLT-0094",
+      "clientName": "Hindalco",
+      "issueDate": "2024-07-03",
+      "dueDate": "2024-11-14",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 89767,
+          "amount": 89767
+        }
+      ],
+      "subtotal": 89767,
+      "cgst": 8079,
+      "sgst": 8079,
+      "total": 105925,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2024-07-03"
+    },
+    {
+      "id": "INV-00112",
+      "invoiceNumber": "SCA/2025-26/0112",
+      "clientId": "CLT-0051",
+      "clientName": "RPG Enterprises",
+      "issueDate": "2025-03-17",
+      "dueDate": "2025-07-22",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 147582,
+          "amount": 147582
+        }
+      ],
+      "subtotal": 147582,
+      "cgst": 13282.5,
+      "sgst": 13282.5,
+      "total": 174147,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0010",
+      "createdAt": "2025-03-17"
+    },
+    {
+      "id": "INV-00113",
+      "invoiceNumber": "SCA/2025-26/0113",
+      "clientId": "CLT-0089",
+      "clientName": "Tata Power",
+      "issueDate": "2024-06-19",
+      "dueDate": "2024-09-27",
+      "status": "sent",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 113212,
+          "amount": 113212
+        }
+      ],
+      "subtotal": 113212,
+      "cgst": 10189,
+      "sgst": 10189,
+      "total": 133590,
+      "paidAmount": 98128,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0004",
+      "createdAt": "2024-06-19"
+    },
+    {
+      "id": "INV-00114",
+      "invoiceNumber": "SCA/2025-26/0114",
+      "clientId": "CLT-0101",
+      "clientName": "GAIL",
+      "issueDate": "2025-04-10",
+      "dueDate": "2025-12-23",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 35510,
+          "amount": 35510
+        }
+      ],
+      "subtotal": 35510,
+      "cgst": 3196,
+      "sgst": 3196,
+      "total": 41902,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2025-04-10"
+    },
+    {
+      "id": "INV-00115",
+      "invoiceNumber": "SCA/2025-26/0115",
+      "clientId": "CLT-0085",
+      "clientName": "SJVN",
+      "issueDate": "2025-03-07",
+      "dueDate": "2025-12-08",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 32703,
+          "amount": 32703
+        }
+      ],
+      "subtotal": 32703,
+      "cgst": 2943.5,
+      "sgst": 2943.5,
+      "total": 38590,
+      "paidAmount": 38590,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0014",
+      "createdAt": "2025-03-07"
+    },
+    {
+      "id": "INV-00116",
+      "invoiceNumber": "SCA/2025-26/0116",
+      "clientId": "CLT-0072",
+      "clientName": "Lemon Tree Hotels",
+      "issueDate": "2024-08-19",
+      "dueDate": "2025-11-23",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 132020,
+          "amount": 132020
+        }
+      ],
+      "subtotal": 132020,
+      "cgst": 11882,
+      "sgst": 11882,
+      "total": 155784,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0013",
+      "createdAt": "2024-08-19"
+    },
+    {
+      "id": "INV-00117",
+      "invoiceNumber": "SCA/2025-26/0117",
+      "clientId": "CLT-0046",
+      "clientName": "LTIMindtree",
+      "issueDate": "2025-05-24",
+      "dueDate": "2025-10-11",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 199482,
+          "amount": 199482
+        }
+      ],
+      "subtotal": 199482,
+      "cgst": 17953.5,
+      "sgst": 17953.5,
+      "total": 235389,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2025-05-24"
+    },
+    {
+      "id": "INV-00118",
+      "invoiceNumber": "SCA/2025-26/0118",
+      "clientId": "CLT-0029",
+      "clientName": "Britannia Industries",
+      "issueDate": "2024-05-21",
+      "dueDate": "2025-08-08",
+      "status": "sent",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 141134,
+          "amount": 141134
+        }
+      ],
+      "subtotal": 141134,
+      "cgst": 12702,
+      "sgst": 12702,
+      "total": 166538,
+      "paidAmount": 53498,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0020",
+      "createdAt": "2024-05-21"
+    },
+    {
+      "id": "INV-00119",
+      "invoiceNumber": "SCA/2025-26/0119",
+      "clientId": "CLT-0044",
+      "clientName": "Persistent Systems",
+      "issueDate": "2025-01-14",
+      "dueDate": "2025-10-02",
+      "status": "paid",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 126482,
+          "amount": 126482
+        }
+      ],
+      "subtotal": 126482,
+      "cgst": 11383.5,
+      "sgst": 11383.5,
+      "total": 149249,
+      "paidAmount": 149249,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0018",
+      "createdAt": "2025-01-14"
+    },
+    {
+      "id": "INV-00120",
+      "invoiceNumber": "SCA/2025-26/0120",
+      "clientId": "CLT-0076",
+      "clientName": "IRFC",
+      "issueDate": "2024-03-08",
+      "dueDate": "2024-04-16",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 76874,
+          "amount": 76874
+        }
+      ],
+      "subtotal": 76874,
+      "cgst": 6918.5,
+      "sgst": 6918.5,
+      "total": 90711,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0024",
+      "createdAt": "2024-03-08"
+    },
+    {
+      "id": "INV-00121",
+      "invoiceNumber": "SCA/2025-26/0121",
+      "clientId": "CLT-0021",
+      "clientName": "Nestle India",
+      "issueDate": "2024-07-25",
+      "dueDate": "2025-12-21",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 140231,
+          "amount": 140231
+        }
+      ],
+      "subtotal": 140231,
+      "cgst": 12621,
+      "sgst": 12621,
+      "total": 165473,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2024-07-25"
+    },
+    {
+      "id": "INV-00122",
+      "invoiceNumber": "SCA/2025-26/0122",
+      "clientId": "CLT-0009",
+      "clientName": "Adani Enterprises",
+      "issueDate": "2024-07-26",
+      "dueDate": "2024-09-05",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 180217,
+          "amount": 180217
+        }
+      ],
+      "subtotal": 180217,
+      "cgst": 16219.5,
+      "sgst": 16219.5,
+      "total": 212656,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2024-07-26"
+    },
+    {
+      "id": "INV-00123",
+      "invoiceNumber": "SCA/2025-26/0123",
+      "clientId": "CLT-0068",
+      "clientName": "Emami Ltd",
+      "issueDate": "2024-07-01",
+      "dueDate": "2025-11-25",
+      "status": "draft",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 147567,
+          "amount": 147567
+        }
+      ],
+      "subtotal": 147567,
+      "cgst": 13281,
+      "sgst": 13281,
+      "total": 174129,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0017",
+      "createdAt": "2024-07-01"
+    },
+    {
+      "id": "INV-00124",
+      "invoiceNumber": "SCA/2025-26/0124",
+      "clientId": "CLT-0004",
+      "clientName": "HDFC Bank",
+      "issueDate": "2024-10-14",
+      "dueDate": "2024-10-19",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 158139,
+          "amount": 158139
+        }
+      ],
+      "subtotal": 158139,
+      "cgst": 14232.5,
+      "sgst": 14232.5,
+      "total": 186604,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0015",
+      "createdAt": "2024-10-14"
+    },
+    {
+      "id": "INV-00125",
+      "invoiceNumber": "SCA/2025-26/0125",
+      "clientId": "CLT-0036",
+      "clientName": "Divis Laboratories",
+      "issueDate": "2025-03-15",
+      "dueDate": "2025-06-12",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Audit",
+          "quantity": 1,
+          "rate": 159545,
+          "amount": 159545
+        }
+      ],
+      "subtotal": 159545,
+      "cgst": 14359,
+      "sgst": 14359,
+      "total": 188263,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0018",
+      "createdAt": "2025-03-15"
+    },
+    {
+      "id": "INV-00126",
+      "invoiceNumber": "SCA/2025-26/0126",
+      "clientId": "CLT-0067",
+      "clientName": "Marico",
+      "issueDate": "2025-06-14",
+      "dueDate": "2025-10-25",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 8456,
+          "amount": 8456
+        }
+      ],
+      "subtotal": 8456,
+      "cgst": 761,
+      "sgst": 761,
+      "total": 9978,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0025",
+      "createdAt": "2025-06-14"
+    },
+    {
+      "id": "INV-00127",
+      "invoiceNumber": "SCA/2025-26/0127",
+      "clientId": "CLT-0046",
+      "clientName": "LTIMindtree",
+      "issueDate": "2024-07-27",
+      "dueDate": "2024-09-04",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "ITR Filing",
+          "quantity": 1,
+          "rate": 38984,
+          "amount": 38984
+        }
+      ],
+      "subtotal": 38984,
+      "cgst": 3508.5,
+      "sgst": 3508.5,
+      "total": 46001,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0008",
+      "createdAt": "2024-07-27"
+    },
+    {
+      "id": "INV-00128",
+      "invoiceNumber": "SCA/2025-26/0128",
+      "clientId": "CLT-0062",
+      "clientName": "Ambuja Cements",
+      "issueDate": "2025-03-18",
+      "dueDate": "2025-10-02",
+      "status": "paid",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 199795,
+          "amount": 199795
+        }
+      ],
+      "subtotal": 199795,
+      "cgst": 17981.5,
+      "sgst": 17981.5,
+      "total": 235758,
+      "paidAmount": 235758,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0004",
+      "createdAt": "2025-03-18"
+    },
+    {
+      "id": "INV-00129",
+      "invoiceNumber": "SCA/2025-26/0129",
+      "clientId": "CLT-0005",
+      "clientName": "Mahindra & Mahindra",
+      "issueDate": "2024-03-17",
+      "dueDate": "2024-10-11",
+      "status": "draft",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 114625,
+          "amount": 114625
+        }
+      ],
+      "subtotal": 114625,
+      "cgst": 10316.5,
+      "sgst": 10316.5,
+      "total": 135258,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0025",
+      "createdAt": "2024-03-17"
+    },
+    {
+      "id": "INV-00130",
+      "invoiceNumber": "SCA/2025-26/0130",
+      "clientId": "CLT-0036",
+      "clientName": "Divis Laboratories",
+      "issueDate": "2024-06-23",
+      "dueDate": "2024-06-26",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 151919,
+          "amount": 151919
+        }
+      ],
+      "subtotal": 151919,
+      "cgst": 13672.5,
+      "sgst": 13672.5,
+      "total": 179264,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0003",
+      "createdAt": "2024-06-23"
+    },
+    {
+      "id": "INV-00131",
+      "invoiceNumber": "SCA/2025-26/0131",
+      "clientId": "CLT-0064",
+      "clientName": "JK Cement",
+      "issueDate": "2024-08-13",
+      "dueDate": "2024-10-16",
+      "status": "paid",
+      "items": [
+        {
+          "description": "GST Filing",
+          "quantity": 1,
+          "rate": 62671,
+          "amount": 62671
+        }
+      ],
+      "subtotal": 62671,
+      "cgst": 5640.5,
+      "sgst": 5640.5,
+      "total": 73952,
+      "paidAmount": 73952,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0021",
+      "createdAt": "2024-08-13"
+    },
+    {
+      "id": "INV-00132",
+      "invoiceNumber": "SCA/2025-26/0132",
+      "clientId": "CLT-0057",
+      "clientName": "KEI Industries",
+      "issueDate": "2024-04-30",
+      "dueDate": "2025-09-01",
+      "status": "sent",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 175831,
+          "amount": 175831
+        }
+      ],
+      "subtotal": 175831,
+      "cgst": 15825,
+      "sgst": 15825,
+      "total": 207481,
+      "paidAmount": 74017,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0005",
+      "createdAt": "2024-04-30"
+    },
+    {
+      "id": "INV-00133",
+      "invoiceNumber": "SCA/2025-26/0133",
+      "clientId": "CLT-0016",
+      "clientName": "Axis Bank",
+      "issueDate": "2025-05-18",
+      "dueDate": "2025-11-07",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 123279,
+          "amount": 123279
+        }
+      ],
+      "subtotal": 123279,
+      "cgst": 11095,
+      "sgst": 11095,
+      "total": 145469,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0011",
+      "createdAt": "2025-05-18"
+    },
+    {
+      "id": "INV-00134",
+      "invoiceNumber": "SCA/2025-26/0134",
+      "clientId": "CLT-0099",
+      "clientName": "Hindustan Zinc",
+      "issueDate": "2024-08-09",
+      "dueDate": "2025-01-07",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 89815,
+          "amount": 89815
+        }
+      ],
+      "subtotal": 89815,
+      "cgst": 8083.5,
+      "sgst": 8083.5,
+      "total": 105982,
+      "paidAmount": 105982,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0014",
+      "createdAt": "2024-08-09"
+    },
+    {
+      "id": "INV-00135",
+      "invoiceNumber": "SCA/2025-26/0135",
+      "clientId": "CLT-0077",
+      "clientName": "RVNL",
+      "issueDate": "2024-06-23",
+      "dueDate": "2024-09-14",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Trademark Filing",
+          "quantity": 1,
+          "rate": 165454,
+          "amount": 165454
+        }
+      ],
+      "subtotal": 165454,
+      "cgst": 14891,
+      "sgst": 14891,
+      "total": 195236,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0024",
+      "createdAt": "2024-06-23"
+    },
+    {
+      "id": "INV-00136",
+      "invoiceNumber": "SCA/2025-26/0136",
+      "clientId": "CLT-0072",
+      "clientName": "Lemon Tree Hotels",
+      "issueDate": "2024-02-05",
+      "dueDate": "2024-03-16",
+      "status": "sent",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 62979,
+          "amount": 62979
+        }
+      ],
+      "subtotal": 62979,
+      "cgst": 5668,
+      "sgst": 5668,
+      "total": 74315,
+      "paidAmount": 34513,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0016",
+      "createdAt": "2024-02-05"
+    },
+    {
+      "id": "INV-00137",
+      "invoiceNumber": "SCA/2025-26/0137",
+      "clientId": "CLT-0033",
+      "clientName": "Berger Paints",
+      "issueDate": "2024-11-26",
+      "dueDate": "2025-11-02",
+      "status": "sent",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 94417,
+          "amount": 94417
+        }
+      ],
+      "subtotal": 94417,
+      "cgst": 8497.5,
+      "sgst": 8497.5,
+      "total": 111412,
+      "paidAmount": 81764,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0012",
+      "createdAt": "2024-11-26"
+    },
+    {
+      "id": "INV-00138",
+      "invoiceNumber": "SCA/2025-26/0138",
+      "clientId": "CLT-0071",
+      "clientName": "Indian Hotels",
+      "issueDate": "2024-05-07",
+      "dueDate": "2024-06-29",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 7572,
+          "amount": 7572
+        }
+      ],
+      "subtotal": 7572,
+      "cgst": 681.5,
+      "sgst": 681.5,
+      "total": 8935,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0025",
+      "createdAt": "2024-05-07"
+    },
+    {
+      "id": "INV-00139",
+      "invoiceNumber": "SCA/2025-26/0139",
+      "clientId": "CLT-0013",
+      "clientName": "HCL Technologies",
+      "issueDate": "2025-03-22",
+      "dueDate": "2025-05-20",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 169223,
+          "amount": 169223
+        }
+      ],
+      "subtotal": 169223,
+      "cgst": 15230,
+      "sgst": 15230,
+      "total": 199683,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0016",
+      "createdAt": "2025-03-22"
+    },
+    {
+      "id": "INV-00140",
+      "invoiceNumber": "SCA/2025-26/0140",
+      "clientId": "CLT-0023",
+      "clientName": "NTPC",
+      "issueDate": "2024-06-09",
+      "dueDate": "2025-02-03",
+      "status": "paid",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 155990,
+          "amount": 155990
+        }
+      ],
+      "subtotal": 155990,
+      "cgst": 14039,
+      "sgst": 14039,
+      "total": 184068,
+      "paidAmount": 184068,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0024",
+      "createdAt": "2024-06-09"
+    },
+    {
+      "id": "INV-00141",
+      "invoiceNumber": "SCA/2025-26/0141",
+      "clientId": "CLT-0037",
+      "clientName": "Apollo Hospitals",
+      "issueDate": "2024-05-06",
+      "dueDate": "2024-10-29",
+      "status": "draft",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 135835,
+          "amount": 135835
+        }
+      ],
+      "subtotal": 135835,
+      "cgst": 12225,
+      "sgst": 12225,
+      "total": 160285,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0006",
+      "createdAt": "2024-05-06"
+    },
+    {
+      "id": "INV-00142",
+      "invoiceNumber": "SCA/2025-26/0142",
+      "clientId": "CLT-0065",
+      "clientName": "Ramco Cements",
+      "issueDate": "2024-07-11",
+      "dueDate": "2025-07-02",
+      "status": "draft",
+      "items": [
+        {
+          "description": "ROC Filing",
+          "quantity": 1,
+          "rate": 36967,
+          "amount": 36967
+        }
+      ],
+      "subtotal": 36967,
+      "cgst": 3327,
+      "sgst": 3327,
+      "total": 43621,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0024",
+      "createdAt": "2024-07-11"
+    },
+    {
+      "id": "INV-00143",
+      "invoiceNumber": "SCA/2025-26/0143",
+      "clientId": "CLT-0101",
+      "clientName": "GAIL",
+      "issueDate": "2024-08-13",
+      "dueDate": "2025-03-09",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Tax Planning",
+          "quantity": 1,
+          "rate": 43299,
+          "amount": 43299
+        }
+      ],
+      "subtotal": 43299,
+      "cgst": 3897,
+      "sgst": 3897,
+      "total": 51093,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0021",
+      "createdAt": "2024-08-13"
+    },
+    {
+      "id": "INV-00144",
+      "invoiceNumber": "SCA/2025-26/0144",
+      "clientId": "CLT-0051",
+      "clientName": "RPG Enterprises",
+      "issueDate": "2024-05-01",
+      "dueDate": "2024-11-07",
+      "status": "sent",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 91289,
+          "amount": 91289
+        }
+      ],
+      "subtotal": 91289,
+      "cgst": 8216,
+      "sgst": 8216,
+      "total": 107721,
+      "paidAmount": 21880,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0023",
+      "createdAt": "2024-05-01"
+    },
+    {
+      "id": "INV-00145",
+      "invoiceNumber": "SCA/2025-26/0145",
+      "clientId": "CLT-0057",
+      "clientName": "KEI Industries",
+      "issueDate": "2025-03-24",
+      "dueDate": "2025-12-30",
+      "status": "overdue",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 131553,
+          "amount": 131553
+        }
+      ],
+      "subtotal": 131553,
+      "cgst": 11840,
+      "sgst": 11840,
+      "total": 155233,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0008",
+      "createdAt": "2025-03-24"
+    },
+    {
+      "id": "INV-00146",
+      "invoiceNumber": "SCA/2025-26/0146",
+      "clientId": "CLT-0057",
+      "clientName": "KEI Industries",
+      "issueDate": "2024-05-14",
+      "dueDate": "2024-12-11",
+      "status": "draft",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 146542,
+          "amount": 146542
+        }
+      ],
+      "subtotal": 146542,
+      "cgst": 13189,
+      "sgst": 13189,
+      "total": 172920,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0016",
+      "createdAt": "2024-05-14"
+    },
+    {
+      "id": "INV-00147",
+      "invoiceNumber": "SCA/2025-26/0147",
+      "clientId": "CLT-0116",
+      "clientName": "L&T 2",
+      "issueDate": "2024-01-14",
+      "dueDate": "2024-02-10",
+      "status": "cancelled",
+      "items": [
+        {
+          "description": "Audit",
+          "quantity": 1,
+          "rate": 193801,
+          "amount": 193801
+        }
+      ],
+      "subtotal": 193801,
+      "cgst": 17442,
+      "sgst": 17442,
+      "total": 228685,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0025",
+      "createdAt": "2024-01-14"
+    },
+    {
+      "id": "INV-00148",
+      "invoiceNumber": "SCA/2025-26/0148",
+      "clientId": "CLT-0050",
+      "clientName": "Zensar Technologies",
+      "issueDate": "2024-05-15",
+      "dueDate": "2025-04-12",
+      "status": "paid",
+      "items": [
+        {
+          "description": "TDS Return",
+          "quantity": 1,
+          "rate": 36933,
+          "amount": 36933
+        }
+      ],
+      "subtotal": 36933,
+      "cgst": 3324,
+      "sgst": 3324,
+      "total": 43581,
+      "paidAmount": 43581,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0018",
+      "createdAt": "2024-05-15"
+    },
+    {
+      "id": "INV-00149",
+      "invoiceNumber": "SCA/2025-26/0149",
+      "clientId": "CLT-0113",
+      "clientName": "Reliance Industries 2",
+      "issueDate": "2024-08-24",
+      "dueDate": "2025-09-29",
+      "status": "draft",
+      "items": [
+        {
+          "description": "GST Registration",
+          "quantity": 1,
+          "rate": 118329,
+          "amount": 118329
+        }
+      ],
+      "subtotal": 118329,
+      "cgst": 10649.5,
+      "sgst": 10649.5,
+      "total": 139628,
+      "paidAmount": 0,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0024",
+      "createdAt": "2024-08-24"
+    },
+    {
+      "id": "INV-00150",
+      "invoiceNumber": "SCA/2025-26/0150",
+      "clientId": "CLT-0119",
+      "clientName": "Adani Enterprises 2",
+      "issueDate": "2025-02-16",
+      "dueDate": "2025-07-17",
+      "status": "paid",
+      "items": [
+        {
+          "description": "Bookkeeping",
+          "quantity": 1,
+          "rate": 19601,
+          "amount": 19601
+        }
+      ],
+      "subtotal": 19601,
+      "cgst": 1764,
+      "sgst": 1764,
+      "total": 23129,
+      "paidAmount": 23129,
+      "notes": "Professional fees for CA services rendered.",
+      "createdBy": "EMP-0019",
+      "createdAt": "2025-02-16"
+    }
+  ],
+  "total": 150
+}

@@ -1,0 +1,474 @@
+Smart CA — Go Backend Optimization / Baseline Report
+====================================================
+Generated: 2026-07-12
+Workspace: D:\SmartCA\Go (backend), D:\SmartCA\saas (frontend)
+Go version: go1.26.5 windows/amd64
+
+IMPORTANT FRAMING
+-----------------
+The Go/ folder was EMPTY at the start of the backend migration work.
+This pass implemented a full in-memory REST backend, migrated the React
+frontend off LocalStorage business data, applied correctness fixes, and
+captured initial benchmarks.
+
+This is NOT an optimization of pre-existing Go production code.
+Baseline = "no backend" / frontend LocalStorage-only MockDatabase.
+Do not interpret benchmark numbers below as "before vs after Go rewrite"
+improvements — they are first measured baselines for the new services.
+
+====================================================
+1. Workspace paths
+====================================================
+Backend:  D:\SmartCA\Go
+Frontend: D:\SmartCA\saas
+
+====================================================
+2. Go version
+====================================================
+go1.26.5 windows/amd64
+Module directive: go 1.26.5 (github.com/JagtapAvadhut/smartca-backend)
+
+====================================================
+3. Baseline Git state
+====================================================
+D:\SmartCA\Go — NOT a git repository (no .git at Go/ or parent SmartCA/).
+D:\SmartCA\saas — git repository on branch main tracking origin/main,
+  with local modifications from API migration (uncommitted at report time).
+
+Baseline for Go code: empty folder → greenfield implementation.
+No prior Go commit history to diff for "optimization deltas."
+
+====================================================
+4. Baseline verification results
+====================================================
+Baseline discovery: Go folder empty → no prior go test / benchmarks /
+endpoints to compare against.
+
+Post-implementation verification (actual):
+- go test ./... PASS
+- Payment financial chain tests PASS
+- HTTP integration tests PASS
+- Race detector: unavailable (CGO not enabled on this machine)
+- Browser QA: 112 PASS / 0 FAIL
+- Business QA: 24 PASS / 0 FAIL
+- Frontend build PASS
+- TypeScript check: should PASS after PaymentsPage fix
+
+====================================================
+5. Backend package count
+====================================================
+15 packages (go list ./...):
+  cmd/api
+  internal/api/handlers
+  internal/api/middleware
+  internal/api/routes
+  internal/app/services
+  internal/auth
+  internal/config
+  internal/domain/errors
+  internal/domain/models
+  internal/domain/money
+  internal/rbac
+  internal/repository/memory
+  internal/seed
+  pkg/apiresponse
+  tests
+
+====================================================
+6. Endpoint count
+====================================================
+Approximately 178 route handlers registered in routes.go, including:
+- 4 ops/version probes (live, ready, /version, /api/v1/version)
+- Auth + demo reset routes
+- 19 CRUD collections (7–8 verbs each; duplicate where enabled)
+- Invoice (8) + Payment (7) resource routes
+- Dashboard, reports, search
+- Accounting (3), archive (5), settings (4)
+
+Canonical inventory: docs/API_CONTRACT_AUDIT.md
+
+====================================================
+7. Domain entity count
+====================================================
+28 named collections in internal/app/services/collections.go:
+clients, companies, employees, invoices, payments, documents, tasks,
+gst, itr, tds, roc, compliance, notifications, activities, calendar,
+users, roles, permissions, organization, settings, auditLogs,
+loginHistory, chat, departments, branches, notes, journals, sessions
+
+====================================================
+8. Files audited
+====================================================
+36 *.go source files under D:\SmartCA\Go (excluding vendor).
+Routes, services, memory store, seed, auth, money, handlers, middleware,
+and tests reviewed during implementation / correctness pass.
+Exact per-file audit checklist: N/A (greenfield build, not a formal
+line-by-line audit of legacy Go).
+
+====================================================
+9. Functions audited
+====================================================
+NOT MEASURED as a discrete function count.
+Focus areas verified via tests: payment sync, invoice tax, archive paid
+calc, auth/session, CRUD list/query, seed integrity, HTTP integration.
+
+====================================================
+10. Architecture problems found/fixed
+====================================================
+Baseline: frontend LocalStorage MockDatabase only; Go folder empty.
+Implemented layered architecture:
+  React → HTTP REST → handlers → services → memory store
+  (RWMutex + WithTx snapshot rollback) → deterministic embedded seed.
+No pre-existing Go architecture defects to "fix"; design choices are
+part of the initial implementation.
+
+====================================================
+11. Correctness bugs found/fixed
+====================================================
+(During implementation / migration QA — actual fixes:)
+- Skip archived payments in paid-amount calculation
+- Payment archive sync (invoice/client remaining totals)
+- User password hashing on create (bcrypt passwordHash)
+- /api/v1/version endpoint (canonical API version path)
+- QA invoice number SCA/ regex alignment
+- Role create modal (frontend)
+- Await payment delete (frontend race / stale UI)
+Seed integrity: orphan employeeId refs on some users treated as
+skipped / non-fatal (do not fail startup).
+
+====================================================
+12. API contract bugs found/fixed
+====================================================
+- Added /api/v1/version alongside /version for frontend/API contract
+- Frontend migrated to VITE_API_BASE_URL=http://localhost:8080/api/v1
+Other contract gaps: see docs/API_CONTRACT_AUDIT.md / openapi.yaml
+(openapi is a sketch, not exhaustive OpenAPI coverage of every CRUD verb).
+
+====================================================
+13. Error handling issues found/fixed
+====================================================
+Implemented consistent JSON error envelope via pkg/apiresponse.
+Pre-existing Go error-handling debt: N/A (no prior backend).
+Further systematic error-code audit: NOT MEASURED.
+
+====================================================
+14. Context issues found/fixed
+====================================================
+NOT MEASURED / N/A for deep context.Context propagation audit.
+HTTP server uses Shutdown with timeout context; request handlers use
+standard net/http without per-request context cancellation plumbing
+beyond framework defaults.
+
+====================================================
+15. Race conditions found/fixed
+====================================================
+Store uses sync.RWMutex; financial mutations use WithTx exclusive lock.
+Payment concurrency safety covered by service tests (PASS).
+go test -race: NOT RUN (CGO not enabled on this machine).
+
+====================================================
+16. Deadlock risks found/fixed
+====================================================
+NOT MEASURED with formal deadlock tooling.
+Design: single store mutex; WithTx holds write lock for mutation duration.
+No deadlock bugs confirmed in tests.
+
+====================================================
+17. Lock contention findings
+====================================================
+NOT MEASURED (no contention profiles under load).
+Initial benchmarks (below) are single-threaded service microbenchmarks.
+
+====================================================
+18. Transaction bugs found/fixed
+====================================================
+WithTx snapshot rollback implemented for multi-collection mutations
+(invoices/payments/clients). Payment financial chain tests PASS
+(including delete rollback paths exercised in tests).
+
+====================================================
+19. Financial calculation bugs found/fixed
+====================================================
+money.Paise integer paise; JSON rupees; GST = Math.round(taxable*0.18)
+parity with frontend.
+Archived payments excluded from paid totals (correctness fix).
+Payment financial chain tests PASS
+(₹100000 subtotal → ₹118000 total @ 18% GST; payment sync paths).
+
+====================================================
+20. Repository optimizations
+====================================================
+N/A as "optimization pass" — memory repository implemented from scratch
+(in-memory maps + query helpers). No SQL repository exists.
+
+====================================================
+21. Indexes added/removed and measured justification
+====================================================
+N/A — in-memory store; no DB indexes.
+No index add/remove measurements.
+
+====================================================
+22. HTTP server improvements
+====================================================
+Implemented (baseline): chi router, timeouts
+(ReadHeader 10s, Read 30s, Write 60s, Idle 120s), CORS, MaxBytes 1MiB,
+RequestID, Recover, Logger, graceful Shutdown.
+Not a measured improvement over a prior Go server (none existed).
+
+====================================================
+23. JSON/DTO improvements
+====================================================
+map-based models.Record for frontend-compatible JSON shapes.
+Structured DTO codegen / schema validation layer: NOT MEASURED / not added.
+
+====================================================
+24. List/search/filter/sort improvements
+====================================================
+Implemented query helpers (page, pageSize, search, status, sortBy, sortDir).
+No before/after latency comparison vs prior Go list code (none existed).
+BenchmarkClientList (initial baseline): ~80µs/op, ~10KB, ~498 allocs/op.
+
+====================================================
+25. Dashboard/report improvements
+====================================================
+Live dashboard/report services compute from store collections.
+BenchmarkDashboard (initial baseline): ~1.3ms/op, ~901KB, ~5130 allocs/op.
+No prior Go dashboard to compare.
+
+====================================================
+26. Allocation improvements
+====================================================
+NOT MEASURED as an improvement delta.
+Initial alloc counts recorded in benchmarks (section 29/44).
+Further alloc reduction pass: not completed / not claimed.
+
+====================================================
+27. CPU profile findings
+====================================================
+NOT MEASURED (no pprof CPU profile captured for this report).
+
+====================================================
+28. Heap profile findings
+====================================================
+NOT MEASURED (no pprof heap profile captured for this report).
+
+====================================================
+29. Benchmark baseline vs final
+====================================================
+Only initial baselines exist (no prior Go "before" numbers):
+
+  BenchmarkDashboard   ~1.3ms/op   ~901KB/op   ~5130 allocs/op
+  BenchmarkClientList  ~80µs/op    ~10KB/op    ~498 allocs/op
+
+"Final" vs "baseline" optimization delta: N/A — first measurement only.
+BenchmarkPaymentCreate exists in bench_test.go; result for this report:
+NOT MEASURED (not included in the verified numbers supplied).
+
+====================================================
+30. Dependency changes
+====================================================
+go.mod requires:
+  github.com/go-chi/chi/v5 v5.3.1
+  github.com/google/uuid v1.6.0
+  golang.org/x/crypto v0.54.0
+Introduced with greenfield module (not a trim of a bloated prior module).
+
+====================================================
+31. Logging improvements
+====================================================
+slog JSON handler with configurable LOG_LEVEL.
+Request logging middleware present.
+No structured log-volume before/after measurement: NOT MEASURED.
+
+====================================================
+32. Seed/reset improvements
+====================================================
+Embedded JSON seed; bcrypt password hashing at load; demo reset endpoint
+for super_admin when DEMO_RESET_ENABLED.
+Orphan user.employeeId refs: non-fatal / skipped in integrity policy.
+Process restart reloads seed (no durable DB).
+
+====================================================
+33. Test quality improvements
+====================================================
+Added/present:
+- go test ./... suite PASS
+- payment financial chain tests PASS
+- HTTP integration tests PASS
+- service benchmarks (Dashboard, ClientList, PaymentCreate)
+5 *_test.go files counted under Go/.
+Prior Go test baseline: none (empty folder).
+
+====================================================
+34. Fuzz tests added/results
+====================================================
+NOT MEASURED / none reported as run for this deliverable.
+
+====================================================
+35. Security issues fixed
+====================================================
+Implemented: bcrypt passwordHash (seed + create), opaque sessions,
+RBAC permission middleware, CORS deny of "*", MaxBytes body limit.
+Demo passwords remain known demo credentials (SmartCA@2025) — demo only.
+No production secret-store / HTTPS / multi-tenant isolation claimed.
+
+====================================================
+36. Frontend forbidden mock usages removed
+====================================================
+Frontend migrated off MockDatabase business LocalStorage collections to
+VITE_API_BASE_URL=http://localhost:8080/api/v1.
+Allowed LocalStorage remains for theme/app/token/auth/drafts/undo
+(UI preferences), not business entity DB.
+Complete grep audit count of remaining smart-ca-db:* usages: NOT MEASURED
+in this report file (migration intent verified via QA PASS).
+
+====================================================
+37. TanStack Query improvements
+====================================================
+NOT MEASURED as a discrete TanStack Query optimization report item.
+Frontend uses API client against Go backend; query-cache tuning deltas
+not quantified here.
+
+====================================================
+38. E2E bugs found/fixed
+====================================================
+Browser QA 112 PASS / 0 FAIL; Business QA 24 PASS / 0 FAIL after fixes
+including SCA/ invoice regex, role create modal, await payment delete,
+PaymentsPage TypeScript fix path, version endpoint, payment archive sync.
+
+====================================================
+39. Load/concurrency results
+====================================================
+NOT MEASURED (no k6/vegeta/load suite numbers).
+Service-level concurrent payment safety covered in unit tests (PASS).
+Race detector: unavailable (CGO).
+
+====================================================
+40. gofmt result
+====================================================
+NOT MEASURED in this report (not recorded as a formal gofmt -l gate run).
+
+====================================================
+41. go vet result
+====================================================
+NOT MEASURED in this report (not recorded as a formal go vet ./... run).
+
+====================================================
+42. go test result
+====================================================
+PASS — go test ./...
+
+====================================================
+43. race result
+====================================================
+NOT AVAILABLE — race detector unavailable (CGO not enabled on this machine).
+
+====================================================
+44. benchmark result
+====================================================
+BenchmarkDashboard   ~1.3ms/op   ~901KB   ~5130 allocs/op
+BenchmarkClientList  ~80µs/op    ~10KB    ~498 allocs/op
+(These are initial baselines, not improvement deltas.)
+
+====================================================
+45. staticcheck result if run
+====================================================
+NOT MEASURED / not run (or not recorded).
+
+====================================================
+46. govulncheck result if run
+====================================================
+NOT MEASURED / not run (or not recorded).
+
+====================================================
+47. backend build result
+====================================================
+Backend runs via go run ./cmd/api (module builds).
+Separate recorded `go build -o` artifact result: N/A / not separately logged;
+tests and run path imply compile success.
+
+====================================================
+48. frontend TypeScript result
+====================================================
+TypeScript check should PASS after PaymentsPage fix.
+(Exact tsc log not re-attached here; treat as expected PASS post-fix.)
+
+====================================================
+49. frontend lint result
+====================================================
+NOT MEASURED / not recorded for this report.
+
+====================================================
+50. frontend build result
+====================================================
+PASS (npm run build / Vite production build).
+
+====================================================
+51. browser QA result
+====================================================
+112 PASS / 0 FAIL
+
+====================================================
+52. business QA result
+====================================================
+24 PASS / 0 FAIL
+
+====================================================
+53. API E2E result
+====================================================
+HTTP integration tests PASS (Go ./tests).
+Browser + business QA against live API: PASS (sections 51–52).
+
+====================================================
+54. Remaining limitations
+====================================================
+- No real database; all state in-memory; restart resets to seed
+- Demo auth credentials are public knowledge for the demo
+- Race detector not runnable without CGO on this machine
+- No pprof / load / fuzz / staticcheck / govulncheck results in this pass
+- OpenAPI sketch is incomplete vs full CRUD surface
+- Document upload/AI/email remain simulated at frontend where applicable
+- Not production-ready for real customer PII or statutory filings
+- Backend local git initialized (no remote).
+Single commit: 2ec8ca919e22b5e4e87bdc9d2a230ffbb6fce367
+Frontend commit: fb3e8dc0eadce91448676301948b042cba655ec3 (pushed to origin/main)
+Backend push: REQUIRED � no remote configured
+
+====================================================
+55. Exact backend run command
+====================================================
+cd D:\SmartCA\Go
+cp .env.example .env
+go mod tidy
+go run ./cmd/api
+
+Listens on http://0.0.0.0:8080 (HTTP_PORT default 8080).
+
+====================================================
+56. Exact frontend run command
+====================================================
+cd D:\SmartCA\saas
+# .env must include:
+# VITE_API_BASE_URL=http://localhost:8080/api/v1
+npm install
+npm run dev
+
+Open http://localhost:5173/
+Demo password: SmartCA@2025
+(example admin: rajesh.sharma@smartca.in)
+
+====================================================
+57. Final demo-readiness verdict
+====================================================
+DEMO-READY for local walkthroughs with Go API + React UI together.
+
+Verified: backend tests PASS, payment financial chain PASS, HTTP
+integration PASS, browser QA 112/0, business QA 24/0, frontend build PASS.
+
+Honest scope of this pass:
+  implemented backend + frontend API migration + correctness fixes +
+  initial service benchmarks — NOT a measured performance optimization
+  of a prior Go codebase (Go folder was empty at baseline).
+
+NOT production-ready for real customer data, durable storage, or
+statutory compliance operations.

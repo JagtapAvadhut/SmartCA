@@ -1,0 +1,323 @@
+openapi: 3.1.0
+info:
+  title: Smart CA Backend API
+  version: 1.0.0
+  description: REST API for Smart CA practice management (demo/in-memory).
+servers:
+  - url: http://localhost:8080
+security:
+  - bearerAuth: []
+paths:
+  /health/live:
+    get:
+      security: []
+      summary: Liveness probe
+      responses:
+        "200":
+          description: OK
+  /health/ready:
+    get:
+      security: []
+      summary: Readiness probe
+      responses:
+        "200":
+          description: OK
+  /version:
+    get:
+      security: []
+      summary: Build version (ops probe)
+      responses:
+        "200":
+          description: OK
+  /api/v1/version:
+    get:
+      security: []
+      summary: Build version (canonical API contract)
+      responses:
+        "200":
+          description: OK
+  /api/v1/auth/login:
+    post:
+      security: []
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [identifier, password]
+              properties:
+                identifier: { type: string }
+                password: { type: string }
+                rememberMe: { type: boolean }
+                device: { type: string }
+      responses:
+        "200":
+          description: Session created
+        "401":
+          description: Invalid credentials
+  /api/v1/auth/logout:
+    post:
+      summary: Logout (revoke session)
+      responses:
+        "200":
+          description: Logged out
+  /api/v1/auth/me:
+    get:
+      summary: Current user
+      responses:
+        "200":
+          description: User profile
+  /api/v1/auth/forgot-password:
+    post:
+      security: []
+      summary: Demo forgot password
+      responses:
+        "200":
+          description: Message
+  /api/v1/auth/reset-password:
+    post:
+      security: []
+      summary: Demo reset password
+      responses:
+        "200":
+          description: Message
+  /api/v1/auth/change-password:
+    post:
+      summary: Change password
+      responses:
+        "200":
+          description: Message
+  /api/v1/demo/reset:
+    post:
+      summary: Reset demo data (super_admin + DEMO_RESET_ENABLED)
+      responses:
+        "200":
+          description: Reset
+        "403":
+          description: Forbidden
+  /api/v1/clients:
+    get:
+      summary: List clients
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/search"
+        - $ref: "#/components/parameters/status"
+        - $ref: "#/components/parameters/sortBy"
+        - $ref: "#/components/parameters/sortDir"
+      responses:
+        "200":
+          description: Paginated list
+    post:
+      summary: Create client
+      responses:
+        "201":
+          description: Created
+  /api/v1/clients/{id}:
+    get:
+      summary: Get client
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Record
+    patch:
+      summary: Update client
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Updated
+    delete:
+      summary: Permanent delete
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Deleted
+  /api/v1/invoices:
+    get:
+      summary: List invoices
+      responses:
+        "200":
+          description: Paginated list
+    post:
+      summary: Create invoice (GST totals)
+      responses:
+        "201":
+          description: Created
+  /api/v1/invoices/{id}:
+    get:
+      summary: Get invoice
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Record
+    patch:
+      summary: Update invoice
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Updated
+    delete:
+      summary: Delete invoice and linked payments
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Deleted
+  /api/v1/payments:
+    get:
+      summary: List payments
+      responses:
+        "200":
+          description: Paginated list
+    post:
+      summary: Create payment (atomic sync to invoice/client)
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Overpayment or validation error
+  /api/v1/dashboard:
+    get:
+      summary: Live dashboard KPIs
+      responses:
+        "200":
+          description: Dashboard
+  /api/v1/reports/summary:
+    get:
+      summary: Live report series
+      responses:
+        "200":
+          description: Reports
+  /api/v1/search:
+    get:
+      summary: Cross-collection search
+      parameters:
+        - name: q
+          in: query
+          schema: { type: string }
+        - name: limit
+          in: query
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Results
+  /api/v1/accounting/journals:
+    get:
+      summary: List system + manual journals
+      responses:
+        "200":
+          description: Journals
+    post:
+      summary: Post balanced manual journal
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Unbalanced
+  /api/v1/accounting/statements:
+    get:
+      summary: Trial balance, P&L, balance sheet
+      responses:
+        "200":
+          description: Statements
+  /api/v1/archive:
+    get:
+      summary: List archived records
+      parameters:
+        - name: collection
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: Archive
+  /api/v1/settings:
+    get:
+      summary: Get settings
+      responses:
+        "200":
+          description: Settings
+    patch:
+      summary: Update settings
+      responses:
+        "200":
+          description: Updated
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: opaque
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema: { type: string }
+    page:
+      name: page
+      in: query
+      schema: { type: integer, default: 1 }
+    pageSize:
+      name: pageSize
+      in: query
+      schema: { type: integer, default: 50, maximum: 200 }
+    search:
+      name: search
+      in: query
+      schema: { type: string }
+    status:
+      name: status
+      in: query
+      schema: { type: string }
+    sortBy:
+      name: sortBy
+      in: query
+      schema: { type: string }
+    sortDir:
+      name: sortDir
+      in: query
+      schema: { type: string, enum: [asc, desc] }
+  schemas:
+    SuccessEnvelope:
+      type: object
+      properties:
+        success: { type: boolean, const: true }
+        data: {}
+        meta:
+          type: object
+          properties:
+            requestId: { type: string }
+            pagination:
+              type: object
+              properties:
+                page: { type: integer }
+                pageSize: { type: integer }
+                totalItems: { type: integer }
+                totalPages: { type: integer }
+    ErrorEnvelope:
+      type: object
+      properties:
+        success: { type: boolean, const: false }
+        error:
+          type: object
+          properties:
+            code: { type: string }
+            message: { type: string }
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field: { type: string }
+                  message: { type: string }
+        meta:
+          type: object
+          properties:
+            requestId: { type: string }

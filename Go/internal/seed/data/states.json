@@ -1,0 +1,47 @@
+{
+  "data": [
+    {
+      "id": "ST-1",
+      "name": "Maharashtra",
+      "country": "IN",
+      "code": "MA"
+    },
+    {
+      "id": "ST-2",
+      "name": "Delhi",
+      "country": "IN",
+      "code": "DE"
+    },
+    {
+      "id": "ST-3",
+      "name": "Karnataka",
+      "country": "IN",
+      "code": "KA"
+    },
+    {
+      "id": "ST-4",
+      "name": "Tamil Nadu",
+      "country": "IN",
+      "code": "TA"
+    },
+    {
+      "id": "ST-5",
+      "name": "Telangana",
+      "country": "IN",
+      "code": "TE"
+    },
+    {
+      "id": "ST-6",
+      "name": "Gujarat",
+      "country": "IN",
+      "code": "GU"
+    },
+    {
+      "id": "ST-7",
+      "name": "West Bengal",
+      "country": "IN",
+      "code": "WE"
+    }
+  ],
+  "total": 7
+}

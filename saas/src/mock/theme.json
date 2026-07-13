@@ -1,0 +1,8 @@
+{
+  "modes": [
+    "light",
+    "dark",
+    "system"
+  ],
+  "default": "system"
+}

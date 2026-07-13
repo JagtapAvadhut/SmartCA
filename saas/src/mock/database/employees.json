@@ -1,0 +1,530 @@
+{
+  "data": [
+    {
+      "id": "EMP-0001",
+      "firstName": "Naveen",
+      "lastName": "Desai",
+      "email": "naveen.desai@smartca.in",
+      "phone": "+91 9047221173",
+      "designation": "Associate",
+      "department": "Advisory",
+      "dateOfJoining": "2022-11-08",
+      "dateOfBirth": "1985-11-10",
+      "pan": "TPDWB4644V",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=NaveenDesai",
+      "address": "352, Brigade Road, Ahmedabad",
+      "salary": 1045007,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "admin"
+    },
+    {
+      "id": "EMP-0002",
+      "firstName": "Kavita",
+      "lastName": "Desai",
+      "email": "kavita.desai@smartca.in",
+      "phone": "+91 9366377321",
+      "designation": "Article Assistant",
+      "department": "Advisory",
+      "dateOfJoining": "2015-12-31",
+      "dateOfBirth": "1985-12-20",
+      "pan": "XQUTJ8097C",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=KavitaDesai",
+      "address": "39, Brigade Road, Delhi",
+      "salary": 806227,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "manager"
+    },
+    {
+      "id": "EMP-0003",
+      "firstName": "Suresh",
+      "lastName": "Sharma",
+      "email": "suresh.sharma@smartca.in",
+      "phone": "+91 9342978601",
+      "designation": "Senior Manager",
+      "department": "Tax",
+      "dateOfJoining": "2018-11-04",
+      "dateOfBirth": "1995-12-20",
+      "pan": "FBCFS6474T",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=SureshSharma",
+      "address": "428, Park Street, Indore",
+      "salary": 1035243,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "manager"
+    },
+    {
+      "id": "EMP-0004",
+      "firstName": "Karthik",
+      "lastName": "Agarwal",
+      "email": "karthik.agarwal@smartca.in",
+      "phone": "+91 9548691708",
+      "designation": "Manager",
+      "department": "Audit",
+      "dateOfJoining": "2018-01-09",
+      "dateOfBirth": "1994-12-17",
+      "pan": "XHHTI7333D",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=KarthikAgarwal",
+      "address": "458, MG Road, Chennai",
+      "salary": 1099246,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0005",
+      "firstName": "Deepa",
+      "lastName": "Bhat",
+      "email": "deepa.bhat@smartca.in",
+      "phone": "+91 9887897137",
+      "designation": "Intern",
+      "department": "Legal",
+      "dateOfJoining": "2019-08-10",
+      "dateOfBirth": "1996-02-16",
+      "pan": "TYUCZ2301L",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=DeepaBhat",
+      "address": "31, MG Road, Indore",
+      "salary": 655019,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0006",
+      "firstName": "Lakshmi",
+      "lastName": "Desai",
+      "email": "lakshmi.desai@smartca.in",
+      "phone": "+91 8946209409",
+      "designation": "Manager",
+      "department": "Compliance",
+      "dateOfJoining": "2024-07-04",
+      "dateOfBirth": "1988-01-16",
+      "pan": "NHIMZ3556T",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=LakshmiDesai",
+      "address": "61, Brigade Road, Indore",
+      "salary": 928409,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0007",
+      "firstName": "Manoj",
+      "lastName": "Desai",
+      "email": "manoj.desai@smartca.in",
+      "phone": "+91 9374151449",
+      "designation": "Senior Manager",
+      "department": "Advisory",
+      "dateOfJoining": "2022-06-12",
+      "dateOfBirth": "1989-08-10",
+      "pan": "ASNJW4489M",
+      "status": "inactive",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ManojDesai",
+      "address": "31, Linking Road, Mumbai",
+      "salary": 835686,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0008",
+      "firstName": "Amit",
+      "lastName": "Menon",
+      "email": "amit.menon@smartca.in",
+      "phone": "+91 8935297592",
+      "designation": "Senior Associate",
+      "department": "Tax",
+      "dateOfJoining": "2023-04-27",
+      "dateOfBirth": "1999-01-06",
+      "pan": "MEGQU3337Z",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=AmitMenon",
+      "address": "121, Park Street, Chennai",
+      "salary": 408673,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0009",
+      "firstName": "Anita",
+      "lastName": "Nair",
+      "email": "anita.nair@smartca.in",
+      "phone": "+91 9829941613",
+      "designation": "Intern",
+      "department": "Audit",
+      "dateOfJoining": "2021-11-15",
+      "dateOfBirth": "1987-12-12",
+      "pan": "EDVYE3836Q",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=AnitaNair",
+      "address": "415, Brigade Road, Jaipur",
+      "salary": 348090,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0010",
+      "firstName": "Vikram",
+      "lastName": "Mehta",
+      "email": "vikram.mehta@smartca.in",
+      "phone": "+91 8976580677",
+      "designation": "Article Assistant",
+      "department": "Advisory",
+      "dateOfJoining": "2021-10-16",
+      "dateOfBirth": "1993-01-17",
+      "pan": "IIXDH1005Y",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=VikramMehta",
+      "address": "236, MG Road, Delhi",
+      "salary": 547882,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0011",
+      "firstName": "Anita",
+      "lastName": "Mehta",
+      "email": "anita.mehta@smartca.in",
+      "phone": "+91 9719246415",
+      "designation": "Senior Associate",
+      "department": "Tax",
+      "dateOfJoining": "2020-01-01",
+      "dateOfBirth": "1989-10-12",
+      "pan": "IVPHW2900V",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=AnitaMehta",
+      "address": "108, Brigade Road, Jaipur",
+      "salary": 992828,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0012",
+      "firstName": "Sanjay",
+      "lastName": "Pillai",
+      "email": "sanjay.pillai@smartca.in",
+      "phone": "+91 9857948043",
+      "designation": "Manager",
+      "department": "Advisory",
+      "dateOfJoining": "2018-03-06",
+      "dateOfBirth": "1985-06-08",
+      "pan": "CDPVO8993M",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=SanjayPillai",
+      "address": "244, MG Road, Hyderabad",
+      "salary": 773341,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0013",
+      "firstName": "Suresh",
+      "lastName": "Desai",
+      "email": "suresh.desai@smartca.in",
+      "phone": "+91 9171018945",
+      "designation": "Senior Manager",
+      "department": "Accounts",
+      "dateOfJoining": "2022-02-07",
+      "dateOfBirth": "1999-08-02",
+      "pan": "ATJIG6910H",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=SureshDesai",
+      "address": "478, Park Street, Jaipur",
+      "salary": 532606,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0014",
+      "firstName": "Deepa",
+      "lastName": "Malhotra",
+      "email": "deepa.malhotra@smartca.in",
+      "phone": "+91 9328437665",
+      "designation": "Partner",
+      "department": "Compliance",
+      "dateOfJoining": "2019-02-14",
+      "dateOfBirth": "1989-12-08",
+      "pan": "PIAOI8867V",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=DeepaMalhotra",
+      "address": "213, Brigade Road, Ahmedabad",
+      "salary": 648885,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0015",
+      "firstName": "Rahul",
+      "lastName": "Menon",
+      "email": "rahul.menon@smartca.in",
+      "phone": "+91 9119640130",
+      "designation": "Senior Manager",
+      "department": "Advisory",
+      "dateOfJoining": "2021-04-18",
+      "dateOfBirth": "1998-06-15",
+      "pan": "RBTIA2942K",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=RahulMenon",
+      "address": "142, Park Street, Lucknow",
+      "salary": 369818,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0016",
+      "firstName": "Anita",
+      "lastName": "Kumar",
+      "email": "anita.kumar@smartca.in",
+      "phone": "+91 9382818732",
+      "designation": "Senior Manager",
+      "department": "Tax",
+      "dateOfJoining": "2022-05-25",
+      "dateOfBirth": "1992-10-23",
+      "pan": "DKFLZ1023N",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=AnitaKumar",
+      "address": "281, Brigade Road, Pune",
+      "salary": 393775,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0017",
+      "firstName": "Karthik",
+      "lastName": "Singh",
+      "email": "karthik.singh@smartca.in",
+      "phone": "+91 9617339340",
+      "designation": "Partner",
+      "department": "Audit",
+      "dateOfJoining": "2015-01-25",
+      "dateOfBirth": "1989-02-02",
+      "pan": "USOJG2845D",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=KarthikSingh",
+      "address": "279, Park Street, Indore",
+      "salary": 596022,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0018",
+      "firstName": "Rajesh",
+      "lastName": "Mehta",
+      "email": "rajesh.mehta@smartca.in",
+      "phone": "+91 9415254316",
+      "designation": "Partner",
+      "department": "Advisory",
+      "dateOfJoining": "2024-05-19",
+      "dateOfBirth": "1995-11-01",
+      "pan": "JHIMG6873K",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=RajeshMehta",
+      "address": "383, Brigade Road, Bangalore",
+      "salary": 800442,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0019",
+      "firstName": "Anita",
+      "lastName": "Iyer",
+      "email": "anita.iyer@smartca.in",
+      "phone": "+91 8815205886",
+      "designation": "Article Assistant",
+      "department": "Audit",
+      "dateOfJoining": "2019-12-21",
+      "dateOfBirth": "1987-01-01",
+      "pan": "DGHUB3070D",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=AnitaIyer",
+      "address": "445, Linking Road, Lucknow",
+      "salary": 406039,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0020",
+      "firstName": "Naveen",
+      "lastName": "Menon",
+      "email": "naveen.menon@smartca.in",
+      "phone": "+91 9094934289",
+      "designation": "Partner",
+      "department": "Advisory",
+      "dateOfJoining": "2018-05-01",
+      "dateOfBirth": "1992-08-30",
+      "pan": "GKJMA7985P",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=NaveenMenon",
+      "address": "294, Park Street, Indore",
+      "salary": 942860,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0021",
+      "firstName": "Pooja",
+      "lastName": "Patel",
+      "email": "pooja.patel@smartca.in",
+      "phone": "+91 9587801270",
+      "designation": "Article Assistant",
+      "department": "Compliance",
+      "dateOfJoining": "2020-04-28",
+      "dateOfBirth": "1992-06-20",
+      "pan": "EGEBL6292C",
+      "status": "inactive",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=PoojaPatel",
+      "address": "458, Park Street, Delhi",
+      "salary": 622193,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0022",
+      "firstName": "Pooja",
+      "lastName": "Gupta",
+      "email": "pooja.gupta@smartca.in",
+      "phone": "+91 9797041065",
+      "designation": "Partner",
+      "department": "Accounts",
+      "dateOfJoining": "2024-03-08",
+      "dateOfBirth": "1992-12-15",
+      "pan": "BSTNM6486G",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=PoojaGupta",
+      "address": "488, Brigade Road, Indore",
+      "salary": 528964,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0023",
+      "firstName": "Lakshmi",
+      "lastName": "Malhotra",
+      "email": "lakshmi.malhotra@smartca.in",
+      "phone": "+91 9024040710",
+      "designation": "Manager",
+      "department": "Compliance",
+      "dateOfJoining": "2018-09-07",
+      "dateOfBirth": "1999-04-05",
+      "pan": "MVHBF8475Z",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=LakshmiMalhotra",
+      "address": "310, MG Road, Chandigarh",
+      "salary": 682781,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0024",
+      "firstName": "Vikram",
+      "lastName": "Gupta",
+      "email": "vikram.gupta@smartca.in",
+      "phone": "+91 9431531969",
+      "designation": "Associate",
+      "department": "Tax",
+      "dateOfJoining": "2016-06-25",
+      "dateOfBirth": "1989-09-08",
+      "pan": "ZIXJU9730K",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=VikramGupta",
+      "address": "453, Park Street, Pune",
+      "salary": 720714,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    },
+    {
+      "id": "EMP-0025",
+      "firstName": "Amit",
+      "lastName": "Pillai",
+      "email": "amit.pillai@smartca.in",
+      "phone": "+91 9818802328",
+      "designation": "Senior Associate",
+      "department": "Compliance",
+      "dateOfJoining": "2020-06-13",
+      "dateOfBirth": "1993-12-06",
+      "pan": "IPNOZ9226A",
+      "status": "active",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=AmitPillai",
+      "address": "395, MG Road, Hyderabad",
+      "salary": 659659,
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "role": "staff"
+    }
+  ],
+  "total": 25
+}

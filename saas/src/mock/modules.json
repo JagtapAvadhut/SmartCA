@@ -1,0 +1,83 @@
+{
+  "data": [
+    {
+      "id": "dashboard",
+      "name": "Dashboard",
+      "path": "/",
+      "permission": "dashboard.view"
+    },
+    {
+      "id": "clients",
+      "name": "Clients",
+      "path": "/clients",
+      "permission": "clients.view"
+    },
+    {
+      "id": "companies",
+      "name": "Companies",
+      "path": "/companies",
+      "permission": "companies.view"
+    },
+    {
+      "id": "compliance",
+      "name": "Compliance",
+      "path": "/compliance",
+      "permission": "compliance.view"
+    },
+    {
+      "id": "accounting",
+      "name": "Accounting",
+      "path": "/accounting",
+      "permission": "accounting.view"
+    },
+    {
+      "id": "invoices",
+      "name": "Invoices",
+      "path": "/invoices",
+      "permission": "invoices.view"
+    },
+    {
+      "id": "payments",
+      "name": "Payments",
+      "path": "/payments",
+      "permission": "payments.view"
+    },
+    {
+      "id": "documents",
+      "name": "Documents",
+      "path": "/documents",
+      "permission": "documents.view"
+    },
+    {
+      "id": "tasks",
+      "name": "Tasks",
+      "path": "/tasks",
+      "permission": "tasks.view"
+    },
+    {
+      "id": "reports",
+      "name": "Reports",
+      "path": "/reports",
+      "permission": "reports.view"
+    },
+    {
+      "id": "employees",
+      "name": "Employees",
+      "path": "/employees",
+      "permission": "employees.view"
+    },
+    {
+      "id": "ai",
+      "name": "AI Assistant",
+      "path": "/ai",
+      "permission": "ai.view"
+    },
+    {
+      "id": "settings",
+      "name": "Settings",
+      "path": "/settings",
+      "permission": "settings.view"
+    }
+  ],
+  "total": 13
+}

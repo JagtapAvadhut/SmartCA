@@ -1,0 +1,532 @@
+{
+  "kpis": {
+    "revenue": {
+      "value": 3449208,
+      "change": 12.5,
+      "trend": "up"
+    },
+    "outstanding": {
+      "value": 6583724,
+      "change": -3.2,
+      "trend": "down"
+    },
+    "invoices": {
+      "value": 150,
+      "change": 8.1,
+      "trend": "up"
+    },
+    "clients": {
+      "value": 102,
+      "change": 5.4,
+      "trend": "up"
+    },
+    "companies": {
+      "value": 54,
+      "change": 3.2,
+      "trend": "up"
+    },
+    "pendingCompliance": {
+      "value": 61,
+      "change": -2.1,
+      "trend": "down"
+    },
+    "upcomingDueDates": {
+      "value": 80,
+      "change": 0,
+      "trend": "neutral"
+    },
+    "employees": {
+      "value": 23,
+      "change": 0,
+      "trend": "neutral"
+    }
+  },
+  "recentActivity": [
+    {
+      "id": "ACT-0001",
+      "type": "itr_filed",
+      "message": "ITR filed for EIH Ltd",
+      "clientId": "CLT-0074",
+      "clientName": "EIH Ltd",
+      "userId": "EMP-0018",
+      "userName": "Rajesh Mehta",
+      "timestamp": "2025-09-16T09:22:00Z"
+    },
+    {
+      "id": "ACT-0002",
+      "type": "payment_received",
+      "message": "Payment received from Narayana Hrudayalaya",
+      "clientId": "CLT-0109",
+      "clientName": "Narayana Hrudayalaya",
+      "userId": "EMP-0019",
+      "userName": "Anita Iyer",
+      "timestamp": "2026-05-30T10:43:00Z"
+    },
+    {
+      "id": "ACT-0003",
+      "type": "invoice_created",
+      "message": "Invoice created for Coforge",
+      "clientId": "CLT-0045",
+      "clientName": "Coforge",
+      "userId": "EMP-0006",
+      "userName": "Lakshmi Desai",
+      "timestamp": "2026-01-24T15:22:00Z"
+    },
+    {
+      "id": "ACT-0004",
+      "type": "compliance_updated",
+      "message": "Compliance status updated for Indraprastha Gas",
+      "clientId": "CLT-0103",
+      "clientName": "Indraprastha Gas",
+      "userId": "EMP-0025",
+      "userName": "Amit Pillai",
+      "timestamp": "2026-05-05T15:52:00Z"
+    },
+    {
+      "id": "ACT-0005",
+      "type": "itr_filed",
+      "message": "ITR filed for Tech Mahindra",
+      "clientId": "CLT-0047",
+      "clientName": "Tech Mahindra",
+      "userId": "EMP-0021",
+      "userName": "Pooja Patel",
+      "timestamp": "2025-07-21T14:03:00Z"
+    },
+    {
+      "id": "ACT-0006",
+      "type": "compliance_updated",
+      "message": "Compliance status updated for Amber Enterprises",
+      "clientId": "CLT-0058",
+      "clientName": "Amber Enterprises",
+      "userId": "EMP-0017",
+      "userName": "Karthik Singh",
+      "timestamp": "2026-03-11T13:52:00Z"
+    },
+    {
+      "id": "ACT-0007",
+      "type": "client_added",
+      "message": "New client Tata Consumer added",
+      "clientId": "CLT-0066",
+      "clientName": "Tata Consumer",
+      "userId": "EMP-0011",
+      "userName": "Anita Mehta",
+      "timestamp": "2026-05-24T16:33:00Z"
+    },
+    {
+      "id": "ACT-0008",
+      "type": "document_uploaded",
+      "message": "Document uploaded for Coforge",
+      "clientId": "CLT-0045",
+      "clientName": "Coforge",
+      "userId": "EMP-0012",
+      "userName": "Sanjay Pillai",
+      "timestamp": "2025-10-15T18:13:00Z"
+    },
+    {
+      "id": "ACT-0009",
+      "type": "client_added",
+      "message": "New client Ambuja Cements added",
+      "clientId": "CLT-0062",
+      "clientName": "Ambuja Cements",
+      "userId": "EMP-0021",
+      "userName": "Pooja Patel",
+      "timestamp": "2026-01-25T09:29:00Z"
+    },
+    {
+      "id": "ACT-0010",
+      "type": "client_added",
+      "message": "New client RPG Enterprises added",
+      "clientId": "CLT-0051",
+      "clientName": "RPG Enterprises",
+      "userId": "EMP-0014",
+      "userName": "Deepa Malhotra",
+      "timestamp": "2026-01-14T17:25:00Z"
+    }
+  ],
+  "todaysTasks": [
+    {
+      "id": "TSK-0001",
+      "title": "GST Filing - Petronet LNG",
+      "description": "Complete Bookkeeping for Petronet LNG",
+      "clientId": "CLT-0102",
+      "clientName": "Petronet LNG",
+      "assignedTo": "EMP-0010",
+      "assignedToName": "Amit Pillai",
+      "dueDate": "2025-12-06",
+      "priority": "low",
+      "status": "todo",
+      "category": "documentation",
+      "createdAt": "2026-01-27",
+      "completedAt": "2025-05-07"
+    },
+    {
+      "id": "TSK-0004",
+      "title": "Company Registration - Bajaj Finance",
+      "description": "Complete GST Registration for Bajaj Finance",
+      "clientId": "CLT-0018",
+      "clientName": "Bajaj Finance",
+      "assignedTo": "EMP-0005",
+      "assignedToName": "Naveen Mehta",
+      "dueDate": "2025-12-02",
+      "priority": "urgent",
+      "status": "cancelled",
+      "category": "compliance",
+      "createdAt": "2025-04-08",
+      "completedAt": null
+    },
+    {
+      "id": "TSK-0005",
+      "title": "Bookkeeping - ITC Ltd",
+      "description": "Complete ITR Filing for ITC Ltd",
+      "clientId": "CLT-0027",
+      "clientName": "ITC Ltd",
+      "assignedTo": "EMP-0017",
+      "assignedToName": "Rahul Menon",
+      "dueDate": "2025-08-17",
+      "priority": "medium",
+      "status": "todo",
+      "category": "billing",
+      "createdAt": "2026-01-12",
+      "completedAt": "2026-04-26"
+    },
+    {
+      "id": "TSK-0006",
+      "title": "ROC Filing - Adani Enterprises",
+      "description": "Complete Company Registration for Adani Enterprises",
+      "clientId": "CLT-0009",
+      "clientName": "Adani Enterprises",
+      "assignedTo": "EMP-0011",
+      "assignedToName": "Deepa Malhotra",
+      "dueDate": "2025-02-19",
+      "priority": "low",
+      "status": "todo",
+      "category": "follow_up",
+      "createdAt": "2025-04-20",
+      "completedAt": "2025-12-17"
+    },
+    {
+      "id": "TSK-0007",
+      "title": "Tax Planning - JK Cement",
+      "description": "Complete TDS Return for JK Cement",
+      "clientId": "CLT-0064",
+      "clientName": "JK Cement",
+      "assignedTo": "EMP-0022",
+      "assignedToName": "Naveen Sharma",
+      "dueDate": "2025-03-03",
+      "priority": "high",
+      "status": "review",
+      "category": "billing",
+      "createdAt": "2025-06-08",
+      "completedAt": null
+    },
+    {
+      "id": "TSK-0008",
+      "title": "Company Registration - Dixon Technologies",
+      "description": "Complete Company Registration for Dixon Technologies",
+      "clientId": "CLT-0059",
+      "clientName": "Dixon Technologies",
+      "assignedTo": "EMP-0001",
+      "assignedToName": "Karthik Mehta",
+      "dueDate": "2025-07-07",
+      "priority": "high",
+      "status": "cancelled",
+      "category": "meeting",
+      "createdAt": "2025-01-12",
+      "completedAt": "2025-02-11"
+    },
+    {
+      "id": "TSK-0009",
+      "title": "TDS Return - Havells India",
+      "description": "Complete Company Registration for Havells India",
+      "clientId": "CLT-0055",
+      "clientName": "Havells India",
+      "assignedTo": "EMP-0023",
+      "assignedToName": "Rahul Desai",
+      "dueDate": "2025-06-28",
+      "priority": "urgent",
+      "status": "cancelled",
+      "category": "follow_up",
+      "createdAt": "2026-01-11",
+      "completedAt": null
+    },
+    {
+      "id": "TSK-0010",
+      "title": "TDS Return - Sun Pharma",
+      "description": "Complete Trademark Filing for Sun Pharma",
+      "clientId": "CLT-0007",
+      "clientName": "Sun Pharma",
+      "assignedTo": "EMP-0018",
+      "assignedToName": "Karthik Menon",
+      "dueDate": "2025-07-17",
+      "priority": "low",
+      "status": "todo",
+      "category": "compliance",
+      "createdAt": "2025-01-08",
+      "completedAt": "2025-10-21"
+    }
+  ],
+  "recentPayments": [
+    {
+      "id": "PAY-00001",
+      "invoiceId": "INV-00067",
+      "invoiceNumber": "SCA/2025-26/0067",
+      "clientId": "CLT-0089",
+      "clientName": "Tata Power",
+      "amount": 25956,
+      "paymentDate": "2025-04-11",
+      "method": "neft",
+      "reference": "TXN623537073",
+      "status": "completed",
+      "notes": "",
+      "recordedBy": "EMP-0012"
+    },
+    {
+      "id": "PAY-00007",
+      "invoiceId": "INV-00115",
+      "invoiceNumber": "SCA/2025-26/0115",
+      "clientId": "CLT-0085",
+      "clientName": "SJVN",
+      "amount": 7450,
+      "paymentDate": "2025-07-07",
+      "method": "bank_transfer",
+      "reference": "TXN480909968",
+      "status": "completed",
+      "notes": "",
+      "recordedBy": "EMP-0014"
+    },
+    {
+      "id": "PAY-00009",
+      "invoiceId": "INV-00092",
+      "invoiceNumber": "SCA/2025-26/0092",
+      "clientId": "CLT-0057",
+      "clientName": "KEI Industries",
+      "amount": 18234,
+      "paymentDate": "2025-05-05",
+      "method": "upi",
+      "reference": "TXN839703967",
+      "status": "completed",
+      "notes": "",
+      "recordedBy": "EMP-0004"
+    },
+    {
+      "id": "PAY-00010",
+      "invoiceId": "INV-00061",
+      "invoiceNumber": "SCA/2025-26/0061",
+      "clientId": "CLT-0111",
+      "clientName": "Infosys Ltd 2",
+      "amount": 122848,
+      "paymentDate": "2025-12-21",
+      "method": "upi",
+      "reference": "TXN243809745",
+      "status": "completed",
+      "notes": "",
+      "recordedBy": "EMP-0009"
+    },
+    {
+      "id": "PAY-00011",
+      "invoiceId": "INV-00097",
+      "invoiceNumber": "SCA/2025-26/0097",
+      "clientId": "CLT-0010",
+      "clientName": "Tata Steel",
+      "amount": 29946,
+      "paymentDate": "2024-08-21",
+      "method": "cheque",
+      "reference": "TXN469904677",
+      "status": "completed",
+      "notes": "",
+      "recordedBy": "EMP-0025"
+    },
+    {
+      "id": "PAY-00013",
+      "invoiceId": "INV-00150",
+      "invoiceNumber": "SCA/2025-26/0150",
+      "clientId": "CLT-0119",
+      "clientName": "Adani Enterprises 2",
+      "amount": 2866,
+      "paymentDate": "2025-05-05",
+      "method": "cheque",
+      "reference": "TXN209208010",
+      "status": "completed",
+      "notes": "",
+      "recordedBy": "EMP-0019"
+    }
+  ],
+  "upcomingDueDates": [
+    {
+      "id": "CMP-0026",
+      "clientId": "CLT-0018",
+      "clientName": "Bajaj Finance",
+      "service": "Bookkeeping",
+      "priority": "medium",
+      "assignedTo": "EMP-0013",
+      "assignedToName": "Suresh Kumar",
+      "dueDate": "2025-01-03",
+      "status": "waiting_client",
+      "description": "Company Registration for Bajaj Finance",
+      "createdAt": "2025-12-07",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0006",
+      "clientId": "CLT-0030",
+      "clientName": "Godrej Consumer",
+      "service": "Company Registration",
+      "priority": "medium",
+      "assignedTo": "EMP-0012",
+      "assignedToName": "Pooja Patel",
+      "dueDate": "2025-01-25",
+      "status": "upcoming",
+      "description": "Tax Planning for Godrej Consumer",
+      "createdAt": "2025-04-12",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0015",
+      "clientId": "CLT-0009",
+      "clientName": "Adani Enterprises",
+      "service": "Tax Planning",
+      "priority": "high",
+      "assignedTo": "EMP-0025",
+      "assignedToName": "Anita Desai",
+      "dueDate": "2025-01-28",
+      "status": "upcoming",
+      "description": "ITR Filing for Adani Enterprises",
+      "createdAt": "2026-02-03",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0077",
+      "clientId": "CLT-0001",
+      "clientName": "Infosys Ltd",
+      "service": "ITR Filing",
+      "priority": "low",
+      "assignedTo": "EMP-0025",
+      "assignedToName": "Karthik Menon",
+      "dueDate": "2025-02-03",
+      "status": "upcoming",
+      "description": "Audit for Infosys Ltd",
+      "createdAt": "2025-02-15",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0010",
+      "clientId": "CLT-0057",
+      "clientName": "KEI Industries",
+      "service": "Audit",
+      "priority": "urgent",
+      "assignedTo": "EMP-0020",
+      "assignedToName": "Naveen Sharma",
+      "dueDate": "2025-02-10",
+      "status": "waiting_client",
+      "description": "Company Registration for KEI Industries",
+      "createdAt": "2024-07-22",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0009",
+      "clientId": "CLT-0012",
+      "clientName": "Bharti Airtel",
+      "service": "Audit",
+      "priority": "urgent",
+      "assignedTo": "EMP-0006",
+      "assignedToName": "Rajesh Nair",
+      "dueDate": "2025-02-11",
+      "status": "waiting_client",
+      "description": "GST Registration for Bharti Airtel",
+      "createdAt": "2025-12-20",
+      "tags": [
+        "quarterly"
+      ]
+    },
+    {
+      "id": "CMP-0057",
+      "clientId": "CLT-0056",
+      "clientName": "Polycab India",
+      "service": "Company Registration",
+      "priority": "urgent",
+      "assignedTo": "EMP-0023",
+      "assignedToName": "Anita Gupta",
+      "dueDate": "2025-02-11",
+      "status": "upcoming",
+      "description": "GST Registration for Polycab India",
+      "createdAt": "2025-08-04",
+      "tags": [
+        "annual"
+      ]
+    },
+    {
+      "id": "CMP-0080",
+      "clientId": "CLT-0045",
+      "clientName": "Coforge",
+      "service": "Company Registration",
+      "priority": "medium",
+      "assignedTo": "EMP-0018",
+      "assignedToName": "Anita Gupta",
+      "dueDate": "2025-03-16",
+      "status": "waiting_client",
+      "description": "GST Filing for Coforge",
+      "createdAt": "2025-09-07",
+      "tags": [
+        "monthly"
+      ]
+    }
+  ],
+  "birthdays": [],
+  "notifications": [
+    {
+      "id": "NOT-0005",
+      "title": "New Task Assigned",
+      "message": "ITR filing deadline approaching for 5 clients",
+      "type": "error",
+      "read": false,
+      "createdAt": "2026-04-21T14:00:00Z",
+      "link": "/invoices"
+    },
+    {
+      "id": "NOT-0014",
+      "title": "GST Due Reminder",
+      "message": "Audit report uploaded for Reliance Industries",
+      "type": "error",
+      "read": false,
+      "createdAt": "2025-08-17T14:00:00Z",
+      "link": "/clients"
+    },
+    {
+      "id": "NOT-0015",
+      "title": "New Task Assigned",
+      "message": "Payment of ₹45,000 received from TCS",
+      "type": "success",
+      "read": false,
+      "createdAt": "2026-05-29T14:00:00Z",
+      "link": "/invoices"
+    },
+    {
+      "id": "NOT-0016",
+      "title": "Client Meeting",
+      "message": "Client meeting scheduled for tomorrow at 11 AM",
+      "type": "info",
+      "read": false,
+      "createdAt": "2025-06-07T19:00:00Z",
+      "link": "/invoices"
+    },
+    {
+      "id": "NOT-0018",
+      "title": "New Task Assigned",
+      "message": "ITR filing deadline approaching for 5 clients",
+      "type": "error",
+      "read": false,
+      "createdAt": "2025-07-05T19:00:00Z",
+      "link": "/clients"
+    }
+  ]
+}

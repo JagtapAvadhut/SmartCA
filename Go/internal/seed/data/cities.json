@@ -1,0 +1,45 @@
+{
+  "data": [
+    {
+      "id": "CT-1",
+      "name": "Mumbai",
+      "state": "Maharashtra"
+    },
+    {
+      "id": "CT-2",
+      "name": "Delhi",
+      "state": "Delhi"
+    },
+    {
+      "id": "CT-3",
+      "name": "Bangalore",
+      "state": "Karnataka"
+    },
+    {
+      "id": "CT-4",
+      "name": "Chennai",
+      "state": "Tamil Nadu"
+    },
+    {
+      "id": "CT-5",
+      "name": "Hyderabad",
+      "state": "Telangana"
+    },
+    {
+      "id": "CT-6",
+      "name": "Pune",
+      "state": "Gujarat"
+    },
+    {
+      "id": "CT-7",
+      "name": "Ahmedabad",
+      "state": "West Bengal"
+    },
+    {
+      "id": "CT-8",
+      "name": "Kolkata",
+      "state": "Maharashtra"
+    }
+  ],
+  "total": 8
+}

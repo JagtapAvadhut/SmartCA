@@ -1,0 +1,37 @@
+{
+  "data": [
+    {
+      "id": "DEP-1",
+      "name": "Tax"
+    },
+    {
+      "id": "DEP-2",
+      "name": "Audit"
+    },
+    {
+      "id": "DEP-3",
+      "name": "Compliance"
+    },
+    {
+      "id": "DEP-4",
+      "name": "Accounts"
+    },
+    {
+      "id": "DEP-5",
+      "name": "Advisory"
+    },
+    {
+      "id": "DEP-6",
+      "name": "Legal"
+    },
+    {
+      "id": "DEP-7",
+      "name": "HR"
+    },
+    {
+      "id": "DEP-8",
+      "name": "Administration"
+    }
+  ],
+  "total": 8
+}

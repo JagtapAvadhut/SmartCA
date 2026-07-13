@@ -1,0 +1,505 @@
+{
+  "data": [
+    {
+      "id": "ACT-0001",
+      "type": "itr_filed",
+      "message": "ITR filed for EIH Ltd",
+      "clientId": "CLT-0074",
+      "clientName": "EIH Ltd",
+      "userId": "EMP-0018",
+      "userName": "Rajesh Mehta",
+      "timestamp": "2025-09-16T09:22:00Z"
+    },
+    {
+      "id": "ACT-0002",
+      "type": "payment_received",
+      "message": "Payment received from Narayana Hrudayalaya",
+      "clientId": "CLT-0109",
+      "clientName": "Narayana Hrudayalaya",
+      "userId": "EMP-0019",
+      "userName": "Anita Iyer",
+      "timestamp": "2026-05-30T10:43:00Z"
+    },
+    {
+      "id": "ACT-0003",
+      "type": "invoice_created",
+      "message": "Invoice created for Coforge",
+      "clientId": "CLT-0045",
+      "clientName": "Coforge",
+      "userId": "EMP-0006",
+      "userName": "Lakshmi Desai",
+      "timestamp": "2026-01-24T15:22:00Z"
+    },
+    {
+      "id": "ACT-0004",
+      "type": "compliance_updated",
+      "message": "Compliance status updated for Indraprastha Gas",
+      "clientId": "CLT-0103",
+      "clientName": "Indraprastha Gas",
+      "userId": "EMP-0025",
+      "userName": "Amit Pillai",
+      "timestamp": "2026-05-05T15:52:00Z"
+    },
+    {
+      "id": "ACT-0005",
+      "type": "itr_filed",
+      "message": "ITR filed for Tech Mahindra",
+      "clientId": "CLT-0047",
+      "clientName": "Tech Mahindra",
+      "userId": "EMP-0021",
+      "userName": "Pooja Patel",
+      "timestamp": "2025-07-21T14:03:00Z"
+    },
+    {
+      "id": "ACT-0006",
+      "type": "compliance_updated",
+      "message": "Compliance status updated for Amber Enterprises",
+      "clientId": "CLT-0058",
+      "clientName": "Amber Enterprises",
+      "userId": "EMP-0017",
+      "userName": "Karthik Singh",
+      "timestamp": "2026-03-11T13:52:00Z"
+    },
+    {
+      "id": "ACT-0007",
+      "type": "client_added",
+      "message": "New client Tata Consumer added",
+      "clientId": "CLT-0066",
+      "clientName": "Tata Consumer",
+      "userId": "EMP-0011",
+      "userName": "Anita Mehta",
+      "timestamp": "2026-05-24T16:33:00Z"
+    },
+    {
+      "id": "ACT-0008",
+      "type": "document_uploaded",
+      "message": "Document uploaded for Coforge",
+      "clientId": "CLT-0045",
+      "clientName": "Coforge",
+      "userId": "EMP-0012",
+      "userName": "Sanjay Pillai",
+      "timestamp": "2025-10-15T18:13:00Z"
+    },
+    {
+      "id": "ACT-0009",
+      "type": "client_added",
+      "message": "New client Ambuja Cements added",
+      "clientId": "CLT-0062",
+      "clientName": "Ambuja Cements",
+      "userId": "EMP-0021",
+      "userName": "Pooja Patel",
+      "timestamp": "2026-01-25T09:29:00Z"
+    },
+    {
+      "id": "ACT-0010",
+      "type": "client_added",
+      "message": "New client RPG Enterprises added",
+      "clientId": "CLT-0051",
+      "clientName": "RPG Enterprises",
+      "userId": "EMP-0014",
+      "userName": "Deepa Malhotra",
+      "timestamp": "2026-01-14T17:25:00Z"
+    },
+    {
+      "id": "ACT-0011",
+      "type": "compliance_updated",
+      "message": "Compliance status updated for Apollo Hospitals",
+      "clientId": "CLT-0037",
+      "clientName": "Apollo Hospitals",
+      "userId": "EMP-0006",
+      "userName": "Lakshmi Desai",
+      "timestamp": "2025-06-27T16:53:00Z"
+    },
+    {
+      "id": "ACT-0012",
+      "type": "client_added",
+      "message": "New client Wipro added",
+      "clientId": "CLT-0008",
+      "clientName": "Wipro",
+      "userId": "EMP-0012",
+      "userName": "Sanjay Pillai",
+      "timestamp": "2025-06-24T10:14:00Z"
+    },
+    {
+      "id": "ACT-0013",
+      "type": "task_completed",
+      "message": "Task completed for Aster DM Healthcare",
+      "clientId": "CLT-0110",
+      "clientName": "Aster DM Healthcare",
+      "userId": "EMP-0022",
+      "userName": "Pooja Gupta",
+      "timestamp": "2026-04-24T13:05:00Z"
+    },
+    {
+      "id": "ACT-0014",
+      "type": "task_completed",
+      "message": "Task completed for Blue Star",
+      "clientId": "CLT-0053",
+      "clientName": "Blue Star",
+      "userId": "EMP-0006",
+      "userName": "Lakshmi Desai",
+      "timestamp": "2025-09-02T16:23:00Z"
+    },
+    {
+      "id": "ACT-0015",
+      "type": "itr_filed",
+      "message": "ITR filed for Ramco Cements",
+      "clientId": "CLT-0065",
+      "clientName": "Ramco Cements",
+      "userId": "EMP-0017",
+      "userName": "Karthik Singh",
+      "timestamp": "2026-04-15T15:52:00Z"
+    },
+    {
+      "id": "ACT-0016",
+      "type": "itr_filed",
+      "message": "ITR filed for ACC Ltd",
+      "clientId": "CLT-0063",
+      "clientName": "ACC Ltd",
+      "userId": "EMP-0019",
+      "userName": "Anita Iyer",
+      "timestamp": "2025-12-18T14:40:00Z"
+    },
+    {
+      "id": "ACT-0017",
+      "type": "invoice_created",
+      "message": "Invoice created for Mahindra & Mahindra 2",
+      "clientId": "CLT-0115",
+      "clientName": "Mahindra & Mahindra 2",
+      "userId": "EMP-0025",
+      "userName": "Amit Pillai",
+      "timestamp": "2025-10-23T19:00:00Z"
+    },
+    {
+      "id": "ACT-0018",
+      "type": "itr_filed",
+      "message": "ITR filed for Indraprastha Gas",
+      "clientId": "CLT-0103",
+      "clientName": "Indraprastha Gas",
+      "userId": "EMP-0013",
+      "userName": "Suresh Desai",
+      "timestamp": "2026-04-10T11:43:00Z"
+    },
+    {
+      "id": "ACT-0019",
+      "type": "gst_filed",
+      "message": "GST return filed for Marico",
+      "clientId": "CLT-0067",
+      "clientName": "Marico",
+      "userId": "EMP-0001",
+      "userName": "Naveen Desai",
+      "timestamp": "2026-04-18T11:25:00Z"
+    },
+    {
+      "id": "ACT-0020",
+      "type": "itr_filed",
+      "message": "ITR filed for Sun Pharma 2",
+      "clientId": "CLT-0117",
+      "clientName": "Sun Pharma 2",
+      "userId": "EMP-0021",
+      "userName": "Pooja Patel",
+      "timestamp": "2025-08-08T19:49:00Z"
+    },
+    {
+      "id": "ACT-0021",
+      "type": "client_added",
+      "message": "New client Reliance Industries added",
+      "clientId": "CLT-0003",
+      "clientName": "Reliance Industries",
+      "userId": "EMP-0009",
+      "userName": "Anita Nair",
+      "timestamp": "2025-10-09T13:14:00Z"
+    },
+    {
+      "id": "ACT-0022",
+      "type": "task_completed",
+      "message": "Task completed for Cyient",
+      "clientId": "CLT-0049",
+      "clientName": "Cyient",
+      "userId": "EMP-0022",
+      "userName": "Pooja Gupta",
+      "timestamp": "2025-08-04T17:30:00Z"
+    },
+    {
+      "id": "ACT-0023",
+      "type": "itr_filed",
+      "message": "ITR filed for Hindalco",
+      "clientId": "CLT-0094",
+      "clientName": "Hindalco",
+      "userId": "EMP-0009",
+      "userName": "Anita Nair",
+      "timestamp": "2026-06-26T11:02:00Z"
+    },
+    {
+      "id": "ACT-0024",
+      "type": "itr_filed",
+      "message": "ITR filed for UltraTech Cement",
+      "clientId": "CLT-0020",
+      "clientName": "UltraTech Cement",
+      "userId": "EMP-0021",
+      "userName": "Pooja Patel",
+      "timestamp": "2025-08-18T16:45:00Z"
+    },
+    {
+      "id": "ACT-0025",
+      "type": "task_completed",
+      "message": "Task completed for Bharti Airtel",
+      "clientId": "CLT-0012",
+      "clientName": "Bharti Airtel",
+      "userId": "EMP-0020",
+      "userName": "Naveen Menon",
+      "timestamp": "2025-07-11T18:47:00Z"
+    },
+    {
+      "id": "ACT-0026",
+      "type": "invoice_created",
+      "message": "Invoice created for Garden Reach Shipbuilders",
+      "clientId": "CLT-0082",
+      "clientName": "Garden Reach Shipbuilders",
+      "userId": "EMP-0009",
+      "userName": "Anita Nair",
+      "timestamp": "2026-01-31T14:47:00Z"
+    },
+    {
+      "id": "ACT-0027",
+      "type": "invoice_created",
+      "message": "Invoice created for TCS 2",
+      "clientId": "CLT-0112",
+      "clientName": "TCS 2",
+      "userId": "EMP-0015",
+      "userName": "Rahul Menon",
+      "timestamp": "2025-11-18T20:13:00Z"
+    },
+    {
+      "id": "ACT-0028",
+      "type": "itr_filed",
+      "message": "ITR filed for Hindustan Unilever",
+      "clientId": "CLT-0028",
+      "clientName": "Hindustan Unilever",
+      "userId": "EMP-0023",
+      "userName": "Lakshmi Malhotra",
+      "timestamp": "2026-03-21T12:58:00Z"
+    },
+    {
+      "id": "ACT-0029",
+      "type": "payment_received",
+      "message": "Payment received from Garden Reach Shipbuilders",
+      "clientId": "CLT-0082",
+      "clientName": "Garden Reach Shipbuilders",
+      "userId": "EMP-0004",
+      "userName": "Karthik Agarwal",
+      "timestamp": "2026-04-06T14:27:00Z"
+    },
+    {
+      "id": "ACT-0030",
+      "type": "itr_filed",
+      "message": "ITR filed for L&T",
+      "clientId": "CLT-0006",
+      "clientName": "L&T",
+      "userId": "EMP-0007",
+      "userName": "Manoj Desai",
+      "timestamp": "2026-04-09T19:18:00Z"
+    },
+    {
+      "id": "ACT-0031",
+      "type": "document_uploaded",
+      "message": "Document uploaded for Coal India",
+      "clientId": "CLT-0024",
+      "clientName": "Coal India",
+      "userId": "EMP-0021",
+      "userName": "Pooja Patel",
+      "timestamp": "2026-04-20T12:31:00Z"
+    },
+    {
+      "id": "ACT-0032",
+      "type": "itr_filed",
+      "message": "ITR filed for Paytm",
+      "clientId": "CLT-0039",
+      "clientName": "Paytm",
+      "userId": "EMP-0017",
+      "userName": "Karthik Singh",
+      "timestamp": "2025-11-15T13:46:00Z"
+    },
+    {
+      "id": "ACT-0033",
+      "type": "itr_filed",
+      "message": "ITR filed for BHEL",
+      "clientId": "CLT-0079",
+      "clientName": "BHEL",
+      "userId": "EMP-0003",
+      "userName": "Suresh Sharma",
+      "timestamp": "2026-04-22T11:05:00Z"
+    },
+    {
+      "id": "ACT-0034",
+      "type": "invoice_created",
+      "message": "Invoice created for Emami Ltd",
+      "clientId": "CLT-0068",
+      "clientName": "Emami Ltd",
+      "userId": "EMP-0009",
+      "userName": "Anita Nair",
+      "timestamp": "2026-05-02T17:41:00Z"
+    },
+    {
+      "id": "ACT-0035",
+      "type": "gst_filed",
+      "message": "GST return filed for Jindal Steel",
+      "clientId": "CLT-0092",
+      "clientName": "Jindal Steel",
+      "userId": "EMP-0003",
+      "userName": "Suresh Sharma",
+      "timestamp": "2025-11-26T14:36:00Z"
+    },
+    {
+      "id": "ACT-0036",
+      "type": "compliance_updated",
+      "message": "Compliance status updated for Torrent Power",
+      "clientId": "CLT-0088",
+      "clientName": "Torrent Power",
+      "userId": "EMP-0013",
+      "userName": "Suresh Desai",
+      "timestamp": "2025-10-07T16:31:00Z"
+    },
+    {
+      "id": "ACT-0037",
+      "type": "client_added",
+      "message": "New client Reliance Industries 2 added",
+      "clientId": "CLT-0113",
+      "clientName": "Reliance Industries 2",
+      "userId": "EMP-0007",
+      "userName": "Manoj Desai",
+      "timestamp": "2025-08-01T20:56:00Z"
+    },
+    {
+      "id": "ACT-0038",
+      "type": "gst_filed",
+      "message": "GST return filed for HDFC Bank 2",
+      "clientId": "CLT-0114",
+      "clientName": "HDFC Bank 2",
+      "userId": "EMP-0011",
+      "userName": "Anita Mehta",
+      "timestamp": "2025-12-10T13:10:00Z"
+    },
+    {
+      "id": "ACT-0039",
+      "type": "payment_received",
+      "message": "Payment received from National Aluminium",
+      "clientId": "CLT-0100",
+      "clientName": "National Aluminium",
+      "userId": "EMP-0011",
+      "userName": "Anita Mehta",
+      "timestamp": "2026-06-11T13:32:00Z"
+    },
+    {
+      "id": "ACT-0040",
+      "type": "document_uploaded",
+      "message": "Document uploaded for Pidilite Industries",
+      "clientId": "CLT-0031",
+      "clientName": "Pidilite Industries",
+      "userId": "EMP-0007",
+      "userName": "Manoj Desai",
+      "timestamp": "2026-04-09T14:02:00Z"
+    },
+    {
+      "id": "ACT-0041",
+      "type": "client_added",
+      "message": "New client NMDC added",
+      "clientId": "CLT-0096",
+      "clientName": "NMDC",
+      "userId": "EMP-0007",
+      "userName": "Manoj Desai",
+      "timestamp": "2025-07-25T09:43:00Z"
+    },
+    {
+      "id": "ACT-0042",
+      "type": "task_completed",
+      "message": "Task completed for ACC Ltd",
+      "clientId": "CLT-0063",
+      "clientName": "ACC Ltd",
+      "userId": "EMP-0009",
+      "userName": "Anita Nair",
+      "timestamp": "2026-01-15T13:12:00Z"
+    },
+    {
+      "id": "ACT-0043",
+      "type": "gst_filed",
+      "message": "GST return filed for Mahindra & Mahindra",
+      "clientId": "CLT-0005",
+      "clientName": "Mahindra & Mahindra",
+      "userId": "EMP-0005",
+      "userName": "Deepa Bhat",
+      "timestamp": "2026-05-06T09:00:00Z"
+    },
+    {
+      "id": "ACT-0044",
+      "type": "invoice_created",
+      "message": "Invoice created for Star Health",
+      "clientId": "CLT-0106",
+      "clientName": "Star Health",
+      "userId": "EMP-0002",
+      "userName": "Kavita Desai",
+      "timestamp": "2025-07-24T13:21:00Z"
+    },
+    {
+      "id": "ACT-0045",
+      "type": "task_completed",
+      "message": "Task completed for Axis Bank",
+      "clientId": "CLT-0016",
+      "clientName": "Axis Bank",
+      "userId": "EMP-0008",
+      "userName": "Amit Menon",
+      "timestamp": "2025-10-29T18:58:00Z"
+    },
+    {
+      "id": "ACT-0046",
+      "type": "gst_filed",
+      "message": "GST return filed for ONGC",
+      "clientId": "CLT-0025",
+      "clientName": "ONGC",
+      "userId": "EMP-0019",
+      "userName": "Anita Iyer",
+      "timestamp": "2026-03-10T10:40:00Z"
+    },
+    {
+      "id": "ACT-0047",
+      "type": "itr_filed",
+      "message": "ITR filed for Indian Hotels",
+      "clientId": "CLT-0071",
+      "clientName": "Indian Hotels",
+      "userId": "EMP-0013",
+      "userName": "Suresh Desai",
+      "timestamp": "2026-03-07T20:22:00Z"
+    },
+    {
+      "id": "ACT-0048",
+      "type": "payment_received",
+      "message": "Payment received from Fortis Healthcare",
+      "clientId": "CLT-0108",
+      "clientName": "Fortis Healthcare",
+      "userId": "EMP-0018",
+      "userName": "Rajesh Mehta",
+      "timestamp": "2025-10-18T12:59:00Z"
+    },
+    {
+      "id": "ACT-0049",
+      "type": "gst_filed",
+      "message": "GST return filed for IRFC",
+      "clientId": "CLT-0076",
+      "clientName": "IRFC",
+      "userId": "EMP-0008",
+      "userName": "Amit Menon",
+      "timestamp": "2025-10-13T17:37:00Z"
+    },
+    {
+      "id": "ACT-0050",
+      "type": "client_added",
+      "message": "New client Reliance Industries 2 added",
+      "clientId": "CLT-0113",
+      "clientName": "Reliance Industries 2",
+      "userId": "EMP-0023",
+      "userName": "Lakshmi Malhotra",
+      "timestamp": "2026-05-01T17:14:00Z"
+    }
+  ],
+  "total": 50
+}

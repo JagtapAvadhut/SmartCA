@@ -1,0 +1,62 @@
+# Dependencies & builds
+node_modules
+dist
+dist-ssr
+build
+coverage
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.key
+credentials.json
+secrets.*
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*~
+
+# Vite
+.vite
+*.local
+
+# Playwright / test artifacts
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+traces/
+**/trace.zip
+
+# Temporary QA outputs (summaries live in docs/)
+qa-results.json
+business-qa-results.json
+qa-client-debug.png
+*.har
+
+# Misc
+.cache
+tmp
+temp

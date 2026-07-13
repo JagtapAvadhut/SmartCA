@@ -1,0 +1,275 @@
+{
+  "data": [
+    {
+      "id": "NOT-0001",
+      "title": "Client Meeting",
+      "message": "Payment of ₹45,000 received from TCS",
+      "type": "info",
+      "read": true,
+      "createdAt": "2026-01-22T10:00:00Z",
+      "link": "/clients"
+    },
+    {
+      "id": "NOT-0002",
+      "title": "New Task Assigned",
+      "message": "Payment of ₹45,000 received from TCS",
+      "type": "info",
+      "read": true,
+      "createdAt": "2025-09-10T18:00:00Z",
+      "link": "/tasks"
+    },
+    {
+      "id": "NOT-0003",
+      "title": "Client Meeting",
+      "message": "Payment of ₹45,000 received from TCS",
+      "type": "warning",
+      "read": true,
+      "createdAt": "2025-07-23T10:00:00Z",
+      "link": "/invoices"
+    },
+    {
+      "id": "NOT-0004",
+      "title": "Payment Received",
+      "message": "Payment of ₹45,000 received from TCS",
+      "type": "error",
+      "read": true,
+      "createdAt": "2025-08-31T14:00:00Z",
+      "link": "/tasks"
+    },
+    {
+      "id": "NOT-0005",
+      "title": "New Task Assigned",
+      "message": "ITR filing deadline approaching for 5 clients",
+      "type": "error",
+      "read": false,
+      "createdAt": "2026-04-21T14:00:00Z",
+      "link": "/invoices"
+    },
+    {
+      "id": "NOT-0006",
+      "title": "Payment Received",
+      "message": "GSTR-3B filing due in 3 days for Infosys Ltd",
+      "type": "error",
+      "read": true,
+      "createdAt": "2026-02-27T09:00:00Z",
+      "link": "/compliance"
+    },
+    {
+      "id": "NOT-0007",
+      "title": "GST Due Reminder",
+      "message": "Client meeting scheduled for tomorrow at 11 AM",
+      "type": "info",
+      "read": true,
+      "createdAt": "2025-11-19T15:00:00Z",
+      "link": "/invoices"
+    },
+    {
+      "id": "NOT-0008",
+      "title": "New Task Assigned",
+      "message": "Audit report uploaded for Reliance Industries",
+      "type": "warning",
+      "read": true,
+      "createdAt": "2026-02-27T19:00:00Z",
+      "link": "/invoices"
+    },
+    {
+      "id": "NOT-0009",
+      "title": "Document Uploaded",
+      "message": "GSTR-3B filing due in 3 days for Infosys Ltd",
+      "type": "warning",
+      "read": true,
+      "createdAt": "2025-11-14T17:00:00Z",
+      "link": "/tasks"
+    },
+    {
+      "id": "NOT-0010",
+      "title": "New Task Assigned",
+      "message": "ITR filing deadline approaching for 5 clients",
+      "type": "warning",
+      "read": true,
+      "createdAt": "2025-12-22T18:00:00Z",
+      "link": "/tasks"
+    },
+    {
+      "id": "NOT-0011",
+      "title": "Client Meeting",
+      "message": "Payment of ₹45,000 received from TCS",
+      "type": "success",
+      "read": true,
+      "createdAt": "2025-12-29T19:00:00Z",
+      "link": "/compliance"
+    },
+    {
+      "id": "NOT-0012",
+      "title": "Payment Received",
+      "message": "GSTR-3B filing due in 3 days for Infosys Ltd",
+      "type": "info",
+      "read": true,
+      "createdAt": "2025-08-20T13:00:00Z",
+      "link": "/tasks"
+    },
+    {
+      "id": "NOT-0013",
+      "title": "ITR Deadline",
+      "message": "New compliance task assigned to you",
+      "type": "success",
+      "read": true,
+      "createdAt": "2026-03-29T19:00:00Z",
+      "link": "/clients"
+    },
+    {
+      "id": "NOT-0014",
+      "title": "GST Due Reminder",
+      "message": "Audit report uploaded for Reliance Industries",
+      "type": "error",
+      "read": false,
+      "createdAt": "2025-08-17T14:00:00Z",
+      "link": "/clients"
+    },
+    {
+      "id": "NOT-0015",
+      "title": "New Task Assigned",
+      "message": "Payment of ₹45,000 received from TCS",
+      "type": "success",
+      "read": false,
+      "createdAt": "2026-05-29T14:00:00Z",
+      "link": "/invoices"
+    },
+    {
+      "id": "NOT-0016",
+      "title": "Client Meeting",
+      "message": "Client meeting scheduled for tomorrow at 11 AM",
+      "type": "info",
+      "read": false,
+      "createdAt": "2025-06-07T19:00:00Z",
+      "link": "/invoices"
+    },
+    {
+      "id": "NOT-0017",
+      "title": "Document Uploaded",
+      "message": "ITR filing deadline approaching for 5 clients",
+      "type": "error",
+      "read": true,
+      "createdAt": "2026-06-29T16:00:00Z",
+      "link": "/clients"
+    },
+    {
+      "id": "NOT-0018",
+      "title": "New Task Assigned",
+      "message": "ITR filing deadline approaching for 5 clients",
+      "type": "error",
+      "read": false,
+      "createdAt": "2025-07-05T19:00:00Z",
+      "link": "/clients"
+    },
+    {
+      "id": "NOT-0019",
+      "title": "Client Meeting",
+      "message": "Audit report uploaded for Reliance Industries",
+      "type": "success",
+      "read": true,
+      "createdAt": "2026-06-07T17:00:00Z",
+      "link": "/compliance"
+    },
+    {
+      "id": "NOT-0020",
+      "title": "ITR Deadline",
+      "message": "Client meeting scheduled for tomorrow at 11 AM",
+      "type": "success",
+      "read": false,
+      "createdAt": "2025-08-15T15:00:00Z",
+      "link": "/invoices"
+    },
+    {
+      "id": "NOT-0021",
+      "title": "GST Due Reminder",
+      "message": "Audit report uploaded for Reliance Industries",
+      "type": "success",
+      "read": false,
+      "createdAt": "2025-11-16T13:00:00Z",
+      "link": "/invoices"
+    },
+    {
+      "id": "NOT-0022",
+      "title": "ITR Deadline",
+      "message": "ITR filing deadline approaching for 5 clients",
+      "type": "info",
+      "read": false,
+      "createdAt": "2026-07-01T19:00:00Z",
+      "link": "/invoices"
+    },
+    {
+      "id": "NOT-0023",
+      "title": "ITR Deadline",
+      "message": "Payment of ₹45,000 received from TCS",
+      "type": "warning",
+      "read": true,
+      "createdAt": "2025-11-09T09:00:00Z",
+      "link": "/tasks"
+    },
+    {
+      "id": "NOT-0024",
+      "title": "New Task Assigned",
+      "message": "New compliance task assigned to you",
+      "type": "warning",
+      "read": false,
+      "createdAt": "2025-10-30T19:00:00Z",
+      "link": "/clients"
+    },
+    {
+      "id": "NOT-0025",
+      "title": "Payment Received",
+      "message": "Audit report uploaded for Reliance Industries",
+      "type": "warning",
+      "read": true,
+      "createdAt": "2025-09-10T16:00:00Z",
+      "link": "/tasks"
+    },
+    {
+      "id": "NOT-0026",
+      "title": "Payment Received",
+      "message": "Audit report uploaded for Reliance Industries",
+      "type": "error",
+      "read": true,
+      "createdAt": "2025-09-26T15:00:00Z",
+      "link": "/clients"
+    },
+    {
+      "id": "NOT-0027",
+      "title": "Payment Received",
+      "message": "Audit report uploaded for Reliance Industries",
+      "type": "error",
+      "read": true,
+      "createdAt": "2025-07-13T13:00:00Z",
+      "link": "/tasks"
+    },
+    {
+      "id": "NOT-0028",
+      "title": "GST Due Reminder",
+      "message": "Payment of ₹45,000 received from TCS",
+      "type": "warning",
+      "read": true,
+      "createdAt": "2026-06-10T10:00:00Z",
+      "link": "/compliance"
+    },
+    {
+      "id": "NOT-0029",
+      "title": "Payment Received",
+      "message": "Payment of ₹45,000 received from TCS",
+      "type": "warning",
+      "read": true,
+      "createdAt": "2025-10-11T13:00:00Z",
+      "link": "/tasks"
+    },
+    {
+      "id": "NOT-0030",
+      "title": "ITR Deadline",
+      "message": "Client meeting scheduled for tomorrow at 11 AM",
+      "type": "success",
+      "read": true,
+      "createdAt": "2025-11-10T16:00:00Z",
+      "link": "/compliance"
+    }
+  ],
+  "total": 30
+}

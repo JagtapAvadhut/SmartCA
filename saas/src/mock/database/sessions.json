@@ -1,0 +1,55 @@
+{
+  "data": [
+    {
+      "id": "SES-0001",
+      "userId": "USR-0001",
+      "token": "session-token-1",
+      "device": "Firefox on Linux",
+      "ip": "192.168.1.100",
+      "createdAt": "2026-07-06T15:23:44.636Z",
+      "expiresAt": "2026-07-07T15:23:44.636Z",
+      "active": true
+    },
+    {
+      "id": "SES-0002",
+      "userId": "USR-0002",
+      "token": "session-token-2",
+      "device": "Chrome on Windows",
+      "ip": "192.168.1.101",
+      "createdAt": "2026-07-06T15:23:44.636Z",
+      "expiresAt": "2026-07-07T15:23:44.636Z",
+      "active": false
+    },
+    {
+      "id": "SES-0003",
+      "userId": "USR-0003",
+      "token": "session-token-3",
+      "device": "Safari on macOS",
+      "ip": "192.168.1.102",
+      "createdAt": "2026-07-06T15:23:44.636Z",
+      "expiresAt": "2026-07-07T15:23:44.636Z",
+      "active": false
+    },
+    {
+      "id": "SES-0004",
+      "userId": "USR-0004",
+      "token": "session-token-4",
+      "device": "Edge on Windows",
+      "ip": "192.168.1.103",
+      "createdAt": "2026-07-06T15:23:44.636Z",
+      "expiresAt": "2026-07-07T15:23:44.636Z",
+      "active": false
+    },
+    {
+      "id": "SES-0005",
+      "userId": "USR-0005",
+      "token": "session-token-5",
+      "device": "Firefox on Linux",
+      "ip": "192.168.1.104",
+      "createdAt": "2026-07-06T15:23:44.636Z",
+      "expiresAt": "2026-07-07T15:23:44.636Z",
+      "active": false
+    }
+  ],
+  "total": 5
+}

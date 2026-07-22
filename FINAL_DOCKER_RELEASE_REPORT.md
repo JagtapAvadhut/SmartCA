@@ -143,16 +143,17 @@ API boot: `provider=gemini`, `model=gemini-flash-latest`, `hasApiKey=true`, `eff
 ## GitHub Verification
 
 ```
+ba85f7d docs(release): stamp release and report SHAs in FINAL_DOCKER_RELEASE_REPORT
 23ff76b docs(release): add FINAL_DOCKER_RELEASE_REPORT for Docker GA
 fe1e29c fix(ai): finalize Docker runtime and AI stability improvements
 035dcb5 docs(release): add FINAL_RELEASE_COMMIT_REPORT for v1.0.1
 9bdfa35 perf: finalize production optimization pass
-036383b docs(release): finalize FINAL_PUSH_REPORT for v1.0.0
 ```
 
 Repository: https://github.com/JagtapAvadhut/SmartCA  
 Release commit: https://github.com/JagtapAvadhut/SmartCA/commit/fe1e29c4666723aa772a04568679c49029ff6d16  
-Report commit: https://github.com/JagtapAvadhut/SmartCA/commit/23ff76b2714f9ce7373416792dd6ac34bbdecf3f
+Report commit: https://github.com/JagtapAvadhut/SmartCA/commit/23ff76b2714f9ce7373416792dd6ac34bbdecf3f  
+`origin/main` tip: https://github.com/JagtapAvadhut/SmartCA/commit/ba85f7d
 
 ---
 

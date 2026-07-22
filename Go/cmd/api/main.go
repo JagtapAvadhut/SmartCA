@@ -92,8 +92,8 @@ func main() {
 			os.Exit(1)
 		}
 	} else {
-		// Get current data as snapshot
-		snapshot = store.Snapshot()
+		// Skip full-table Snapshot on warm start — DemoReset loads embedded seed when nil.
+		snapshot = nil
 	}
 
 	if err := seed.ValidateIntegrity(store); err != nil {

@@ -451,22 +451,15 @@ func (s *Store) nextID(collection string) string {
 	if collection == "invoices" || collection == "payments" {
 		width = 5
 	}
-	rows, err := s.q().Query(`SELECT id FROM ` + table)
-	if err != nil {
-		return prefix + strings.ToUpper(strconv.FormatInt(time.Now().UnixNano(), 36))
-	}
-	defer rows.Close()
+	// Zero-padded fixed-width IDs sort lexicographically; take the latest match.
+	var id string
+	err = s.q().QueryRow(
+		`SELECT id FROM `+table+` WHERE id LIKE $1 ORDER BY id DESC LIMIT 1`,
+		prefix+"%",
+	).Scan(&id)
 	maxN := 0
-	for rows.Next() {
-		var id string
-		if err := rows.Scan(&id); err != nil {
-			continue
-		}
-		if !strings.HasPrefix(id, prefix) {
-			continue
-		}
-		n, err := strconv.Atoi(strings.TrimPrefix(id, prefix))
-		if err == nil && n > maxN {
+	if err == nil && strings.HasPrefix(id, prefix) {
+		if n, parseErr := strconv.Atoi(strings.TrimPrefix(id, prefix)); parseErr == nil {
 			maxN = n
 		}
 	}

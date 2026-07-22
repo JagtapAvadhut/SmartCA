@@ -36,11 +36,8 @@ func (s *PaymentService) assertValid(st repository.Store, data models.Record, ex
 	if ref == "" {
 		return nil
 	}
-	for _, p := range st.GetAll(ColPayments, true) {
+	for _, p := range st.ListByJSONField(ColPayments, "invoiceId", invoiceID, true) {
 		if excludeID != "" && p.ID() == excludeID {
-			continue
-		}
-		if p.GetString("invoiceId") != invoiceID {
 			continue
 		}
 		if !strings.EqualFold(p.GetString("status"), "completed") {

@@ -26,6 +26,19 @@ type NotificationExtraHandler struct {
 
 func (h *NotificationExtraHandler) MarkAllRead(w http.ResponseWriter, r *http.Request) {
 	var updated int
+	// Fast path: single SQL update when using PostgreSQL store.
+	type bulkNotifier interface {
+		MarkAllNotificationsRead() (int, error)
+	}
+	if bn, ok := h.Store.(bulkNotifier); ok {
+		n, err := bn.MarkAllNotificationsRead()
+		if err != nil {
+			writeErr(w, r, err)
+			return
+		}
+		apiresponse.OK(w, rid(r), map[string]any{"updated": n})
+		return
+	}
 	err := h.Store.WithTx(func(st repository.Store) error {
 		for _, n := range st.GetAll(services.ColNotifications, false) {
 			if n.GetBool("read") {

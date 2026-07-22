@@ -28,6 +28,11 @@ type Store interface {
 	Count(collection string, includeArchived bool) int
 	GetAll(collection string, includeArchived bool) []models.Record
 	List(collection string, q models.Query) models.PageResult
+	// ListByJSONField returns rows whose JSON field equals value (uses indexed
+	// generated columns when available). Same includeArchived semantics as GetAll.
+	ListByJSONField(collection, jsonField, value string, includeArchived bool) []models.Record
+	// FindUserByIdentifier matches email|username|loginId case-insensitively.
+	FindUserByIdentifier(identifier string, includeArchived bool) (models.Record, error)
 	Create(collection string, rec models.Record) (models.Record, error)
 	Update(collection, id string, patch models.Record) (models.Record, error)
 	Archive(collection, id string) error

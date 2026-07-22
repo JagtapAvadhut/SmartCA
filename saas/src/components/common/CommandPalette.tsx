@@ -30,7 +30,8 @@ const quickActions = [
 ]
 
 export function CommandPalette() {
-  const { commandPaletteOpen, setCommandPaletteOpen } = useAppStore()
+  const commandPaletteOpen = useAppStore((s) => s.commandPaletteOpen)
+  const setCommandPaletteOpen = useAppStore((s) => s.setCommandPaletteOpen)
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResult[]>([])
   const [loading, setLoading] = useState(false)

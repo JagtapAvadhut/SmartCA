@@ -80,7 +80,10 @@ export default function SettingsPage() {
   const [params, setParams] = useSearchParams()
   const [activeTab, setActiveTab] = useState(params.get('tab') || 'organization')
   const { user, permissions, updateUser } = useAuth()
-  const { mode, setMode, language, setLanguage } = useThemeStore()
+  const mode = useThemeStore((s) => s.mode)
+  const setMode = useThemeStore((s) => s.setMode)
+  const language = useThemeStore((s) => s.language)
+  const setLanguage = useThemeStore((s) => s.setLanguage)
   const queryClient = useQueryClient()
 
   useEffect(() => {

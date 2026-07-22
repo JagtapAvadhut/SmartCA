@@ -88,7 +88,7 @@ func Logger(log *slog.Logger) func(http.Handler) http.Handler {
 				"method", r.Method,
 				"path", r.URL.Path,
 				"status", ww.status,
-				"duration", time.Since(start).String(),
+				"duration", time.Since(start),
 				"requestId", RequestIDFrom(r.Context()),
 			)
 		})

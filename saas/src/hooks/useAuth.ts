@@ -3,8 +3,15 @@ import { hasPermission, hasAnyPermission, hasAllPermissions, hasRole } from '@/u
 import type { Permission, UserRole } from '@/types/auth'
 
 export function useAuth() {
-  const { user, token, isAuthenticated, login, logout, updateUser, touchActivity, checkSession, rememberMe } =
-    useAuthStore()
+  const user = useAuthStore((s) => s.user)
+  const token = useAuthStore((s) => s.token)
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+  const login = useAuthStore((s) => s.login)
+  const logout = useAuthStore((s) => s.logout)
+  const updateUser = useAuthStore((s) => s.updateUser)
+  const touchActivity = useAuthStore((s) => s.touchActivity)
+  const checkSession = useAuthStore((s) => s.checkSession)
+  const rememberMe = useAuthStore((s) => s.rememberMe)
 
   return {
     user,

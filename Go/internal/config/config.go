@@ -90,7 +90,7 @@ func Load() (Config, error) {
 		DBName:            getenv("DB_NAME", "smartca"),
 		DBSSLMode:         getenv("DB_SSLMODE", "disable"),
 		DBMaxOpenConns:    getenvInt("DB_MAX_OPEN_CONNS", 25),
-		DBMaxIdleConns:    getenvInt("DB_MAX_IDLE_CONNS", 5),
+		DBMaxIdleConns:    getenvInt("DB_MAX_IDLE_CONNS", 10),
 		DBConnMaxLifetime: getenvDuration("DB_CONN_MAX_LIFETIME", 5*time.Minute),
 		AIProvider:        strings.ToLower(getenv("AI_PROVIDER", "gemini")),
 		GeminiAPIKey:      getenv("GEMINI_API_KEY", ""),

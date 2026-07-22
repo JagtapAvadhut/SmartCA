@@ -13,7 +13,8 @@ import { usePermission } from '@/hooks/useAuth'
 import { NavLink } from 'react-router'
 
 function MobileSidebar() {
-  const { sidebarMobileOpen, setSidebarMobileOpen } = useAppStore()
+  const sidebarMobileOpen = useAppStore((s) => s.sidebarMobileOpen)
+  const setSidebarMobileOpen = useAppStore((s) => s.setSidebarMobileOpen)
   const { permissions } = usePermission()
   const navigation = getFilteredNavigation(permissions)
 
@@ -71,7 +72,7 @@ function MobileSidebar() {
 }
 
 export function AppLayout() {
-  const { sidebarCollapsed } = useAppStore()
+  const sidebarCollapsed = useAppStore((s) => s.sidebarCollapsed)
   const isMobile = useIsMobile()
   useSessionTimeout()
 

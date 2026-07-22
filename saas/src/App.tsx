@@ -10,7 +10,12 @@ import { applyBrandingFromSettings } from '@/utils/branding'
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries: { staleTime: 30_000, retry: 1, refetchOnWindowFocus: false },
+    queries: {
+      staleTime: 30_000,
+      gcTime: 15 * 60_000,
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
   },
 })
 
@@ -22,6 +27,7 @@ function AppProviders({ children }: { children: React.ReactNode }) {
     initTheme()
     initNotifications()
     applyBrandingFromSettings()
+    // Lazy-loaded QA surface (separate chunk); required by npm run qa:business against Docker.
     void import('@/qa/expose').then((m) => m.exposeQaApi())
   }, [initTheme, initNotifications])
 

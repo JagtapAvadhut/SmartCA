@@ -223,6 +223,37 @@ func (s *Store) GetAll(collection string, includeArchived bool) []models.Record 
 	return out
 }
 
+// ListByJSONField filters GetAll by an exact JSON string field match.
+func (s *Store) ListByJSONField(collection, jsonField, value string, includeArchived bool) []models.Record {
+	if value == "" || jsonField == "" {
+		return nil
+	}
+	all := s.GetAll(collection, includeArchived)
+	out := make([]models.Record, 0)
+	for _, r := range all {
+		if r.GetString(jsonField) == value {
+			out = append(out, r)
+		}
+	}
+	return out
+}
+
+// FindUserByIdentifier matches email|username|loginId case-insensitively.
+func (s *Store) FindUserByIdentifier(identifier string, includeArchived bool) (models.Record, error) {
+	id := strings.ToLower(strings.TrimSpace(identifier))
+	if id == "" {
+		return nil, apperrors.NotFound("user not found")
+	}
+	for _, u := range s.GetAll("users", includeArchived) {
+		if strings.EqualFold(u.GetString("email"), id) ||
+			strings.EqualFold(u.GetString("username"), id) ||
+			strings.EqualFold(u.GetString("loginId"), id) {
+			return u, nil
+		}
+	}
+	return nil, apperrors.NotFound("user not found")
+}
+
 // List filters, searches, sorts, and paginates. Returns cloned records.
 func (s *Store) List(collection string, q models.Query) models.PageResult {
 	s.lockRead()

@@ -163,14 +163,7 @@ func (s *InvoiceService) Delete(id string) error {
 		if err != nil {
 			return err
 		}
-		allPay := st.GetAll(ColPayments, true)
-		for _, p := range allPay {
-			if p.GetString("invoiceId") == id {
-				if err := st.PermanentDelete(ColPayments, p.ID()); err != nil {
-					return err
-				}
-			}
-		}
+		// PermanentDelete cascades payments + invoice_items via indexed FK columns.
 		if err := st.PermanentDelete(ColInvoices, id); err != nil {
 			return err
 		}
@@ -229,11 +222,8 @@ func syncInvoiceFromPayments(st repository.Store, invoiceID string) (models.Reco
 		return nil, err
 	}
 	var paid money.Paise
-	for _, p := range st.GetAll(ColPayments, true) {
+	for _, p := range st.ListByJSONField(ColPayments, "invoiceId", invoiceID, true) {
 		if p.GetBool("archived") {
-			continue
-		}
-		if p.GetString("invoiceId") != invoiceID {
 			continue
 		}
 		if !strings.EqualFold(p.GetString("status"), "completed") {
@@ -259,10 +249,7 @@ func recalcClientFinancials(st repository.Store, clientID string) error {
 		return err
 	}
 	var revenue, outstanding money.Paise
-	for _, inv := range st.GetAll(ColInvoices, false) {
-		if inv.GetString("clientId") != clientID {
-			continue
-		}
+	for _, inv := range st.ListByJSONField(ColInvoices, "clientId", clientID, false) {
 		status := inv.GetString("status")
 		total := money.FromRupees(inv.GetFloat("total"))
 		paid := money.FromRupees(inv.GetFloat("paidAmount"))
@@ -287,11 +274,8 @@ func getInvoiceRemainingBalance(st repository.Store, invoiceID, excludePaymentID
 		return 0
 	}
 	var paid money.Paise
-	for _, p := range st.GetAll(ColPayments, true) {
+	for _, p := range st.ListByJSONField(ColPayments, "invoiceId", invoiceID, true) {
 		if p.GetBool("archived") {
-			continue
-		}
-		if p.GetString("invoiceId") != invoiceID {
 			continue
 		}
 		if !strings.EqualFold(p.GetString("status"), "completed") {

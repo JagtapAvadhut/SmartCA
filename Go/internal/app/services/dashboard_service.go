@@ -3,6 +3,7 @@ package services
 import (
 	"math"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
@@ -20,18 +21,33 @@ func NewDashboardService(store repository.Store) *DashboardService {
 }
 
 func (s *DashboardService) Get() map[string]any {
-	clients := s.store.GetAll(ColClients, false)
-	companies := s.store.GetAll(ColCompanies, false)
-	invoices := s.store.GetAll(ColInvoices, false)
-	payments := s.store.GetAll(ColPayments, false)
-	tasks := s.store.GetAll(ColTasks, false)
-	compliance := s.store.GetAll(ColCompliance, false)
-	gst := s.store.GetAll(ColGST, false)
-	itr := s.store.GetAll(ColITR, false)
-	employees := s.store.GetAll(ColEmployees, false)
-	activities := s.store.List(ColActivities, models.Query{SortBy: "timestamp", SortDir: "desc", PageSize: 50})
-	notifications := s.store.GetAll(ColNotifications, false)
-	calendar := s.store.GetAll(ColCalendar, false)
+	companyCount := s.store.Count(ColCompanies, false)
+
+	var activities models.PageResult
+	var actWG sync.WaitGroup
+	actWG.Add(1)
+	go func() {
+		defer actWG.Done()
+		activities = s.store.List(ColActivities, models.Query{SortBy: "timestamp", SortDir: "desc", PageSize: 50})
+	}()
+
+	loaded := parallelGetAll(s.store, false,
+		ColClients, ColInvoices, ColPayments, ColTasks,
+		ColCompliance, ColGST, ColITR, ColEmployees,
+		ColNotifications, ColCalendar,
+	)
+	actWG.Wait()
+
+	clients := loaded[0]
+	invoices := loaded[1]
+	payments := loaded[2]
+	tasks := loaded[3]
+	compliance := loaded[4]
+	gst := loaded[5]
+	itr := loaded[6]
+	employees := loaded[7]
+	notifications := loaded[8]
+	calendar := loaded[9]
 
 	now := time.Now()
 	thisMonth := now.Format("2006-01")
@@ -234,7 +250,7 @@ func (s *DashboardService) Get() map[string]any {
 			"outstanding":       kpi(totalOutstanding.Rupees(), outTrend.change, outTrend.trend),
 			"invoices":          kpi(float64(len(invoices)), pctChange(float64(len(invoices)), math.Max(float64(len(invoices)-5), 1)).change, "up"),
 			"clients":           kpi(float64(activeClients), pctChange(float64(activeClients), math.Max(float64(activeClients-2), 1)).change, "up"),
-			"companies":         kpi(float64(len(companies)), 3.2, "up"),
+			"companies":         kpi(float64(companyCount), 3.2, "up"),
 			"pendingCompliance": kpi(float64(pendingCompliance), pctChange(float64(pendingCompliance), float64(pendingCompliance+2)).change, "down"),
 			"upcomingDueDates":  kpi(float64(upcomingDue), 0, "neutral"),
 			"employees":         kpi(float64(activeEmployees), 0, "neutral"),

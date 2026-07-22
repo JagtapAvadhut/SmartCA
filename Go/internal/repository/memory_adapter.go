@@ -36,6 +36,12 @@ func (a *memoryAdapter) Count(c string, includeArchived bool) int {
 func (a *memoryAdapter) GetAll(c string, includeArchived bool) []models.Record {
 	return a.inner.GetAll(c, includeArchived)
 }
+func (a *memoryAdapter) ListByJSONField(c, jsonField, value string, includeArchived bool) []models.Record {
+	return a.inner.ListByJSONField(c, jsonField, value, includeArchived)
+}
+func (a *memoryAdapter) FindUserByIdentifier(identifier string, includeArchived bool) (models.Record, error) {
+	return a.inner.FindUserByIdentifier(identifier, includeArchived)
+}
 func (a *memoryAdapter) List(c string, q models.Query) models.PageResult {
 	return a.inner.List(c, q)
 }

@@ -10,7 +10,8 @@ FROM golang:1.26.5-bookworm AS builder
 WORKDIR /src
 
 COPY go.mod go.sum ./
-RUN go mod download
+RUN --mount=type=cache,target=/go/pkg/mod \
+    go mod download
 
 COPY cmd/ ./cmd/
 COPY internal/ ./internal/
@@ -20,7 +21,9 @@ COPY pkg/ ./pkg/
 ENV CGO_ENABLED=0 \
     GOOS=linux
 
-RUN go build -trimpath -ldflags="-s -w" -o /out/smartca-api ./cmd/api
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    go build -trimpath -ldflags="-s -w" -o /out/smartca-api ./cmd/api
 
 # ---------- runtime ----------
 # Distroless static + nonroot: no shell, no package manager. Healthcheck uses the binary flag.
@@ -38,7 +41,8 @@ ENV APP_ENV=production \
     LOG_LEVEL=info \
     SESSION_TTL=30m \
     DEMO_RESET_ENABLED=true \
-    DB_SSLMODE=disable
+    DB_SSLMODE=disable \
+    DB_MAX_IDLE_CONNS=10
 
 EXPOSE 8080
 

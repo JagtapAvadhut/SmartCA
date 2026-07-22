@@ -19,14 +19,16 @@ func NewReportService(store repository.Store) *ReportService {
 }
 
 func (s *ReportService) Summary() map[string]any {
-	invoices := s.store.GetAll(ColInvoices, false)
-	payments := s.store.GetAll(ColPayments, false)
-	clients := s.store.GetAll(ColClients, false)
-	companies := s.store.GetAll(ColCompanies, false)
-	gst := s.store.GetAll(ColGST, false)
-	itr := s.store.GetAll(ColITR, false)
-	tasks := s.store.GetAll(ColTasks, false)
-	employees := s.store.GetAll(ColEmployees, false)
+	loaded := parallelGetAll(s.store, false,
+		ColInvoices, ColClients, ColCompanies, ColGST, ColITR, ColTasks, ColEmployees,
+	)
+	invoices := loaded[0]
+	clients := loaded[1]
+	companies := loaded[2]
+	gst := loaded[3]
+	itr := loaded[4]
+	tasks := loaded[5]
+	employees := loaded[6]
 
 	months := last12MonthLabels()
 	monthIndex := map[string]int{}
@@ -55,7 +57,6 @@ func (s *ReportService) Summary() map[string]any {
 		row["expenses"] = exp
 		row["profit"] = rev - exp
 	}
-	_ = payments
 
 	gstFiled := make([]map[string]any, len(months))
 	itrFiled := make([]map[string]any, len(months))

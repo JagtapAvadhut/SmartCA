@@ -9,7 +9,8 @@ import { cn } from '@/utils'
 import { APP_NAME } from '@/config/env'
 
 export function Sidebar() {
-  const { sidebarCollapsed, toggleSidebar } = useAppStore()
+  const sidebarCollapsed = useAppStore((s) => s.sidebarCollapsed)
+  const toggleSidebar = useAppStore((s) => s.toggleSidebar)
   const { permissions } = usePermission()
   const location = useLocation()
   const navigate = useNavigate()

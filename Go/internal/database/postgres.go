@@ -28,7 +28,7 @@ func Connect(connStr string, maxOpenConns, maxIdleConns int, connMaxLifetimeMinu
 	db.SetMaxOpenConns(maxOpenConns)
 	db.SetMaxIdleConns(maxIdleConns)
 	db.SetConnMaxLifetime(time.Duration(connMaxLifetimeMinutes) * time.Minute)
-	db.SetConnMaxIdleTime(2 * time.Minute)
+	db.SetConnMaxIdleTime(5 * time.Minute)
 
 	if err := db.Ping(); err != nil {
 		db.Close()

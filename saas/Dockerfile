@@ -1,8 +1,6 @@
 # Smart CA React frontend — multi-stage production image
 # Builder: Node matching local verification (Node 22). Runtime: nginx unprivileged on :8080.
 # Build-time VITE_API_BASE_URL=/api/v1 → same-origin requests; nginx proxies /api/ to Go service "api".
-#
-# Docker build was NOT executed in the authoring environment (Docker unavailable).
 
 # ---------- builder ----------
 FROM node:22.20.0-bookworm-slim AS builder
@@ -10,7 +8,8 @@ FROM node:22.20.0-bookworm-slim AS builder
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci
 
 COPY index.html ./
 COPY public/ ./public/

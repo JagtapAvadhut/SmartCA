@@ -35,17 +35,11 @@ func (b *ContextBuilder) ClientBrief(clientID string) string {
 		return ""
 	}
 	invCount, payCount, outstanding := 0, 0, 0.0
-	for _, inv := range b.Store.GetAll(services.ColInvoices, false) {
-		if inv.GetString("clientId") == clientID {
-			invCount++
-			outstanding += inv.GetFloat("remainingAmount")
-		}
+	for _, inv := range b.Store.ListByJSONField(services.ColInvoices, "clientId", clientID, false) {
+		invCount++
+		outstanding += inv.GetFloat("remainingAmount")
 	}
-	for _, p := range b.Store.GetAll(services.ColPayments, false) {
-		if p.GetString("clientId") == clientID {
-			payCount++
-		}
-	}
+	payCount = len(b.Store.ListByJSONField(services.ColPayments, "clientId", clientID, false))
 	payload := map[string]any{
 		"id": c.ID(), "name": c.GetString("name"), "type": c.GetString("type"),
 		"status": c.GetString("status"), "city": c.GetString("city"), "state": c.GetString("state"),

@@ -42,17 +42,8 @@ func (s *AuthService) Login(identifier, password string, rememberMe bool, device
 		ip = "127.0.0.1"
 	}
 
-	users := s.store.GetAll(ColUsers, true)
-	var user models.Record
-	for _, u := range users {
-		if strings.EqualFold(u.GetString("email"), id) ||
-			strings.EqualFold(u.GetString("username"), id) ||
-			strings.EqualFold(u.GetString("loginId"), id) {
-			user = u
-			break
-		}
-	}
-	if user == nil {
+	user, err := s.store.FindUserByIdentifier(id, true)
+	if err != nil || user == nil {
 		return nil, apperrors.Unauthorized("Invalid email, username, or login ID")
 	}
 	if !strings.EqualFold(user.GetString("status"), "active") {
@@ -152,11 +143,8 @@ func (s *AuthService) ForgotPassword(email string) (map[string]string, error) {
 		return nil, apperrors.Validation("email is required")
 	}
 	found := false
-	for _, u := range s.store.GetAll(ColUsers, false) {
-		if strings.EqualFold(u.GetString("email"), email) {
-			found = true
-			break
-		}
+	if u, err := s.store.FindUserByIdentifier(email, false); err == nil && u != nil {
+		found = true
 	}
 	if !found {
 		return nil, apperrors.NotFound("No account found with this email address")
@@ -197,8 +185,5 @@ func (s *AuthService) ChangePassword(userID, currentPassword, newPassword string
 }
 
 func sanitizeUser(user models.Record) models.Record {
-	out := user.Clone()
-	delete(out, "password")
-	delete(out, "passwordHash")
-	return out
+	return stripSecrets(user)
 }

@@ -184,7 +184,7 @@ export function DataTable<T>({
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     enableRowSelection: !!enableRowSelection,
-    columnResizeMode: 'onChange',
+    columnResizeMode: 'onEnd',
     enableColumnResizing: true,
     defaultColumn: {
       minSize: 80,

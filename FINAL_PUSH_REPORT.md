@@ -15,9 +15,9 @@
 | Latest Commit (short) | `af08242` |
 | Message | `fix(release): finalize SmartCA production release` |
 | Remote Tracking | `origin/main` (up to date) |
-| Git Status | Clean after push and tag |
-| Push Result | SUCCESS — `d7e48d5..af08242  main -> main` |
-| Tag Result | SUCCESS — `v1.0.0` annotated tag pushed (`af08242`) |
+| Git Status | Clean |
+| Push Result | SUCCESS — `d7e48d5..af08242  main -> main` (docs follow-ups also on `main`) |
+| Tag Result | SUCCESS — annotated `v1.0.0` → `af08242` |
 | Final GitHub Commit URL | https://github.com/JagtapAvadhut/SmartCA/commit/af0824254458c209a72ee39eee56f728bd0c9848 |
 | Release Tag URL | https://github.com/JagtapAvadhut/SmartCA/releases/tag/v1.0.0 |
 
@@ -91,8 +91,8 @@
 | `git push origin main` | SUCCESS |
 | `git tag -a v1.0.0` | SUCCESS |
 | `git push origin v1.0.0` | SUCCESS |
-| `git log origin/main --oneline -5` | `af08242` … `e78c3f0` (latest on remote) |
-| HEAD == `origin/main` | YES |
+| `git log origin/main --oneline -5` | Includes `af08242 fix(release): finalize SmartCA production release` |
+| Tag target | `v1.0.0^{}` = `af0824254458c209a72ee39eee56f728bd0c9848` |
 
 ---
 

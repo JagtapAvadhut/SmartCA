@@ -1,0 +1,3 @@
+# Go sources must stay LF so `gofmt -l .` is clean on Windows checkouts.
+*.go text eol=lf
+.go-version text eol=lf

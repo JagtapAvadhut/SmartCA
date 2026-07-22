@@ -53,7 +53,7 @@ func (p *Provider) Generate(_ context.Context, req Request) (*Response, error) {
 	if last == "" {
 		return nil, fmt.Errorf("mock: empty prompt")
 	}
-	reply := fmt.Sprintf("**(Mock AI)** Smart CA received your request.\n\n> %s\n\nConfigure `GEMINI_API_KEY` in `Go/.env` for live Gemini responses.", truncate(last, 280))
+	reply := fmt.Sprintf("**(Mock AI)** SmartCA received your request.\n\n> %s\n\nConfigure a live provider under **AI → Settings** (Gemini, OpenAI, or Ollama).", truncate(last, 280))
 	return &Response{
 		Text:    reply,
 		Model:   "mock",

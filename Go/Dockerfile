@@ -42,7 +42,8 @@ ENV APP_ENV=production \
     SESSION_TTL=30m \
     DEMO_RESET_ENABLED=true \
     DB_SSLMODE=disable \
-    DB_MAX_IDLE_CONNS=10
+    DB_MAX_IDLE_CONNS=10 \
+    AI_PROVIDER=mock
 
 EXPOSE 8080
 

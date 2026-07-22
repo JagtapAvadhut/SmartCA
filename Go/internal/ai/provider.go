@@ -36,8 +36,27 @@ type GenerateResponse struct {
 	RawFinish string
 }
 
-// Provider abstracts LLM backends (Gemini, OpenAI, Claude, Azure, Ollama, Mock).
+// StreamChunk is one incremental piece of a streamed reply.
+type StreamChunk struct {
+	Delta string
+	Done  bool
+	Model string
+	Usage Usage
+}
+
+// Provider abstracts LLM backends (Gemini, OpenAI, Ollama, Mock, …).
 type Provider interface {
 	Name() string
 	Generate(ctx context.Context, req GenerateRequest) (*GenerateResponse, error)
+}
+
+// Streamer is an optional capability for token/chunk streaming.
+type Streamer interface {
+	Provider
+	Stream(ctx context.Context, req GenerateRequest, emit func(StreamChunk) error) error
+}
+
+// ConnectionTester verifies credentials / reachability.
+type ConnectionTester interface {
+	TestConnection(ctx context.Context) error
 }

@@ -105,6 +105,18 @@ func (w *statusWriter) WriteHeader(code int) {
 	w.ResponseWriter.WriteHeader(code)
 }
 
+// Flush unlocks SSE / streaming when the underlying writer supports it.
+func (w *statusWriter) Flush() {
+	if f, ok := w.ResponseWriter.(http.Flusher); ok {
+		f.Flush()
+	}
+}
+
+// Unwrap lets http.ResponseController reach the real writer.
+func (w *statusWriter) Unwrap() http.ResponseWriter {
+	return w.ResponseWriter
+}
+
 // CORS allows configured frontend origin(s) with credentials (never *).
 // request Origin must exactly match an allowlisted value (localhost ≠ 127.0.0.1).
 func CORS(allowedOrigins string) func(http.Handler) http.Handler {

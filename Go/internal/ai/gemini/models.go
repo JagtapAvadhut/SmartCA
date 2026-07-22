@@ -1,5 +1,7 @@
 package gemini
 
+import "strings"
+
 // Request/response shapes for generativelanguage.googleapis.com generateContent.
 
 type generateContentRequest struct {
@@ -50,4 +52,34 @@ type apiErrorBody struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 	Status  string `json:"status"`
+	Details []struct {
+		Reason   string            `json:"reason"`
+		Metadata map[string]string `json:"metadata"`
+	} `json:"details"`
+}
+
+func (e *apiErrorBody) DetailReason() string {
+	if e == nil {
+		return ""
+	}
+	for _, d := range e.Details {
+		if strings.TrimSpace(d.Reason) != "" {
+			return d.Reason
+		}
+	}
+	return ""
+}
+
+func (e *apiErrorBody) DisplayMessage() string {
+	if e == nil {
+		return ""
+	}
+	msg := strings.TrimSpace(e.Message)
+	if r := e.DetailReason(); r != "" {
+		if msg == "" {
+			return r
+		}
+		return msg + " [" + r + "]"
+	}
+	return msg
 }

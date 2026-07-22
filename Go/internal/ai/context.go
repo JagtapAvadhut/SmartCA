@@ -2,7 +2,6 @@ package ai
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
 
 	"github.com/JagtapAvadhut/smartca-backend/internal/app/services"
@@ -115,15 +114,35 @@ func (b *ContextBuilder) PracticeSnippet() string {
 	if b.Store == nil {
 		return ""
 	}
-	return fmt.Sprintf(`{"clients":%d,"companies":%d,"invoices":%d,"payments":%d,"employees":%d,"documents":%d,"tasks":%d}`,
-		b.Store.Count(services.ColClients, false),
-		b.Store.Count(services.ColCompanies, false),
-		b.Store.Count(services.ColInvoices, false),
-		b.Store.Count(services.ColPayments, false),
-		b.Store.Count(services.ColEmployees, false),
-		b.Store.Count(services.ColDocuments, false),
-		b.Store.Count(services.ColTasks, false),
-	)
+	payload := map[string]any{
+		"clients":    b.Store.Count(services.ColClients, false),
+		"companies":  b.Store.Count(services.ColCompanies, false),
+		"invoices":   b.Store.Count(services.ColInvoices, false),
+		"payments":   b.Store.Count(services.ColPayments, false),
+		"employees":  b.Store.Count(services.ColEmployees, false),
+		"documents":  b.Store.Count(services.ColDocuments, false),
+		"tasks":      b.Store.Count(services.ColTasks, false),
+		"gst":        b.Store.Count(services.ColGST, false),
+		"tds":        b.Store.Count(services.ColTDS, false),
+		"roc":        b.Store.Count(services.ColROC, false),
+		"itr":        b.Store.Count(services.ColITR, false),
+		"journals":   b.Store.Count(services.ColJournals, false),
+		"compliance": b.Store.Count(services.ColCompliance, false),
+		"dashboard":  jsonRaw(b.DashboardBrief()),
+	}
+	return mustJSON(payload)
+}
+
+func jsonRaw(s string) any {
+	s = strings.TrimSpace(s)
+	if s == "" {
+		return map[string]any{}
+	}
+	var v any
+	if err := json.Unmarshal([]byte(s), &v); err != nil {
+		return s
+	}
+	return v
 }
 
 func sanitizeRecord(rec models.Record, allow []string) map[string]any {

@@ -70,6 +70,9 @@ func NewRouter(d Deps) http.Handler {
 	r.Get("/health/ready", d.Health.Ready)
 	// Keep /version for ops probes; canonical contract is /api/v1/version.
 	r.Get("/version", d.Health.Version)
+	r.Get("/openapi.yaml", handlers.OpenAPIYAML)
+	r.Get("/docs", handlers.SwaggerUI)
+	r.Get("/docs/", handlers.SwaggerUI)
 
 	r.Route("/api/v1", func(api chi.Router) {
 		api.Get("/version", d.Health.Version)
@@ -141,6 +144,11 @@ func NewRouter(d Deps) http.Handler {
 				pr.Route("/ai", func(ar chi.Router) {
 					ar.Use(middleware.RequirePermission(rbac.AIView))
 					ar.Post("/chat", d.AI.Chat)
+					ar.Post("/chat/stream", d.AI.ChatStream)
+					ar.Get("/settings", d.AI.GetSettings)
+					ar.Put("/settings", d.AI.SaveSettings)
+					ar.Delete("/settings", d.AI.RemoveSettings)
+					ar.Post("/settings/test", d.AI.TestSettings)
 					ar.Post("/summarize", d.AI.Summarize)
 					ar.Post("/email", d.AI.Email)
 					ar.Post("/client-summary", d.AI.ClientSummary)

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -36,19 +37,14 @@ func main() {
 	log := newLogger(cfg.LogLevel)
 	slog.SetDefault(log)
 
-	// Connect to PostgreSQL
+	// Connect to PostgreSQL (retry — Compose may restart api while db is briefly unavailable).
 	log.Info("connecting to database",
 		"host", cfg.DBHost,
 		"port", cfg.DBPort,
 		"database", cfg.DBName,
 	)
 
-	db, err := database.Connect(
-		cfg.DBConnectionString(),
-		cfg.DBMaxOpenConns,
-		cfg.DBMaxIdleConns,
-		int(cfg.DBConnMaxLifetime.Minutes()),
-	)
+	db, err := connectWithRetry(log, cfg, 30, 2*time.Second)
 	if err != nil {
 		log.Error("database connection failed", "err", err)
 		os.Exit(1)
@@ -57,10 +53,10 @@ func main() {
 
 	log.Info("database connected successfully")
 
-	// Run migrations
+	// Run migrations (also retried — transient failures after connect are rare but recoverable).
 	migrationsDir := filepath.Join(".", "migrations")
 	log.Info("running database migrations", "dir", migrationsDir)
-	if err := database.Migrate(db, migrationsDir); err != nil {
+	if err := migrateWithRetry(log, db, migrationsDir, 10, 2*time.Second); err != nil {
 		log.Error("migration failed", "err", err)
 		os.Exit(1)
 	}
@@ -107,14 +103,22 @@ func main() {
 	invoiceSvc := services.NewInvoiceService(store)
 	paymentSvc := services.NewPaymentService(store)
 
-	aiProvider, err := ai.NewProviderFromConfig(cfg)
+	aiRuntime, err := ai.NewRuntime(cfg, store)
 	if err != nil {
-		log.Warn("AI provider unavailable; AI routes will error until GEMINI_API_KEY is set", "err", err)
-		aiProvider, _ = ai.NewProviderFromConfig(config.Config{AIProvider: "mock"})
-	} else {
-		log.Info("AI provider ready", "provider", aiProvider.Name(), "model", cfg.GeminiModel)
+		log.Warn("AI runtime init warning", "err", err)
 	}
-	aiSvc := ai.NewService(cfg, store, log, aiProvider)
+	if aiRuntime != nil {
+		pub := aiRuntime.PublicSettings()
+		log.Info("AI provider ready",
+			"provider", aiRuntime.Provider().Name(),
+			"model", pub.Model,
+			"hasApiKey", pub.HasAPIKey,
+			"envAIProvider", cfg.AIProvider,
+			"envGeminiKeyConfigured", strings.TrimSpace(cfg.GeminiAPIKey) != "",
+			"effectiveEnvProvider", ai.EffectiveEnvProvider(cfg),
+		)
+	}
+	aiSvc := ai.NewServiceWithRuntime(cfg, store, log, aiRuntime)
 
 	deps := routes.Deps{
 		Cfg:          cfg,
@@ -224,4 +228,40 @@ func newLogger(level string) *slog.Logger {
 		lv = slog.LevelInfo
 	}
 	return slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: lv}))
+}
+
+func connectWithRetry(log *slog.Logger, cfg config.Config, attempts int, delay time.Duration) (*sql.DB, error) {
+	var last error
+	for i := 1; i <= attempts; i++ {
+		db, err := database.Connect(
+			cfg.DBConnectionString(),
+			cfg.DBMaxOpenConns,
+			cfg.DBMaxIdleConns,
+			int(cfg.DBConnMaxLifetime.Minutes()),
+		)
+		if err == nil {
+			if i > 1 {
+				log.Info("database connected after retry", "attempt", i)
+			}
+			return db, nil
+		}
+		last = err
+		log.Warn("database not ready; retrying", "attempt", i, "of", attempts, "err", err)
+		time.Sleep(delay)
+	}
+	return nil, last
+}
+
+func migrateWithRetry(log *slog.Logger, db *sql.DB, dir string, attempts int, delay time.Duration) error {
+	var last error
+	for i := 1; i <= attempts; i++ {
+		err := database.Migrate(db, dir)
+		if err == nil {
+			return nil
+		}
+		last = err
+		log.Warn("migration not ready; retrying", "attempt", i, "of", attempts, "err", err)
+		time.Sleep(delay)
+	}
+	return last
 }

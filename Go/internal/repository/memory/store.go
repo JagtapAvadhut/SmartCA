@@ -19,6 +19,7 @@ import (
 
 	apperrors "github.com/JagtapAvadhut/smartca-backend/internal/domain/errors"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
+	"github.com/google/uuid"
 )
 
 // Known collection names used by seed and services.
@@ -27,7 +28,7 @@ var Collections = []string{
 	"tasks", "gst", "itr", "tds", "roc", "compliance", "notifications",
 	"activities", "calendar", "users", "roles", "permissions", "organization",
 	"settings", "auditLogs", "loginHistory", "chat", "departments", "branches",
-	"notes", "journals", "sessions",
+	"notes", "journals", "sessions", "aiSettings",
 }
 
 // Default ID prefixes per collection (used when creating without an id).
@@ -297,13 +298,32 @@ func (s *Store) Create(collection string, rec models.Record) (models.Record, err
 	if r == nil {
 		r = models.Record{}
 	}
-	id := r.ID()
-	if id == "" {
-		id = s.nextIDLocked(collection)
-		r.Set("id", id)
+	var id string
+	if collection == "chat" {
+		// Never use sequential CHAT-NNNN counters. Empty → UUID.
+		// Seed may supply explicit legacy ids; API CRUD strips client ids.
+		id = r.ID()
+		if id == "" {
+			id = newChatUniqueID()
+			r.Set("id", id)
+		}
+	} else {
+		id = r.ID()
+		if id == "" {
+			id = s.nextIDLocked(collection)
+			r.Set("id", id)
+		}
 	}
 	if _, exists := s.data[collection][id]; exists {
 		return nil, apperrors.Conflict(fmt.Sprintf("%s %q already exists", collection, id))
+	}
+	now := time.Now().UTC().Format(time.RFC3339)
+	if r.GetString("createdAt") == "" {
+		r.Set("createdAt", now)
+	}
+	r.Set("updatedAt", now)
+	if _, ok := r["archived"]; !ok {
+		r.Set("archived", false)
 	}
 	s.data[collection][id] = r
 	s.order[collection] = append(s.order[collection], id)
@@ -495,6 +515,13 @@ func (s *Store) ClearSessions() {
 	s.lockWrite()
 	defer s.unlockWrite()
 	s.sessions = make(map[string]Session)
+}
+
+func newChatUniqueID() string {
+	if id, err := uuid.NewV7(); err == nil {
+		return id.String()
+	}
+	return uuid.NewString()
 }
 
 func (s *Store) nextIDLocked(collection string) string {

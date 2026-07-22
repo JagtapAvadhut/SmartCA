@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart CA API — OpenAPI</title>
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui.css" />
+    <style>
+      body { margin: 0; background: #fafafa; }
+      .topbar { display: none; }
+      .note {
+        font-family: system-ui, sans-serif;
+        font-size: 13px;
+        color: #334155;
+        max-width: 960px;
+        margin: 12px auto 0;
+        padding: 0 20px;
+      }
+      .note code { background: #e2e8f0; padding: 1px 6px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <p class="note">
+      Smart CA OpenAPI (partial). Live app:
+      <a href="/">http://localhost:8080</a>
+      · Spec file:
+      <a href="/openapi.yaml"><code>/openapi.yaml</code></a>
+      · Requires network once to load Swagger UI assets from unpkg (spec itself is served locally).
+    </p>
+    <div id="swagger-ui"></div>
+    <script src="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui-bundle.js" crossorigin></script>
+    <script>
+      window.ui = SwaggerUIBundle({
+        url: '/openapi.yaml',
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [SwaggerUIBundle.presets.apis],
+        layout: 'BaseLayout',
+      })
+    </script>
+  </body>
+</html>

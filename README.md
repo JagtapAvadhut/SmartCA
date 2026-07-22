@@ -2,7 +2,7 @@
 
 **Practice management for Chartered Accountant firms** — clients, companies, GST/ITR/TDS/ROC compliance, invoicing, payments, documents, accounting, reports, and an AI assistant, in one platform.
 
-React (Vite) frontend + Go REST API + PostgreSQL, with Google Gemini AI wired in server-side only.
+React (Vite) frontend + Go REST API + PostgreSQL, with optional Google Gemini AI (server-side only).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Go](https://img.shields.io/badge/Go-1.26-00ADD8?logo=go&logoColor=white)](./Go/go.mod)
@@ -12,17 +12,62 @@ React (Vite) frontend + Go REST API + PostgreSQL, with Google Gemini AI wired in
 
 ---
 
+## Quick start (Docker only)
+
+**Requirement:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Windows/macOS) or Docker Engine + Compose v2 (Linux).
+
+You do **not** need Go, Node.js, npm, or PostgreSQL installed on the host.
+
+```bash
+git clone https://github.com/JagtapAvadhut/SmartCA.git
+cd SmartCA
+docker compose up --build -d
+```
+
+Open **http://localhost:8080**
+
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | `rajesh.sharma@smartca.in` | `SmartCA@2025` |
+
+That is the complete local setup. Compose starts PostgreSQL, runs migrations, seeds demo data, starts the Go API (`AI_PROVIDER=mock` by default), and serves the React app through nginx. **No `.env` file is required.**
+
+| URL | Purpose |
+|-----|---------|
+| http://localhost:8080 | Application |
+| http://localhost:8080/docs | Swagger UI (OpenAPI) |
+| http://localhost:8080/openapi.yaml | OpenAPI spec |
+| http://localhost:8080/health | Web liveness |
+| http://localhost:8080/health/live | API liveness |
+| http://localhost:8080/health/ready | API readiness (DB) |
+
+```bash
+docker compose ps          # db, api, web should be healthy
+docker compose logs -f
+docker compose down        # stop (keeps database volume)
+docker compose down -v     # wipe DB (re-seeds on next up)
+```
+
+Optional live Gemini (no code changes):
+
+```bash
+cp .env.example .env
+# set AI_PROVIDER=gemini and GEMINI_API_KEY=...
+docker compose up -d --force-recreate api
+```
+
+---
+
 ## Table of Contents
 
+- [Quick start (Docker only)](#quick-start-docker-only)
 - [Overview](#overview)
 - [Architecture](#architecture)
 - [Features](#features)
 - [Technology Stack](#technology-stack)
 - [Folder Structure](#folder-structure)
 - [Screenshots](#screenshots)
-- [Installation](#installation)
-- [Development](#development)
-- [Production (Docker)](#production-docker)
+- [Native development (optional)](#native-development-optional)
 - [Environment Variables](#environment-variables)
 - [Database](#database)
 - [Authentication](#authentication)
@@ -40,6 +85,8 @@ React (Vite) frontend + Go REST API + PostgreSQL, with Google Gemini AI wired in
 Smart CA helps a CA firm run its practice end-to-end: client and company records, statutory compliance (GST, Income Tax/ITR, TDS, ROC), invoicing and payment collection, document management, tasks/notes/calendar, double-entry style accounting reports, role-based user administration, and an AI assistant grounded in the firm's own data.
 
 Business data is owned by the **Go API** and persisted in **PostgreSQL**. The React app never talks to the database or to Gemini directly — every request goes through the Go REST API.
+
+**Docker is the supported way to run Smart CA.** Native Go/Node installs are optional for contributors who want hot reload.
 
 ## Architecture
 
@@ -104,7 +151,7 @@ In native development the browser talks to the Go API directly on `:8080` (no ng
 | Compliance | GST, ITR, TDS, ROC filing trackers with due dates and status |
 | Accounting | Journals, revenue/expense trend, profit & loss inputs |
 | Settings / Users / Roles | Organization profile, branding, notification channels, RBAC administration |
-| AI Assistant | Chat, summarization, email drafting, insights — powered by Gemini via the Go API |
+| AI Assistant | Chat, summarization, email drafting, insights — `AI_PROVIDER=mock` by default (offline); optional Gemini via env |
 | Search / Recycle Bin / Notifications | Cross-cutting UX shared by every module |
 | Theming | Light / Dark / System, responsive layout (desktop, tablet, mobile) |
 
@@ -206,70 +253,33 @@ All screenshots below are real captures of the running application (Go API + Pos
 | **Responsive — Tablet** | ![Responsive Tablet](docs/screenshots/responsive-tablet.png) |
 | **Responsive — Mobile** | ![Responsive Mobile](docs/screenshots/responsive-mobile.png) |
 
-Regenerate them anytime (native dev servers must be running — see [Development](#development)):
+Regenerate them anytime (native dev servers must be running — see [Native development (optional)](#native-development-optional)):
 
 ```bash
 cd saas
 node scripts/capture-screenshots.mjs
 ```
 
-## Installation
+## Native development (optional)
 
-### Prerequisites
+Only needed if you want Vite HMR or `go run` without Docker. **Not required to use Smart CA.**
 
-- **Docker** + Docker Compose v2 — **recommended** (full stack in one command)
-- Optional for native development only:
-  - **Go** 1.24+ (developed on 1.26.5)
-  - **Node.js** 22.x + npm
-  - **PostgreSQL** 14+ (developed on 18)
-
-### Clone
+Prerequisites: Go 1.24+, Node.js 22.x + npm, PostgreSQL 14+.
 
 ```bash
-git clone https://github.com/JagtapAvadhut/SmartCA.git
-cd SmartCA
-```
+# Backend
+cd Go
+cp .env.example .env   # AI_PROVIDER=mock by default
+go run ./cmd/api       # migrations + seed on empty DB
 
-### Quick start (Docker — preferred)
-
-```bash
-cp .env.example .env          # optional; defaults already work (DB user/password/db = smartca)
-docker compose up --build
-```
-
-Open **http://localhost:8080** and sign in with a [demo account](#demo-login).
-
-No local PostgreSQL install and no interactive prompts are required for this path.
-
-## Development
-
-Native hot-reload loop (optional). Prefer [Docker](#production-docker) / the Quick start above unless you need Vite HMR.
-
-```bash
-# 1. Database (non-interactive — set the postgres superuser password in the environment)
-#    App credentials created: user/password/db = smartca / smartca / smartca
-cd Go/scripts
-# Linux/macOS:
-POSTGRES_PASSWORD='your-postgres-superuser-password' ./setup_database.sh
-# Windows PowerShell:
-# $env:POSTGRES_PASSWORD = 'your-postgres-superuser-password'
-# .\check_and_setup.ps1
-
-# 2. Backend
-cd ..
-cp .env.example .env         # defaults match Docker (DB_* = smartca, AI_PROVIDER=mock)
-go run ./cmd/api             # connects to PostgreSQL, runs migrations, seeds if empty
-
-# 3. Frontend (new terminal)
-cd ../saas
+# Frontend (new terminal)
+cd saas
 cp .env.example .env
 npm ci
-npm run dev
+npm run dev            # http://localhost:5173
 ```
 
-Open `http://localhost:5173` (or `http://127.0.0.1:5173`).
-
-### Demo login
+### Additional demo accounts
 
 | Role | Email | Password |
 |------|-------|----------|
@@ -278,73 +288,30 @@ Open `http://localhost:5173` (or `http://127.0.0.1:5173`).
 | Partner | `amit.kumar@smartca.in` | `SmartCA@2025` |
 | CA | `vikram.iyer@smartca.in` | `SmartCA@2025` |
 
-### Tests & QA
+### Tests & QA (maintainers)
 
-With **Docker** already running (`docker compose up --build`), from `saas/`:
-
-```bash
-npm ci
-npm run qa:auth
-npm run qa:business
-npm run qa:browser
-```
-
-Playwright scripts default to `http://127.0.0.1:8080`. For native Vite on `:5173`, set `QA_BASE` / `QA_BASE_URL`.
+With Docker already running (`docker compose up --build -d`):
 
 ```bash
-# Backend
-cd Go
-gofmt -l .                   # must print nothing
-go vet ./...
-go test ./...
-go build ./cmd/api
-
-# Frontend
-cd saas
-npx tsc -b
-npm run lint
-npm run build
+cd saas && npm ci && npm run qa:auth && npm run qa:business && npm run qa:browser
+cd ../Go && gofmt -l . && go vet ./... && go test ./... && go build ./cmd/api
 ```
 
-## Production (Docker)
-
-The full stack — **PostgreSQL → Go API → React (nginx)** — starts with one command:
-
-```bash
-cp .env.example .env    # optional: override DB_PASSWORD / GEMINI_API_KEY
-docker compose up --build
-```
+### Docker stack details
 
 | Service | Image base | Published port | Notes |
-|---------|------------|-----------------|-------|
-| `db` | `postgres:18-alpine` | internal only | Named volume `db-data` → `/var/lib/postgresql` (Postgres 18 layout); `pg_isready` healthcheck |
-| `api` | multi-stage → `distroless/static-debian12:nonroot` | internal only | Waits for `db` to be healthy; runs migrations + seed on boot |
-| `web` | multi-stage → `nginx-unprivileged:1.27.4-alpine` | **8080** | Waits for `api` to be healthy; serves the SPA and proxies `/api/*` |
+|---------|------------|----------------|-------|
+| `db` | `postgres:18-alpine` | internal | Volume `db-data`; `pg_isready` healthcheck |
+| `api` | distroless nonroot | internal | Waits for db; migrations + seed; OpenAPI at `/docs` |
+| `web` | nginx-unprivileged | **8080** | Waits for api; SPA + `/api/*` + `/docs` proxy |
 
-Open **http://localhost:8080**.
+Design: multi-stage builds, non-root, `cap_drop: ALL`, `depends_on: service_healthy` (`db → api → web`), mock AI by default.
 
-```bash
-docker compose ps
-docker compose logs -f
-docker compose down        # stop (keeps the db-data volume)
-docker compose down -v     # stop + wipe the database volume
-```
-
-Design highlights:
-
-- Multi-stage builds; final images contain no build toolchain
-- `api` and `web` run as non-root (`nonroot` / `nginx`), `cap_drop: ALL`, `no-new-privileges`
-- `api` runs `read_only: true` with a `tmpfs` `/tmp`
-- Explicit `smartca-net` bridge network and named `db-data` volume mounted at `/var/lib/postgresql` (Postgres 18+)
-- `depends_on: condition: service_healthy` enforces `db → api → web` startup order
-- All service credentials/AI keys are externalized via `${VAR:-default}` substitution from a root `.env` (never baked into images)
-- Published `:8080` exposes SPA `/health`, API `/health/live` + `/health/ready`, and `/api/*`
-
-> Verify `docker compose up --build` on your machine and open an issue if you hit anything.
+---
 
 ## Environment Variables
 
-Three independent `.env.example` files — copy each to `.env` next to it. **Never commit a real `.env`.**
+**Docker users:** no `.env` file is required. Optional overrides via root `.env` (from `.env.example`). **Never commit a real `.env`.**
 
 ### Root (`/.env.example`) — Docker Compose overrides
 
@@ -355,19 +322,9 @@ Three independent `.env.example` files — copy each to `.env` next to it. **Nev
 | `GEMINI_API_KEY` | _(empty)_ | Required only when `AI_PROVIDER=gemini` |
 | `GEMINI_MODEL` | `gemini-2.5-flash` | Gemini model id |
 
-### Backend (`Go/.env.example`)
+### Backend (`Go/.env.example`) — native only
 
-| Variable | Default | Purpose |
-|----------|---------|---------|
-| `APP_ENV` | `development` | `development` \| `production` |
-| `HTTP_HOST` / `HTTP_PORT` | `0.0.0.0` / `8080` | Listener |
-| `FRONTEND_ORIGIN` | `http://localhost:5173,http://127.0.0.1:5173` | CORS allowlist — never `*` |
-| `LOG_LEVEL` | `info` | `debug` \| `info` \| `warn` \| `error` |
-| `SESSION_TTL` | `30m` | Bearer session TTL (`rememberMe` → 7d) |
-| `DEMO_RESET_ENABLED` | `true` in dev | Gates `POST /api/v1/demo/reset` |
-| `DB_HOST` / `DB_PORT` / `DB_USER` / `DB_PASSWORD` / `DB_NAME` / `DB_SSLMODE` | see file | PostgreSQL connection |
-| `DB_MAX_OPEN_CONNS` / `DB_MAX_IDLE_CONNS` / `DB_CONN_MAX_LIFETIME` | `25` / `5` / `5` | Connection pool tuning |
-| `AI_PROVIDER` / `GEMINI_API_KEY` / `GEMINI_MODEL` / `GEMINI_TIMEOUT` / `GEMINI_MAX_TOKENS` | see file | Server-side only — never sent to the browser |
+See file for `APP_ENV`, `HTTP_*`, `FRONTEND_ORIGIN`, `SESSION_TTL`, `DEMO_RESET_ENABLED`, `DB_*`, and `AI_*`. Default `AI_PROVIDER=mock`.
 
 ### Frontend (`saas/.env.example`) — build-time `VITE_*`
 
@@ -376,16 +333,15 @@ Three independent `.env.example` files — copy each to `.env` next to it. **Nev
 | `VITE_API_BASE_URL` | `http://localhost:8080/api/v1` | `/api/v1` (same-origin; nginx proxies to `api`) |
 | `VITE_APP_NAME` | `Smart CA` | `Smart CA` |
 
-`VITE_*` values are inlined at **build time**. Never put secrets in a `VITE_*` variable — anything prefixed `VITE_` ships to the browser.
+Never put secrets in a `VITE_*` variable.
 
 ## Database
 
-- PostgreSQL 14+, schema versioned via SQL migrations in [`Go/migrations/`](Go/migrations)
-- Applied automatically on API startup and tracked in a `schema_migrations` table
-- Seed data is embedded JSON (`Go/internal/seed/data/*.json`, `go:embed`) and loads automatically into an empty database
-- Entities: users, roles, permissions, clients, companies, employees, invoices, invoice_items, payments, documents, folders, tasks, notes, gst, itr, tds, roc, activities, audit_logs, calendar_events, notifications, settings, auth_sessions
-- Full setup guide: [`docs/database/DATABASE_SETUP.md`](docs/database/DATABASE_SETUP.md)
-- Migration history / rationale: [`docs/database/MIGRATION_GUIDE.md`](docs/database/MIGRATION_GUIDE.md)
+- PostgreSQL 18 in Docker (14+ for native); SQL migrations in [`Go/migrations/`](Go/migrations)
+- **Automatic on API boot:** connect (with retry), run migrations, seed demo data when empty
+- No manual SQL required for Docker users
+- Seed data is embedded JSON (`Go/internal/seed/data/*.json`, `go:embed`)
+- Guides: [`docs/database/DATABASE_SETUP.md`](docs/database/DATABASE_SETUP.md) · [`docs/database/MIGRATION_GUIDE.md`](docs/database/MIGRATION_GUIDE.md)
 
 ## Authentication
 
@@ -401,11 +357,11 @@ Three independent `.env.example` files — copy each to `.env` next to it. **Nev
 
 ## Gemini AI
 
-- All Gemini calls happen **inside the Go API** (`Go/internal/ai/`) — `GEMINI_API_KEY` never reaches the browser
-- Provider abstraction (`AI_PROVIDER=gemini|mock`) lets the app run fully offline with a deterministic mock provider when no key is configured
+- Default: **`AI_PROVIDER=mock`** (offline, no key) in Docker and native config
+- Set `AI_PROVIDER=gemini` + `GEMINI_API_KEY` in root `.env` for live Gemini — no code changes
+- All Gemini calls happen **inside the Go API** — the key never reaches the browser
 - Endpoints under `/api/v1/ai/*`: chat, summarization, email drafting, dashboard insights
 - Get a key: <https://aistudio.google.com/apikey>
-
 ## RBAC
 
 ```mermaid
@@ -452,4 +408,4 @@ Please avoid committing `.env` files, build artifacts, or generated reports — 
 
 ---
 
-Additional documentation: [Architecture](docs/architecture/ARCHITECTURE.md) · [Database](docs/database/DATABASE_SETUP.md) · [OpenAPI](docs/api/openapi.yaml) · [Backend README](Go/README.md) · [Frontend README](saas/README.md) · [Changelog](CHANGELOG.md) · [Historical release reports](docs/reports)
+Additional documentation: [Architecture](docs/architecture/ARCHITECTURE.md) · [Database](docs/database/DATABASE_SETUP.md) · [OpenAPI](docs/api/openapi.yaml) · [Backend README](Go/README.md) · [Frontend README](saas/README.md) · [Changelog](CHANGELOG.md) · [Docker local setup report](DOCKER_LOCAL_SETUP_REPORT.md) · [Historical release reports](docs/reports)

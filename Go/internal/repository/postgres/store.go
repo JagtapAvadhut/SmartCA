@@ -46,7 +46,7 @@ var collectionToTable = map[string]string{
 	"calendar": "calendar_events", "notes": "notes", "organization": "organizations",
 	"compliance": "compliance", "chat": "chat", "departments": "departments",
 	"branches": "branches", "loginHistory": "login_history", "journals": "journals",
-	"sessions": "sessions_data",
+	"sessions": "sessions_data", "aiSettings": "ai_settings",
 }
 
 var knownCollections = []string{
@@ -54,7 +54,7 @@ var knownCollections = []string{
 	"invoices", "invoice_items", "payments", "documents", "folders", "tasks",
 	"activities", "auditLogs", "notifications", "settings", "gst", "itr", "tds", "roc",
 	"calendar", "notes", "organization", "compliance", "chat", "departments",
-	"branches", "loginHistory", "journals", "sessions",
+	"branches", "loginHistory", "journals", "sessions", "aiSettings",
 }
 
 // seedInsertOrder respects FK dependencies (parents before children).
@@ -78,7 +78,7 @@ var idPrefixes = map[string]string{
 	"settings": "SET-", "auditLogs": "AUD-", "loginHistory": "LH-",
 	"chat": "CHAT-", "departments": "DEPT-", "branches": "BR-",
 	"notes": "NOTE-", "journals": "JNL-", "sessions": "SES-",
-	"folders": "FLD-", "invoice_items": "ITI-",
+	"folders": "FLD-", "invoice_items": "ITI-", "aiSettings": "AI-",
 }
 
 func (s *Store) table(collection string) (string, error) {
@@ -174,10 +174,22 @@ func (s *Store) Create(collection string, rec models.Record) (models.Record, err
 	if r == nil {
 		r = models.Record{}
 	}
-	id := r.ID()
-	if id == "" {
-		id = s.nextID(collection)
-		r.Set("id", id)
+	var id string
+	if repository.UsesServerUniqueIDs(collection) {
+		// Chat: never use sequential nextID. Empty id → UUID.
+		// Explicit ids are allowed only for seed/import paths; the CRUD service
+		// strips client-supplied ids on API create so browsers never choose them.
+		id = r.ID()
+		if id == "" {
+			id = repository.NewUniqueID()
+			r.Set("id", id)
+		}
+	} else {
+		id = r.ID()
+		if id == "" {
+			id = s.nextID(collection)
+			r.Set("id", id)
+		}
 	}
 	if s.Exists(collection, id) {
 		return nil, apperrors.Conflict(fmt.Sprintf("%s %q already exists", collection, id))
@@ -200,6 +212,24 @@ func (s *Store) Create(collection string, rec models.Record) (models.Record, err
 	)
 	if err != nil {
 		if pqErr, ok := err.(*pq.Error); ok && pqErr.Code == "23505" {
+			// Extremely rare UUID collision or concurrent insert of same id — retry once for unique-ID collections.
+			if repository.UsesServerUniqueIDs(collection) {
+				id = repository.NewUniqueID()
+				r.Set("id", id)
+				payload, _ = json.Marshal(r)
+				_, err = s.q().Exec(
+					`INSERT INTO `+table+` (id, data, archived, created_at, updated_at) VALUES ($1, $2::jsonb, $3, NOW(), NOW())`,
+					id, payload, isArchived(r),
+				)
+				if err == nil {
+					if collection == "invoices" {
+						if err := s.syncInvoiceItems(id, r); err != nil {
+							return nil, fmt.Errorf("sync invoice items: %w", err)
+						}
+					}
+					return r.Clone(), nil
+				}
+			}
 			return nil, apperrors.Conflict(fmt.Sprintf("%s %q already exists", collection, id))
 		}
 		return nil, fmt.Errorf("insert %s: %w", collection, err)

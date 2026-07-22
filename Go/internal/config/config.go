@@ -92,9 +92,9 @@ func Load() (Config, error) {
 		DBMaxOpenConns:    getenvInt("DB_MAX_OPEN_CONNS", 25),
 		DBMaxIdleConns:    getenvInt("DB_MAX_IDLE_CONNS", 10),
 		DBConnMaxLifetime: getenvDuration("DB_CONN_MAX_LIFETIME", 5*time.Minute),
-		AIProvider:        strings.ToLower(getenv("AI_PROVIDER", "gemini")),
+		AIProvider:        strings.ToLower(getenv("AI_PROVIDER", "mock")),
 		GeminiAPIKey:      getenv("GEMINI_API_KEY", ""),
-		GeminiModel:       getenv("GEMINI_MODEL", "gemini-2.5-flash"),
+		GeminiModel:       getenv("GEMINI_MODEL", "gemini-flash-latest"),
 		GeminiTimeout:     getenvDuration("GEMINI_TIMEOUT", 45*time.Second),
 		GeminiMaxTokens:   getenvInt("GEMINI_MAX_TOKENS", 2048),
 	}

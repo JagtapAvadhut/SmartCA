@@ -1,6 +1,7 @@
 package gemini
 
 import (
+	"bufio"
 	"bytes"
 	"context"
 	"encoding/json"
@@ -45,7 +46,7 @@ type Response struct {
 
 const defaultBaseURL = "https://generativelanguage.googleapis.com/v1beta"
 
-// Client talks to Google Gemini generateContent.
+// Client talks to Google Gemini generateContent / streamGenerateContent.
 type Client struct {
 	apiKey     string
 	model      string
@@ -69,7 +70,7 @@ func NewClient(cfg Config) (*Client, error) {
 	}
 	model := strings.TrimSpace(cfg.Model)
 	if model == "" {
-		model = "gemini-2.5-flash"
+		model = "gemini-flash-latest"
 	}
 	timeout := cfg.Timeout
 	if timeout <= 0 {
@@ -99,7 +100,8 @@ func NewClient(cfg Config) (*Client, error) {
 	}, nil
 }
 
-func (c *Client) Name() string { return "gemini" }
+func (c *Client) Name() string  { return "gemini" }
+func (c *Client) Model() string { return c.model }
 
 func (c *Client) Generate(ctx context.Context, req Request) (*Response, error) {
 	start := time.Now()
@@ -152,6 +154,149 @@ func (c *Client) Generate(ctx context.Context, req Request) (*Response, error) {
 		return resp, nil
 	}
 	return nil, lastErr
+}
+
+// Stream emits incremental deltas via official streamGenerateContent (SSE / alt=sse).
+func (c *Client) Stream(ctx context.Context, req Request, emit func(delta, model string, done bool, usage Usage) error) error {
+	maxTok := req.MaxTokens
+	if maxTok <= 0 {
+		maxTok = 2048
+	}
+	temp := req.Temperature
+	if temp <= 0 {
+		temp = 0.4
+	}
+	body, err := c.buildRequest(req, maxTok, temp)
+	if err != nil {
+		return err
+	}
+
+	url := fmt.Sprintf("%s/models/%s:streamGenerateContent?alt=sse", c.baseURL, c.model)
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(body))
+	if err != nil {
+		return fmt.Errorf("%w: %v", ErrNetwork, err)
+	}
+	httpReq.Header.Set("Content-Type", "application/json")
+	httpReq.Header.Set("Accept", "text/event-stream")
+	httpReq.Header.Set("X-goog-api-key", c.apiKey)
+
+	// Streaming responses can exceed the client Timeout; use a transport-only client.
+	streamClient := &http.Client{
+		Timeout:   0,
+		Transport: c.httpClient.Transport,
+	}
+	httpResp, err := streamClient.Do(httpReq)
+	if err != nil {
+		if ctx.Err() != nil || strings.Contains(strings.ToLower(err.Error()), "timeout") {
+			return fmt.Errorf("%w: %v", ErrTimeout, err)
+		}
+		return fmt.Errorf("%w: %v", ErrNetwork, err)
+	}
+	defer httpResp.Body.Close()
+
+	if httpResp.StatusCode >= 400 {
+		raw, _ := io.ReadAll(io.LimitReader(httpResp.Body, 2<<20))
+		var parsed generateContentResponse
+		_ = json.Unmarshal(raw, &parsed)
+		msg := truncate(string(raw), 200)
+		if parsed.Error != nil && parsed.Error.DisplayMessage() != "" {
+			msg = parsed.Error.DisplayMessage()
+		}
+		return classifyHTTP(httpResp.StatusCode, msg)
+	}
+
+	scanner := bufio.NewScanner(httpResp.Body)
+	scanner.Buffer(make([]byte, 0, 64*1024), 2<<20)
+	var usage Usage
+	model := c.model
+	gotDelta := false
+
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		if line == "" {
+			continue
+		}
+		if !strings.HasPrefix(line, "data:") {
+			continue
+		}
+		payload := strings.TrimSpace(strings.TrimPrefix(line, "data:"))
+		if payload == "" || payload == "[DONE]" {
+			continue
+		}
+		var parsed generateContentResponse
+		if err := json.Unmarshal([]byte(payload), &parsed); err != nil {
+			continue
+		}
+		if parsed.Error != nil {
+			return classifyHTTP(httpResp.StatusCode, parsed.Error.DisplayMessage())
+		}
+		if parsed.UsageMetadata != nil {
+			usage = Usage{
+				PromptTokens:     parsed.UsageMetadata.PromptTokenCount,
+				CompletionTokens: parsed.UsageMetadata.CandidatesTokenCount,
+				TotalTokens:      parsed.UsageMetadata.TotalTokenCount,
+			}
+		}
+		if len(parsed.Candidates) == 0 {
+			continue
+		}
+		var b strings.Builder
+		for _, p := range parsed.Candidates[0].Content.Parts {
+			b.WriteString(p.Text)
+		}
+		delta := b.String()
+		if delta == "" {
+			continue
+		}
+		gotDelta = true
+		if err := emit(delta, model, false, usage); err != nil {
+			return err
+		}
+	}
+	if err := scanner.Err(); err != nil && ctx.Err() == nil {
+		if gotDelta {
+			// Partial stream — still finalize what we have.
+			return emit("", model, true, usage)
+		}
+		return fmt.Errorf("%w: %v", ErrNetwork, err)
+	}
+	if ctx.Err() != nil {
+		return fmt.Errorf("%w: %v", ErrTimeout, ctx.Err())
+	}
+	if !gotDelta {
+		return ErrEmptyResponse
+	}
+	return emit("", model, true, usage)
+}
+
+// TestConnection verifies the API key via models.list (lightweight) and optionally
+// confirms the configured model exists. Falls back to a tiny generateContent call.
+func (c *Client) TestConnection(ctx context.Context) error {
+	models, err := c.ListGenerateModels(ctx)
+	if err != nil {
+		return err
+	}
+	if c.model != "" {
+		found := false
+		for _, m := range models {
+			if m == c.model {
+				found = true
+				break
+			}
+		}
+		if !found {
+			// Model may still work if Google accepts aliases not fully listed — probe once.
+			_, genErr := c.Generate(ctx, Request{
+				Messages:  []Message{{Role: "user", Content: "Reply with OK"}},
+				MaxTokens: 8,
+			})
+			if genErr != nil {
+				return fmt.Errorf("%w: model %q not available (%v)", ErrInvalidModel, c.model, genErr)
+			}
+			return nil
+		}
+	}
+	return nil
 }
 
 func (c *Client) buildRequest(req Request, maxTok int, temp float32) ([]byte, error) {
@@ -215,16 +360,19 @@ func (c *Client) doGenerate(ctx context.Context, body []byte) (*Response, error)
 		return nil, fmt.Errorf("%w: %v", ErrMalformed, err)
 	}
 	if parsed.Error != nil {
-		return nil, classifyHTTP(httpResp.StatusCode, parsed.Error.Message)
+		return nil, classifyHTTP(httpResp.StatusCode, parsed.Error.DisplayMessage())
 	}
 	if httpResp.StatusCode >= 400 {
 		msg := truncate(string(raw), 200)
 		if parsed.Error != nil {
-			msg = parsed.Error.Message
+			msg = parsed.Error.DisplayMessage()
 		}
 		return nil, classifyHTTP(httpResp.StatusCode, msg)
 	}
 	if len(parsed.Candidates) == 0 || len(parsed.Candidates[0].Content.Parts) == 0 {
+		if len(parsed.Candidates) > 0 && parsed.Candidates[0].FinishReason != "" {
+			return nil, fmt.Errorf("%w: finishReason=%s", ErrEmptyResponse, parsed.Candidates[0].FinishReason)
+		}
 		return nil, ErrEmptyResponse
 	}
 	var b strings.Builder

@@ -55,6 +55,10 @@ func (c *CRUDService) Create(data models.Record) (models.Record, error) {
 	if data == nil {
 		data = models.Record{}
 	}
+	// Chat IDs are always server-generated UUIDs — never accept client-supplied ids.
+	if c.collection == ColChat {
+		delete(data, "id")
+	}
 	if err := validateCreate(c.collection, data); err != nil {
 		return nil, err
 	}

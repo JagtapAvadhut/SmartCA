@@ -66,17 +66,25 @@ export const NotificationService = {
 export const ChatService = {
   async getSessions() {
     const res = await http.get<PaginatedResult<ChatSession>>('/chat', {
-      params: { page: 1, pageSize: 100000 },
+      params: { page: 1, pageSize: 100000, sortBy: 'updatedAt', sortOrder: 'desc' },
     })
-    return res.data
+    const list = res.data || []
+    // Newest conversations first (stable client-side sort as backup).
+    return [...list].sort((a, b) => {
+      const ta = a.updatedAt || a.createdAt || ''
+      const tb = b.updatedAt || b.createdAt || ''
+      return tb.localeCompare(ta)
+    })
   },
   async getSession(id: string) {
     return http.get<ChatSession>(`/chat/${id}`)
   },
   async createSession(title: string) {
+    // Never send an id — backend assigns a UUID.
     return http.post<ChatSession>('/chat', {
       title,
-      createdAt: new Date().toISOString().split('T')[0],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       messages: [],
     })
   },
@@ -101,12 +109,18 @@ export const ChatService = {
       timestamp: new Date().toISOString(),
     }
     const messages = [...(session.messages || []), userMsg, assistantMsg]
-    await http.patch(`/chat/${sessionId}`, { messages })
+    await http.patch(`/chat/${sessionId}`, { messages, updatedAt: new Date().toISOString() })
     return { userMsg, assistantMsg, ai }
   },
   async deleteSession(id: string) {
     await http.del(`/chat/${id}`)
     return { success: true }
+  },
+  async renameSession(id: string, title: string) {
+    return http.patch<ChatSession>(`/chat/${id}`, {
+      title,
+      updatedAt: new Date().toISOString(),
+    })
   },
 }
 

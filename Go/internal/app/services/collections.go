@@ -30,6 +30,7 @@ const (
 	ColNotes         = "notes"
 	ColJournals      = "journals"
 	ColSessions      = "sessions"
+	ColAISettings    = "aiSettings"
 )
 
 // CollectionNames is a list of all collection names
@@ -39,7 +40,7 @@ var CollectionNames = []string{
 	ColNotifications, ColActivities, ColCalendar, ColUsers, ColRoles,
 	ColPermissions, ColOrganization, ColSettings, ColAuditLogs,
 	ColLoginHistory, ColChat, ColDepartments, ColBranches, ColNotes,
-	ColJournals, ColSessions,
+	ColJournals, ColSessions, ColAISettings,
 }
 
 // SearchFields returns default search fields per collection.

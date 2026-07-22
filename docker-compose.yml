@@ -1,25 +1,21 @@
 # Smart CA full-stack Compose (modern Compose Specification — no obsolete top-level version)
 #
-# Workspace layout (required):
-#   SmartCA/
-#     Go/                 backend (build context)
-#     saas/               frontend (build context; folder name is lowercase)
-#     docker-compose.yml  this file
-#     .env                optional overrides (copy from .env.example — never commit it)
+# Docker-first: on any machine with Docker Desktop / Docker Engine + Compose v2:
 #
-# Startup order:  db (PostgreSQL) → api (Go, runs migrations + seed on boot) → web (nginx + React)
+#   git clone <repo> && cd SmartCA
+#   docker compose up --build -d
+#   open http://localhost:8080
 #
-# Browser → web (:8080) → /api/* proxied to api:8080 → PostgreSQL (db:5432)
+# No Go, Node.js, npm, or PostgreSQL install is required.
+# No .env file is required (safe defaults below). Optional root .env overrides AI/DB.
 #
-# Intended commands on a Docker-capable host:
-#   docker compose up --build
+# Startup order:  db (PostgreSQL) → api (migrations + seed) → web (nginx + React)
+# Browser → web (:8080) → /api/* and /docs → api:8080 → PostgreSQL (db:5432)
+#
 #   docker compose ps
 #   docker compose logs -f
-#   docker compose down          # keeps the "db-data" volume (data persists)
-#   docker compose down -v       # also removes the volume (full reset)
-#
-# All variables below have safe defaults, so `docker compose up --build` works with zero
-# configuration. Override any of them via a root .env file (see .env.example).
+#   docker compose down          # keeps the "db-data" volume
+#   docker compose down -v       # full reset (re-seed on next up)
 
 name: smartca
 
@@ -71,10 +67,15 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-smartca}
       DB_NAME: ${DB_NAME:-smartca}
       DB_SSLMODE: disable
-      # Gemini AI (server-side only). Leave empty to run with the mock provider.
+      # Gemini AI (server-side only). Values come from the ROOT .env file
+      # (docker compose does NOT read Go/.env). Sync with:
+      #   powershell -File scripts/sync-docker-ai-env.ps1
+      # Runtime AI Settings UI can override without rebuild.
+      # If GEMINI_API_KEY is set, API prefers Gemini over default mock.
       AI_PROVIDER: ${AI_PROVIDER:-mock}
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
-      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-2.5-flash}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-flash-latest}
+      AI_SETTINGS_SECRET: ${AI_SETTINGS_SECRET:-smartca-ai-settings}
     depends_on:
       db:
         condition: service_healthy
@@ -85,8 +86,8 @@ services:
       test: ["CMD", "/app/smartca-api", "-healthcheck"]
       interval: 10s
       timeout: 3s
-      retries: 5
-      start_period: 15s
+      retries: 8
+      start_period: 45s
     restart: unless-stopped
     init: true
     read_only: true

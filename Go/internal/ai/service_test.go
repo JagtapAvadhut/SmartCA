@@ -17,7 +17,7 @@ func TestPromptTemplates(t *testing.T) {
 		ai.TplDocumentAnalysis, ai.TplDashboardInsights, ai.TplGSTExplain,
 	} {
 		p := ai.BuildSystemPrompt(id)
-		if !strings.Contains(p, "Smart CA AI") {
+		if !strings.Contains(p, "SmartCA AI") && !strings.Contains(p, "Smart CA AI") {
 			t.Fatalf("template %s missing base identity", id)
 		}
 	}

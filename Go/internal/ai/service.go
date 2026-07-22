@@ -10,6 +10,8 @@ import (
 	"time"
 
 	"github.com/JagtapAvadhut/smartca-backend/internal/ai/gemini"
+	"github.com/JagtapAvadhut/smartca-backend/internal/ai/ollama"
+	"github.com/JagtapAvadhut/smartca-backend/internal/ai/openai"
 	"github.com/JagtapAvadhut/smartca-backend/internal/config"
 	apperrors "github.com/JagtapAvadhut/smartca-backend/internal/domain/errors"
 	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
@@ -76,6 +78,7 @@ type DashboardInsightsInput struct {
 // Service orchestrates prompts, context, and providers.
 type Service struct {
 	Provider Provider
+	Runtime  *Runtime
 	Ctx      *ContextBuilder
 	Log      *slog.Logger
 	Cfg      config.Config
@@ -91,6 +94,25 @@ func NewService(cfg config.Config, store repository.Store, log *slog.Logger, pro
 		Log:      log,
 		Cfg:      cfg,
 	}
+}
+
+// NewServiceWithRuntime wires a runtime-managed provider (preferred).
+func NewServiceWithRuntime(cfg config.Config, store repository.Store, log *slog.Logger, rt *Runtime) *Service {
+	svc := NewService(cfg, store, log, nil)
+	svc.Runtime = rt
+	if rt != nil {
+		svc.Provider = rt.Provider()
+	}
+	return svc
+}
+
+func (s *Service) activeProvider() Provider {
+	if s.Runtime != nil {
+		if p := s.Runtime.Provider(); p != nil {
+			return p
+		}
+	}
+	return s.Provider
 }
 
 func (s *Service) defaultMaxTokens(n int) int {
@@ -111,7 +133,78 @@ func (s *Service) Chat(ctx context.Context, requestID string, in ChatInput) (*Re
 	if msg == "" {
 		return nil, apperrors.Validation("message is required")
 	}
-	hist := LimitHistory(in.History, 8)
+	messages, system := s.buildChatMessages(in)
+	return s.run(ctx, requestID, TplChat, system, messages, in.MaxTokens, true)
+}
+
+// ChatStream emits incremental deltas then returns the final Result.
+func (s *Service) ChatStream(ctx context.Context, requestID string, in ChatInput, emit func(StreamChunk) error) (*Result, error) {
+	msg := strings.TrimSpace(in.Message)
+	if msg == "" {
+		return nil, apperrors.Validation("message is required")
+	}
+	messages, system := s.buildChatMessages(in)
+	provider := s.activeProvider()
+	if provider == nil {
+		return nil, apperrors.Internal("AI provider not configured", ErrNotConfigured)
+	}
+	req := GenerateRequest{
+		SystemPrompt: system,
+		Messages:     messages,
+		MaxTokens:    s.defaultMaxTokens(in.MaxTokens),
+		Temperature:  0.4,
+	}
+	start := time.Now()
+	var full strings.Builder
+	var model string
+	var usage Usage
+
+	streamFn := func(ch StreamChunk) error {
+		if ch.Model != "" {
+			model = ch.Model
+		}
+		if ch.Delta != "" {
+			full.WriteString(ch.Delta)
+		}
+		if ch.Done {
+			usage = ch.Usage
+		}
+		return emit(ch)
+	}
+
+	var err error
+	if streamer, ok := provider.(Streamer); ok {
+		err = streamer.Stream(ctx, req, streamFn)
+	} else {
+		var resp *GenerateResponse
+		resp, err = provider.Generate(ctx, req)
+		if err == nil {
+			err = chunkEmit(resp.Text, resp.Model, resp.Usage, streamFn)
+			model = resp.Model
+			usage = resp.Usage
+		}
+	}
+	latency := time.Since(start)
+	if err != nil {
+		s.Log.Warn("ai.stream.failed", "requestId", requestID, "provider", provider.Name(), "err", sanitizeErr(err))
+		return nil, mapProviderError(err)
+	}
+	text := strings.TrimSpace(full.String())
+	out := &Result{
+		Reply: text, Markdown: text, Model: model, Provider: provider.Name(),
+		Usage: usage, LatencyMs: latency.Milliseconds(), Template: TplChat,
+		Suggestions: []string{
+			"Explain GST in simple English",
+			"Summarize overdue invoices",
+			"Draft a payment reminder email",
+		},
+	}
+	s.Log.Info("ai.stream.ok", "requestId", requestID, "provider", provider.Name(), "model", model, "latencyMs", latency.Milliseconds())
+	return out, nil
+}
+
+func (s *Service) buildChatMessages(in ChatInput) ([]Message, string) {
+	hist := LimitHistory(in.History, 16)
 	var messages []Message
 	for _, h := range hist {
 		role := strings.ToLower(h.Role)
@@ -132,9 +225,9 @@ func (s *Service) Chat(ctx context.Context, requestID string, in ChatInput) (*Re
 			ctxBlock = brief
 		}
 	}
-	user := CompactUserPrompt("Answer as Smart CA AI.", ctxBlock, msg)
+	user := CompactUserPrompt("Answer as SmartCA AI.", ctxBlock, strings.TrimSpace(in.Message))
 	messages = append(messages, Message{Role: "user", Content: user})
-	return s.run(ctx, requestID, TplChat, BuildSystemPrompt(TplChat), messages, in.MaxTokens, true)
+	return messages, BuildSystemPrompt(TplChat)
 }
 
 func (s *Service) Summarize(ctx context.Context, requestID string, in SummarizeInput) (*Result, error) {
@@ -205,11 +298,12 @@ func (s *Service) DashboardInsights(ctx context.Context, requestID string, in Da
 }
 
 func (s *Service) run(ctx context.Context, requestID, template, system string, messages []Message, maxTokens int, markdown bool) (*Result, error) {
-	if s.Provider == nil {
-		return nil, apperrors.Internal("AI provider not configured", gemini.ErrNotConfigured)
+	provider := s.activeProvider()
+	if provider == nil {
+		return nil, apperrors.Internal("AI provider not configured", ErrNotConfigured)
 	}
 	start := time.Now()
-	resp, err := s.Provider.Generate(ctx, GenerateRequest{
+	resp, err := provider.Generate(ctx, GenerateRequest{
 		SystemPrompt: system,
 		Messages:     messages,
 		MaxTokens:    s.defaultMaxTokens(maxTokens),
@@ -220,7 +314,7 @@ func (s *Service) run(ctx context.Context, requestID, template, system string, m
 		s.Log.Warn("ai.generate.failed",
 			"requestId", requestID,
 			"template", template,
-			"provider", s.Provider.Name(),
+			"provider", provider.Name(),
 			"latencyMs", latency.Milliseconds(),
 			"err", sanitizeErr(err),
 		)
@@ -229,7 +323,7 @@ func (s *Service) run(ctx context.Context, requestID, template, system string, m
 	s.Log.Info("ai.generate.ok",
 		"requestId", requestID,
 		"template", template,
-		"provider", s.Provider.Name(),
+		"provider", provider.Name(),
 		"model", resp.Model,
 		"latencyMs", resp.Latency.Milliseconds(),
 		"cached", resp.Cached,
@@ -243,7 +337,7 @@ func (s *Service) run(ctx context.Context, requestID, template, system string, m
 		Reply:     text,
 		Markdown:  text,
 		Model:     resp.Model,
-		Provider:  s.Provider.Name(),
+		Provider:  provider.Name(),
 		Usage:     resp.Usage,
 		LatencyMs: resp.Latency.Milliseconds(),
 		Cached:    resp.Cached,
@@ -252,7 +346,6 @@ func (s *Service) run(ctx context.Context, requestID, template, system string, m
 	if !markdown {
 		if obj := tryParseJSONObject(text); obj != nil {
 			out.JSON = obj
-			// Prefer human-readable reply from common fields
 			if n, ok := obj["narrative"].(string); ok && n != "" {
 				out.Reply = n
 				out.Markdown = n
@@ -278,29 +371,35 @@ func (s *Service) run(ctx context.Context, requestID, template, system string, m
 
 func mapProviderError(err error) error {
 	switch {
-	case errors.Is(err, gemini.ErrNotConfigured):
-		return apperrors.New(apperrors.CodeInternal, 503, "Gemini API key not configured on server")
-	case errors.Is(err, gemini.ErrInvalidAPIKey):
-		return apperrors.New(apperrors.CodeUnauthorized, 401, "Gemini API key is invalid")
-	case errors.Is(err, gemini.ErrRateLimited):
-		return apperrors.New(apperrors.CodeBadRequest, 429, "Gemini rate limit exceeded; retry shortly")
-	case errors.Is(err, gemini.ErrTimeout):
-		return apperrors.New(apperrors.CodeInternal, 504, "Gemini request timed out")
-	case errors.Is(err, gemini.ErrEmptyResponse):
-		return apperrors.Internal("Gemini returned an empty response", err)
-	case errors.Is(err, gemini.ErrNetwork):
-		return apperrors.Internal("Unable to reach Gemini API", err)
-	case errors.Is(err, gemini.ErrMalformed):
-		return apperrors.Internal("Malformed Gemini response", err)
+	case errors.Is(err, ErrInvalidAPIKey), errors.Is(err, gemini.ErrInvalidAPIKey), errors.Is(err, openai.ErrInvalidAPIKey):
+		return apperrors.New(apperrors.CodeUnauthorized, 401, "Invalid API key")
+	case errors.Is(err, ErrQuotaExceeded), errors.Is(err, gemini.ErrQuotaExceeded), errors.Is(err, openai.ErrQuotaExceeded):
+		return apperrors.New(apperrors.CodeBadRequest, 429, "Quota exceeded")
+	case errors.Is(err, ErrRateLimited), errors.Is(err, gemini.ErrRateLimited), errors.Is(err, openai.ErrRateLimited):
+		return apperrors.New(apperrors.CodeBadRequest, 429, "Rate limit exceeded; retry shortly")
+	case errors.Is(err, ErrInvalidModel), errors.Is(err, gemini.ErrInvalidModel):
+		return apperrors.New(apperrors.CodeBadRequest, 400, "Invalid or unavailable model — select another from AI Settings")
+	case errors.Is(err, ErrTimeout), errors.Is(err, gemini.ErrTimeout), errors.Is(err, openai.ErrTimeout), errors.Is(err, ollama.ErrTimeout):
+		return apperrors.New(apperrors.CodeInternal, 504, "Network timeout contacting AI provider")
+	case errors.Is(err, ErrProviderUnavailable), errors.Is(err, openai.ErrUnavailable), errors.Is(err, ollama.ErrUnavailable), errors.Is(err, gemini.ErrTransient):
+		return apperrors.New(apperrors.CodeInternal, 503, "Provider unavailable")
+	case errors.Is(err, ErrNotConfigured), errors.Is(err, gemini.ErrNotConfigured), errors.Is(err, openai.ErrNotConfigured), errors.Is(err, ollama.ErrNotConfigured):
+		return apperrors.New(apperrors.CodeInternal, 503, "AI provider not configured — open AI Settings to add credentials")
+	case errors.Is(err, gemini.ErrEmptyResponse), errors.Is(err, openai.ErrEmptyResponse), errors.Is(err, ollama.ErrEmptyResponse):
+		return apperrors.Internal("AI provider returned an empty response", err)
+	case errors.Is(err, gemini.ErrMalformed), errors.Is(err, openai.ErrMalformed):
+		return apperrors.Internal("JSON parsing error from AI provider", err)
+	case errors.Is(err, ErrNetwork), errors.Is(err, gemini.ErrNetwork), errors.Is(err, openai.ErrNetwork), errors.Is(err, ollama.ErrNetwork):
+		return apperrors.Internal("Unable to reach AI provider", err)
 	default:
 		var apiErr *gemini.APIError
 		if errors.As(err, &apiErr) {
 			msg := apiErr.Message
 			if msg == "" {
-				msg = "Gemini API error"
+				msg = "AI provider error"
 			}
 			if apiErr.Status == 429 || strings.Contains(strings.ToLower(msg), "quota") {
-				return apperrors.New(apperrors.CodeBadRequest, 429, "Gemini rate limit exceeded; retry shortly")
+				return apperrors.New(apperrors.CodeBadRequest, 429, "Quota or rate limit exceeded")
 			}
 			return apperrors.Internal(trimRunes(msg, 180), err)
 		}

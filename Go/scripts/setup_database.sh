@@ -1,51 +1,38 @@
 #!/bin/bash
-# Smart CA PostgreSQL Database Setup Script for Unix/Linux/Mac
-# This script creates the smartca database and user
+# Smart CA PostgreSQL Database Setup (Unix/Linux/Mac)
+# Non-interactive: export POSTGRES_PASSWORD=... before running.
 #
-# Prerequisites:
-# 1. PostgreSQL must be installed
-# 2. You need the postgres superuser password
+# Prefer Docker for zero local DB setup:
+#   docker compose up --build
 #
-# Usage: ./setup_database.sh
+# Creates app credentials aligned with /.env.example and Go/.env.example:
+#   smartca / smartca / smartca
+
+set -euo pipefail
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echo "========================================"
 echo "Smart CA Database Setup"
 echo "========================================"
 echo ""
-echo "This script will:"
-echo "1. Create the 'smartca' database"
-echo "2. Create the 'smartca' user"
-echo "3. Grant necessary privileges"
-echo ""
-echo "You will be prompted for the postgres superuser password."
-echo ""
-read -p "Press Enter to continue..."
 
-# Get the directory where this script is located
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if [[ -z "${POSTGRES_PASSWORD:-}" ]]; then
+  echo "ERROR: Set POSTGRES_PASSWORD to the postgres superuser password (non-interactive)."
+  echo "Example: POSTGRES_PASSWORD='...' ./setup_database.sh"
+  echo "Or use Docker: docker compose up --build"
+  exit 1
+fi
 
-# Run the setup SQL script
-echo ""
+export PGPASSWORD="$POSTGRES_PASSWORD"
+
 echo "Running database setup..."
 psql -U postgres -h localhost -f "${SCRIPT_DIR}/setup_database.sql"
 
-if [ $? -eq 0 ]; then
-    echo ""
-    echo "========================================"
-    echo "Database setup completed successfully!"
-    echo "========================================"
-    echo ""
-    echo "Database: smartca"
-    echo "User: smartca"
-    echo "Password: yourpassword"
-    echo ""
-    echo "You can now run the Go application."
-else
-    echo ""
-    echo "========================================"
-    echo "Database setup failed!"
-    echo "========================================"
-    echo ""
-    echo "Please check the error messages above."
-    exit 1
-fi
+echo ""
+echo "Database setup completed successfully!"
+echo "Database: smartca"
+echo "User:     smartca"
+echo "Password: smartca"
+echo ""
+echo "Next: cp Go/.env.example Go/.env && cd Go && go run ./cmd/api"

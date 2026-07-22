@@ -9,14 +9,14 @@ import (
 
 // Sentinel / classified errors for the Gemini provider.
 var (
-	ErrInvalidAPIKey   = errors.New("gemini: invalid api key")
-	ErrRateLimited     = errors.New("gemini: rate limited")
-	ErrTimeout         = errors.New("gemini: timeout")
-	ErrEmptyResponse   = errors.New("gemini: empty response")
-	ErrNetwork         = errors.New("gemini: network error")
-	ErrMalformed       = errors.New("gemini: malformed response")
-	ErrNotConfigured   = errors.New("gemini: api key not configured")
-	ErrTransient       = errors.New("gemini: transient failure")
+	ErrInvalidAPIKey = errors.New("gemini: invalid api key")
+	ErrRateLimited   = errors.New("gemini: rate limited")
+	ErrTimeout       = errors.New("gemini: timeout")
+	ErrEmptyResponse = errors.New("gemini: empty response")
+	ErrNetwork       = errors.New("gemini: network error")
+	ErrMalformed     = errors.New("gemini: malformed response")
+	ErrNotConfigured = errors.New("gemini: api key not configured")
+	ErrTransient     = errors.New("gemini: transient failure")
 )
 
 // APIError wraps an HTTP status from the Gemini API.

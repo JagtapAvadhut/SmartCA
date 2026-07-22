@@ -1,11 +1,13 @@
 /**
  * Auth E2E against real Go API — no mocked auth routes.
- * Usage: QA_BASE=http://127.0.0.1:5173 node scripts/qa-auth-e2e.mjs
+ * Defaults target Docker Compose (http://127.0.0.1:8080).
+ * Native Vite: QA_BASE=http://127.0.0.1:5173 QA_API=http://127.0.0.1:8080/api/v1 npm run qa:auth
  */
 import { chromium } from 'playwright'
 
-const BASE = process.env.QA_BASE || process.env.QA_BASE_URL || 'http://127.0.0.1:5173'
-const API = process.env.QA_API || 'http://localhost:8080/api/v1'
+const BASE = process.env.QA_BASE || process.env.QA_BASE_URL || 'http://127.0.0.1:8080'
+const API = process.env.QA_API || `${BASE.replace(/\/$/, '')}/api/v1`
+const HEALTH = process.env.QA_HEALTH || `${BASE.replace(/\/$/, '')}/health/live`
 const PASSWORD = 'SmartCA@2025'
 
 const results = []
@@ -37,7 +39,7 @@ const page = await context.newPage()
 
 try {
   // Health
-  const live = await fetch('http://localhost:8080/health/live')
+  const live = await fetch(HEALTH)
   record('API health live', live.ok, String(live.status))
 
   // Page load

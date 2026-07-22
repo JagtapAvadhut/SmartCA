@@ -8,7 +8,7 @@ CREATE DATABASE smartca;
 
 -- Create user
 DROP USER IF EXISTS smartca;
-CREATE USER smartca WITH PASSWORD 'yourpassword';
+CREATE USER smartca WITH PASSWORD 'smartca';
 
 -- Grant privileges
 GRANT ALL PRIVILEGES ON DATABASE smartca TO smartca;

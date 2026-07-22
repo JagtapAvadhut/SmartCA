@@ -31,10 +31,10 @@ type Config struct {
 	DBMaxIdleConns    int
 	DBConnMaxLifetime time.Duration
 	// AI / Gemini (server-side only — never sent to the frontend)
-	AIProvider     string
-	GeminiAPIKey   string
-	GeminiModel    string
-	GeminiTimeout  time.Duration
+	AIProvider      string
+	GeminiAPIKey    string
+	GeminiModel     string
+	GeminiTimeout   time.Duration
 	GeminiMaxTokens int
 }
 

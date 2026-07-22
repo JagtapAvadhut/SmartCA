@@ -32,7 +32,8 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-smartca}
       POSTGRES_DB: ${DB_NAME:-smartca}
     volumes:
-      - db-data:/var/lib/postgresql/data
+      # Postgres 18+ uses PGDATA=/var/lib/postgresql/<major>/docker — mount the parent directory.
+      - db-data:/var/lib/postgresql
     # Database is reached via the Compose network only. No host publish by default.
     expose:
       - "5432"

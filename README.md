@@ -217,10 +217,11 @@ node scripts/capture-screenshots.mjs
 
 ### Prerequisites
 
-- **Go** 1.24+ (developed on 1.26.5)
-- **Node.js** 22.x + npm
-- **PostgreSQL** 14+ (developed on 18)
-- **Docker** + Docker Compose v2 — only if you want the containerized path
+- **Docker** + Docker Compose v2 — **recommended** (full stack in one command)
+- Optional for native development only:
+  - **Go** 1.24+ (developed on 1.26.5)
+  - **Node.js** 22.x + npm
+  - **PostgreSQL** 14+ (developed on 18)
 
 ### Clone
 
@@ -229,19 +230,34 @@ git clone https://github.com/JagtapAvadhut/SmartCA.git
 cd SmartCA
 ```
 
-## Development
-
-Run PostgreSQL, the Go API, and the Vite dev server natively (fastest inner loop, hot reload):
+### Quick start (Docker — preferred)
 
 ```bash
-# 1. Database
+cp .env.example .env          # optional; defaults already work (DB user/password/db = smartca)
+docker compose up --build
+```
+
+Open **http://localhost:8080** and sign in with a [demo account](#demo-login).
+
+No local PostgreSQL install and no interactive prompts are required for this path.
+
+## Development
+
+Native hot-reload loop (optional). Prefer [Docker](#production-docker) / the Quick start above unless you need Vite HMR.
+
+```bash
+# 1. Database (non-interactive — set the postgres superuser password in the environment)
+#    App credentials created: user/password/db = smartca / smartca / smartca
 cd Go/scripts
-./setup_database.sh        # Linux/macOS — creates the smartca DB + user
-# .\check_and_setup.ps1    # Windows PowerShell
+# Linux/macOS:
+POSTGRES_PASSWORD='your-postgres-superuser-password' ./setup_database.sh
+# Windows PowerShell:
+# $env:POSTGRES_PASSWORD = 'your-postgres-superuser-password'
+# .\check_and_setup.ps1
 
 # 2. Backend
 cd ..
-cp .env.example .env         # edit DB_PASSWORD / GEMINI_API_KEY as needed
+cp .env.example .env         # defaults match Docker (DB_* = smartca, AI_PROVIDER=mock)
 go run ./cmd/api             # connects to PostgreSQL, runs migrations, seeds if empty
 
 # 3. Frontend (new terminal)
@@ -257,16 +273,28 @@ Open `http://localhost:5173` (or `http://127.0.0.1:5173`).
 
 | Role | Email | Password |
 |------|-------|----------|
-| Admin | `rajesh.sharma@smartca.in` | `SmartCA@2025` |
-| Partner | `priya.patel@smartca.in` | `SmartCA@2025` |
-| CA | `amit.kumar@smartca.in` | `SmartCA@2025` |
+| Super Admin | `rajesh.sharma@smartca.in` | `SmartCA@2025` |
+| Admin | `priya.patel@smartca.in` | `SmartCA@2025` |
+| Partner | `amit.kumar@smartca.in` | `SmartCA@2025` |
+| CA | `vikram.iyer@smartca.in` | `SmartCA@2025` |
 
 ### Tests & QA
+
+With **Docker** already running (`docker compose up --build`), from `saas/`:
+
+```bash
+npm ci
+npm run qa:auth
+npm run qa:business
+npm run qa:browser
+```
+
+Playwright scripts default to `http://127.0.0.1:8080`. For native Vite on `:5173`, set `QA_BASE` / `QA_BASE_URL`.
 
 ```bash
 # Backend
 cd Go
-gofmt -l .
+gofmt -l .                   # must print nothing
 go vet ./...
 go test ./...
 go build ./cmd/api
@@ -276,9 +304,6 @@ cd saas
 npx tsc -b
 npm run lint
 npm run build
-npm run qa:auth       # Playwright auth E2E
-npm run qa:business   # Playwright business-flow QA
-npm run qa:browser    # Playwright page-render QA
 ```
 
 ## Production (Docker)
@@ -292,7 +317,7 @@ docker compose up --build
 
 | Service | Image base | Published port | Notes |
 |---------|------------|-----------------|-------|
-| `db` | `postgres:18-alpine` | internal only | Named volume `db-data`; `pg_isready` healthcheck |
+| `db` | `postgres:18-alpine` | internal only | Named volume `db-data` → `/var/lib/postgresql` (Postgres 18 layout); `pg_isready` healthcheck |
 | `api` | multi-stage → `distroless/static-debian12:nonroot` | internal only | Waits for `db` to be healthy; runs migrations + seed on boot |
 | `web` | multi-stage → `nginx-unprivileged:1.27.4-alpine` | **8080** | Waits for `api` to be healthy; serves the SPA and proxies `/api/*` |
 
@@ -305,16 +330,17 @@ docker compose down        # stop (keeps the db-data volume)
 docker compose down -v     # stop + wipe the database volume
 ```
 
-Design highlights (see [Phase 2 review in `REPOSITORY_RELEASE_REPORT.md`](REPOSITORY_RELEASE_REPORT.md) for the full checklist):
+Design highlights:
 
 - Multi-stage builds; final images contain no build toolchain
 - `api` and `web` run as non-root (`nonroot` / `nginx`), `cap_drop: ALL`, `no-new-privileges`
 - `api` runs `read_only: true` with a `tmpfs` `/tmp`
-- Explicit `smartca-net` bridge network and named `db-data` volume
+- Explicit `smartca-net` bridge network and named `db-data` volume mounted at `/var/lib/postgresql` (Postgres 18+)
 - `depends_on: condition: service_healthy` enforces `db → api → web` startup order
 - All service credentials/AI keys are externalized via `${VAR:-default}` substitution from a root `.env` (never baked into images)
+- Published `:8080` exposes SPA `/health`, API `/health/live` + `/health/ready`, and `/api/*`
 
-> Docker Compose was reviewed and corrected for structural/technical correctness in this environment (Docker itself was not available to execute `docker compose up` here). Verify on your machine and open an issue if you hit anything.
+> Verify `docker compose up --build` on your machine and open an issue if you hit anything.
 
 ## Environment Variables
 

@@ -1,12 +1,14 @@
 /**
  * Deterministic business-logic QA.
  * Asserts EXACT expected values via window.__SMART_CA_QA__ (not "value changed").
+ * Defaults target Docker Compose (http://127.0.0.1:8080).
+ * Native Vite: QA_BASE_URL=http://127.0.0.1:5173 npm run qa:business
  */
 import { chromium } from 'playwright'
 import fs from 'node:fs'
 import path from 'node:path'
 
-const BASE = process.env.QA_BASE_URL || 'http://localhost:5173'
+const BASE = process.env.QA_BASE || process.env.QA_BASE_URL || 'http://127.0.0.1:8080'
 const OUT = path.resolve('business-qa-results.json')
 
 const results = []

@@ -3,10 +3,10 @@ package gemini
 // Request/response shapes for generativelanguage.googleapis.com generateContent.
 
 type generateContentRequest struct {
-	SystemInstruction *content           `json:"systemInstruction,omitempty"`
-	Contents          []content          `json:"contents"`
-	GenerationConfig  *generationConfig  `json:"generationConfig,omitempty"`
-	SafetySettings    []safetySetting    `json:"safetySettings,omitempty"`
+	SystemInstruction *content          `json:"systemInstruction,omitempty"`
+	Contents          []content         `json:"contents"`
+	GenerationConfig  *generationConfig `json:"generationConfig,omitempty"`
+	SafetySettings    []safetySetting   `json:"safetySettings,omitempty"`
 }
 
 type content struct {
@@ -30,14 +30,14 @@ type safetySetting struct {
 }
 
 type generateContentResponse struct {
-	Candidates []candidate `json:"candidates"`
+	Candidates    []candidate    `json:"candidates"`
 	UsageMetadata *usageMetadata `json:"usageMetadata,omitempty"`
-	Error *apiErrorBody `json:"error,omitempty"`
+	Error         *apiErrorBody  `json:"error,omitempty"`
 }
 
 type candidate struct {
-	Content       content `json:"content"`
-	FinishReason  string  `json:"finishReason"`
+	Content      content `json:"content"`
+	FinishReason string  `json:"finishReason"`
 }
 
 type usageMetadata struct {

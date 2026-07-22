@@ -55,9 +55,9 @@ func (p *Provider) Generate(_ context.Context, req Request) (*Response, error) {
 	}
 	reply := fmt.Sprintf("**(Mock AI)** Smart CA received your request.\n\n> %s\n\nConfigure `GEMINI_API_KEY` in `Go/.env` for live Gemini responses.", truncate(last, 280))
 	return &Response{
-		Text:  reply,
-		Model: "mock",
-		Usage: Usage{PromptTokens: len(last) / 4, CompletionTokens: len(reply) / 4, TotalTokens: (len(last) + len(reply)) / 4},
+		Text:    reply,
+		Model:   "mock",
+		Usage:   Usage{PromptTokens: len(last) / 4, CompletionTokens: len(reply) / 4, TotalTokens: (len(last) + len(reply)) / 4},
 		Latency: time.Since(start),
 	}, nil
 }

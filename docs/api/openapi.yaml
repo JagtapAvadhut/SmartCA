@@ -2,9 +2,13 @@ openapi: 3.1.0
 info:
   title: Smart CA Backend API
   version: 1.0.0
-  description: REST API for Smart CA practice management (demo/in-memory).
+  description: |
+    REST API for Smart CA practice management.
+    PostgreSQL-backed Go service. Browser calls go through `/api/v1` (Docker nginx same-origin proxy or direct to `:8080` in native dev).
+    Authentication uses opaque Bearer tokens stored in `auth_sessions`.
 servers:
   - url: http://localhost:8080
+    description: Docker Compose (web proxies /api and /health/*) or native Go API
 security:
   - bearerAuth: []
 paths:
@@ -14,32 +18,44 @@ paths:
       summary: Liveness probe
       responses:
         "200":
-          description: OK
+          description: Process is up
+          content:
+            application/json:
+              example:
+                success: true
+                data: { status: live }
+                meta: { requestId: "uuid" }
   /health/ready:
     get:
       security: []
-      summary: Readiness probe
+      summary: Readiness probe (DB reachable)
       responses:
         "200":
-          description: OK
+          description: Ready
+          content:
+            application/json:
+              example:
+                success: true
+                data: { status: ready }
+                meta: { requestId: "uuid" }
   /version:
     get:
       security: []
-      summary: Build version (ops probe)
+      summary: Build version
       responses:
         "200":
-          description: OK
+          description: Version payload
   /api/v1/version:
     get:
       security: []
-      summary: Build version (canonical API contract)
+      summary: Build version (API prefix)
       responses:
         "200":
-          description: OK
+          description: Version payload
   /api/v1/auth/login:
     post:
       security: []
-      summary: Login
+      summary: Login (email, username, or loginId)
       requestBody:
         required: true
         content:
@@ -48,13 +64,25 @@ paths:
               type: object
               required: [identifier, password]
               properties:
-                identifier: { type: string }
-                password: { type: string }
-                rememberMe: { type: boolean }
-                device: { type: string }
+                identifier: { type: string, example: rajesh.sharma@smartca.in }
+                password: { type: string, example: SmartCA@2025 }
+                rememberMe: { type: boolean, default: false }
+                device: { type: string, example: Desktop Browser }
+            example:
+              identifier: rajesh.sharma@smartca.in
+              password: SmartCA@2025
+              rememberMe: false
       responses:
         "200":
           description: Session created
+          content:
+            application/json:
+              example:
+                success: true
+                data:
+                  user: { id: USR-0001, email: rajesh.sharma@smartca.in, role: super_admin }
+                  token: opaque-session-token
+                meta: { requestId: "uuid" }
         "401":
           description: Invalid credentials
   /api/v1/auth/logout:
@@ -65,10 +93,12 @@ paths:
           description: Logged out
   /api/v1/auth/me:
     get:
-      summary: Current user
+      summary: Current user profile + permissions
       responses:
         "200":
           description: User profile
+        "401":
+          description: Missing/invalid token
   /api/v1/auth/forgot-password:
     post:
       security: []
@@ -86,9 +116,18 @@ paths:
   /api/v1/auth/change-password:
     post:
       summary: Change password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [currentPassword, newPassword]
+              properties:
+                currentPassword: { type: string }
+                newPassword: { type: string, minLength: 8 }
       responses:
         "200":
-          description: Message
+          description: Updated
   /api/v1/demo/reset:
     post:
       summary: Reset demo data (super_admin + DEMO_RESET_ENABLED)
@@ -99,7 +138,7 @@ paths:
           description: Forbidden
   /api/v1/clients:
     get:
-      summary: List clients
+      summary: List clients (pagination, search, sort)
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
@@ -110,11 +149,30 @@ paths:
       responses:
         "200":
           description: Paginated list
+          content:
+            application/json:
+              example:
+                success: true
+                data: [{ id: CLT-0001, name: Example Client }]
+                meta:
+                  requestId: uuid
+                  pagination: { page: 1, pageSize: 50, totalItems: 120, totalPages: 3 }
     post:
       summary: Create client
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: Acme Traders
+              email: acme@example.com
+              phone: "9876543210"
+              type: company
+              status: active
       responses:
-        "201":
+        "200":
           description: Created
+        "403":
+          description: Missing clients.create
   /api/v1/clients/{id}:
     get:
       summary: Get client
@@ -137,16 +195,131 @@ paths:
       responses:
         "200":
           description: Deleted
-  /api/v1/invoices:
+  /api/v1/clients/{id}/archive:
+    post:
+      summary: Archive client
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Archived
+  /api/v1/companies:
     get:
-      summary: List invoices
+      summary: List companies
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/search"
+        - $ref: "#/components/parameters/sortBy"
+        - $ref: "#/components/parameters/sortDir"
       responses:
         "200":
           description: Paginated list
     post:
-      summary: Create invoice (GST totals)
+      summary: Create company
       responses:
-        "201":
+        "200":
+          description: Created
+  /api/v1/employees:
+    get:
+      summary: List employees
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/search"
+      responses:
+        "200":
+          description: Paginated list
+  /api/v1/documents:
+    get:
+      summary: List document metadata
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/search"
+      responses:
+        "200":
+          description: Paginated list
+    post:
+      summary: Create document metadata record
+      responses:
+        "200":
+          description: Created
+  /api/v1/tasks:
+    get:
+      summary: List tasks
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/search"
+        - $ref: "#/components/parameters/status"
+      responses:
+        "200":
+          description: Paginated list
+  /api/v1/notes:
+    get:
+      summary: List notes
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/search"
+      responses:
+        "200":
+          description: Paginated list
+    post:
+      summary: Create note
+      requestBody:
+        content:
+          application/json:
+            example:
+              title: Follow up
+              content: Call client about GST
+      responses:
+        "200":
+          description: Created
+  /api/v1/gst:
+    get:
+      summary: List GST filings
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+      responses:
+        "200":
+          description: Paginated list
+  /api/v1/itr:
+    get:
+      summary: List ITR filings
+      responses:
+        "200":
+          description: Paginated list
+  /api/v1/tds:
+    get:
+      summary: List TDS filings
+      responses:
+        "200":
+          description: Paginated list
+  /api/v1/roc:
+    get:
+      summary: List ROC filings
+      responses:
+        "200":
+          description: Paginated list
+  /api/v1/invoices:
+    get:
+      summary: List invoices
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/search"
+        - $ref: "#/components/parameters/sortBy"
+        - $ref: "#/components/parameters/sortDir"
+      responses:
+        "200":
+          description: Paginated list
+    post:
+      summary: Create invoice (server-side GST totals)
+      responses:
+        "200":
           description: Created
   /api/v1/invoices/{id}:
     get:
@@ -164,7 +337,7 @@ paths:
         "200":
           description: Updated
     delete:
-      summary: Delete invoice and linked payments
+      summary: Delete invoice
       parameters:
         - $ref: "#/components/parameters/id"
       responses:
@@ -173,51 +346,59 @@ paths:
   /api/v1/payments:
     get:
       summary: List payments
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
       responses:
         "200":
           description: Paginated list
     post:
-      summary: Create payment (atomic sync to invoice/client)
+      summary: Create payment (reconciles invoice/client)
       responses:
-        "201":
+        "200":
           description: Created
         "400":
-          description: Overpayment or validation error
+          description: Validation / overpayment
   /api/v1/dashboard:
     get:
       summary: Live dashboard KPIs
       responses:
         "200":
           description: Dashboard
+        "403":
+          description: Missing dashboard.view
   /api/v1/reports/summary:
     get:
       summary: Live report series
       responses:
         "200":
           description: Reports
+        "403":
+          description: Missing reports.view
   /api/v1/search:
     get:
       summary: Cross-collection search
       parameters:
         - name: q
           in: query
-          schema: { type: string }
+          required: true
+          schema: { type: string, example: acme }
         - name: limit
           in: query
-          schema: { type: integer }
+          schema: { type: integer, default: 20 }
       responses:
         "200":
           description: Results
   /api/v1/accounting/journals:
     get:
-      summary: List system + manual journals
+      summary: List journals
       responses:
         "200":
           description: Journals
     post:
       summary: Post balanced manual journal
       responses:
-        "201":
+        "200":
           description: Created
         "400":
           description: Unbalanced
@@ -233,10 +414,10 @@ paths:
       parameters:
         - name: collection
           in: query
-          schema: { type: string }
+          schema: { type: string, example: clients }
       responses:
         "200":
-          description: Archive
+          description: Archive list
   /api/v1/settings:
     get:
       summary: Get settings
@@ -248,6 +429,87 @@ paths:
       responses:
         "200":
           description: Updated
+  /api/v1/ai/chat:
+    post:
+      summary: AI chat (Gemini or mock provider)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [message]
+              properties:
+                message: { type: string }
+                history: { type: array, items: { type: object } }
+                clientId: { type: string }
+                maxTokens: { type: integer }
+            example:
+              message: Summarize outstanding invoices for this firm.
+      responses:
+        "200":
+          description: AI result
+          content:
+            application/json:
+              example:
+                success: true
+                data:
+                  reply: "**(Mock AI)** ..."
+                  markdown: "**(Mock AI)** ..."
+                  provider: mock
+                  model: gemini-2.5-flash
+        "403":
+          description: Missing ai.view
+  /api/v1/ai/summarize:
+    post:
+      summary: Summarize free text
+      requestBody:
+        content:
+          application/json:
+            example: { text: "Long filing notes..." }
+      responses:
+        "200":
+          description: AI result
+  /api/v1/ai/email:
+    post:
+      summary: Draft professional email
+      requestBody:
+        content:
+          application/json:
+            example: { purpose: "GST reminder", clientId: "CLT-0001", tone: "professional" }
+      responses:
+        "200":
+          description: AI result
+  /api/v1/ai/client-summary:
+    post:
+      summary: Client dossier summary
+      requestBody:
+        content:
+          application/json:
+            example: { clientId: "CLT-0001", question: "Key risks?" }
+      responses:
+        "200":
+          description: AI result
+  /api/v1/ai/document-analysis:
+    post:
+      summary: Document analysis
+      requestBody:
+        content:
+          application/json:
+            example: { documentId: "DOC-0001", question: "What is missing?" }
+      responses:
+        "200":
+          description: AI result
+  /api/v1/ai/dashboard-insights:
+    post:
+      summary: Dashboard KPI narrative
+      requestBody:
+        content:
+          application/json:
+            example: { focus: "cash collection" }
+      responses:
+        "200":
+          description: AI result
 components:
   securitySchemes:
     bearerAuth:
@@ -310,13 +572,6 @@ components:
           properties:
             code: { type: string }
             message: { type: string }
-            details:
-              type: array
-              items:
-                type: object
-                properties:
-                  field: { type: string }
-                  message: { type: string }
         meta:
           type: object
           properties:

@@ -4,15 +4,15 @@ import (
 	"strings"
 
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 )
 
 // SearchService performs cross-collection search.
 type SearchService struct {
-	store *memory.Store
+	store repository.Store
 }
 
-func NewSearchService(store *memory.Store) *SearchService {
+func NewSearchService(store repository.Store) *SearchService {
 	return &SearchService{store: store}
 }
 

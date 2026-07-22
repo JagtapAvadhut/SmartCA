@@ -240,21 +240,25 @@ export async function runDataIntegrityCheck(): Promise<IntegrityReport> {
   }
 }
 
-/**
- * Derived financial fields are repaired by the Go invoice/payment services.
- * This re-fetches an integrity report after noting that repair is server-owned.
- */
 export async function repairDerivedData(): Promise<{
   repaired: number
   report: IntegrityReport
   auditId: string
 }> {
+  const { http } = await import('./httpClient')
+  let repaired = 0
+  try {
+    const res = await http.post<{ repaired: number }>('/invoices/repair-financials', {})
+    repaired = Number(res?.repaired || 0)
+  } catch {
+    /* fall through to integrity report */
+  }
   const report = await runDataIntegrityCheck()
   const audit = {
     id: `AUDIT-${Date.now()}`,
     action: 'repair_derived_data',
-    repaired: 0,
-    note: 'Derived amounts are owned by the Go API; re-check completed',
+    repaired,
+    note: 'Go API /invoices/repair-financials + integrity re-check',
     errorCount: report.errorCount,
     warningCount: report.warningCount,
     at: new Date().toISOString(),
@@ -267,7 +271,7 @@ export async function repairDerivedData(): Promise<{
     /* ignore */
   }
 
-  return { repaired: 0, report, auditId: audit.id }
+  return { repaired, report, auditId: audit.id }
 }
 
 export function getIntegrityAuditLog() {

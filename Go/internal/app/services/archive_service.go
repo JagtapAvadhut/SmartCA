@@ -3,17 +3,17 @@ package services
 import (
 	apperrors "github.com/JagtapAvadhut/smartca-backend/internal/domain/errors"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 	"github.com/JagtapAvadhut/smartca-backend/internal/seed"
 )
 
 // ArchiveService lists and manages soft-deleted records.
 type ArchiveService struct {
-	store    *memory.Store
+	store    repository.Store
 	snapshot map[string][]models.Record
 }
 
-func NewArchiveService(store *memory.Store) *ArchiveService {
+func NewArchiveService(store repository.Store) *ArchiveService {
 	return &ArchiveService{store: store}
 }
 
@@ -35,7 +35,7 @@ func (a *ArchiveService) List(collection string) []models.Record {
 
 func (a *ArchiveService) ListAll() map[string][]models.Record {
 	out := map[string][]models.Record{}
-	for _, coll := range memory.Collections {
+	for _, coll := range CollectionNames {
 		items := a.List(coll)
 		if len(items) > 0 {
 			out[coll] = items
@@ -103,10 +103,10 @@ func (a *ArchiveService) DemoReset() error {
 
 // SettingsService reads/updates organization settings singleton.
 type SettingsService struct {
-	store *memory.Store
+	store repository.Store
 }
 
-func NewSettingsService(store *memory.Store) *SettingsService {
+func NewSettingsService(store repository.Store) *SettingsService {
 	return &SettingsService{store: store}
 }
 

@@ -6,15 +6,15 @@ import (
 	"time"
 
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/money"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 )
 
 // ReportService computes live report series.
 type ReportService struct {
-	store *memory.Store
+	store repository.Store
 }
 
-func NewReportService(store *memory.Store) *ReportService {
+func NewReportService(store repository.Store) *ReportService {
 	return &ReportService{store: store}
 }
 

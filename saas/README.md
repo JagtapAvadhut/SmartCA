@@ -1,9 +1,8 @@
 ﻿# Smart CA Frontend (`saas`)
 
-React + TypeScript UI for Smart CA. Business data is loaded and mutated through the **Go REST API** (`../Go`), not through a LocalStorage MockDatabase on the verified path.
+React + TypeScript UI for Smart CA. Business data is loaded and mutated exclusively through the **Go REST API** (`../Go`) — there is no LocalStorage business database.
 
-> **Requires the Go backend** for login and business features.  
-> **Docker image/Compose runtime was NOT verified** on the machine that authored the Docker files.
+> **Requires the Go backend** (and its PostgreSQL database) for login and every business feature.
 
 ## Stack (from `package.json`)
 
@@ -91,18 +90,15 @@ Never put secrets in `VITE_*`.
 
 **Do not** set `VITE_API_BASE_URL=http://api:8080` — browsers cannot resolve Compose DNS.
 
-### Intended Compose usage
+### Compose usage
 
-From workspace root (`D:\SmartCA`):
+From the workspace root (`SmartCA/`):
 
 ```bash
-docker compose build
-docker compose up -d
+docker compose up --build
 ```
 
-UI: http://localhost:8080  
-
-These commands were **not** executed in the authoring environment.
+UI: http://localhost:8080
 
 ## Auth integration
 
@@ -112,12 +108,10 @@ Demo users are shown on the login page; password `SmartCA@2025` matches Go seed.
 
 ## Known limitations
 
-- No offline business data authority
-- Document upload/preview are metadata / simulated content
-- AI assistant replies are canned
-- Docker build/run **not verified** here
-- Backend restart resets API data (UI refresh alone does not)
+- No offline business data authority — the API/PostgreSQL is the single source of truth
+- Document upload/preview are metadata-only (no binary object storage yet)
+- AI assistant replies depend on `GEMINI_API_KEY` being set on the backend; otherwise the `mock` provider answers
 
 ## License
 
-No license file is present in this repository at the time of writing.
+MIT — see [`../LICENSE`](../LICENSE).

@@ -32,6 +32,16 @@ const (
 	ColSessions      = "sessions"
 )
 
+// CollectionNames is a list of all collection names
+var CollectionNames = []string{
+	ColClients, ColCompanies, ColEmployees, ColInvoices, ColPayments,
+	ColDocuments, ColTasks, ColGST, ColITR, ColTDS, ColROC, ColCompliance,
+	ColNotifications, ColActivities, ColCalendar, ColUsers, ColRoles,
+	ColPermissions, ColOrganization, ColSettings, ColAuditLogs,
+	ColLoginHistory, ColChat, ColDepartments, ColBranches, ColNotes,
+	ColJournals, ColSessions,
+}
+
 // SearchFields returns default search fields per collection.
 func SearchFields(collection string) []string {
 	switch collection {

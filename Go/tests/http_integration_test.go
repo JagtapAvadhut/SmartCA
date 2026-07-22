@@ -15,6 +15,7 @@ import (
 	"github.com/JagtapAvadhut/smartca-backend/internal/api/routes"
 	"github.com/JagtapAvadhut/smartca-backend/internal/app/services"
 	"github.com/JagtapAvadhut/smartca-backend/internal/config"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
 	"github.com/JagtapAvadhut/smartca-backend/internal/seed"
 )
@@ -25,8 +26,9 @@ func setupTestServer(t *testing.T) http.Handler {
 	if err != nil {
 		t.Fatalf("seed: %v", err)
 	}
-	store := memory.NewStore()
-	store.Reset(data)
+	memStore := memory.NewStore()
+	memStore.Reset(data)
+	store := repository.AdaptMemory(memStore)
 	if err := seed.ValidateIntegrity(store); err != nil {
 		t.Fatalf("integrity: %v", err)
 	}

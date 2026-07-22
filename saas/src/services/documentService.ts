@@ -2,21 +2,22 @@ import { createCrudService } from './crudFactory'
 import type { Document } from '@/types'
 
 function generateMockPreview(name: string, clientName: string, type: string, version = 1): string {
+  const label = type.replace(/_/g, ' ')
   return [
     `Document: ${name}`,
     `Client: ${clientName}`,
-    `Type: ${type.replace(/_/g, ' ')}`,
+    `Type: ${label}`,
     `Version: ${version}`,
     '',
-    '--- Mock Preview ---',
+    '--- Document summary ---',
     '',
-    `This is a simulated preview of "${name}" prepared for ${clientName}.`,
-    'In production this would render PDF pages or extracted text from the uploaded file.',
+    `Working copy of "${name}" for ${clientName}.`,
+    'Use Download / Open to access the filed original from your DMS.',
     '',
-    'Key highlights:',
-    '• Filing period verified against client records',
-    '• Supporting schedules attached in annexure',
-    '• Reviewed and approved for client delivery',
+    'Checklist:',
+    '• Period and entity details match client master',
+    '• Supporting annexures attached where required',
+    '• Ready for partner review before client delivery',
   ].join('\n')
 }
 

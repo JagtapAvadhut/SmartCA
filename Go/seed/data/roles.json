@@ -149,7 +149,14 @@
         "tasks.view",
         "tasks.create",
         "tasks.edit",
-        "ai.view"
+        "ai.view",
+        "invoices.view",
+        "invoices.create",
+        "invoices.edit",
+        "payments.view",
+        "payments.create",
+        "reports.view",
+        "accounting.view"
       ],
       "userCount": 4
     },

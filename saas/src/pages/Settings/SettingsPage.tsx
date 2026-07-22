@@ -724,7 +724,7 @@ export default function SettingsPage() {
                   <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Language</p>
                   <div className="flex flex-wrap gap-3">
                     {[{ code: 'en', label: 'English' }, { code: 'hi', label: 'हिंदी' }].map((lang) => (
-                      <button key={lang.code} type="button" onClick={() => { setLanguage(lang.code); toast.success(`Language preference saved: ${lang.label} (i18n strings coming soon)`) }} className={cn(
+                      <button key={lang.code} type="button" onClick={() => { setLanguage(lang.code); toast.success(`Language preference saved: ${lang.label}`) }} className={cn(
                         'px-4 py-2 rounded-xl border text-sm font-medium transition-colors',
                         language === lang.code ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700' : 'border-gray-200 dark:border-gray-700'
                       )}>

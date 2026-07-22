@@ -7,15 +7,19 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"strings"
 	"syscall"
 	"time"
 
+	"github.com/JagtapAvadhut/smartca-backend/internal/ai"
 	"github.com/JagtapAvadhut/smartca-backend/internal/api/handlers"
 	"github.com/JagtapAvadhut/smartca-backend/internal/api/routes"
 	"github.com/JagtapAvadhut/smartca-backend/internal/app/services"
 	"github.com/JagtapAvadhut/smartca-backend/internal/config"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/database"
+	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository/postgres"
 	"github.com/JagtapAvadhut/smartca-backend/internal/seed"
 )
 
@@ -32,31 +36,78 @@ func main() {
 	log := newLogger(cfg.LogLevel)
 	slog.SetDefault(log)
 
-	data, err := seed.LoadSeed()
+	// Connect to PostgreSQL
+	log.Info("connecting to database",
+		"host", cfg.DBHost,
+		"port", cfg.DBPort,
+		"database", cfg.DBName,
+	)
+
+	db, err := database.Connect(
+		cfg.DBConnectionString(),
+		cfg.DBMaxOpenConns,
+		cfg.DBMaxIdleConns,
+		int(cfg.DBConnMaxLifetime.Minutes()),
+	)
 	if err != nil {
-		log.Error("seed load failed", "err", err)
+		log.Error("database connection failed", "err", err)
+		os.Exit(1)
+	}
+	defer db.Close()
+
+	log.Info("database connected successfully")
+
+	// Run migrations
+	migrationsDir := filepath.Join(".", "migrations")
+	log.Info("running database migrations", "dir", migrationsDir)
+	if err := database.Migrate(db, migrationsDir); err != nil {
+		log.Error("migration failed", "err", err)
 		os.Exit(1)
 	}
 
-	store := memory.NewStore()
-	store.Reset(data)
+	// Initialize PostgreSQL store
+	store := postgres.NewStore(db)
+
+	// Load seed data if database is empty
+	var snapshot map[string][]models.Record
+	if store.Count(services.ColUsers, false) == 0 {
+		log.Info("loading seed data")
+		data, err := seed.LoadSeed()
+		if err != nil {
+			log.Error("seed load failed", "err", err)
+			os.Exit(1)
+		}
+		store.Reset(data)
+		snapshot = data
+		log.Info("seed data loaded",
+			"clients", store.Count(services.ColClients, true),
+			"invoices", store.Count(services.ColInvoices, true),
+			"users", store.Count(services.ColUsers, true),
+		)
+	} else {
+		// Get current data as snapshot
+		snapshot = store.Snapshot()
+	}
 
 	if err := seed.ValidateIntegrity(store); err != nil {
-		log.Error("seed integrity check failed", "err", err)
-		os.Exit(1)
+		log.Warn("seed integrity check had issues", "err", err)
 	}
-	log.Info("seed loaded and validated",
-		"clients", store.Count(services.ColClients, true),
-		"invoices", store.Count(services.ColInvoices, true),
-		"users", store.Count(services.ColUsers, true),
-	)
 
 	authSvc := services.NewAuthService(store, cfg)
 	archiveSvc := services.NewArchiveService(store)
-	archiveSvc.SetSnapshot(data)
+	archiveSvc.SetSnapshot(snapshot)
 
 	invoiceSvc := services.NewInvoiceService(store)
 	paymentSvc := services.NewPaymentService(store)
+
+	aiProvider, err := ai.NewProviderFromConfig(cfg)
+	if err != nil {
+		log.Warn("AI provider unavailable; AI routes will error until GEMINI_API_KEY is set", "err", err)
+		aiProvider, _ = ai.NewProviderFromConfig(config.Config{AIProvider: "mock"})
+	} else {
+		log.Info("AI provider ready", "provider", aiProvider.Name(), "model", cfg.GeminiModel)
+	}
+	aiSvc := ai.NewService(cfg, store, log, aiProvider)
 
 	deps := routes.Deps{
 		Cfg:          cfg,
@@ -95,6 +146,7 @@ func main() {
 		Settings:     &handlers.SettingsHandler{Svc: services.NewSettingsService(store)},
 		LoginHistory: &handlers.LoginHistoryHandler{Store: store},
 		NotifsExtra:  &handlers.NotificationExtraHandler{Store: store},
+		AI:           &handlers.AIHandler{Svc: aiSvc},
 	}
 
 	srv := &http.Server{
@@ -102,7 +154,7 @@ func main() {
 		Handler:           routes.NewRouter(deps),
 		ReadHeaderTimeout: 10 * time.Second,
 		ReadTimeout:       30 * time.Second,
-		WriteTimeout:      60 * time.Second,
+		WriteTimeout:      120 * time.Second,
 		IdleTimeout:       120 * time.Second,
 	}
 

@@ -12,14 +12,14 @@ import (
 	"github.com/JagtapAvadhut/smartca-backend/internal/app/services"
 	"github.com/JagtapAvadhut/smartca-backend/internal/config"
 	"github.com/JagtapAvadhut/smartca-backend/internal/rbac"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 )
 
 // Deps aggregates handlers and services for route wiring.
 type Deps struct {
 	Cfg     config.Config
 	Log     *slog.Logger
-	Store   *memory.Store
+	Store   repository.Store
 	Auth    *services.AuthService
 	Archive *services.ArchiveService
 
@@ -54,6 +54,7 @@ type Deps struct {
 	Settings     *handlers.SettingsHandler
 	LoginHistory *handlers.LoginHistoryHandler
 	NotifsExtra  *handlers.NotificationExtraHandler
+	AI           *handlers.AIHandler
 }
 
 // NewRouter builds the chi router with /api/v1 routes.
@@ -135,6 +136,18 @@ func NewRouter(d Deps) http.Handler {
 				st.With(middleware.RequirePermission(rbac.SettingsView)).Get("/organization", d.Settings.GetOrganization)
 				st.With(middleware.RequirePermission(rbac.SettingsEdit)).Patch("/organization", d.Settings.UpdateOrganization)
 			})
+
+			if d.AI != nil {
+				pr.Route("/ai", func(ar chi.Router) {
+					ar.Use(middleware.RequirePermission(rbac.AIView))
+					ar.Post("/chat", d.AI.Chat)
+					ar.Post("/summarize", d.AI.Summarize)
+					ar.Post("/email", d.AI.Email)
+					ar.Post("/client-summary", d.AI.ClientSummary)
+					ar.Post("/document-analysis", d.AI.DocumentAnalysis)
+					ar.Post("/dashboard-insights", d.AI.DashboardInsights)
+				})
+			}
 		})
 	})
 
@@ -159,6 +172,7 @@ func mountCRUD(r chi.Router, path string, h *handlers.CRUDHandler, view, create,
 func mountInvoices(r chi.Router, h *handlers.InvoiceHandler) {
 	r.Route("/invoices", func(cr chi.Router) {
 		cr.With(middleware.RequirePermission(rbac.InvoicesView)).Get("/", h.List)
+		cr.With(middleware.RequirePermission(rbac.InvoicesEdit)).Post("/repair-financials", h.RepairFinancials)
 		cr.With(middleware.RequirePermission(rbac.InvoicesView)).Get("/{id}", h.Get)
 		cr.With(middleware.RequirePermission(rbac.InvoicesCreate)).Post("/", h.Create)
 		cr.With(middleware.RequirePermission(rbac.InvoicesEdit)).Patch("/{id}", h.Update)

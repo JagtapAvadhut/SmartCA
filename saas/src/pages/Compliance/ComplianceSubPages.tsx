@@ -68,8 +68,35 @@ function ComplianceTablePage({
   const [saving, setSaving] = useState(false)
   const queryClient = useQueryClient()
 
-  const { data, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFn })
+  const { data: rawData, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFn })
   const invalidate = () => invalidateAfterMutation(queryClient, [queryKey])
+
+  // Normalize module-specific seed shapes into a shared table row (prevents NaN / blank refs).
+  const rows = useMemo(() => {
+    const list = Array.isArray(rawData)
+      ? rawData
+      : ((rawData as { data?: GSTFiling[] } | undefined)?.data || [])
+    return list.map((row) => {
+      const r = row as unknown as Record<string, unknown>
+      const clientName = String(r.clientName || r.companyName || '—')
+      const gstin = String(r.gstin || r.pan || r.tan || r.cin || '—')
+      const returnType = String(r.returnType || r.itrForm || r.form || r.formType || '—')
+      const period = String(r.period || r.assessmentYear || r.quarter || r.financialYear || '—')
+      const taxRaw = r.taxLiability ?? r.taxPayable ?? r.tdsAmount ?? r.amount ?? 0
+      const taxLiability = Number(taxRaw)
+      return {
+        ...row,
+        clientName,
+        gstin,
+        returnType,
+        period,
+        taxLiability: Number.isFinite(taxLiability) ? taxLiability : 0,
+        priority: String(r.priority || 'medium'),
+        dueDate: String(r.dueDate || ''),
+        status: String(r.status || 'pending'),
+      } as GSTFiling
+    })
+  }, [rawData])
 
   const mutateCreate = async (payload: Partial<GSTFiling>) => {
     if (collection === COLLECTION.gst) return ComplianceService.createGST(payload)
@@ -138,7 +165,7 @@ function ComplianceTablePage({
     { accessorKey: 'period', header: 'Period' },
     { accessorKey: 'dueDate', header: 'Due Date', cell: ({ getValue }) => formatDate(getValue() as string) },
     { accessorKey: 'status', header: 'Status', cell: ({ getValue }) => <Badge status={getValue() as string} /> },
-    { accessorKey: 'taxLiability', header: 'Tax', cell: ({ getValue }) => formatCurrency(getValue() as number) },
+    { accessorKey: 'taxLiability', header: 'Tax', cell: ({ getValue }) => formatCurrency(Number(getValue()) || 0) },
     { accessorKey: 'priority', header: 'Priority', cell: ({ getValue }) => <Badge priority={getValue() as string} variant="priority" /> },
     {
       id: 'actions',
@@ -185,7 +212,7 @@ function ComplianceTablePage({
           </Can>
         }
       />
-      <DataTable data={(data?.data || []) as GSTFiling[]} columns={columns} searchPlaceholder={`Search ${title}...`} exportFilename={queryKey} loading={isLoading} />
+      <DataTable data={rows} columns={columns} searchPlaceholder={`Search ${title}...`} exportFilename={queryKey} loading={isLoading} />
       <EntityFormModal
         open={formOpen}
         onClose={() => setFormOpen(false)}

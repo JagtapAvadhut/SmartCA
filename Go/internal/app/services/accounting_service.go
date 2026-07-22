@@ -9,7 +9,7 @@ import (
 	apperrors "github.com/JagtapAvadhut/smartca-backend/internal/domain/errors"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/money"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 )
 
 var (
@@ -21,10 +21,10 @@ var (
 
 // AccountingService provides demo journals and statements.
 type AccountingService struct {
-	store *memory.Store
+	store repository.Store
 }
 
-func NewAccountingService(store *memory.Store) *AccountingService {
+func NewAccountingService(store repository.Store) *AccountingService {
 	return &AccountingService{store: store}
 }
 

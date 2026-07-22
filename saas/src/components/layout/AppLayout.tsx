@@ -81,8 +81,8 @@ export function AppLayout() {
       <MobileSidebar />
       <Topbar />
       <main className={cn('pt-16 min-h-screen transition-all duration-300 min-w-0', isMobile ? 'pl-0' : sidebarCollapsed ? 'pl-[72px]' : 'pl-64')}>
-        <div className="bg-amber-50 dark:bg-amber-950/40 border-b border-amber-200/80 dark:border-amber-800/60 px-4 py-2 text-center text-xs text-amber-900 dark:text-amber-100">
-          Demo Mode — business data is served by the local Go API (in-memory). Restarting the API resets to seed data. AI replies are simulated.
+        <div className="bg-emerald-50 dark:bg-emerald-950/40 border-b border-emerald-200/80 dark:border-emerald-800/60 px-4 py-2 text-center text-xs text-emerald-900 dark:text-emerald-100">
+          Connected to Smart CA API — business data is persisted in PostgreSQL. AI responses are generated server-side via Gemini.
         </div>
         <div className="page-container min-w-0">
           <Outlet />

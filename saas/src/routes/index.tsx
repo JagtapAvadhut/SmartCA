@@ -2,7 +2,8 @@ import { lazy, Suspense } from 'react'
 import { createBrowserRouter, Navigate } from 'react-router'
 import { AppLayout } from '@/components/layout'
 import { DashboardSkeleton, ErrorBoundary } from '@/components/common'
-import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
+import { AuthLoading, ProtectedRoute } from '@/components/auth/ProtectedRoute'
+import { useAuthHydrated } from '@/hooks/useAuthHydrated'
 import { useAuthStore } from '@/store'
 
 const DashboardPage = lazy(() => import('@/pages/Dashboard/DashboardPage'))
@@ -40,7 +41,9 @@ function LazyPage({ children }: { children: React.ReactNode }) {
 }
 
 function GuestRoute({ children }: { children: React.ReactNode }) {
+  const hydrated = useAuthHydrated()
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+  if (!hydrated) return <AuthLoading />
   if (isAuthenticated) return <Navigate to="/" replace />
   return <>{children}</>
 }

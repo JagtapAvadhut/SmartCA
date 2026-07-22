@@ -1,71 +1,119 @@
 # Smart CA
 
-Chartered Accountant practice management system — **React** frontend + **Go** REST API in a single monorepo.
+**Practice management for Chartered Accountant firms** — clients, companies, GST/ITR/TDS/ROC compliance, invoicing, payments, documents, accounting, reports, and an AI assistant, in one platform.
 
-```
-Browser → React (saas) → REST /api/v1 → Go handlers → services → repository interfaces → in-memory store → deterministic seed
-```
+React (Vite) frontend + Go REST API + PostgreSQL, with Google Gemini AI wired in server-side only.
 
-> **Demo status:** Ready for local walkthroughs. **Not** production-ready for real customer data or statutory filings.  
-> **Database:** Concurrency-safe **in-memory** store only. **PostgreSQL is not implemented.**  
-> **Docker:** Configuration is provided and statically reviewed. **Docker was NOT runtime-tested on the authoring machine.**
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Go](https://img.shields.io/badge/Go-1.26-00ADD8?logo=go&logoColor=white)](./Go/go.mod)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](./saas/package.json)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?logo=postgresql&logoColor=white)](./docs/database/DATABASE_SETUP.md)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](./docker-compose.yml)
 
 ---
 
-## Application Screenshots
+## Table of Contents
 
-![Smart CA Login](docs/screenshots/login.png)
-
-![Smart CA Dashboard](docs/screenshots/dashboard.png)
-
-![Smart CA Clients](docs/screenshots/clients.png)
-
-![Smart CA Documents](docs/screenshots/documents.png)
-
-![Smart CA Calendar](docs/screenshots/calendar.png)
-
-![Smart CA Accounting](docs/screenshots/accounting.png)
-
-![Smart CA Reports](docs/screenshots/reports.png)
-
-![Smart CA Settings](docs/screenshots/settings.png)
-
-![Smart CA Dark Mode](docs/screenshots/dark-mode.png)
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Folder Structure](#folder-structure)
+- [Screenshots](#screenshots)
+- [Installation](#installation)
+- [Development](#development)
+- [Production (Docker)](#production-docker)
+- [Environment Variables](#environment-variables)
+- [Database](#database)
+- [Authentication](#authentication)
+- [Gemini AI](#gemini-ai)
+- [RBAC](#rbac)
+- [Modules](#modules)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
 ## Overview
 
-Smart CA helps a CA firm manage clients, companies, compliance workflows (GST / ITR / TDS / ROC), invoicing, payments, document metadata, tasks, calendar, demo accounting journals, reports, users/roles, and settings.
+Smart CA helps a CA firm run its practice end-to-end: client and company records, statutory compliance (GST, Income Tax/ITR, TDS, ROC), invoicing and payment collection, document management, tasks/notes/calendar, double-entry style accounting reports, role-based user administration, and an AI assistant grounded in the firm's own data.
 
-Business data is owned by the **Go API**. The verified frontend path does **not** use LocalStorage or static JSON as the business database.
+Business data is owned by the **Go API** and persisted in **PostgreSQL**. The React app never talks to the database or to Gemini directly — every request goes through the Go REST API.
 
----
+## Architecture
 
-## Key Features
+```mermaid
+flowchart LR
+  U["Browser"] --> R["React 19 + Vite (saas/)"]
+  R -->|"HTTPS /api/v1 (JSON, Bearer token)"| A["Go REST API (Go/)"]
+  A --> S["Application Services\n(business rules, RBAC, money math)"]
+  S --> P["PostgreSQL 18\n(entity tables + auth_sessions)"]
+  S -->|"server-side only"| G["Google Gemini\n(gemini-2.5-flash)"]
+```
+
+**Docker Compose topology** (`docker compose up --build`):
+
+```mermaid
+flowchart TB
+  subgraph compose["Docker Compose network: smartca-net"]
+    direction TB
+    DB["db\npostgres:18-alpine\nvolume: db-data"] -->|"healthy"| API["api\nGo distroless nonroot\n:8080 (internal)"]
+    API -->|"healthy"| WEB["web\nnginx-unprivileged\n:8080 → published"]
+  end
+  Browser["Browser :8080"] --> WEB
+  WEB -->|"/api/* proxy"| API
+  API --> DB
+```
+
+### Request flow
+
+```mermaid
+sequenceDiagram
+  participant Browser
+  participant Nginx as nginx (web, Docker only)
+  participant API as Go API
+  participant RBAC as RBAC middleware
+  participant Svc as Service layer
+  participant DB as PostgreSQL
+
+  Browser->>Nginx: GET /api/v1/clients (Bearer token)
+  Nginx->>API: proxy_pass /api/* (same origin)
+  API->>API: CORS + auth middleware (validate session)
+  API->>RBAC: check permission (e.g. clients.view)
+  RBAC-->>API: allow / 403
+  API->>Svc: CRUDService.List()
+  Svc->>DB: SELECT ... FROM clients
+  DB-->>Svc: rows
+  Svc-->>API: domain records
+  API-->>Browser: JSON envelope {success, data, meta}
+```
+
+In native development the browser talks to the Go API directly on `:8080` (no nginx hop); in Docker, nginx serves the SPA and reverse-proxies `/api/*` to the `api` service.
+
+## Features
 
 | Module | Capability |
 |--------|------------|
-| Auth & RBAC | Opaque Bearer sessions, permission-gated routes/actions |
-| Dashboard / Reports | Aggregates from live backend state |
-| Clients / Companies / Employees | CRUD + archive/restore patterns |
-| Invoices / Payments | Server-side totals, GST-aware money (paise internally) |
-| Documents | Metadata CRUD (no real object storage) |
-| Tasks / Notes / Calendar | Practice operations |
-| Compliance | GST, ITR, TDS, ROC modules |
-| Accounting (demo) | Journals, trial balance, P&L, balance sheet |
-| Settings / Users / Roles | Admin configuration |
-| Search / Recycle Bin / Notifications | Cross-cutting UX |
-| Demo reset | `POST /api/v1/demo/reset` (authorized) |
-
----
+| Auth & RBAC | Opaque Bearer sessions (PostgreSQL-backed), permission-gated routes & UI actions |
+| Dashboard / Reports | Live KPIs, revenue/outstanding trends, GST filing status, compliance due |
+| Clients / Companies / Employees | Full CRUD, archive & restore (Recycle Bin) |
+| Invoices / Payments | Server-side totals, GST money math (paise-accurate), payment reconciliation |
+| Documents | Folder-based metadata CRUD, search, favourites |
+| Tasks / Notes / Calendar | Day-to-day practice operations |
+| Compliance | GST, ITR, TDS, ROC filing trackers with due dates and status |
+| Accounting | Journals, revenue/expense trend, profit & loss inputs |
+| Settings / Users / Roles | Organization profile, branding, notification channels, RBAC administration |
+| AI Assistant | Chat, summarization, email drafting, insights — powered by Gemini via the Go API |
+| Search / Recycle Bin / Notifications | Cross-cutting UX shared by every module |
+| Theming | Light / Dark / System, responsive layout (desktop, tablet, mobile) |
 
 ## Technology Stack
 
 ### Frontend (`saas/`)
 
-| Tech | Version (from `saas/package.json`) |
-|------|--------------------------------------|
+| Technology | Version |
+|------------|---------|
 | React / React DOM | ^19.2.7 |
 | Vite | ^8.1.1 |
 | TypeScript | ~6.0.2 |
@@ -74,196 +122,146 @@ Business data is owned by the **Go API**. The verified frontend path does **not*
 | Zustand | ^5.0.14 |
 | react-router | ^7.18.1 |
 | react-hook-form + zod | ^7.81.0 / ^4.4.3 |
-| recharts, framer-motion, lucide-react | as declared |
-| Package manager | **npm** (`package-lock.json`) |
+| recharts, framer-motion, lucide-react | as declared in `package.json` |
+| Playwright | ^1.61.1 (QA + screenshot capture) |
+| Package manager | npm (`package-lock.json`) |
 
 ### Backend (`Go/`)
 
-| Tech | Version (from `Go/go.mod`) |
-|------|----------------------------|
-| Go | **1.26.5** |
-| chi | v5.3.1 |
+| Technology | Version |
+|------------|---------|
+| Go | 1.26.5 |
+| chi router | v5.3.1 |
+| lib/pq (PostgreSQL driver) | v1.10.9 |
 | google/uuid | v1.6.0 |
-| golang.org/x/crypto | v0.54.0 (bcrypt; pure Go) |
+| golang.org/x/crypto (bcrypt) | v0.54.0 |
 
----
+### Data & AI
 
-## Monorepo Structure
+| Component | Details |
+|-----------|---------|
+| Database | PostgreSQL 14+ (developed/tested on 18), SQL migrations in `Go/migrations/` |
+| AI provider | Google Gemini (`gemini-2.5-flash` default) via a server-side provider abstraction; falls back to a deterministic `mock` provider with no API key |
+
+## Folder Structure
 
 ```
 SmartCA/
-├── Go/                      # Go REST API
-│   ├── cmd/api/             # Entrypoint (+ -healthcheck)
-│   ├── internal/            # handlers, services, memory store, seed, auth, RBAC
-│   ├── pkg/apiresponse/
+├── README.md                 # This file
+├── LICENSE
+├── CHANGELOG.md
+├── docker-compose.yml        # db + api + web orchestration
+├── .env.example               # Compose variable overrides (no secrets)
+├── Go/                        # Backend — Go REST API
+│   ├── cmd/api/                # Entrypoint (+ -healthcheck flag)
+│   ├── internal/                # handlers, services, repository, auth, RBAC, AI
+│   ├── migrations/               # Versioned SQL migrations
+│   ├── scripts/                  # Database setup helpers
+│   ├── pkg/apiresponse/           # JSON response envelopes
 │   ├── Dockerfile
 │   ├── .dockerignore
+│   ├── .env.example
+│   ├── QUICKSTART.md
 │   └── README.md
-├── saas/                    # React + Vite frontend
-│   ├── src/
-│   ├── nginx.conf           # SPA + /api reverse proxy (Docker)
+├── saas/                       # Frontend — React + Vite
+│   ├── src/                      # pages, components, services, store
+│   ├── scripts/                    # Playwright QA + screenshot capture
+│   ├── public/
 │   ├── Dockerfile
+│   ├── nginx.conf                  # SPA + /api reverse proxy (Docker)
 │   ├── .dockerignore
+│   ├── .env.example
 │   └── README.md
-├── docs/
-│   └── screenshots/         # README screenshots
-├── docker-compose.yml       # api + web services
-├── README.md                # This file
-├── Docker_Static_Review_Report.txt
-├── FEATURE_API_TRACEABILITY_MATRIX.md
-├── CRUD_COMPLETENESS_MATRIX.md
-├── SYSTEM_GAP_ANALYSIS.md
-├── SMART_CA_SYSTEM_STATUS.md
-└── Auth_Debug_Report.txt
+└── docs/
+    ├── screenshots/                # README screenshots (real, fully loaded)
+    ├── architecture/                 # Diagrams reference
+    ├── api/openapi.yaml               # Partial OpenAPI spec
+    ├── database/                       # Setup guide + migration history
+    └── reports/                         # Historical GA/RC release reports
 ```
 
-GitHub: [JagtapAvadhut/SmartCA](https://github.com/JagtapAvadhut/SmartCA)
+## Screenshots
 
----
+All screenshots below are real captures of the running application (Go API + PostgreSQL + React), taken with Playwright at `1440×900` unless noted — no skeletons, no loading spinners, no mock/demo banners.
 
-## Architecture
+| | |
+|---|---|
+| **Login** | ![Login](docs/screenshots/login.png) |
+| **Dashboard** | ![Dashboard](docs/screenshots/dashboard.png) |
+| **Clients** | ![Clients](docs/screenshots/clients.png) |
+| **Companies** | ![Companies](docs/screenshots/companies.png) |
+| **Invoices** | ![Invoices](docs/screenshots/invoices.png) |
+| **Payments** | ![Payments](docs/screenshots/payments.png) |
+| **Compliance** | ![Compliance](docs/screenshots/compliance.png) |
+| **GST** | ![GST](docs/screenshots/gst.png) |
+| **ITR** | ![ITR](docs/screenshots/itr.png) |
+| **TDS** | ![TDS](docs/screenshots/tds.png) |
+| **ROC** | ![ROC](docs/screenshots/roc.png) |
+| **Reports** | ![Reports](docs/screenshots/reports.png) |
+| **Documents** | ![Documents](docs/screenshots/documents.png) |
+| **AI Assistant** | ![AI Assistant](docs/screenshots/ai-assistant.png) |
+| **Settings** | ![Settings](docs/screenshots/settings.png) |
+| **Dark Mode** | ![Dark Mode](docs/screenshots/dark-mode.png) |
+| **Light Mode** | ![Light Mode](docs/screenshots/light-mode.png) |
+| **Responsive — Tablet** | ![Responsive Tablet](docs/screenshots/responsive-tablet.png) |
+| **Responsive — Mobile** | ![Responsive Mobile](docs/screenshots/responsive-mobile.png) |
 
-### Native development
-
-```mermaid
-flowchart LR
-  B["Browser\n:5173"] --> V["React + Vite\nsaas/"]
-  V -->|"VITE_API_BASE_URL\nhttp://localhost:8080/api/v1"| G["Go API\n:8080"]
-  G --> M["In-memory Store\n+ embedded seed"]
-```
-
-### Intended Docker deployment
-
-```mermaid
-flowchart LR
-  B["Browser\n:8080"] --> W["web\nnginx :8080"]
-  W -->|"/ static SPA"| W
-  W -->|"/api/* proxy"| A["api\nGo :8080"]
-  A --> M["In-memory Store"]
-```
-
-**Docker networking:** Browser JS must **not** call Compose DNS (`http://api:8080`). Production builds use **`VITE_API_BASE_URL=/api/v1`**. Nginx proxies `/api/` to `http://api:8080`.
-
-### Layered API flow
-
-```
-Browser
-  → React
-  → /api/v1 (native absolute URL or Docker same-origin)
-  → [Docker] frontend reverse proxy
-  → Go REST handlers
-  → Application services / business rules
-  → Repository interfaces
-  → Concurrency-safe in-memory repositories
-  → Deterministic seed data
-```
-
----
-
-## Authentication and RBAC
-
-| Item | Behavior |
-|------|----------|
-| Login | `POST /api/v1/auth/login` `{ identifier, password, rememberMe?, device? }` |
-| Identifier | email **or** username **or** loginId |
-| Session | Opaque Bearer token (`Authorization: Bearer …`) |
-| Storage (browser) | `localStorage` key `smart-ca-token` (token only — not a business DB) |
-| Me / Logout | `GET /api/v1/auth/me`, `POST /api/v1/auth/logout` |
-| CORS | `FRONTEND_ORIGIN` allowlist (`localhost` ≠ `127.0.0.1`) |
-
-### Demo credentials (intentional public demo)
-
-Password for seeded users: **`SmartCA@2025`** (bcrypt at seed load; never returned by API).
-
-| Role label | Email |
-|------------|-------|
-| Admin | `rajesh.sharma@smartca.in` |
-| Partner | `priya.patel@smartca.in` |
-| CA (UI label) | `amit.kumar@smartca.in` |
-
----
-
-## In-Memory Data Model
-
-- Collections held in process memory with mutexes / transactional snapshots
-- Deterministic seed JSON embedded via `go:embed` (`Go/internal/seed/data/`)
-- CRUD mutations survive browser refresh while the API process lives
-- **API restart or container recreate resets to seed**
-- `POST /api/v1/demo/reset` reloads seed for authorized `super_admin` when enabled
-- **No PostgreSQL, Redis, or durable volumes for business data**
-
----
-
-## API
-
-Base path: **`/api/v1`**
-
-| Probe | Path |
-|-------|------|
-| Liveness | `GET /health/live` |
-| Readiness | `GET /health/ready` |
-| Version | `GET /api/v1/version` |
-
-Partial OpenAPI: `Go/docs/openapi.yaml` (routes in `Go/internal/api/routes` are authoritative).
-
----
-
-## Environment Variables
-
-### Backend (`Go/`)
-
-| Variable | Purpose | Default |
-|----------|---------|---------|
-| `APP_ENV` | Environment label | `development` |
-| `HTTP_HOST` | Bind host | `0.0.0.0` |
-| `HTTP_PORT` | Listen port | `8080` |
-| `FRONTEND_ORIGIN` | CORS allowlist (comma-separated; never `*`) | `http://localhost:5173,http://127.0.0.1:5173` |
-| `FRONTEND_ORIGINS` | Optional override of above | unset |
-| `LOG_LEVEL` | `debug\|info\|warn\|error` | `info` |
-| `SESSION_TTL` | Session TTL (`rememberMe` → 7d) | `30m` |
-| `DEMO_RESET_ENABLED` | Allow demo reset | `true` in development |
-
-### Frontend (`saas/`) — build-time `VITE_*`
-
-| Variable | Native | Docker image build |
-|----------|--------|--------------------|
-| `VITE_API_BASE_URL` | `http://localhost:8080/api/v1` | `/api/v1` |
-| `VITE_APP_NAME` | `Smart CA` | `Smart CA` |
-
-Never put secrets in `VITE_*` variables.
-
----
-
-## Native Development Setup
-
-### Prerequisites
-
-- Go **1.26.5**
-- Node **22.x** + npm
-- No database server
-
-### Backend
-
-```bash
-cd Go
-cp .env.example .env   # optional
-go run ./cmd/api
-```
-
-### Frontend
+Regenerate them anytime (native dev servers must be running — see [Development](#development)):
 
 ```bash
 cd saas
-cp .env.example .env   # VITE_API_BASE_URL=http://localhost:8080/api/v1
+node scripts/capture-screenshots.mjs
+```
+
+## Installation
+
+### Prerequisites
+
+- **Go** 1.24+ (developed on 1.26.5)
+- **Node.js** 22.x + npm
+- **PostgreSQL** 14+ (developed on 18)
+- **Docker** + Docker Compose v2 — only if you want the containerized path
+
+### Clone
+
+```bash
+git clone https://github.com/JagtapAvadhut/SmartCA.git
+cd SmartCA
+```
+
+## Development
+
+Run PostgreSQL, the Go API, and the Vite dev server natively (fastest inner loop, hot reload):
+
+```bash
+# 1. Database
+cd Go/scripts
+./setup_database.sh        # Linux/macOS — creates the smartca DB + user
+# .\check_and_setup.ps1    # Windows PowerShell
+
+# 2. Backend
+cd ..
+cp .env.example .env         # edit DB_PASSWORD / GEMINI_API_KEY as needed
+go run ./cmd/api             # connects to PostgreSQL, runs migrations, seeds if empty
+
+# 3. Frontend (new terminal)
+cd ../saas
+cp .env.example .env
 npm ci
 npm run dev
 ```
 
-Open `http://localhost:5173` or `http://127.0.0.1:5173`.
+Open `http://localhost:5173` (or `http://127.0.0.1:5173`).
 
----
+### Demo login
 
-## Testing
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | `rajesh.sharma@smartca.in` | `SmartCA@2025` |
+| Partner | `priya.patel@smartca.in` | `SmartCA@2025` |
+| CA | `amit.kumar@smartca.in` | `SmartCA@2025` |
+
+### Tests & QA
 
 ```bash
 # Backend
@@ -271,7 +269,6 @@ cd Go
 gofmt -l .
 go vet ./...
 go test ./...
-go test -race ./...   # requires CGO on some Windows hosts
 go build ./cmd/api
 
 # Frontend
@@ -279,92 +276,154 @@ cd saas
 npx tsc -b
 npm run lint
 npm run build
-
-# E2E against native API + Vite (both must be running)
-cd saas
-npm run qa:auth
-npm run qa:business
-npm run qa:browser
+npm run qa:auth       # Playwright auth E2E
+npm run qa:business   # Playwright business-flow QA
+npm run qa:browser    # Playwright page-render QA
 ```
 
----
+## Production (Docker)
 
-## Docker Deployment Configuration
-
-| File | Role |
-|------|------|
-| `docker-compose.yml` | Services `api` + `web` |
-| `Go/Dockerfile` | Multi-stage → distroless nonroot binary |
-| `Go/.dockerignore` | Lean API build context |
-| `saas/Dockerfile` | `npm ci` + build → nginx unprivileged |
-| `saas/nginx.conf` | SPA, `/health`, `/api/` → `api:8080` |
-| `saas/.dockerignore` | Lean UI build context |
-
-### Intended commands (Docker-capable host)
+The full stack — **PostgreSQL → Go API → React (nginx)** — starts with one command:
 
 ```bash
-docker compose build
-docker compose up -d
-docker compose ps
-docker compose logs -f
-docker compose down
+cp .env.example .env    # optional: override DB_PASSWORD / GEMINI_API_KEY
+docker compose up --build
 ```
 
-**These commands were NOT executed in this environment.** Docker is unavailable locally; treat the above as the intended interface of the checked-in configuration.
+| Service | Image base | Published port | Notes |
+|---------|------------|-----------------|-------|
+| `db` | `postgres:18-alpine` | internal only | Named volume `db-data`; `pg_isready` healthcheck |
+| `api` | multi-stage → `distroless/static-debian12:nonroot` | internal only | Waits for `db` to be healthy; runs migrations + seed on boot |
+| `web` | multi-stage → `nginx-unprivileged:1.27.4-alpine` | **8080** | Waits for `api` to be healthy; serves the SPA and proxies `/api/*` |
 
-| Service | Host port | Notes |
-|---------|-----------|-------|
-| `web` | **8080** | UI + `/api` proxy |
-| `api` | _(internal only)_ | Compose DNS `api:8080` |
+Open **http://localhost:8080**.
 
-In-memory data resets when containers are recreated.
+```bash
+docker compose ps
+docker compose logs -f
+docker compose down        # stop (keeps the db-data volume)
+docker compose down -v     # stop + wipe the database volume
+```
 
----
+Design highlights (see [Phase 2 review in `REPOSITORY_RELEASE_REPORT.md`](REPOSITORY_RELEASE_REPORT.md) for the full checklist):
 
-## Known Limitations
+- Multi-stage builds; final images contain no build toolchain
+- `api` and `web` run as non-root (`nonroot` / `nginx`), `cap_drop: ALL`, `no-new-privileges`
+- `api` runs `read_only: true` with a `tmpfs` `/tmp`
+- Explicit `smartca-net` bridge network and named `db-data` volume
+- `depends_on: condition: service_healthy` enforces `db → api → web` startup order
+- All service credentials/AI keys are externalized via `${VAR:-default}` substitution from a root `.env` (never baked into images)
 
-1. No PostgreSQL / durable persistence  
-2. API/container restart resets runtime CRUD data  
-3. No real object storage for documents  
-4. AI assistant replies are simulated / canned  
-5. **Docker build/run/Compose not verified locally**  
-6. OpenAPI may lag mounted routes  
-7. Accounting is demo-grade, not statutory certification  
+> Docker Compose was reviewed and corrected for structural/technical correctness in this environment (Docker itself was not available to execute `docker compose up` here). Verify on your machine and open an issue if you hit anything.
 
----
+## Environment Variables
 
-## Future PostgreSQL Migration
+Three independent `.env.example` files — copy each to `.env` next to it. **Never commit a real `.env`.**
 
-Replace in-memory repository implementations behind existing interfaces; keep HTTP handlers and services stable. See `Go/docs/POSTGRESQL_MIGRATION_BLUEPRINT.md`.
+### Root (`/.env.example`) — Docker Compose overrides
 
----
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `DB_USER` / `DB_PASSWORD` / `DB_NAME` | `smartca` / `smartca` / `smartca` | PostgreSQL credentials shared by `db` + `api` |
+| `AI_PROVIDER` | `mock` | `gemini` \| `mock` |
+| `GEMINI_API_KEY` | _(empty)_ | Required only when `AI_PROVIDER=gemini` |
+| `GEMINI_MODEL` | `gemini-2.5-flash` | Gemini model id |
 
-## Troubleshooting
+### Backend (`Go/.env.example`)
 
-| Symptom | Likely cause |
-|---------|----------------|
-| `Failed to fetch` | API not running, or CORS `localhost` vs `127.0.0.1` |
-| Docker login fails conceptually | Image built without `VITE_API_BASE_URL=/api/v1` |
-| Data disappeared | API/container restart (expected) |
-| Browser uses `http://api:8080` | Invalid — Compose DNS is not browser-reachable |
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `APP_ENV` | `development` | `development` \| `production` |
+| `HTTP_HOST` / `HTTP_PORT` | `0.0.0.0` / `8080` | Listener |
+| `FRONTEND_ORIGIN` | `http://localhost:5173,http://127.0.0.1:5173` | CORS allowlist — never `*` |
+| `LOG_LEVEL` | `info` | `debug` \| `info` \| `warn` \| `error` |
+| `SESSION_TTL` | `30m` | Bearer session TTL (`rememberMe` → 7d) |
+| `DEMO_RESET_ENABLED` | `true` in dev | Gates `POST /api/v1/demo/reset` |
+| `DB_HOST` / `DB_PORT` / `DB_USER` / `DB_PASSWORD` / `DB_NAME` / `DB_SSLMODE` | see file | PostgreSQL connection |
+| `DB_MAX_OPEN_CONNS` / `DB_MAX_IDLE_CONNS` / `DB_CONN_MAX_LIFETIME` | `25` / `5` / `5` | Connection pool tuning |
+| `AI_PROVIDER` / `GEMINI_API_KEY` / `GEMINI_MODEL` / `GEMINI_TIMEOUT` / `GEMINI_MAX_TOKENS` | see file | Server-side only — never sent to the browser |
 
----
+### Frontend (`saas/.env.example`) — build-time `VITE_*`
 
-## Documentation Index
+| Variable | Native | Docker image build |
+|----------|--------|---------------------|
+| `VITE_API_BASE_URL` | `http://localhost:8080/api/v1` | `/api/v1` (same-origin; nginx proxies to `api`) |
+| `VITE_APP_NAME` | `Smart CA` | `Smart CA` |
 
-| Document | Path |
-|----------|------|
-| Docker static review | `Docker_Static_Review_Report.txt` |
-| System status | `SMART_CA_SYSTEM_STATUS.md` |
-| Feature ↔ API matrix | `FEATURE_API_TRACEABILITY_MATRIX.md` |
-| CRUD matrix | `CRUD_COMPLETENESS_MATRIX.md` |
-| Gap analysis | `SYSTEM_GAP_ANALYSIS.md` |
-| Auth debug | `Auth_Debug_Report.txt` |
-| Backend README | `Go/README.md` |
-| Frontend README | `saas/README.md` |
+`VITE_*` values are inlined at **build time**. Never put secrets in a `VITE_*` variable — anything prefixed `VITE_` ships to the browser.
 
----
+## Database
+
+- PostgreSQL 14+, schema versioned via SQL migrations in [`Go/migrations/`](Go/migrations)
+- Applied automatically on API startup and tracked in a `schema_migrations` table
+- Seed data is embedded JSON (`Go/internal/seed/data/*.json`, `go:embed`) and loads automatically into an empty database
+- Entities: users, roles, permissions, clients, companies, employees, invoices, invoice_items, payments, documents, folders, tasks, notes, gst, itr, tds, roc, activities, audit_logs, calendar_events, notifications, settings, auth_sessions
+- Full setup guide: [`docs/database/DATABASE_SETUP.md`](docs/database/DATABASE_SETUP.md)
+- Migration history / rationale: [`docs/database/MIGRATION_GUIDE.md`](docs/database/MIGRATION_GUIDE.md)
+
+## Authentication
+
+| Item | Behavior |
+|------|----------|
+| Login | `POST /api/v1/auth/login` `{ identifier, password, rememberMe?, device? }` |
+| Identifier | Email, username, **or** login ID |
+| Session | Opaque Bearer token, persisted in the `auth_sessions` table |
+| Storage (browser) | `localStorage` key `smart-ca-token` (token only — not a business database) |
+| Me / Logout | `GET /api/v1/auth/me`, `POST /api/v1/auth/logout` |
+| Password hashing | bcrypt (`golang.org/x/crypto`) |
+| CORS | Explicit `FRONTEND_ORIGIN` allowlist (`localhost` ≠ `127.0.0.1`; `*` is rejected) |
+
+## Gemini AI
+
+- All Gemini calls happen **inside the Go API** (`Go/internal/ai/`) — `GEMINI_API_KEY` never reaches the browser
+- Provider abstraction (`AI_PROVIDER=gemini|mock`) lets the app run fully offline with a deterministic mock provider when no key is configured
+- Endpoints under `/api/v1/ai/*`: chat, summarization, email drafting, dashboard insights
+- Get a key: <https://aistudio.google.com/apikey>
+
+## RBAC
+
+```mermaid
+flowchart TD
+  Req["Incoming request"] --> Auth{"Valid Bearer session?"}
+  Auth -- no --> R401["401 Unauthorized"]
+  Auth -- yes --> Role["Resolve user → role → permissions"]
+  Role --> Perm{"Has required permission?\n(e.g. invoices.create)"}
+  Perm -- no --> R403["403 Forbidden"]
+  Perm -- yes --> Handler["Handler → Service → PostgreSQL"]
+```
+
+- Permissions are granular per module and action, e.g. `clients.view`, `invoices.create`, `settings.roles` (see `Go/internal/rbac/rbac.go`)
+- Roles bundle permissions (`roles` + `role_permissions` tables); users can also get direct permission overrides
+- The React UI reads the same permission set to hide/disable actions — enforcement is always re-checked server-side
+
+## Modules
+
+Clients · Companies · Employees · Compliance (GST, ITR, TDS, ROC) · Accounting · Invoices · Payments · Documents · Tasks · Notes · Calendar · Reports · Recycle Bin · Search · Notifications · Settings (Organization, Users, Roles, Branding, Notifications, Security, API Keys, Data Integrity, Appearance, Activity Logs) · AI Assistant
+
+## Roadmap
+
+- [ ] Binary document storage (S3-compatible object storage) — currently metadata-only
+- [ ] Real-time notifications (WebSocket/SSE) instead of polling
+- [ ] Multi-tenant firm isolation
+- [ ] Audit-grade accounting exports (Tally/Excel reconciliation)
+- [ ] Additional AI providers (OpenAI, Claude, Azure, Ollama) behind the existing provider interface
+- [ ] CI pipeline (lint, test, build, image scan) on GitHub Actions
+
+## Contributing
+
+Contributions are welcome.
+
+1. Fork the repository and create a feature branch
+2. Follow existing code style (`gofmt`, `go vet` for Go; `oxlint`, `tsc -b` for TypeScript)
+3. Add/update tests where practical
+4. Open a pull request describing the change and how you tested it
+
+Please avoid committing `.env` files, build artifacts, or generated reports — see `.gitignore` for what's already excluded.
 
 ## License
 
-No `LICENSE` file is present in this repository at the time of writing. Do not assume an open-source license.
+[MIT](./LICENSE) © Avadhut Jagtap
+
+---
+
+Additional documentation: [Architecture](docs/architecture/ARCHITECTURE.md) · [Database](docs/database/DATABASE_SETUP.md) · [OpenAPI](docs/api/openapi.yaml) · [Backend README](Go/README.md) · [Frontend README](saas/README.md) · [Changelog](CHANGELOG.md) · [Historical release reports](docs/reports)

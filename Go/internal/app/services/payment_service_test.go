@@ -9,12 +9,14 @@ import (
 	"github.com/JagtapAvadhut/smartca-backend/internal/app/services"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/money"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
 )
 
-func setupFinancialStore(t *testing.T) (*memory.Store, string, string) {
+func setupFinancialStore(t *testing.T) (repository.Store, string, string) {
 	t.Helper()
-	store := memory.NewStore()
+	memStore := memory.NewStore()
+	store := repository.AdaptMemory(memStore)
 	client, err := store.Create(services.ColClients, models.Record{
 		"id": "CLT-TEST", "name": "Test Client", "status": "active",
 		"revenue": 0.0, "outstanding": 0.0,

@@ -1,6 +1,35 @@
 const TOKEN_KEY = 'smart-ca-token'
-const DEFAULT_BASE = 'http://localhost:8080/api/v1'
+const AUTH_PERSIST_KEY = 'smart-ca-auth'
 const TIMEOUT_MS = 15_000
+
+function defaultApiBase(): string {
+  if (typeof window !== 'undefined' && window.location?.hostname) {
+    const host = window.location.hostname
+    // Keep API host aligned with the page host (localhost vs 127.0.0.1) to avoid CORS/session quirks.
+    if (host === 'localhost' || host === '127.0.0.1') {
+      return `http://${host}:8080/api/v1`
+    }
+  }
+  return 'http://localhost:8080/api/v1'
+}
+
+/** Sync bearer token from zustand persist blob before any request (avoids boot race). */
+function syncTokenFromPersist() {
+  try {
+    if (localStorage.getItem(TOKEN_KEY)) return
+    const raw = localStorage.getItem(AUTH_PERSIST_KEY)
+    if (!raw) return
+    const parsed = JSON.parse(raw) as { state?: { token?: string } }
+    const token = parsed?.state?.token
+    if (token) localStorage.setItem(TOKEN_KEY, token)
+  } catch {
+    /* ignore */
+  }
+}
+
+if (typeof window !== 'undefined') {
+  syncTokenFromPersist()
+}
 
 export function setAuthToken(token: string | null) {
   if (token) {
@@ -12,6 +41,7 @@ export function setAuthToken(token: string | null) {
 
 export function getAuthToken(): string | null {
   try {
+    syncTokenFromPersist()
     return localStorage.getItem(TOKEN_KEY)
   } catch {
     return null
@@ -21,7 +51,7 @@ export function getAuthToken(): string | null {
 export function getApiBaseUrl(): string {
   const raw = import.meta.env.VITE_API_BASE_URL as string | undefined
   // Empty or unset → native default. Explicit "/api/v1" is for same-origin Docker/nginx proxy.
-  const base = raw !== undefined && raw.trim() !== '' ? raw.trim() : DEFAULT_BASE
+  const base = raw !== undefined && raw.trim() !== '' ? raw.trim() : defaultApiBase()
   return base.replace(/\/$/, '')
 }
 
@@ -83,7 +113,7 @@ export class ApiError extends Error {
 function handleUnauthorized() {
   setAuthToken(null)
   try {
-    localStorage.removeItem('smart-ca-auth')
+    localStorage.removeItem(AUTH_PERSIST_KEY)
   } catch {
     /* ignore */
   }
@@ -115,6 +145,8 @@ type RequestOptions = {
   signal?: AbortSignal
   /** When true, skip 401 redirect (e.g. login failures). */
   skipAuthRedirect?: boolean
+  /** Override default request timeout (ms). */
+  timeoutMs?: number
 }
 
 async function request<T>(
@@ -123,7 +155,8 @@ async function request<T>(
   options: RequestOptions = {},
 ): Promise<T> {
   const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), TIMEOUT_MS)
+  const timeoutMs = options.timeoutMs ?? TIMEOUT_MS
+  const timeout = setTimeout(() => controller.abort(), timeoutMs)
   const outer = options.signal
   if (outer) {
     if (outer.aborted) controller.abort()
@@ -135,6 +168,7 @@ async function request<T>(
     Accept: 'application/json',
   }
   const token = getAuthToken()
+  const sentAuth = Boolean(token)
   if (token) headers.Authorization = `Bearer ${token}`
   if (options.body !== undefined) headers['Content-Type'] = 'application/json'
 
@@ -182,7 +216,7 @@ async function request<T>(
     }
   }
 
-  if (res.status === 401 && !options.skipAuthRedirect) {
+  if (res.status === 401 && !options.skipAuthRedirect && sentAuth) {
     handleUnauthorized()
   }
 

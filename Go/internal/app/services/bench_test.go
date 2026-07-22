@@ -6,11 +6,12 @@ import (
 
 	"github.com/JagtapAvadhut/smartca-backend/internal/app/services"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
 	"github.com/JagtapAvadhut/smartca-backend/internal/seed"
 )
 
-func seedStore(b *testing.B) *memory.Store {
+func seedStore(b *testing.B) repository.Store {
 	b.Helper()
 	data, err := seed.LoadSeed()
 	if err != nil {
@@ -18,7 +19,7 @@ func seedStore(b *testing.B) *memory.Store {
 	}
 	st := memory.NewStore()
 	st.Reset(data)
-	return st
+	return repository.AdaptMemory(st)
 }
 
 func BenchmarkDashboard(b *testing.B) {
@@ -43,10 +44,10 @@ func BenchmarkClientList(b *testing.B) {
 }
 
 func BenchmarkPaymentCreate(b *testing.B) {
-	st := seedStore(b)
-	pay := services.NewPaymentService(st)
-	invSvc := services.NewInvoiceService(st)
-	clients := st.GetAll(services.ColClients, false)
+	store := seedStore(b)
+	pay := services.NewPaymentService(store)
+	invSvc := services.NewInvoiceService(store)
+	clients := store.GetAll(services.ColClients, false)
 	if len(clients) == 0 {
 		b.Fatal("no clients")
 	}

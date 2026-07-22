@@ -9,7 +9,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 )
 
 //go:embed data/*.json
@@ -58,7 +58,16 @@ const noteTimestamp = "2025-04-01T10:00:00Z"
 func LoadSeed() (map[string][]models.Record, error) {
 	out := make(map[string][]models.Record, len(collectionFiles)+2)
 
-	for _, coll := range memory.Collections {
+	// Initialize all collections with nil
+	collections := []string{
+		"clients", "companies", "employees", "invoices", "payments",
+		"documents", "tasks", "gst", "itr", "tds", "roc", "compliance",
+		"notifications", "activities", "calendar", "users", "roles",
+		"permissions", "organization", "settings", "auditLogs",
+		"loginHistory", "chat", "departments", "branches", "notes",
+		"journals", "sessions",
+	}
+	for _, coll := range collections {
 		out[coll] = nil
 	}
 
@@ -189,7 +198,7 @@ func seedNotes() []models.Record {
 
 // ValidateIntegrity checks referential links commonly used by the app.
 // Returns an error listing all issues found (does not stop at the first).
-func ValidateIntegrity(store *memory.Store) error {
+func ValidateIntegrity(store repository.Store) error {
 	if store == nil {
 		return fmt.Errorf("store is nil")
 	}
@@ -257,7 +266,7 @@ func ValidateIntegrity(store *memory.Store) error {
 	return nil
 }
 
-func idSet(store *memory.Store, collection string) map[string]bool {
+func idSet(store repository.Store, collection string) map[string]bool {
 	set := make(map[string]bool)
 	for _, r := range store.GetAll(collection, true) {
 		if id := r.ID(); id != "" {

@@ -20,6 +20,22 @@ type Config struct {
 	LogLevel         string
 	SessionTTL       time.Duration
 	DemoResetEnabled bool
+	// Database configuration
+	DBHost            string
+	DBPort            int
+	DBUser            string
+	DBPassword        string
+	DBName            string
+	DBSSLMode         string
+	DBMaxOpenConns    int
+	DBMaxIdleConns    int
+	DBConnMaxLifetime time.Duration
+	// AI / Gemini (server-side only — never sent to the frontend)
+	AIProvider     string
+	GeminiAPIKey   string
+	GeminiModel    string
+	GeminiTimeout  time.Duration
+	GeminiMaxTokens int
 }
 
 // Addr returns host:port for the HTTP listener.
@@ -41,8 +57,16 @@ func (c Config) IsDevelopment() bool {
 	}
 }
 
+// DBConnectionString returns the PostgreSQL connection string.
+func (c Config) DBConnectionString() string {
+	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s",
+		c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName, c.DBSSLMode)
+}
+
 // Load reads configuration from environment variables and validates it.
 func Load() (Config, error) {
+	loadDotEnv(".env")
+
 	// Prefer FRONTEND_ORIGINS; fall back to FRONTEND_ORIGIN.
 	// Default includes both localhost and 127.0.0.1 — browsers treat them as distinct origins.
 	originRaw := getenv("FRONTEND_ORIGINS", "")
@@ -52,13 +76,27 @@ func Load() (Config, error) {
 	origins := ParseOrigins(originRaw)
 
 	cfg := Config{
-		AppEnv:          getenv("APP_ENV", "development"),
-		HTTPHost:        getenv("HTTP_HOST", "0.0.0.0"),
-		HTTPPort:        getenvInt("HTTP_PORT", 8080),
-		FrontendOrigin:  strings.Join(origins, ","),
-		FrontendOrigins: origins,
-		LogLevel:        getenv("LOG_LEVEL", "info"),
-		SessionTTL:      getenvDuration("SESSION_TTL", 30*time.Minute),
+		AppEnv:            getenv("APP_ENV", "development"),
+		HTTPHost:          getenv("HTTP_HOST", "0.0.0.0"),
+		HTTPPort:          getenvInt("HTTP_PORT", 8080),
+		FrontendOrigin:    strings.Join(origins, ","),
+		FrontendOrigins:   origins,
+		LogLevel:          getenv("LOG_LEVEL", "info"),
+		SessionTTL:        getenvDuration("SESSION_TTL", 30*time.Minute),
+		DBHost:            getenv("DB_HOST", "localhost"),
+		DBPort:            getenvInt("DB_PORT", 5432),
+		DBUser:            getenv("DB_USER", "smartca"),
+		DBPassword:        getenv("DB_PASSWORD", ""),
+		DBName:            getenv("DB_NAME", "smartca"),
+		DBSSLMode:         getenv("DB_SSLMODE", "disable"),
+		DBMaxOpenConns:    getenvInt("DB_MAX_OPEN_CONNS", 25),
+		DBMaxIdleConns:    getenvInt("DB_MAX_IDLE_CONNS", 5),
+		DBConnMaxLifetime: getenvDuration("DB_CONN_MAX_LIFETIME", 5*time.Minute),
+		AIProvider:        strings.ToLower(getenv("AI_PROVIDER", "gemini")),
+		GeminiAPIKey:      getenv("GEMINI_API_KEY", ""),
+		GeminiModel:       getenv("GEMINI_MODEL", "gemini-2.5-flash"),
+		GeminiTimeout:     getenvDuration("GEMINI_TIMEOUT", 45*time.Second),
+		GeminiMaxTokens:   getenvInt("GEMINI_MAX_TOKENS", 2048),
 	}
 
 	if v, ok := os.LookupEnv("DEMO_RESET_ENABLED"); ok {
@@ -162,4 +200,37 @@ func getenvDuration(key string, fallback time.Duration) time.Duration {
 		return fallback
 	}
 	return d
+}
+
+// loadDotEnv loads KEY=VALUE pairs from a local .env file into the process
+// environment when the key is not already set. Existing OS env wins.
+func loadDotEnv(path string) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return
+	}
+	for _, line := range strings.Split(string(data), "\n") {
+		line = strings.TrimSpace(line)
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+		key, val, ok := strings.Cut(line, "=")
+		if !ok {
+			continue
+		}
+		key = strings.TrimSpace(key)
+		val = strings.TrimSpace(val)
+		if len(val) >= 2 {
+			if (val[0] == '"' && val[len(val)-1] == '"') || (val[0] == '\'' && val[len(val)-1] == '\'') {
+				val = val[1 : len(val)-1]
+			}
+		}
+		if key == "" {
+			continue
+		}
+		if _, exists := os.LookupEnv(key); exists {
+			continue
+		}
+		_ = os.Setenv(key, val)
+	}
 }

@@ -7,15 +7,15 @@ import (
 
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/money"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 )
 
 // DashboardService computes live KPIs from the store.
 type DashboardService struct {
-	store *memory.Store
+	store repository.Store
 }
 
-func NewDashboardService(store *memory.Store) *DashboardService {
+func NewDashboardService(store repository.Store) *DashboardService {
 	return &DashboardService{store: store}
 }
 
@@ -182,6 +182,52 @@ func (s *DashboardService) Get() map[string]any {
 		}
 	}
 
+	birthdays := make([]models.Record, 0, 8)
+	curMonth := int(now.Month())
+	for _, emp := range employees {
+		dob := emp.GetString("dateOfBirth")
+		if dob == "" {
+			dob = emp.GetString("dob")
+		}
+		if dob == "" {
+			continue
+		}
+		t, err := time.Parse("2006-01-02", dob)
+		if err != nil {
+			t, err = time.Parse(time.RFC3339, dob)
+			if err != nil {
+				continue
+			}
+		}
+		if int(t.Month()) != curMonth {
+			continue
+		}
+		rec := emp.Clone()
+		if rec.GetString("firstName") == "" {
+			full := rec.GetString("fullName")
+			if full == "" {
+				full = rec.GetString("name")
+			}
+			parts := strings.Fields(full)
+			if len(parts) > 0 {
+				rec.Set("firstName", parts[0])
+			}
+			if len(parts) > 1 {
+				rec.Set("lastName", parts[len(parts)-1])
+			}
+		}
+		if rec.GetString("avatar") == "" {
+			rec.Set("avatar", rec.GetString("profileImage"))
+		}
+		if rec.GetString("dateOfBirth") == "" {
+			rec.Set("dateOfBirth", dob)
+		}
+		birthdays = append(birthdays, rec)
+		if len(birthdays) >= 8 {
+			break
+		}
+	}
+
 	return map[string]any{
 		"kpis": map[string]any{
 			"revenue":           kpi(totalRevenue.Rupees(), revTrend.change, revTrend.trend),
@@ -197,7 +243,7 @@ func (s *DashboardService) Get() map[string]any {
 		"todaysTasks":      todaysTasks,
 		"recentPayments":   recentPayments,
 		"upcomingDueDates": upcomingList,
-		"birthdays":        []any{},
+		"birthdays":        birthdays,
 		"notifications":    unread,
 	}
 }

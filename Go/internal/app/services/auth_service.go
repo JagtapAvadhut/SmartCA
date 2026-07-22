@@ -8,17 +8,17 @@ import (
 	"github.com/JagtapAvadhut/smartca-backend/internal/config"
 	apperrors "github.com/JagtapAvadhut/smartca-backend/internal/domain/errors"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 )
 
 // AuthService handles login, logout, and password flows.
 type AuthService struct {
-	store *memory.Store
+	store repository.Store
 	cfg   config.Config
 	nowFn func() time.Time
 }
 
-func NewAuthService(store *memory.Store, cfg config.Config) *AuthService {
+func NewAuthService(store repository.Store, cfg config.Config) *AuthService {
 	return &AuthService{store: store, cfg: cfg, nowFn: time.Now}
 }
 
@@ -78,7 +78,7 @@ func (s *AuthService) Login(identifier, password string, rememberMe bool, device
 	if err != nil {
 		return nil, apperrors.Internal("failed to create session", err)
 	}
-	memSess := memory.Session{
+	memSess := repository.Session{
 		ID: sess.ID, UserID: sess.UserID, Token: sess.Token,
 		Device: sess.Device, IP: sess.IP,
 		CreatedAt: sess.CreatedAt, ExpiresAt: sess.ExpiresAt, Active: true,
@@ -134,7 +134,7 @@ func (s *AuthService) Me(token string) (models.Record, error) {
 }
 
 // UserFromSession loads the user attached to a store session.
-func (s *AuthService) UserFromSession(sess memory.Session) (models.Record, error) {
+func (s *AuthService) UserFromSession(sess repository.Session) (models.Record, error) {
 	user, err := s.store.Get(ColUsers, sess.UserID)
 	if err != nil {
 		return nil, apperrors.Unauthorized("user not found")

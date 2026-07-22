@@ -5,13 +5,13 @@ import (
 
 	"github.com/JagtapAvadhut/smartca-backend/internal/app/services"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 	"github.com/JagtapAvadhut/smartca-backend/pkg/apiresponse"
 )
 
 // LoginHistoryHandler lists seeded + recorded login history rows.
 type LoginHistoryHandler struct {
-	Store *memory.Store
+	Store repository.Store
 }
 
 func (h *LoginHistoryHandler) List(w http.ResponseWriter, r *http.Request) {
@@ -21,12 +21,12 @@ func (h *LoginHistoryHandler) List(w http.ResponseWriter, r *http.Request) {
 
 // NotificationExtraHandler provides bulk notification operations.
 type NotificationExtraHandler struct {
-	Store *memory.Store
+	Store repository.Store
 }
 
 func (h *NotificationExtraHandler) MarkAllRead(w http.ResponseWriter, r *http.Request) {
 	var updated int
-	err := h.Store.WithTx(func(st *memory.Store) error {
+	err := h.Store.WithTx(func(st repository.Store) error {
 		for _, n := range st.GetAll(services.ColNotifications, false) {
 			if n.GetBool("read") {
 				continue

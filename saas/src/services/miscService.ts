@@ -82,6 +82,12 @@ export const ChatService = {
   },
   async sendMessage(sessionId: string, content: string) {
     const session = await this.getSession(sessionId)
+    const history = (session.messages || []).map((m) => ({
+      role: (m.role === 'assistant' ? 'assistant' : 'user') as 'user' | 'assistant',
+      content: m.content,
+    }))
+    const { AIService } = await import('./aiService')
+    const ai = await AIService.chat(content, history)
     const userMsg = {
       id: String(Date.now()),
       role: 'user' as const,
@@ -91,13 +97,12 @@ export const ChatService = {
     const assistantMsg = {
       id: String(Date.now() + 1),
       role: 'assistant' as const,
-      content:
-        'Thank you for your query. As your AI CA assistant, I can help with GST filing, ITR computations, TDS rates, ROC compliance, and tax planning. Please share more details about your requirement.',
+      content: ai.markdown || ai.reply,
       timestamp: new Date().toISOString(),
     }
     const messages = [...(session.messages || []), userMsg, assistantMsg]
     await http.patch(`/chat/${sessionId}`, { messages })
-    return { userMsg, assistantMsg }
+    return { userMsg, assistantMsg, ai }
   },
   async deleteSession(id: string) {
     await http.del(`/chat/${id}`)

@@ -1,8 +1,8 @@
 # Smart CA Go API — multi-stage production image
 # Go version matches go.mod (1.26.5). Seed JSON is embedded via go:embed — no runtime data copy.
-# CGO is disabled: dependencies (chi, uuid, x/crypto bcrypt) are pure Go.
-#
-# Docker build was NOT executed in the authoring environment (Docker unavailable).
+# SQL migrations (internal/database/migrate.go reads "./migrations" relative to WORKDIR) are
+# NOT embedded, so they must be copied into the runtime image explicitly (see below).
+# CGO is disabled: dependencies (chi, uuid, lib/pq, x/crypto bcrypt) are pure Go.
 
 # ---------- builder ----------
 FROM golang:1.26.5-bookworm AS builder
@@ -29,13 +29,16 @@ FROM gcr.io/distroless/static-debian12:nonroot
 WORKDIR /app
 
 COPY --from=builder /out/smartca-api /app/smartca-api
+# Required at boot: database.Migrate() reads *.up.sql from ./migrations (relative to WORKDIR).
+COPY migrations/ /app/migrations/
 
 ENV APP_ENV=production \
     HTTP_HOST=0.0.0.0 \
     HTTP_PORT=8080 \
     LOG_LEVEL=info \
     SESSION_TTL=30m \
-    DEMO_RESET_ENABLED=true
+    DEMO_RESET_ENABLED=true \
+    DB_SSLMODE=disable
 
 EXPOSE 8080
 

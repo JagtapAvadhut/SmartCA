@@ -8,23 +8,23 @@ import (
 	apperrors "github.com/JagtapAvadhut/smartca-backend/internal/domain/errors"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/money"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 )
 
 // PaymentService handles payments with atomic invoice/client sync.
 type PaymentService struct {
-	store *memory.Store
+	store repository.Store
 	base  *CRUDService
 }
 
-func NewPaymentService(store *memory.Store) *PaymentService {
+func NewPaymentService(store repository.Store) *PaymentService {
 	return &PaymentService{store: store, base: NewCRUDService(store, ColPayments)}
 }
 
 func (s *PaymentService) List(q models.Query) models.PageResult { return s.base.List(q) }
 func (s *PaymentService) Get(id string) (models.Record, error)  { return s.base.Get(id) }
 
-func (s *PaymentService) assertValid(st *memory.Store, data models.Record, excludeID string) error {
+func (s *PaymentService) assertValid(st repository.Store, data models.Record, excludeID string) error {
 	invoiceID := data.GetString("invoiceId")
 	if invoiceID == "" {
 		return apperrors.Validation("Invoice is required", apperrors.Detail{Field: "invoiceId", Message: "required"})
@@ -55,7 +55,7 @@ func (s *PaymentService) assertValid(st *memory.Store, data models.Record, exclu
 
 func (s *PaymentService) Create(data models.Record) (models.Record, error) {
 	var created models.Record
-	err := s.store.WithTx(func(st *memory.Store) error {
+	err := s.store.WithTx(func(st repository.Store) error {
 		if data == nil {
 			data = models.Record{}
 		}
@@ -117,7 +117,7 @@ func (s *PaymentService) Create(data models.Record) (models.Record, error) {
 
 func (s *PaymentService) Update(id string, patch models.Record) (models.Record, error) {
 	var out models.Record
-	err := s.store.WithTx(func(st *memory.Store) error {
+	err := s.store.WithTx(func(st repository.Store) error {
 		before, err := st.Get(ColPayments, id)
 		if err != nil {
 			return err
@@ -161,7 +161,7 @@ func (s *PaymentService) Update(id string, patch models.Record) (models.Record, 
 }
 
 func (s *PaymentService) Delete(id string) error {
-	return s.store.WithTx(func(st *memory.Store) error {
+	return s.store.WithTx(func(st repository.Store) error {
 		before, err := st.Get(ColPayments, id)
 		if err != nil {
 			return err
@@ -174,7 +174,7 @@ func (s *PaymentService) Delete(id string) error {
 }
 
 func (s *PaymentService) Archive(id string) error {
-	return s.store.WithTx(func(st *memory.Store) error {
+	return s.store.WithTx(func(st repository.Store) error {
 		before, err := st.Get(ColPayments, id)
 		if err != nil {
 			return err
@@ -187,7 +187,7 @@ func (s *PaymentService) Archive(id string) error {
 }
 
 func (s *PaymentService) Restore(id string) error {
-	return s.store.WithTx(func(st *memory.Store) error {
+	return s.store.WithTx(func(st repository.Store) error {
 		if err := st.Restore(ColPayments, id); err != nil {
 			return err
 		}

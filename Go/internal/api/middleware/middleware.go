@@ -14,7 +14,7 @@ import (
 	apperrors "github.com/JagtapAvadhut/smartca-backend/internal/domain/errors"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
 	"github.com/JagtapAvadhut/smartca-backend/internal/rbac"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 	"github.com/JagtapAvadhut/smartca-backend/pkg/apiresponse"
 )
 
@@ -166,7 +166,7 @@ func MaxBytes(n int64) func(http.Handler) http.Handler {
 }
 
 // Auth validates Bearer token and attaches user to context.
-func Auth(store *memory.Store, authSvc *services.AuthService) func(http.Handler) http.Handler {
+func Auth(store repository.Store, authSvc *services.AuthService) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			token := extractBearer(r)

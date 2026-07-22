@@ -8,16 +8,16 @@ import (
 	apperrors "github.com/JagtapAvadhut/smartca-backend/internal/domain/errors"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/money"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 )
 
 // InvoiceService wraps invoice CRUD with tax totals and client sync.
 type InvoiceService struct {
-	store *memory.Store
+	store repository.Store
 	base  *CRUDService
 }
 
-func NewInvoiceService(store *memory.Store) *InvoiceService {
+func NewInvoiceService(store repository.Store) *InvoiceService {
 	return &InvoiceService{store: store, base: NewCRUDService(store, ColInvoices)}
 }
 
@@ -58,7 +58,7 @@ func buildInvoiceTotals(data models.Record) models.Record {
 
 func (s *InvoiceService) Create(data models.Record) (models.Record, error) {
 	var created models.Record
-	err := s.store.WithTx(func(st *memory.Store) error {
+	err := s.store.WithTx(func(st repository.Store) error {
 		if data == nil {
 			data = models.Record{}
 		}
@@ -119,7 +119,7 @@ func (s *InvoiceService) Create(data models.Record) (models.Record, error) {
 
 func (s *InvoiceService) Update(id string, patch models.Record) (models.Record, error) {
 	var out models.Record
-	err := s.store.WithTx(func(st *memory.Store) error {
+	err := s.store.WithTx(func(st repository.Store) error {
 		before, err := st.Get(ColInvoices, id)
 		if err != nil {
 			return err
@@ -158,7 +158,7 @@ func (s *InvoiceService) Update(id string, patch models.Record) (models.Record, 
 }
 
 func (s *InvoiceService) Delete(id string) error {
-	return s.store.WithTx(func(st *memory.Store) error {
+	return s.store.WithTx(func(st repository.Store) error {
 		before, err := st.Get(ColInvoices, id)
 		if err != nil {
 			return err
@@ -189,7 +189,7 @@ func (s *InvoiceService) PermanentDelete(id string) error {
 
 func (s *InvoiceService) Duplicate(id string) (models.Record, error) {
 	var copyRec models.Record
-	err := s.store.WithTx(func(st *memory.Store) error {
+	err := s.store.WithTx(func(st repository.Store) error {
 		src, err := st.Get(ColInvoices, id)
 		if err != nil {
 			return err
@@ -220,7 +220,7 @@ func (s *InvoiceService) Duplicate(id string) (models.Record, error) {
 
 // --- shared financial sync (paise-safe via money.RoundMoney) ---
 
-func syncInvoiceFromPayments(st *memory.Store, invoiceID string) (models.Record, error) {
+func syncInvoiceFromPayments(st repository.Store, invoiceID string) (models.Record, error) {
 	if invoiceID == "" {
 		return nil, nil
 	}
@@ -251,7 +251,7 @@ func syncInvoiceFromPayments(st *memory.Store, invoiceID string) (models.Record,
 	})
 }
 
-func recalcClientFinancials(st *memory.Store, clientID string) error {
+func recalcClientFinancials(st repository.Store, clientID string) error {
 	if clientID == "" {
 		return nil
 	}
@@ -281,7 +281,7 @@ func recalcClientFinancials(st *memory.Store, clientID string) error {
 	return err
 }
 
-func getInvoiceRemainingBalance(st *memory.Store, invoiceID, excludePaymentID string) float64 {
+func getInvoiceRemainingBalance(st repository.Store, invoiceID, excludePaymentID string) float64 {
 	inv, err := st.Get(ColInvoices, invoiceID)
 	if err != nil {
 		return 0
@@ -305,7 +305,7 @@ func getInvoiceRemainingBalance(st *memory.Store, invoiceID, excludePaymentID st
 	return money.InvoiceRemaining(inv.GetFloat("total"), paid.Rupees())
 }
 
-func validatePaymentAmount(st *memory.Store, amount float64, invoiceID, excludePaymentID string) error {
+func validatePaymentAmount(st repository.Store, amount float64, invoiceID, excludePaymentID string) error {
 	amt := money.FromRupees(amount)
 	if amt <= 0 {
 		return apperrors.Validation("Payment amount must be greater than zero")
@@ -320,7 +320,7 @@ func validatePaymentAmount(st *memory.Store, amount float64, invoiceID, excludeP
 	return nil
 }
 
-func syncPaymentSideEffects(st *memory.Store, payment models.Record) error {
+func syncPaymentSideEffects(st repository.Store, payment models.Record) error {
 	touched := map[string]struct{}{}
 	if iid := payment.GetString("invoiceId"); iid != "" {
 		inv, err := syncInvoiceFromPayments(st, iid)
@@ -343,4 +343,28 @@ func syncPaymentSideEffects(st *memory.Store, payment models.Record) error {
 		}
 	}
 	return nil
+}
+
+// RepairAllFinancials resyncs every invoice from completed payments and recalculates clients.
+func (s *InvoiceService) RepairAllFinancials() (int, error) {
+	n := 0
+	err := s.store.WithTx(func(st repository.Store) error {
+		clients := map[string]struct{}{}
+		for _, inv := range st.GetAll(ColInvoices, true) {
+			if _, err := syncInvoiceFromPayments(st, inv.ID()); err != nil {
+				return err
+			}
+			n++
+			if cid := inv.GetString("clientId"); cid != "" {
+				clients[cid] = struct{}{}
+			}
+		}
+		for cid := range clients {
+			if err := recalcClientFinancials(st, cid); err != nil {
+				return err
+			}
+		}
+		return nil
+	})
+	return n, err
 }

@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from 'react-router'
 import { useAuth } from '@/hooks/useAuth'
+import { useAuthHydrated } from '@/hooks/useAuthHydrated'
 import { canAccessRoute } from '@/utils/permissions'
 import type { Permission } from '@/types/auth'
 import { DashboardSkeleton } from '@/components/common'
@@ -10,8 +11,13 @@ interface ProtectedRouteProps {
 }
 
 export function ProtectedRoute({ children, permission }: ProtectedRouteProps) {
+  const hydrated = useAuthHydrated()
   const { isAuthenticated, permissions, checkSession } = useAuth()
   const location = useLocation()
+
+  if (!hydrated) {
+    return <AuthLoading />
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />

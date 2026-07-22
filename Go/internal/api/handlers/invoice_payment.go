@@ -159,3 +159,13 @@ func (h *PaymentHandler) PermanentDelete(w http.ResponseWriter, r *http.Request)
 	}
 	apiresponse.OK(w, rid(r), map[string]string{"message": "deleted"})
 }
+
+// RepairFinancials resyncs invoice paid/remaining/status from payments and client outstanding.
+func (h *InvoiceHandler) RepairFinancials(w http.ResponseWriter, r *http.Request) {
+	n, err := h.Svc.RepairAllFinancials()
+	if err != nil {
+		writeErr(w, r, err)
+		return
+	}
+	apiresponse.OK(w, rid(r), map[string]any{"repaired": n, "message": "financials reconciled"})
+}

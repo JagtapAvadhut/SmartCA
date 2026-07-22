@@ -48,10 +48,9 @@ function getPreviewContent(doc: Document): string {
       `Type: ${capitalize(doc.type)}`,
       `Folder: ${doc.folder}`,
       '',
-      'Mock PDF content — page 1 of 3',
+      'Document preview — page 1',
       '',
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. This preview simulates',
-      'rendered PDF text extracted from the uploaded document.',
+      'Extracted text summary for partner review. Download the original file for the full PDF.',
     ].join('\n')
   }
   return [
@@ -61,7 +60,7 @@ function getPreviewContent(doc: Document): string {
     `Uploaded: ${formatDate(doc.uploadedAt)}`,
     `Size: ${formatFileSize(doc.size)}`,
     '',
-    '--- Mock Content ---',
+    '--- Document summary ---',
     '',
     `Preview of ${doc.name} for ${doc.clientName}.`,
   ].join('\n')

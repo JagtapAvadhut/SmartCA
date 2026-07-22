@@ -5,7 +5,7 @@ import (
 	"runtime"
 
 	apperrors "github.com/JagtapAvadhut/smartca-backend/internal/domain/errors"
-	"github.com/JagtapAvadhut/smartca-backend/internal/repository/memory"
+	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
 	"github.com/JagtapAvadhut/smartca-backend/pkg/apiresponse"
 )
 
@@ -13,7 +13,7 @@ const Version = "1.0.0"
 
 // HealthHandler serves liveness/readiness/version.
 type HealthHandler struct {
-	Store *memory.Store
+	Store repository.Store
 }
 
 func (h *HealthHandler) Live(w http.ResponseWriter, r *http.Request) {

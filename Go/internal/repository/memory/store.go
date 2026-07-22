@@ -387,7 +387,7 @@ func (s *Store) replaceAllLocked(collection string, records []models.Record) {
 }
 
 // Reset atomically replaces all collection data and clears auth sessions.
-func (s *Store) Reset(data map[string][]models.Record) {
+func (s *Store) Reset(data map[string][]models.Record) error {
 	s.lockWrite()
 	defer s.unlockWrite()
 
@@ -401,6 +401,7 @@ func (s *Store) Reset(data map[string][]models.Record) {
 		s.replaceAllLocked(coll, records)
 	}
 	s.sessions = make(map[string]Session)
+	return nil
 }
 
 // Snapshot returns a deep copy of all collections for demo reset.

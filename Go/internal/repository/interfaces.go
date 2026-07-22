@@ -34,7 +34,7 @@ type Store interface {
 	Restore(collection, id string) error
 	PermanentDelete(collection, id string) error
 	ReplaceAll(collection string, rows []models.Record)
-	Reset(data map[string][]models.Record)
+	Reset(data map[string][]models.Record) error
 	Snapshot() map[string][]models.Record
 	WithTx(fn func(tx Store) error) error
 

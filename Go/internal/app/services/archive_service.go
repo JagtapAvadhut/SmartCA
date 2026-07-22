@@ -94,7 +94,9 @@ func (a *ArchiveService) DemoReset() error {
 		}
 		clone[k] = cp
 	}
-	a.store.Reset(clone)
+	if err := a.store.Reset(clone); err != nil {
+		return apperrors.Internal("failed to reset store", err)
+	}
 	if err := seed.ValidateIntegrity(a.store); err != nil {
 		return apperrors.Internal("reset integrity failed", err)
 	}

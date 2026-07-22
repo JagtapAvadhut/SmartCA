@@ -57,6 +57,17 @@ var knownCollections = []string{
 	"branches", "loginHistory", "journals", "sessions",
 }
 
+// seedInsertOrder respects FK dependencies (parents before children).
+// payments/invoice_items reference invoices; invoices/payments reference clients.
+var seedInsertOrder = []string{
+	"permissions", "roles", "users", "departments", "branches", "organization", "settings",
+	"clients", "companies", "employees",
+	"invoices", "invoice_items", "payments",
+	"documents", "folders", "tasks", "gst", "itr", "tds", "roc", "compliance",
+	"notifications", "activities", "auditLogs", "calendar", "notes", "chat",
+	"loginHistory", "journals", "sessions",
+}
+
 var idPrefixes = map[string]string{
 	"clients": "CLT-", "companies": "CMP-", "employees": "EMP-",
 	"invoices": "INV-", "payments": "PAY-", "documents": "DOC-",
@@ -299,11 +310,17 @@ func (s *Store) PermanentDelete(collection, id string) error {
 }
 
 func (s *Store) ReplaceAll(collection string, rows []models.Record) {
+	_ = s.replaceAll(collection, rows)
+}
+
+func (s *Store) replaceAll(collection string, rows []models.Record) error {
 	table, err := s.table(collection)
 	if err != nil {
-		return
+		return err
 	}
-	_, _ = s.q().Exec(`DELETE FROM ` + table)
+	if _, err := s.q().Exec(`DELETE FROM ` + table); err != nil {
+		return fmt.Errorf("clear %s: %w", collection, err)
+	}
 	for _, rec := range rows {
 		r := rec.Clone()
 		if r == nil {
@@ -322,37 +339,75 @@ func (s *Store) ReplaceAll(collection string, rows []models.Record) {
 		}
 		payload, err := json.Marshal(r)
 		if err != nil {
-			continue
+			return fmt.Errorf("marshal %s %s: %w", collection, id, err)
 		}
-		_, _ = s.q().Exec(
+		if _, err := s.q().Exec(
 			`INSERT INTO `+table+` (id, data, archived, created_at, updated_at)
 			 VALUES ($1, $2::jsonb, $3, NOW(), NOW())
 			 ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, archived = EXCLUDED.archived, updated_at = NOW()`,
 			id, payload, isArchived(r),
-		)
+		); err != nil {
+			return fmt.Errorf("insert %s %s: %w", collection, id, err)
+		}
 	}
+	return nil
 }
 
-func (s *Store) Reset(data map[string][]models.Record) {
-	_ = s.WithTx(func(tx repository.Store) error {
+func (s *Store) Reset(data map[string][]models.Record) error {
+	return s.WithTx(func(tx repository.Store) error {
 		ps := tx.(*Store)
-		for _, c := range knownCollections {
+		// Delete children before parents (reverse of insert order).
+		for i := len(seedInsertOrder) - 1; i >= 0; i-- {
+			c := seedInsertOrder[i]
 			table, err := ps.table(c)
 			if err != nil {
 				continue
 			}
 			if _, err := ps.q().Exec(`DELETE FROM ` + table); err != nil {
-				return err
+				return fmt.Errorf("delete %s: %w", c, err)
+			}
+		}
+		for _, c := range knownCollections {
+			if containsStr(seedInsertOrder, c) {
+				continue
+			}
+			table, err := ps.table(c)
+			if err != nil {
+				continue
+			}
+			if _, err := ps.q().Exec(`DELETE FROM ` + table); err != nil {
+				return fmt.Errorf("delete %s: %w", c, err)
 			}
 		}
 		if _, err := ps.q().Exec(`DELETE FROM auth_sessions`); err != nil {
 			return err
 		}
+		seen := map[string]bool{}
+		for _, collection := range seedInsertOrder {
+			seen[collection] = true
+			if err := ps.replaceAll(collection, data[collection]); err != nil {
+				return err
+			}
+		}
 		for collection, records := range data {
-			ps.ReplaceAll(collection, records)
+			if seen[collection] {
+				continue
+			}
+			if err := ps.replaceAll(collection, records); err != nil {
+				return err
+			}
 		}
 		return nil
 	})
+}
+
+func containsStr(list []string, v string) bool {
+	for _, x := range list {
+		if x == v {
+			return true
+		}
+	}
+	return false
 }
 
 func (s *Store) Snapshot() map[string][]models.Record {

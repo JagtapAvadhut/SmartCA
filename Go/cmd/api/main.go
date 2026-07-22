@@ -77,13 +77,20 @@ func main() {
 			log.Error("seed load failed", "err", err)
 			os.Exit(1)
 		}
-		store.Reset(data)
+		if err := store.Reset(data); err != nil {
+			log.Error("seed reset failed", "err", err)
+			os.Exit(1)
+		}
 		snapshot = data
 		log.Info("seed data loaded",
 			"clients", store.Count(services.ColClients, true),
 			"invoices", store.Count(services.ColInvoices, true),
 			"users", store.Count(services.ColUsers, true),
 		)
+		if store.Count(services.ColUsers, true) == 0 {
+			log.Error("seed reset left zero users — check FK order / DB constraints")
+			os.Exit(1)
+		}
 	} else {
 		// Get current data as snapshot
 		snapshot = store.Snapshot()

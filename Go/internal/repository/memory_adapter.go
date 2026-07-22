@@ -51,8 +51,10 @@ func (a *memoryAdapter) PermanentDelete(c, id string) error { return a.inner.Per
 func (a *memoryAdapter) ReplaceAll(c string, rows []models.Record) {
 	a.inner.ReplaceAll(c, rows)
 }
-func (a *memoryAdapter) Reset(data map[string][]models.Record) { a.inner.Reset(data) }
-func (a *memoryAdapter) Snapshot() map[string][]models.Record  { return a.inner.Snapshot() }
+func (a *memoryAdapter) Reset(data map[string][]models.Record) error {
+	return a.inner.Reset(data)
+}
+func (a *memoryAdapter) Snapshot() map[string][]models.Record { return a.inner.Snapshot() }
 func (a *memoryAdapter) WithTx(fn func(tx Store) error) error {
 	return a.inner.WithTx(func(st *memory.Store) error {
 		return fn(&memoryAdapter{inner: st})

@@ -92,3 +92,11 @@
 - **Local verify:** Practice totals 25/19/17/17; demo aliases 40 each via `GET /work/items`.
 - **Run:** `cd Go && go run ./cmd/practiceuatseed`
 - **Tests:** `go test ./cmd/practiceuatseed/ ./internal/workmgmt/...` PASS
+
+## BUG-0013 — Concurrent gate conflict / FOR UPDATE load test not executed
+
+- **Status:** FIXED-PENDING-QA
+- **Root cause:** Test gap — `ApplyGateWrite` already returns `ErrStatusConflict` (Memory mutex / Postgres `FOR UPDATE` + `UPDATE … WHERE status=expected` → 409), but no reliable concurrent proof existed (prior pass marked BLOCKED).
+- **Fix:** Added `TestConcurrentGateWrite_Conflict` — parallel `ApplyGateWrite` / `VerifyTL` / `CloseWork` on MemoryStore and Postgres (when DB available); expects one success + one conflict/409.
+- **Live verify:** Parallel `POST …/close` on `PRACTICE-WRK-0033` → HTTP 200 + HTTP 409.
+- **Tests:** `go test ./internal/workmgmt/...` PASS (`TestConcurrentGateWrite_Conflict` ×20 including PG subtests)

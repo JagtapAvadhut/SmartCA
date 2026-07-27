@@ -36,3 +36,11 @@
 - **Run:** `cd Go && go run ./cmd/practiceuatseed` (DB defaults: smartca / yourpassword).
 - **Verify:** Alok/Nitesh/Mukesh `fullName` counts > 0 via psql after seed.
 - **Tests:** `go test ./cmd/practiceuatseed/ ./internal/workmgmt/...` PASS
+
+## BUG-0006 — Ownership triad empty on nearly all works
+
+- **Status:** FIXED-PENDING-QA
+- **Root cause:** `wmseed` inserted only `assigned_by`/`assigned_to`; Practice Core triad columns (`owner_ca_id`/`tl_id`/`assignee_id`) from 007 were never backfilled. `CreateWork` only auto-set owner when actor was CA and tl when actor was TL.
+- **Fix:** Additive migration `009_ownership_triad_backfill` (H0 assignee sync; H1 role-aware from assigner/assignee; H2 engagement owner; H3 WM-* pool heuristic `WM-CA-((n-1)%20)+1` / `WM-TL-((n-1)%50)+1`). `wmseed` now writes triad on insert. `ApplyOwnershipTriadDefaults` + `CreateWork` derive triad from actor/assignee roles when empty. PRACTICE-* already had triad (no seeder change).
+- **Local verify:** before `triad_missing=5006` / `with_triad=510`; after `triad_missing=0` / `with_triad=5516`.
+- **Tests:** `go test ./internal/workmgmt/...` PASS (`TestCreateWork_PopulatesOwnershipTriad`)

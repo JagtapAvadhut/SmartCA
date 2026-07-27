@@ -348,6 +348,41 @@ func firstNonEmptyStr(vals ...string) string {
 	return ""
 }
 
+// ApplyOwnershipTriadDefaults fills owner_ca_id / tl_id / assignee_id when empty
+// using actor + assignee roles (BC-P0-11). Explicit non-empty values are preserved.
+//
+// Rules:
+//   - assignee_id ← assigned_to when empty
+//   - actor is CA/senior_ca → owner_ca_id = actor
+//   - assignee is CA/senior_ca → owner_ca_id = assignee (if still empty)
+//   - actor is team_leader → tl_id = actor
+//   - assignee is team_leader → tl_id = assignee (if still empty)
+func ApplyOwnershipTriadDefaults(actor Actor, in *WorkItem, assigneeRole string) {
+	if in == nil {
+		return
+	}
+	assignee := firstNonEmptyStr(in.AssigneeID, in.AssignedTo)
+	if in.AssigneeID == "" && assignee != "" {
+		in.AssigneeID = assignee
+	}
+	ar := NormalizeHierarchyRole(actor.Hierarchy)
+	tr := NormalizeHierarchyRole(assigneeRole)
+	if in.OwnerCAID == "" {
+		if IsProfessional(ar) {
+			in.OwnerCAID = actor.ID
+		} else if IsProfessional(tr) && assignee != "" {
+			in.OwnerCAID = assignee
+		}
+	}
+	if in.TlID == "" {
+		if ar == RoleTeamLeader {
+			in.TlID = actor.ID
+		} else if tr == RoleTeamLeader && assignee != "" {
+			in.TlID = assignee
+		}
+	}
+}
+
 // applyListScope mutates filters for role-aware list/search queries (Architecture §7.2).
 func applyListScope(actor Actor, f *ListFilter) {
 	role := NormalizeHierarchyRole(actor.Hierarchy)

@@ -136,12 +136,7 @@ func (s *Service) CreateWork(ctx context.Context, actor Actor, in *WorkItem, ass
 	in.AssignedByName = actor.Name
 	in.CreatedBy = actor.ID
 	in.UpdatedBy = actor.ID
-	if IsProfessional(actor.Hierarchy) && in.OwnerCAID == "" {
-		in.OwnerCAID = actor.ID
-	}
-	if NormalizeHierarchyRole(actor.Hierarchy) == RoleTeamLeader && in.TlID == "" {
-		in.TlID = actor.ID
-	}
+	ApplyOwnershipTriadDefaults(actor, in, assigneeRole)
 	if in.Tags == nil {
 		in.Tags = []string{}
 	}

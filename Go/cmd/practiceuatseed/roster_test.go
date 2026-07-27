@@ -57,3 +57,33 @@ func TestPracticeRoster_Exactly55Named(t *testing.T) {
 		t.Fatalf("want exactly 1 manager (Alok), got %d", roles["manager"])
 	}
 }
+
+func TestPracticeRoster_ReportsToTree(t *testing.T) {
+	roster := practiceRoster()
+	byID := map[string]seedUser{}
+	for _, u := range roster {
+		byID[u.ID] = u
+	}
+	var withReports int
+	for _, u := range roster {
+		if u.ReportsTo == "" {
+			continue
+		}
+		withReports++
+		if _, ok := byID[u.ReportsTo]; !ok {
+			t.Fatalf("%s reportsTo %s not in roster", u.ID, u.ReportsTo)
+		}
+	}
+	if withReports < 40 {
+		t.Fatalf("expected most practice users to have reportsTo, got %d", withReports)
+	}
+	if byID["PRACTICE-CA-NITESH"].ReportsTo != "PRACTICE-MGR-ALOK" {
+		t.Fatal("CA Nitesh should report to Alok")
+	}
+	if byID["PRACTICE-TL-MUKESH"].ReportsTo != "PRACTICE-CA-NITESH" {
+		t.Fatal("TL Mukesh should report to CA Nitesh")
+	}
+	if byID["PRACTICE-EMP-01"].ReportsTo != "PRACTICE-TL-MUKESH" {
+		t.Fatal("Emp Amol should report to TL Mukesh")
+	}
+}

@@ -44,3 +44,11 @@
 - **Fix:** Additive migration `009_ownership_triad_backfill` (H0 assignee sync; H1 role-aware from assigner/assignee; H2 engagement owner; H3 WM-* pool heuristic `WM-CA-((n-1)%20)+1` / `WM-TL-((n-1)%50)+1`). `wmseed` now writes triad on insert. `ApplyOwnershipTriadDefaults` + `CreateWork` derive triad from actor/assignee roles when empty. PRACTICE-* already had triad (no seeder change).
 - **Local verify:** before `triad_missing=5006` / `with_triad=510`; after `triad_missing=0` / `with_triad=5516`.
 - **Tests:** `go test ./internal/workmgmt/...` PASS (`TestCreateWork_PopulatesOwnershipTriad`)
+
+## BUG-0007 — WM hierarchy has no reports_to; DownlineIDs not hydrated
+
+- **Status:** FIXED-PENDING-QA
+- **Root cause:** `wmseed` omitted `reportsTo`/`reports_to`; `actorFrom` never populated `Actor.DownlineIDs`, so CA/TL list scope was portfolio/team only (empty downline).
+- **Fix:** Migration `010_wm_reports_to_backfill` + `wmseed` Manager→CA→TL→Emp tree; `WorkHandler.DownlineFn` loads user reports edges and `CollectDownlineIDs` hydrates actor; CreateTeamUser sets reports_to to creator. Unit tests in `downline_scope_test.go`.
+- **Local verify:** WM `with_reports_to=370` / 375; sample CA→MGR, TL→CA, Emp→TL.
+- **Tests:** `go test ./internal/workmgmt/...` PASS

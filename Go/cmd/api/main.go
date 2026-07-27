@@ -22,6 +22,7 @@ import (
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
 	"github.com/JagtapAvadhut/smartca-backend/internal/repository/postgres"
 	"github.com/JagtapAvadhut/smartca-backend/internal/seed"
+	"github.com/JagtapAvadhut/smartca-backend/internal/workmgmt"
 )
 
 func main() {
@@ -120,6 +121,41 @@ func main() {
 	}
 	aiSvc := ai.NewServiceWithRuntime(cfg, store, log, aiRuntime)
 
+	// Work Management — Postgres-backed (migration 006); falls back only if ping fails.
+	wmStore := workmgmt.Store(workmgmt.NewPostgresStore(db))
+	wmSvc := workmgmt.NewService(wmStore)
+	usersCRUD := services.NewCRUDService(store, services.ColUsers)
+	workHandler := &handlers.WorkHandler{
+		Svc: wmSvc,
+		CreateUserFn: func(actor workmgmt.Actor, in workmgmt.CreateUserInput) (models.Record, error) {
+			rec := models.Record{
+				"fullName":    in.FullName,
+				"email":       in.Email,
+				"password":    in.Password,
+				"role":        workmgmt.NormalizeHierarchyRole(in.Role),
+				"department":  in.Department,
+				"designation": in.Designation,
+				"status":      "active",
+				"permissions": workmgmt.PermissionsForRole(in.Role),
+				"createdBy":   actor.ID,
+				"reportsTo":   actor.ID,
+				"reports_to":  actor.ID,
+			}
+			return usersCRUD.Create(rec)
+		},
+		DownlineFn: func(userID string) []string {
+			reportsTo := map[string]string{}
+			for _, rec := range store.GetAll(services.ColUsers, false) {
+				id := rec.GetString("id")
+				mgr := workmgmt.ReportsToFromFields(rec.GetString("reportsTo"), rec.GetString("reports_to"))
+				if id != "" && mgr != "" {
+					reportsTo[id] = mgr
+				}
+			}
+			return workmgmt.CollectDownlineIDs(reportsTo, userID)
+		},
+	}
+
 	deps := routes.Deps{
 		Cfg:          cfg,
 		Log:          log,
@@ -158,6 +194,7 @@ func main() {
 		LoginHistory: &handlers.LoginHistoryHandler{Store: store},
 		NotifsExtra:  &handlers.NotificationExtraHandler{Store: store},
 		AI:           &handlers.AIHandler{Svc: aiSvc},
+		Work:         workHandler,
 	}
 
 	srv := &http.Server{

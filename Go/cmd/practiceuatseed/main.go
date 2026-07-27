@@ -416,6 +416,7 @@ func printCounts(db *sql.DB) {
 		{"works", `SELECT COUNT(*) FROM wm_work_items WHERE id LIKE 'PRACTICE-%'`},
 		{"intakes", `SELECT COUNT(*) FROM wm_intakes WHERE id LIKE 'PRACTICE-%'`},
 		{"HR-created works (expect 0)", `SELECT COUNT(*) FROM wm_work_items WHERE id LIKE 'PRACTICE-%' AND created_by LIKE 'PRACTICE-HR-%'`},
+		{"users with reports_to (BUG-0007)", `SELECT COUNT(*) FROM users WHERE id LIKE 'PRACTICE-%' AND COALESCE(NULLIF(TRIM(data->>'reports_to'),''), NULLIF(TRIM(data->>'reportsTo'),'')) IS NOT NULL`},
 	}
 	for _, q := range queries {
 		var n int

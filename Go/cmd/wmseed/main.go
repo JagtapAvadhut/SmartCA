@@ -94,35 +94,41 @@ func wipe(db *sql.DB) {
 }
 
 func seedUsers(db *sql.DB) (managers, cas, tls, emps []string) {
-	insert := func(id, email, full, role, dept string) {
+	// Hierarchy: Manager → CA → TL → Emp (stable modulo pools match work pairing).
+	insert := func(id, email, full, role, dept, reportsTo string) {
 		perms := permsFor(role)
-		data, _ := json.Marshal(map[string]any{
+		data := map[string]any{
 			"id": id, "email": email, "fullName": full, "role": role, "roleName": role,
 			"department": dept, "status": "active", "passwordHash": passwordHash,
 			"permissions": perms, "designation": role, "loginId": email,
-		})
+			"reportsTo": reportsTo, "reports_to": reportsTo,
+		}
+		raw, _ := json.Marshal(data)
 		_, err := db.Exec(`INSERT INTO users (id, data, archived, created_at, updated_at) VALUES ($1,$2,false,NOW(),NOW())
-			ON CONFLICT (id) DO UPDATE SET data=EXCLUDED.data, archived=false, updated_at=NOW()`, id, data)
+			ON CONFLICT (id) DO UPDATE SET data=EXCLUDED.data, archived=false, updated_at=NOW()`, id, raw)
 		must(err)
 	}
 	for i := 1; i <= nManagers; i++ {
 		id := fmt.Sprintf("WM-MGR-%04d", i)
-		insert(id, fmt.Sprintf("manager%d@wm.smartca.in", i), fmt.Sprintf("Manager %d", i), "manager", "Leadership")
+		insert(id, fmt.Sprintf("manager%d@wm.smartca.in", i), fmt.Sprintf("Manager %d", i), "manager", "Leadership", "")
 		managers = append(managers, id)
 	}
 	for i := 1; i <= nCA; i++ {
 		id := fmt.Sprintf("WM-CA-%04d", i)
-		insert(id, fmt.Sprintf("ca%d@wm.smartca.in", i), fmt.Sprintf("CA %d", i), "ca", "Assurance")
+		mgr := managers[(i-1)%len(managers)]
+		insert(id, fmt.Sprintf("ca%d@wm.smartca.in", i), fmt.Sprintf("CA %d", i), "ca", "Assurance", mgr)
 		cas = append(cas, id)
 	}
 	for i := 1; i <= nTL; i++ {
 		id := fmt.Sprintf("WM-TL-%04d", i)
-		insert(id, fmt.Sprintf("tl%d@wm.smartca.in", i), fmt.Sprintf("Team Leader %d", i), "team_leader", "Operations")
+		ca := cas[(i-1)%len(cas)]
+		insert(id, fmt.Sprintf("tl%d@wm.smartca.in", i), fmt.Sprintf("Team Leader %d", i), "team_leader", "Operations", ca)
 		tls = append(tls, id)
 	}
 	for i := 1; i <= nEmployees; i++ {
 		id := fmt.Sprintf("WM-EMP-%04d", i)
-		insert(id, fmt.Sprintf("emp%d@wm.smartca.in", i), fmt.Sprintf("Employee %d", i), "employee", []string{"GST", "ITR", "Audit", "ROC", "TDS"}[i%5])
+		tl := tls[(i-1)%len(tls)]
+		insert(id, fmt.Sprintf("emp%d@wm.smartca.in", i), fmt.Sprintf("Employee %d", i), "employee", []string{"GST", "ITR", "Audit", "ROC", "TDS"}[i%5], tl)
 		emps = append(emps, id)
 	}
 	return

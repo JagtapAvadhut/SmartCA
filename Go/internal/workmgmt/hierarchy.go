@@ -339,6 +339,43 @@ func inDownline(actor Actor, userID string) bool {
 	return false
 }
 
+// CollectDownlineIDs returns transitive reporting descendants of rootID.
+// reportsTo maps userID → managerID (reports_to / reportsTo from user JSON).
+// Cycles are ignored; rootID itself is never included.
+func CollectDownlineIDs(reportsTo map[string]string, rootID string) []string {
+	if rootID == "" || len(reportsTo) == 0 {
+		return nil
+	}
+	children := map[string][]string{}
+	for child, mgr := range reportsTo {
+		if child == "" || mgr == "" {
+			continue
+		}
+		children[mgr] = append(children[mgr], child)
+	}
+	seen := map[string]bool{rootID: true}
+	var out []string
+	queue := []string{rootID}
+	for len(queue) > 0 {
+		cur := queue[0]
+		queue = queue[1:]
+		for _, id := range children[cur] {
+			if seen[id] {
+				continue
+			}
+			seen[id] = true
+			out = append(out, id)
+			queue = append(queue, id)
+		}
+	}
+	return out
+}
+
+// ReportsToFromFields picks the first non-empty reports manager id.
+func ReportsToFromFields(reportsTo, reportsToSnake string) string {
+	return firstNonEmptyStr(reportsTo, reportsToSnake)
+}
+
 func firstNonEmptyStr(vals ...string) string {
 	for _, v := range vals {
 		if strings.TrimSpace(v) != "" {

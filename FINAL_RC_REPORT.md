@@ -119,8 +119,10 @@ Known product gaps from `PRACTICE_UAT_REPORT.md` (enhancements, not RC blockers)
 - `.env` excluded via `.gitignore`.
 - Large `saas/qa-artifacts/` screenshots **not** required in git (optional evidence locally).
 
-**Commit hash:** `b5db21004b7b033928fdd842a6237d5762430765`  
-**Docker image tags:** `smartca-api:local`, `smartca-web:local`
+**Commit hash:** `b5db210` (Practice Core + firm isolation); tip `e90e8f1` (RC report hash)  
+**Remote:** `origin/feature/enterprise-work-management` (pushed; **not** merged to main)  
+**Docker image tags:** `smartca-api:local`, `smartca-web:local`  
+**PR link:** https://github.com/JagtapAvadhut/SmartCA/pull/new/feature/enterprise-work-management
 
 ---
 

@@ -60,3 +60,10 @@
 - **Fix:** `sanitizeUser` merges `workmgmt.PermissionsForRole(NormalizeHierarchyRole(role))` into the returned permissions (login + session/`/auth/me`). Manager SoD unchanged (no verify.tl/ca / close.partner). `wmseed` seeds via `PermissionsForRole`; FE manager hierarchy list aligned.
 - **Verify:** Login manager → payload includes `work.transition`, `work.close.manager`, `intake.*`; employee → includes `work.transition` but not assign/close/intake.approve.
 - **Tests:** `go test ./internal/app/services/ -run TestLogin_MergesPracticeCorePermissions` PASS; `go test ./internal/workmgmt/...` PASS
+
+## BUG-0009 — Dashboard completed ignores practice statuses / close queue
+
+- **Status:** FIXED-PENDING-QA
+- **Root cause:** Dashboard SQL counted only CLOSED/legacy completed/DELIVERED with no verify/close queue fields, so managers saw `completed≈0/1` while hundreds sat in `READY_FOR_MANAGER_CLOSE`.
+- **Fix:** Practice-aware aggregates — `completed`/`completedTasks` = CLOSED (+ legacy `completed`); `pending` = not CLOSED/CANCELLED; add `readyForTLVerify`, `readyForCAVerify`, `readyForManagerClose`, `awaitingClose`. Postgres + MemoryStore + FE dashboard cards. `TestDashboard_PracticeAwareAggregates`.
+- **Tests:** `go test ./internal/workmgmt/...` PASS

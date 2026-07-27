@@ -20,3 +20,10 @@
 - **Root cause:** Postgres FK violations (`23503` on `fk_wm_eng_client` / `fk_wm_intake_client`) from `ApproveIntakeAtomic` / `CreateEngagement` were not mapped; service wrapped them as Internal / handlers treated raw errors as unexpected 500.
 - **Fix:** `mapFKViolation` maps client/company/engagement FK constraints to `BadRequest`; `ApproveIntake` and `CreateEngagement` return the mapped AppError. Added `TestCreateEngagement_InvalidClientID_NotInternal` and `TestApproveIntake_InvalidClientID_NotInternal`.
 - **Tests:** `go test ./internal/workmgmt/...` PASS
+
+## BUG-0004 — Duplicate period work returns 500 not conflict
+
+- **Status:** FIXED-PENDING-QA
+- **Root cause:** Postgres unique violations (`23505` on `uq_wm_work_company_period` / `uq_wm_work_client_period`) from `CreateWork` were wrapped as Internal 500.
+- **Fix:** `mapUniqueViolation` maps period unique indexes to `Conflict` (409); `CreateWork` returns mapped AppError via `mapGateErr`. Added `TestCreateWork_DuplicatePeriod_Conflict`.
+- **Tests:** `go test ./internal/workmgmt/...` PASS

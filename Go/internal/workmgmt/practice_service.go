@@ -16,10 +16,31 @@ func mapGateErr(err error) error {
 	if errors.Is(err, ErrStatusConflict) || errors.Is(err, ErrIntakeConflict) {
 		return apperrors.Conflict(err.Error())
 	}
+	if mapped := mapUniqueViolation(err); mapped != nil {
+		return mapped
+	}
 	if mapped := mapFKViolation(err); mapped != nil {
 		return mapped
 	}
 	return err
+}
+
+// mapUniqueViolation turns Postgres unique_violation (23505) on work period indexes into Conflict.
+// Returns nil when err is not a unique violation.
+func mapUniqueViolation(err error) error {
+	var pqErr *pq.Error
+	if !errors.As(err, &pqErr) || pqErr.Code != "23505" {
+		return nil
+	}
+	c := strings.ToLower(string(pqErr.Constraint))
+	switch {
+	case strings.Contains(c, "uq_wm_work_company_period"), strings.Contains(c, "company_period"):
+		return apperrors.Conflict("work already exists for this company, workType, and periodKey")
+	case strings.Contains(c, "uq_wm_work_client_period"), strings.Contains(c, "client_period"):
+		return apperrors.Conflict("work already exists for this client, workType, and periodKey")
+	default:
+		return apperrors.Conflict("duplicate work record")
+	}
 }
 
 // mapFKViolation turns Postgres foreign_key_violation (23503) into a client error.

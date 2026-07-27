@@ -74,3 +74,11 @@
 - **Root cause:** `CreateWork` rejected empty `assignedTo`/`assigneeId`, blocking OPEN work before triad AssignSlot.
 - **Fix:** Assignee optional on create; unassigned work allowed as `OPEN`/`DOCUMENT_PENDING`. When assignee provided, still enforce `PermAssign` + `CanAssignTo`. Skip assign activity/notify when unassigned. Employees still blocked (no `work.create`). `TestCreateWork_UnassignedOpen`.
 - **Tests:** `go test ./internal/workmgmt/...` PASS
+
+## BUG-0011 — WM seed missing Receptionist in `@wm.smartca.in` org
+
+- **Status:** FIXED-PENDING-QA
+- **Root cause:** `wmseed` only created manager/ca/tl/employee; reception existed only on demo USR seed and practiceuatseed (Fatima/Leena), not in the WM 5k org.
+- **Fix:** `wmseed` seeds 2 reception users (`reception1@wm.smartca.in`, `reception2@wm.smartca.in`, ids `WM-RCP-0001/0002`, role `reception`, `PermissionsForRole` → intake.create / no assign/edit, password `SmartCA@2025`, optional `reportsTo` first manager). One-shot helper `go run ./cmd/wmreceptionseed` upserts reception only (no 5k wipe). practiceuatseed ROLE_HIERARCHY reception already present (asserted in roster test).
+- **Verify:** Login `reception1@wm.smartca.in` → role=reception, perms include `intake.create`, no `work.assign`/`work.edit`, work list total=0.
+- **Tests:** `go test ./cmd/wmseed/ ./cmd/practiceuatseed/ ./internal/workmgmt/` PASS

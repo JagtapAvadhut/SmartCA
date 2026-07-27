@@ -4,7 +4,7 @@ package main
 // Usage (from Go/): go run ./cmd/wmseed
 //
 // Targets:
-//   5 managers, 20 CA, 50 team leaders, 300 employees,
+//   5 managers, 20 CA, 50 team leaders, 300 employees, 2 receptionists,
 //   1000 clients, 5000 work items,
 //   15000 notes, 12000 follow-ups, 8000 calls, 4000 emails,
 //   3000 meetings, 20000 comments, 5000 attachments.
@@ -25,19 +25,20 @@ import (
 )
 
 const (
-	nManagers  = 5
-	nCA        = 20
-	nTL        = 50
-	nEmployees = 300
-	nClients   = 1000
-	nWork      = 5000
-	nNotes     = 15000
-	nFollowups = 12000
-	nCalls     = 8000
-	nEmails    = 4000
-	nMeetings  = 3000
-	nComments  = 20000
-	nAttach    = 5000
+	nManagers   = 5
+	nCA         = 20
+	nTL         = 50
+	nEmployees  = 300
+	nReception  = 2
+	nClients    = 1000
+	nWork       = 5000
+	nNotes      = 15000
+	nFollowups  = 12000
+	nCalls      = 8000
+	nEmails     = 4000
+	nMeetings   = 3000
+	nComments   = 20000
+	nAttach     = 5000
 )
 
 var passwordHash = "$2a$10$LfjRwo5HgMU/P2xEQMtaYu1PNHkOXL/ZrDAdhKG8Ob9j2XRw5i2la" // SmartCA@2025
@@ -69,6 +70,7 @@ func main() {
 	log.Println("wmseed complete")
 	log.Println("sample logins (password SmartCA@2025):")
 	log.Println("  manager1@wm.smartca.in  ca1@wm.smartca.in  tl1@wm.smartca.in  emp1@wm.smartca.in")
+	log.Println("  reception1@wm.smartca.in  reception2@wm.smartca.in")
 }
 
 func wipe(db *sql.DB) {
@@ -131,6 +133,14 @@ func seedUsers(db *sql.DB) (managers, cas, tls, emps []string) {
 		tl := tls[(i-1)%len(tls)]
 		insert(id, fmt.Sprintf("emp%d@wm.smartca.in", i), fmt.Sprintf("Employee %d", i), "employee", []string{"GST", "ITR", "Audit", "ROC", "TDS"}[i%5], tl)
 		emps = append(emps, id)
+	}
+	// Front-office intake UAT (BUG-0011): reportsTo first manager when present.
+	mgrRef := ""
+	if len(managers) > 0 {
+		mgrRef = managers[0]
+	}
+	for _, r := range receptionRoster(mgrRef) {
+		insert(r.ID, r.Email, r.FullName, r.Role, r.Department, r.ReportsTo)
 	}
 	return
 }

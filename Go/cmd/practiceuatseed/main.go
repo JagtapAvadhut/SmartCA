@@ -14,7 +14,18 @@
 // Targets: 55 named users, 300 clients, 100 companies, ~120 engagements, ≥500 works.
 // Password for all practice users: SmartCA@2025
 //
-// Sample logins: alok@practice.smartca.in, nitesh@practice.smartca.in, mukesh@practice.smartca.in
+// Sample logins (preferred UAT):
+//
+//	senior_ca  vikram@practice.smartca.in
+//	junior_ca  aditya@practice.smartca.in
+//	accountant ganesh@practice.smartca.in
+//	article    kunal@practice.smartca.in
+//	manager    alok@practice.smartca.in
+//
+// Demo USR aliases (also get PRACTICE portfolios when present):
+//
+//	suresh.gupta@smartca.in / rahul.joshi@smartca.in /
+//	arun.mehta@smartca.in / sanjay.verma@smartca.in
 package main
 
 import (
@@ -84,10 +95,22 @@ func main() {
 	seedWorks(db, clients, companies, engagements, roster)
 	seedIntakes(db, roster)
 
+	log.Println("seeding demo USR role portfolios (BUG-0012)…")
+	seedDemoRolePortfolios(db, clients, companies, engagements, roster)
+
 	printCounts(db)
 	verifyNamed(db)
+	verifyRolePortfolios(db)
 	log.Println("practiceuatseed complete")
-	log.Println("password for all: SmartCA@2025")
+	log.Println("password for all practice users: SmartCA@2025")
+	log.Println("UAT preferred (Practice):")
+	log.Println("  senior_ca  vikram@practice.smartca.in")
+	log.Println("  junior_ca  aditya@practice.smartca.in")
+	log.Println("  accountant ganesh@practice.smartca.in")
+	log.Println("  article    kunal@practice.smartca.in")
+	log.Println("UAT demo aliases (also seeded portfolios if USR-* present):")
+	log.Println("  suresh.gupta@smartca.in  rahul.joshi@smartca.in")
+	log.Println("  arun.mehta@smartca.in    sanjay.verma@smartca.in")
 	log.Println("  alok@practice.smartca.in  nitesh@practice.smartca.in  mukesh@practice.smartca.in")
 }
 
@@ -280,7 +303,9 @@ func seedEngagements(db *sql.DB, clients, companies []string, roster []seedUser)
 
 func seedWorks(db *sql.DB, clients, companies, engagements []string, roster []seedUser) {
 	cas := rosterByRole("ca")
+	scas := rosterByRole("senior_ca")
 	tls := rosterByRole("team_leader")
+	// Executors include junior_ca / article / accountant / employee so assignee list scope is non-empty.
 	executors := append(append(rosterByRole("junior_ca"), rosterByRole("article_assistant")...), rosterByRole("accountant")...)
 	executors = append(executors, rosterByRole("employee")...)
 
@@ -337,6 +362,11 @@ func seedWorks(db *sql.DB, clients, companies, engagements []string, roster []se
 		ca := cas[i%len(cas)]
 		tl := tls[i%len(tls)]
 		ex := executors[i%len(executors)]
+		// BUG-0012: ~20% of works use Senior CA as owner_ca so professional list scope is non-empty.
+		owner := ca
+		if len(scas) > 0 && i%5 == 0 {
+			owner = scas[i%len(scas)]
+		}
 		cli := clients[i%len(clients)]
 		eng := engagements[i%len(engagements)]
 		wt := workTypes[i%len(workTypes)]
@@ -359,19 +389,124 @@ func seedWorks(db *sql.DB, clients, companies, engagements []string, roster []se
 		partnerFlag := risk == "high" && i%7 == 0
 		due := now.Add(time.Duration((i%45)-15) * 24 * time.Hour)
 		title := fmt.Sprintf("%s — %s #%d", wt, clientName(cli), i)
-		dept := ca.Dept
+		dept := owner.Dept
 		_, err := stmt.Exec(
 			id, title, "Practice UAT work for Alok firm gates / triad validation",
 			priorities[i%len(priorities)], st, due, now,
 			tl.ID, ex.ID, cli, clientName(cli), dept, pq.Array([]string{"practice_uat", wt}),
-			float64(4+(i%16)), float64(i%12), pct, ca.ID, now,
+			float64(4+(i%16)), float64(i%12), pct, owner.ID, now,
 			cmp, eng, wt, periodKey, "FY2025-26", overlays[i%len(overlays)], risk,
-			ca.ID, tl.ID, ex.ID, partnerFlag,
+			owner.ID, tl.ID, ex.ID, partnerFlag,
 		)
 		must(err)
 		if i%100 == 0 {
 			log.Printf("  work %d/%d", i, nWorks)
 		}
+	}
+	must(tx.Commit())
+}
+
+// seedDemoRolePortfolios assigns PRACTICE works to classic demo USR-* emails cited in BUG-0012
+// (suresh.gupta / rahul.joshi / arun.mehta / sanjay.verma) when those users exist in the DB.
+// Preferred UAT remains @practice.smartca.in; demo aliases are kept for QA scripts that still use them.
+func seedDemoRolePortfolios(db *sql.DB, clients, companies, engagements []string, roster []seedUser) {
+	type demoSlot struct {
+		email string
+		as    string // owner_ca | assignee
+		uid   string
+	}
+	demos := []demoSlot{
+		{email: "suresh.gupta@smartca.in", as: "owner_ca"},
+		{email: "rahul.joshi@smartca.in", as: "assignee"},
+		{email: "arun.mehta@smartca.in", as: "assignee"},
+		{email: "sanjay.verma@smartca.in", as: "assignee"},
+	}
+	active := demos[:0]
+	for _, d := range demos {
+		var uid string
+		err := db.QueryRow(`SELECT id FROM users WHERE lower(data->>'email')=$1 AND archived=false LIMIT 1`, strings.ToLower(d.email)).Scan(&uid)
+		if err != nil || uid == "" {
+			log.Printf("  demo portfolio skip %s (user not in DB)", d.email)
+			continue
+		}
+		d.uid = uid
+		active = append(active, d)
+	}
+	if len(active) == 0 {
+		return
+	}
+
+	cas := rosterByRole("ca")
+	tls := rosterByRole("team_leader")
+	executors := append(rosterByRole("junior_ca"), rosterByRole("employee")...)
+	if len(cas) == 0 || len(tls) == 0 || len(executors) == 0 {
+		return
+	}
+	const perUser = 40
+	now := time.Now().UTC()
+	workTypes := []string{"GSTR1", "GSTR3B", "ITR", "TDS", "ROC_AOC4", "AUDIT"}
+	priorities := []string{"low", "medium", "high", "urgent"}
+	risks := []string{"low", "medium", "high"}
+
+	tx, err := db.Begin()
+	must(err)
+	stmt, err := tx.Prepare(`
+		INSERT INTO wm_work_items (
+			id, title, description, priority, status, due_date, created_date,
+			assigned_by, assigned_to, client_id, client_name, department, tags,
+			estimated_hours, actual_hours, completion_pct, parent_id, created_by, updated_by,
+			created_at, updated_at,
+			company_id, engagement_id, work_type, period_key, fy, overlay, risk_class,
+			owner_ca_id, tl_id, assignee_id, delegated_close, requires_partner_signoff
+		) VALUES (
+			$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,NULL,$17,$17,$18,$18,
+			$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,false,false
+		) ON CONFLICT (id) DO NOTHING`)
+	must(err)
+	defer stmt.Close()
+
+	seq := 0
+	for _, d := range active {
+		for i := 1; i <= perUser; i++ {
+			seq++
+			slug := strings.ToUpper(strings.ReplaceAll(strings.Split(d.email, "@")[0], ".", ""))
+			id := fmt.Sprintf("PRACTICE-WRK-DEMO-%s-%02d", slug, i)
+			ca := cas[seq%len(cas)]
+			tl := tls[seq%len(tls)]
+			ex := executors[seq%len(executors)]
+			ownerID, assigneeID := ca.ID, ex.ID
+			switch d.as {
+			case "owner_ca":
+				ownerID = d.uid
+			case "assignee":
+				assigneeID = d.uid
+			}
+			cli := clients[seq%len(clients)]
+			eng := engagements[seq%len(engagements)]
+			wt := workTypes[seq%len(workTypes)]
+			var cmp any
+			periodKey := fmt.Sprintf("2025-%02d-D%04d", (seq%12)+1, seq)
+			if seq%3 != 0 && len(companies) > 0 {
+				cmp = companies[seq%len(companies)]
+			}
+			st := "IN_PROGRESS"
+			if i%5 == 0 {
+				st = "DOCUMENT_PENDING"
+			} else if i%7 == 0 {
+				st = "READY_FOR_CA_VERIFY"
+			}
+			title := fmt.Sprintf("%s — demo portfolio %s #%d", wt, d.email, i)
+			_, err := stmt.Exec(
+				id, title, "BUG-0012 demo USR portfolio for practice-role UAT",
+				priorities[seq%len(priorities)], st, now.Add(time.Duration(i)*24*time.Hour), now,
+				tl.ID, assigneeID, cli, cli, ca.Dept, pq.Array([]string{"practice_uat", "demo_portfolio", wt}),
+				float64(4+(i%8)), float64(i%6), 25, ownerID, now,
+				cmp, eng, wt, periodKey, "FY2025-26", "", risks[seq%len(risks)],
+				ownerID, tl.ID, assigneeID,
+			)
+			must(err)
+		}
+		log.Printf("  demo portfolio %s → %s (%d works as %s)", d.email, d.uid, perUser, d.as)
 	}
 	must(tx.Commit())
 }
@@ -433,6 +568,31 @@ func verifyNamed(db *sql.DB) {
 			log.Fatalf("verify failed: %s count = 0", name)
 		}
 		log.Printf("VERIFY %s fullName matches = %d", name, n)
+	}
+}
+
+// verifyRolePortfolios asserts BUG-0012 practice roles each have at least one visible work
+// (senior_ca via owner_ca_id; junior/accountant/article via assignee_id).
+func verifyRolePortfolios(db *sql.DB) {
+	checks := []struct {
+		label, email, sql string
+	}{
+		{"senior_ca practice", "vikram@practice.smartca.in",
+			`SELECT COUNT(*) FROM wm_work_items w JOIN users u ON u.id=w.owner_ca_id WHERE lower(u.data->>'email')=$1 AND w.id LIKE 'PRACTICE-%'`},
+		{"junior_ca practice", "aditya@practice.smartca.in",
+			`SELECT COUNT(*) FROM wm_work_items w JOIN users u ON u.id=w.assignee_id WHERE lower(u.data->>'email')=$1 AND w.id LIKE 'PRACTICE-%'`},
+		{"accountant practice", "ganesh@practice.smartca.in",
+			`SELECT COUNT(*) FROM wm_work_items w JOIN users u ON u.id=w.assignee_id WHERE lower(u.data->>'email')=$1 AND w.id LIKE 'PRACTICE-%'`},
+		{"article practice", "kunal@practice.smartca.in",
+			`SELECT COUNT(*) FROM wm_work_items w JOIN users u ON u.id=w.assignee_id WHERE lower(u.data->>'email')=$1 AND w.id LIKE 'PRACTICE-%'`},
+	}
+	for _, c := range checks {
+		var n int
+		must(db.QueryRow(c.sql, c.email).Scan(&n))
+		if n == 0 {
+			log.Fatalf("BUG-0012 verify failed: %s (%s) portfolio = 0", c.label, c.email)
+		}
+		log.Printf("VERIFY portfolio %s (%s) = %d", c.label, c.email, n)
 	}
 }
 

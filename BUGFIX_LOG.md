@@ -82,3 +82,13 @@
 - **Fix:** `wmseed` seeds 2 reception users (`reception1@wm.smartca.in`, `reception2@wm.smartca.in`, ids `WM-RCP-0001/0002`, role `reception`, `PermissionsForRole` → intake.create / no assign/edit, password `SmartCA@2025`, optional `reportsTo` first manager). One-shot helper `go run ./cmd/wmreceptionseed` upserts reception only (no 5k wipe). practiceuatseed ROLE_HIERARCHY reception already present (asserted in roster test).
 - **Verify:** Login `reception1@wm.smartca.in` → role=reception, perms include `intake.create`, no `work.assign`/`work.edit`, work list total=0.
 - **Tests:** `go test ./cmd/wmseed/ ./cmd/practiceuatseed/ ./internal/workmgmt/` PASS
+
+## BUG-0012 — Practice / demo senior_ca / junior_ca / accountant / article work list total=0
+
+- **Status:** FIXED-PENDING-QA
+- **Root cause:** `practiceuatseed` never set `senior_ca` as `owner_ca_id` (professional list scope), so SCA portfolios were empty; QA also used demo USR emails (`suresh.gupta@smartca.in` etc.) that had no triad/assignee links.
+- **Fix:** `seedWorks` assigns ~20% of PRACTICE works to senior_ca as owner; junior/accountant/article stay on assignee rotation. `seedDemoRolePortfolios` creates 40 PRACTICE works each for demo USR aliases when present. Portfolio smoke test + seeder verify. QA harness prefers `@practice.smartca.in`.
+- **UAT emails:** Preferred `vikram@` / `aditya@` / `ganesh@` / `kunal@practice.smartca.in`; demo aliases also seeded.
+- **Local verify:** Practice totals 25/19/17/17; demo aliases 40 each via `GET /work/items`.
+- **Run:** `cd Go && go run ./cmd/practiceuatseed`
+- **Tests:** `go test ./cmd/practiceuatseed/ ./internal/workmgmt/...` PASS

@@ -119,7 +119,7 @@ Known product gaps from `PRACTICE_UAT_REPORT.md` (enhancements, not RC blockers)
 - `.env` excluded via `.gitignore`.
 - Large `saas/qa-artifacts/` screenshots **not** required in git (optional evidence locally).
 
-**Commit hash:** _(filled after commit)_  
+**Commit hash:** `b5db21004b7b033928fdd842a6237d5762430765`  
 **Docker image tags:** `smartca-api:local`, `smartca-web:local`
 
 ---

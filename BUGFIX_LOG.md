@@ -100,3 +100,10 @@
 - **Fix:** Added `TestConcurrentGateWrite_Conflict` — parallel `ApplyGateWrite` / `VerifyTL` / `CloseWork` on MemoryStore and Postgres (when DB available); expects one success + one conflict/409.
 - **Live verify:** Parallel `POST …/close` on `PRACTICE-WRK-0033` → HTTP 200 + HTTP 409.
 - **Tests:** `go test ./internal/workmgmt/...` PASS (`TestConcurrentGateWrite_Conflict` ×20 including PG subtests)
+
+## BUG-0014 — OpenAPI / swagger not regenerated; Practice Core contract drift
+
+- **Status:** FIXED-PENDING-QA
+- **Root cause:** Practice Core routes (`mountWork` transitions/verify/close/reopen/assign, intakes, checklist, engagements) shipped without OpenAPI updates; formal contract QA blocked.
+- **Fix:** Documented Practice Core paths + `WorkItem`/`Intake`/`Engagement`/`ChecklistItem`/`PracticeStatus` schemas in all three OpenAPI copies (`docs/api/openapi.yaml`, `saas/public/openapi.yaml`, `Go/internal/api/handlers/docs/openapi.yaml`) matching `routes.go` handlers.
+- **Verify:** Three YAML copies identical; paths align with `mountWork`; static `swagger.html` loads `/openapi.yaml`.

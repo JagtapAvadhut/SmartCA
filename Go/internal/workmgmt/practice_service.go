@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	apperrors "github.com/JagtapAvadhut/smartca-backend/internal/domain/errors"
+	"github.com/lib/pq"
 )
 
 func mapGateErr(err error) error {
@@ -15,7 +16,30 @@ func mapGateErr(err error) error {
 	if errors.Is(err, ErrStatusConflict) || errors.Is(err, ErrIntakeConflict) {
 		return apperrors.Conflict(err.Error())
 	}
+	if mapped := mapFKViolation(err); mapped != nil {
+		return mapped
+	}
 	return err
+}
+
+// mapFKViolation turns Postgres foreign_key_violation (23503) into a client error.
+// Returns nil when err is not an FK violation.
+func mapFKViolation(err error) error {
+	var pqErr *pq.Error
+	if !errors.As(err, &pqErr) || pqErr.Code != "23503" {
+		return nil
+	}
+	c := strings.ToLower(string(pqErr.Constraint))
+	switch {
+	case strings.Contains(c, "client"):
+		return apperrors.BadRequest("invalid clientId: client not found")
+	case strings.Contains(c, "company"):
+		return apperrors.BadRequest("invalid companyId: company not found")
+	case strings.Contains(c, "engagement"):
+		return apperrors.BadRequest("invalid engagementId: engagement not found")
+	default:
+		return apperrors.BadRequest("referenced entity not found")
+	}
 }
 
 // tlPassVerifier returns the actor ID of the latest successful TL verify (pass → READY_FOR_CA_VERIFY).
@@ -471,8 +495,10 @@ func (s *Service) ApproveIntake(ctx context.Context, actor Actor, id string, cli
 	in.OwnerCAID = ownerCAID
 	in.EngagementID = eng.ID
 	if err := s.store.ApproveIntakeAtomic(ctx, eng, in, IntakeStatusOpen); err != nil {
-		if mapped := mapGateErr(err); mapped != err {
-			return nil, mapped
+		mapped := mapGateErr(err)
+		var ae *apperrors.AppError
+		if errors.As(mapped, &ae) {
+			return nil, ae
 		}
 		return nil, apperrors.Internal("failed to approve intake", err)
 	}
@@ -524,7 +550,12 @@ func (s *Service) CreateEngagement(ctx context.Context, actor Actor, e *Engageme
 	e.CreatedBy = actor.ID
 	e.UpdatedBy = actor.ID
 	if err := s.store.CreateEngagement(ctx, e); err != nil {
-		return nil, err
+		mapped := mapGateErr(err)
+		var ae *apperrors.AppError
+		if errors.As(mapped, &ae) {
+			return nil, ae
+		}
+		return nil, apperrors.Internal("failed to create engagement", err)
 	}
 	return s.store.GetEngagement(ctx, e.ID, false)
 }

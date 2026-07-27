@@ -258,6 +258,433 @@ paths:
       responses:
         "200":
           description: Paginated list
+  /api/v1/work/items:
+    get:
+      summary: List work items (Practice Core)
+      description: Requires `work.view`. Status filter accepts practice status enums.
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/search"
+        - name: status
+          in: query
+          schema: { $ref: "#/components/schemas/PracticeStatus" }
+        - name: clientId
+          in: query
+          schema: { type: string }
+        - name: assigneeId
+          in: query
+          schema: { type: string }
+        - name: ownerCaId
+          in: query
+          schema: { type: string }
+        - name: tlId
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: Paginated work items
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items: { $ref: "#/components/schemas/WorkItem" }
+    post:
+      summary: Create work item
+      description: Requires `work.create`. Assignee optional (OPEN / DOCUMENT_PENDING); triad via `/assign`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/WorkItemCreate" }
+            example:
+              title: GSTR-3B Mar 2026
+              clientId: CLT-0001
+              companyId: CMP-0001
+              workType: GSTR3B
+              periodKey: 2026-03
+              riskClass: medium
+              status: OPEN
+              ownerCaId: WM-CA-0001
+              tlId: WM-TL-0001
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    properties:
+                      data: { $ref: "#/components/schemas/WorkItem" }
+        "403":
+          description: Missing work.create
+        "409":
+          description: Duplicate period / conflict
+  /api/v1/work/items/{id}:
+    get:
+      summary: Get work item
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Work item
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    properties:
+                      data: { $ref: "#/components/schemas/WorkItem" }
+    patch:
+      summary: Update work item (free-status PATCH only)
+      description: |
+        Requires `work.edit`. Gated statuses (READY_FOR_*, CLOSED, etc.) must use
+        `/transitions`, `/verify/*`, `/close`, or `/reopen` — not PATCH.
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/WorkItemUpdate" }
+      responses:
+        "200":
+          description: Updated work item
+        "409":
+          description: Gate status cannot be set via PATCH
+  /api/v1/work/items/{id}/assign:
+    post:
+      summary: Assign ownership triad slot (owner_ca | tl | assignee)
+      description: Requires `work.assign`.
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [slot, userId]
+              properties:
+                slot: { type: string, enum: [owner_ca, tl, assignee] }
+                userId: { type: string }
+                userName: { type: string }
+                userRole: { type: string }
+            example:
+              slot: assignee
+              userId: WM-EMP-0001
+              userName: Emp One
+              userRole: employee
+      responses:
+        "200":
+          description: Updated work item
+        "403":
+          description: Missing work.assign or role cannot set slot
+  /api/v1/work/items/{id}/transitions:
+    post:
+      summary: Practice status transition (non-verify edges)
+      description: Requires `work.transition`. Use for READY_FOR_TL_VERIFY and operational edges; verify/close/reopen have dedicated APIs.
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [to]
+              properties:
+                to: { $ref: "#/components/schemas/PracticeStatus" }
+                remarks: { type: string }
+                overlay: { type: string, example: GSTR3B_FILED }
+            example:
+              to: READY_FOR_TL_VERIFY
+              remarks: Prep complete
+      responses:
+        "200":
+          description: Transitioned work item
+        "409":
+          description: Illegal edge / status conflict
+  /api/v1/work/items/{id}/verify/tl:
+    post:
+      summary: TL verify gate (pass → READY_FOR_CA_VERIFY, fail → TL_REJECTED)
+      description: Requires `work.verify.tl`. Decision `pass` or `fail`; remarks required on fail.
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/VerifyDecision" }
+            example: { decision: pass, remarks: Looks good }
+      responses:
+        "200":
+          description: Verified work item
+        "403":
+          description: Missing work.verify.tl (Manager SoD strips this)
+        "409":
+          description: Not READY_FOR_TL_VERIFY or concurrent conflict
+  /api/v1/work/items/{id}/verify/ca:
+    post:
+      summary: CA verify gate (pass → READY_FOR_MANAGER_CLOSE / DELIVERED, fail → CA_REJECTED)
+      description: Requires `work.verify.ca`. Same actor cannot both pass TL and act on CA verify (SoD).
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/VerifyDecision" }
+            example: { decision: pass, remarks: Approved }
+      responses:
+        "200":
+          description: Verified work item
+        "403":
+          description: Missing work.verify.ca or SoD violation
+        "409":
+          description: Not READY_FOR_CA_VERIFY or concurrent conflict
+  /api/v1/work/items/{id}/close:
+    post:
+      summary: Manager/Partner close (→ CLOSED)
+      description: Requires `work.close.manager` (or `work.close.partner` when `requiresPartnerSignoff`).
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                remarks: { type: string }
+            example: { remarks: Filing complete }
+      responses:
+        "200":
+          description: Closed work item
+        "403":
+          description: Insufficient close permission
+        "409":
+          description: Not READY_FOR_MANAGER_CLOSE/DELIVERED or concurrent conflict
+  /api/v1/work/items/{id}/reopen:
+    post:
+      summary: Reopen CLOSED work (→ OPEN)
+      description: Requires `work.reopen`.
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason]
+              properties:
+                reason: { type: string }
+            example: { reason: Client amendment }
+      responses:
+        "200":
+          description: Reopened work item
+        "409":
+          description: Not CLOSED
+  /api/v1/work/items/{id}/checklist:
+    get:
+      summary: List document checklist for work item
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Checklist rows
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items: { $ref: "#/components/schemas/ChecklistItem" }
+    post:
+      summary: Add checklist item
+      description: Requires `work.edit`.
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ChecklistItemCreate" }
+            example: { code: BANK_STMT, label: Bank statement }
+      responses:
+        "201":
+          description: Created checklist item
+  /api/v1/work/items/{id}/checklist/{cid}/verify:
+    post:
+      summary: Verify or reject checklist item
+      description: |
+        Requires `work.view` at route; service allows TL/CA/Manager.
+        Decision `pass`/`verified` or `fail`/`rejected` (remarks required on reject).
+      parameters:
+        - $ref: "#/components/parameters/id"
+        - $ref: "#/components/parameters/cid"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/VerifyDecision" }
+            examples:
+              verify:
+                value: { decision: pass, remarks: Received }
+              reject:
+                value: { decision: fail, remarks: Illegible scan }
+      responses:
+        "200":
+          description: Updated checklist item
+        "403":
+          description: Role cannot verify checklist
+  /api/v1/work/intakes:
+    get:
+      summary: List intakes
+      description: Requires `work.view` (leadership/reception/intake perms enforced in service).
+      parameters:
+        - name: status
+          in: query
+          schema: { type: string, enum: [INTAKE, APPROVED, REJECTED] }
+      responses:
+        "200":
+          description: Intake list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items: { $ref: "#/components/schemas/Intake" }
+    post:
+      summary: Create intake (reception pre-master)
+      description: Requires `intake.create`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/IntakeCreate" }
+            example:
+              source: walk_in
+              contactName: Ravi Patel
+              contactPhone: "9876543210"
+              services: [GST, ITR]
+              notes: New walk-in
+      responses:
+        "201":
+          description: Created intake (status INTAKE)
+        "403":
+          description: Missing intake.create
+  /api/v1/work/intakes/{id}/approve:
+    post:
+      summary: Approve intake → engagement
+      description: Requires `intake.approve`. Creates engagement atomically.
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [clientId, ownerCaId]
+              properties:
+                clientId: { type: string }
+                companyId: { type: string }
+                ownerCaId: { type: string }
+                engagementTitle: { type: string }
+                services:
+                  type: array
+                  items: { type: string }
+            example:
+              clientId: CLT-0001
+              companyId: CMP-0001
+              ownerCaId: WM-CA-0001
+              engagementTitle: FY26 retainer
+              services: [GST, ITR]
+      responses:
+        "200":
+          description: Approved intake
+        "400":
+          description: Invalid clientId / validation
+        "409":
+          description: Intake not INTAKE
+  /api/v1/work/intakes/{id}/reject:
+    post:
+      summary: Reject intake
+      description: Requires `intake.reject`. Remarks required.
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [remarks]
+              properties:
+                remarks: { type: string }
+            example: { remarks: Incomplete KYC }
+      responses:
+        "200":
+          description: Rejected intake
+        "409":
+          description: Intake not INTAKE
+  /api/v1/work/engagements:
+    get:
+      summary: List engagements
+      description: Requires `work.view`. Professionals scoped to own ownerCaId portfolio.
+      parameters:
+        - name: clientId
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: Engagement list
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/SuccessEnvelope"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items: { $ref: "#/components/schemas/Engagement" }
+    post:
+      summary: Create engagement
+      description: Requires `engagement.create`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EngagementCreate" }
+            example:
+              clientId: CLT-0001
+              companyId: CMP-0001
+              ownerCaId: WM-CA-0001
+              title: FY26 GST retainer
+              services: [GSTR1, GSTR3B]
+              fy: "2025-26"
+              status: ACTIVE
+      responses:
+        "201":
+          description: Created engagement
+        "400":
+          description: Invalid clientId / validation
   /api/v1/notes:
     get:
       summary: List notes
@@ -524,6 +951,12 @@ components:
       in: path
       required: true
       schema: { type: string }
+    cid:
+      name: cid
+      in: path
+      required: true
+      description: Checklist item id
+      schema: { type: string }
     page:
       name: page
       in: query
@@ -578,3 +1011,203 @@ components:
           type: object
           properties:
             requestId: { type: string }
+    PracticeStatus:
+      type: string
+      description: Canonical Practice Core work status (Architecture §6.1)
+      enum:
+        - OPEN
+        - DOCUMENT_PENDING
+        - DOCUMENT_RECEIVED
+        - IN_PROGRESS
+        - BLOCKED
+        - ON_HOLD
+        - READY_FOR_TL_VERIFY
+        - TL_REJECTED
+        - TL_VERIFIED
+        - READY_FOR_CA_VERIFY
+        - CA_REJECTED
+        - CA_VERIFIED
+        - READY_FOR_MANAGER_CLOSE
+        - DELIVERED
+        - CLOSED
+        - CANCELLED
+    RiskClass:
+      type: string
+      enum: [low, medium, high]
+    VerifyDecision:
+      type: object
+      required: [decision]
+      properties:
+        decision:
+          type: string
+          description: pass|fail (checklist also accepts verified|rejected)
+          enum: [pass, fail, verified, rejected]
+        remarks: { type: string }
+    WorkItem:
+      type: object
+      properties:
+        id: { type: string }
+        title: { type: string }
+        description: { type: string }
+        priority: { type: string }
+        status: { $ref: "#/components/schemas/PracticeStatus" }
+        dueDate: { type: string, format: date-time }
+        createdDate: { type: string, format: date-time }
+        assignedBy: { type: string }
+        assignedByName: { type: string }
+        assignedTo: { type: string }
+        assignedToName: { type: string }
+        clientId: { type: string }
+        clientName: { type: string }
+        companyId: { type: string }
+        engagementId: { type: string }
+        workType: { type: string }
+        periodKey: { type: string }
+        fy: { type: string }
+        overlay: { type: string }
+        riskClass: { $ref: "#/components/schemas/RiskClass" }
+        ownerCaId: { type: string, description: Ownership triad — Owner CA }
+        tlId: { type: string, description: Ownership triad — Team Leader }
+        assigneeId: { type: string, description: Ownership triad — assignee (synced with assignedTo) }
+        delegatedClose: { type: boolean }
+        requiresPartnerSignoff: { type: boolean }
+        department: { type: string }
+        tags: { type: array, items: { type: string } }
+        estimatedHours: { type: number }
+        actualHours: { type: number }
+        completionPct: { type: integer }
+        parentId: { type: string }
+        createdBy: { type: string }
+        updatedBy: { type: string }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+        deletedAt: { type: string, format: date-time }
+        childCount: { type: integer }
+    WorkItemCreate:
+      type: object
+      required: [title]
+      properties:
+        title: { type: string }
+        description: { type: string }
+        priority: { type: string }
+        status: { $ref: "#/components/schemas/PracticeStatus" }
+        dueDate: { type: string, format: date-time }
+        assignedTo: { type: string }
+        assignedToName: { type: string }
+        assigneeRole: { type: string }
+        assigneeId: { type: string }
+        clientId: { type: string }
+        clientName: { type: string }
+        companyId: { type: string }
+        engagementId: { type: string }
+        workType: { type: string }
+        periodKey: { type: string }
+        fy: { type: string }
+        overlay: { type: string }
+        riskClass: { $ref: "#/components/schemas/RiskClass" }
+        ownerCaId: { type: string }
+        tlId: { type: string }
+        delegatedClose: { type: boolean }
+        requiresPartnerSignoff: { type: boolean }
+        department: { type: string }
+        tags: { type: array, items: { type: string } }
+        estimatedHours: { type: number }
+        parentId: { type: string }
+    WorkItemUpdate:
+      type: object
+      properties:
+        title: { type: string }
+        description: { type: string }
+        priority: { type: string }
+        status:
+          $ref: "#/components/schemas/PracticeStatus"
+          description: Free statuses only (OPEN, DOCUMENT_*, IN_PROGRESS, BLOCKED, ON_HOLD, *_REJECTED)
+        dueDate: { type: string, format: date-time }
+        clientName: { type: string }
+        department: { type: string }
+        tags: { type: array, items: { type: string } }
+        estimatedHours: { type: number }
+        actualHours: { type: number }
+        completionPct: { type: integer }
+        overlay: { type: string }
+        riskClass: { $ref: "#/components/schemas/RiskClass" }
+        delegatedClose: { type: boolean }
+        requiresPartnerSignoff: { type: boolean }
+    Intake:
+      type: object
+      properties:
+        id: { type: string }
+        status: { type: string, enum: [INTAKE, APPROVED, REJECTED] }
+        source: { type: string }
+        contactName: { type: string }
+        contactPhone: { type: string }
+        contactEmail: { type: string }
+        services: { type: array, items: { type: string } }
+        notes: { type: string }
+        payload: { type: object, additionalProperties: true }
+        createdBy: { type: string }
+        approvedBy: { type: string }
+        rejectedBy: { type: string }
+        rejectRemarks: { type: string }
+        clientId: { type: string }
+        companyId: { type: string }
+        engagementId: { type: string }
+        ownerCaId: { type: string }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+    IntakeCreate:
+      type: object
+      properties:
+        source: { type: string }
+        contactName: { type: string }
+        contactPhone: { type: string }
+        contactEmail: { type: string }
+        services: { type: array, items: { type: string } }
+        notes: { type: string }
+        payload: { type: object, additionalProperties: true }
+    Engagement:
+      type: object
+      properties:
+        id: { type: string }
+        clientId: { type: string }
+        companyId: { type: string }
+        ownerCaId: { type: string }
+        services: { type: array, items: { type: string } }
+        status: { type: string, example: ACTIVE }
+        fy: { type: string }
+        title: { type: string }
+        createdBy: { type: string }
+        updatedBy: { type: string }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+    EngagementCreate:
+      type: object
+      required: [clientId, ownerCaId]
+      properties:
+        clientId: { type: string }
+        companyId: { type: string }
+        ownerCaId: { type: string }
+        services: { type: array, items: { type: string } }
+        status: { type: string, default: ACTIVE }
+        fy: { type: string }
+        title: { type: string }
+    ChecklistItem:
+      type: object
+      properties:
+        id: { type: string }
+        workItemId: { type: string }
+        code: { type: string }
+        label: { type: string }
+        status: { type: string, enum: [pending, received, verified, rejected] }
+        remarks: { type: string }
+        verifiedBy: { type: string }
+        createdBy: { type: string }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+    ChecklistItemCreate:
+      type: object
+      properties:
+        code: { type: string }
+        label: { type: string }
+        status: { type: string, enum: [pending, received], default: pending }
+        remarks: { type: string }

@@ -9,6 +9,7 @@ import (
 	apperrors "github.com/JagtapAvadhut/smartca-backend/internal/domain/errors"
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
 	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
+	"github.com/JagtapAvadhut/smartca-backend/internal/workmgmt"
 )
 
 // AuthService handles login, logout, and password flows.
@@ -185,5 +186,59 @@ func (s *AuthService) ChangePassword(userID, currentPassword, newPassword string
 }
 
 func sanitizeUser(user models.Record) models.Record {
-	return stripSecrets(user)
+	return mergeHierarchyPermissions(stripSecrets(user))
+}
+
+// mergeHierarchyPermissions unions stored user.permissions with Practice Core
+// grants from workmgmt.PermissionsForRole so login /auth/me stay current even
+// when seeded JSON is stale (BUG-0008).
+func mergeHierarchyPermissions(user models.Record) models.Record {
+	if user == nil {
+		return nil
+	}
+	derived := workmgmt.PermissionsForRole(workmgmt.NormalizeHierarchyRole(user.GetString("role")))
+	if len(derived) == 0 {
+		return user
+	}
+	existing := permissionStrings(user["permissions"])
+	seen := make(map[string]struct{}, len(existing)+len(derived))
+	merged := make([]string, 0, len(existing)+len(derived))
+	for _, p := range existing {
+		if p == "" {
+			continue
+		}
+		if _, ok := seen[p]; ok {
+			continue
+		}
+		seen[p] = struct{}{}
+		merged = append(merged, p)
+	}
+	for _, p := range derived {
+		if _, ok := seen[p]; ok {
+			continue
+		}
+		seen[p] = struct{}{}
+		merged = append(merged, p)
+	}
+	user["permissions"] = merged
+	return user
+}
+
+func permissionStrings(raw any) []string {
+	switch list := raw.(type) {
+	case []string:
+		out := make([]string, 0, len(list))
+		out = append(out, list...)
+		return out
+	case []any:
+		out := make([]string, 0, len(list))
+		for _, item := range list {
+			if s, ok := item.(string); ok && s != "" {
+				out = append(out, s)
+			}
+		}
+		return out
+	default:
+		return nil
+	}
 }

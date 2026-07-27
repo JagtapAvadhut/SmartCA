@@ -5,6 +5,15 @@ export { ComplianceService } from './complianceService'
 export { EmployeeService } from './employeeService'
 export { DashboardService } from './dashboardService'
 export { TaskService } from './taskService'
+export { WorkService } from './workService'
+export type {
+  WorkItem,
+  WorkDashboard,
+  Intake,
+  Engagement,
+  ChecklistItem,
+  PracticeStatus,
+} from './workService'
 export { PaymentService } from './paymentService'
 export { ReportService } from './reportService'
 export { AuthService } from './authService'

@@ -52,3 +52,11 @@
 - **Fix:** Migration `010_wm_reports_to_backfill` + `wmseed` Manager→CA→TL→Emp tree; `WorkHandler.DownlineFn` loads user reports edges and `CollectDownlineIDs` hydrates actor; CreateTeamUser sets reports_to to creator. Unit tests in `downline_scope_test.go`.
 - **Local verify:** WM `with_reports_to=370` / 375; sample CA→MGR, TL→CA, Emp→TL.
 - **Tests:** `go test ./internal/workmgmt/...` PASS
+
+## BUG-0008 — Auth login omits Practice Core permission strings
+
+- **Status:** FIXED-PENDING-QA
+- **Root cause:** Seeded `user.data.permissions` still held classic WM grants; login/`/auth/me` returned that JSON as-is while API gates fell back to `PermissionsForRole`.
+- **Fix:** `sanitizeUser` merges `workmgmt.PermissionsForRole(NormalizeHierarchyRole(role))` into the returned permissions (login + session/`/auth/me`). Manager SoD unchanged (no verify.tl/ca / close.partner). `wmseed` seeds via `PermissionsForRole`; FE manager hierarchy list aligned.
+- **Verify:** Login manager → payload includes `work.transition`, `work.close.manager`, `intake.*`; employee → includes `work.transition` but not assign/close/intake.approve.
+- **Tests:** `go test ./internal/app/services/ -run TestLogin_MergesPracticeCorePermissions` PASS; `go test ./internal/workmgmt/...` PASS

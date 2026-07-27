@@ -18,6 +18,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/JagtapAvadhut/smartca-backend/internal/workmgmt"
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 	_ "github.com/lib/pq"
@@ -135,14 +136,12 @@ func seedUsers(db *sql.DB) (managers, cas, tls, emps []string) {
 }
 
 func permsFor(role string) []string {
-	switch role {
-	case "manager", "ca":
-		return []string{"work.view", "work.create", "work.edit", "work.delete", "work.assign", "work.comment", "work.upload", "work.users.create", "work.audit.view", "work.dashboard.manage", "work.dashboard.mine", "dashboard.view", "clients.view"}
-	case "team_leader":
-		return []string{"work.view", "work.create", "work.edit", "work.assign", "work.comment", "work.upload", "work.users.create", "work.dashboard.mine", "dashboard.view"}
-	default:
-		return []string{"work.view", "work.edit", "work.comment", "work.upload", "work.dashboard.mine", "dashboard.view"}
+	perms := append([]string{}, workmgmt.PermissionsForRole(role)...)
+	perms = append(perms, "dashboard.view")
+	if role == "manager" || role == "ca" {
+		perms = append(perms, "clients.view")
 	}
+	return perms
 }
 
 func seedClients(db *sql.DB) []string {

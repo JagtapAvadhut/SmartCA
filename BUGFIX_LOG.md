@@ -67,3 +67,10 @@
 - **Root cause:** Dashboard SQL counted only CLOSED/legacy completed/DELIVERED with no verify/close queue fields, so managers saw `completed≈0/1` while hundreds sat in `READY_FOR_MANAGER_CLOSE`.
 - **Fix:** Practice-aware aggregates — `completed`/`completedTasks` = CLOSED (+ legacy `completed`); `pending` = not CLOSED/CANCELLED; add `readyForTLVerify`, `readyForCAVerify`, `readyForManagerClose`, `awaitingClose`. Postgres + MemoryStore + FE dashboard cards. `TestDashboard_PracticeAwareAggregates`.
 - **Tests:** `go test ./internal/workmgmt/...` PASS
+
+## BUG-0010 — Work create always requires assignee
+
+- **Status:** FIXED-PENDING-QA
+- **Root cause:** `CreateWork` rejected empty `assignedTo`/`assigneeId`, blocking OPEN work before triad AssignSlot.
+- **Fix:** Assignee optional on create; unassigned work allowed as `OPEN`/`DOCUMENT_PENDING`. When assignee provided, still enforce `PermAssign` + `CanAssignTo`. Skip assign activity/notify when unassigned. Employees still blocked (no `work.create`). `TestCreateWork_UnassignedOpen`.
+- **Tests:** `go test ./internal/workmgmt/...` PASS

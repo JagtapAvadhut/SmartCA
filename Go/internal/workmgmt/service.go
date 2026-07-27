@@ -92,7 +92,11 @@ func (s *Service) notify(ctx context.Context, userID, workID, kind, title, body 
 	})
 }
 
-// CreateWork creates and assigns a work item.
+// CreateWork creates a work item. Assignee is optional: Manager/CA (and other
+// creators with work.create) may open unassigned OPEN / DOCUMENT_PENDING work
+// and fill assignee later via AssignSlot. When assignedTo/assigneeId is set,
+// assign permission and CanAssignTo(assigneeRole) still apply. Employees lack
+// work.create and remain rejected.
 func (s *Service) CreateWork(ctx context.Context, actor Actor, in *WorkItem, assigneeRole string) (*WorkItem, error) {
 	if err := s.require(actor, PermCreate); err != nil {
 		return nil, err
@@ -104,18 +108,20 @@ func (s *Service) CreateWork(ctx context.Context, actor Actor, in *WorkItem, ass
 		return nil, apperrors.Validation("title is required")
 	}
 	assignee := firstNonEmptyStr(in.AssigneeID, in.AssignedTo)
-	if assignee == "" {
-		return nil, apperrors.Validation("assignedTo/assigneeId is required")
-	}
-	in.AssignedTo = assignee
-	if in.AssigneeID == "" {
-		in.AssigneeID = assignee
-	}
-	if err := s.require(actor, PermAssign); err != nil {
-		return nil, err
-	}
-	if !CanAssignTo(actor.Hierarchy, assigneeRole) {
-		return nil, apperrors.Forbidden("cannot assign work to this role")
+	if assignee != "" {
+		in.AssignedTo = assignee
+		if in.AssigneeID == "" {
+			in.AssigneeID = assignee
+		}
+		if err := s.require(actor, PermAssign); err != nil {
+			return nil, err
+		}
+		if !CanAssignTo(actor.Hierarchy, assigneeRole) {
+			return nil, apperrors.Forbidden("cannot assign work to this role")
+		}
+	} else {
+		in.AssignedTo = ""
+		in.AssigneeID = ""
 	}
 	// Corporate compliance requires company_id when work_type implies GST/ROC etc.
 	wt := strings.ToUpper(strings.TrimSpace(in.WorkType))
@@ -130,6 +136,14 @@ func (s *Service) CreateWork(ctx context.Context, actor Actor, in *WorkItem, ass
 	}
 	in.Priority = normalizePriority(in.Priority)
 	in.Status = normalizeStatus(in.Status)
+	if assignee == "" {
+		st := NormalizePracticeStatus(in.Status)
+		if st != StatusOpen && st != StatusDocumentPending {
+			in.Status = StatusOpen
+		} else {
+			in.Status = st
+		}
+	}
 	in.RiskClass = NormalizeRiskClass(in.RiskClass)
 	in.Overlay = NormalizeOverlay(in.Overlay)
 	in.AssignedBy = actor.ID
@@ -149,9 +163,11 @@ func (s *Service) CreateWork(ctx context.Context, actor Actor, in *WorkItem, ass
 		return nil, apperrors.Internal("failed to create work", err)
 	}
 	s.activity(ctx, actor, in.ID, ActionCreated, "Work created: "+in.Title, nil)
-	s.activity(ctx, actor, in.ID, ActionAssigned, "Assigned to "+in.AssignedToName, map[string]any{"to": in.AssignedTo})
+	if assignee != "" {
+		s.activity(ctx, actor, in.ID, ActionAssigned, "Assigned to "+in.AssignedToName, map[string]any{"to": in.AssignedTo})
+		s.notify(ctx, in.AssignedTo, in.ID, "assignment", "New work assigned", in.Title)
+	}
 	s.auditField(ctx, actor, in.ID, "work_item", in.ID, "status", "", in.Status)
-	s.notify(ctx, in.AssignedTo, in.ID, "assignment", "New work assigned", in.Title)
 	return s.store.GetWork(ctx, in.ID, false)
 }
 

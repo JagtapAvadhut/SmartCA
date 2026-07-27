@@ -14,7 +14,7 @@ export function Sidebar() {
   const { permissions } = usePermission()
   const location = useLocation()
   const navigate = useNavigate()
-  const [expandedMenus, setExpandedMenus] = useState<string[]>(['compliance'])
+  const [expandedMenus, setExpandedMenus] = useState<string[]>(['compliance', 'work'])
 
   const navigation = getFilteredNavigation(permissions)
 

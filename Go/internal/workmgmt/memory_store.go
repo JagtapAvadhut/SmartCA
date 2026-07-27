@@ -140,6 +140,11 @@ func (s *MemoryStore) ListWork(_ context.Context, f ListFilter) (Page[WorkItem],
 				continue
 			}
 		}
+		if f.FirmKey != "" {
+			if !WorkBelongsToFirm(f.FirmKey, w.CreatedBy, w.AssignedBy, w.AssignedTo, w.OwnerCAID, w.TlID, w.AssigneeID, w.ID) {
+				continue
+			}
+		}
 		if f.OwnerCAID != "" || f.TlID != "" || len(f.ScopeDownlineIDs) > 0 {
 			ok := false
 			if f.OwnerCAID != "" && (w.OwnerCAID == f.OwnerCAID || firstNonEmptyStr(w.AssigneeID, w.AssignedTo) == f.OwnerCAID || w.CreatedBy == f.OwnerCAID || w.AssignedBy == f.OwnerCAID) {

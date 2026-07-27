@@ -12,13 +12,20 @@ export type Permission =
   | 'reports.view' | 'reports.export'
   | 'employees.view' | 'employees.create' | 'employees.edit'
   | 'ai.view'
+  | 'work.view' | 'work.create' | 'work.edit' | 'work.delete' | 'work.assign'
+  | 'work.transition' | 'work.verify.tl' | 'work.verify.ca'
+  | 'work.close.manager' | 'work.close.partner' | 'work.reopen'
+  | 'work.comment' | 'work.upload' | 'work.users.create' | 'work.audit.view'
+  | 'work.dashboard.manage' | 'work.dashboard.mine'
+  | 'intake.create' | 'intake.approve' | 'intake.reject'
+  | 'engagement.create' | 'engagement.edit' | 'hierarchy.place'
   | 'settings.view' | 'settings.edit' | 'settings.users' | 'settings.roles'
   | 'settings.security' | 'settings.branding' | 'settings.api'
 
 export type UserRole =
   | 'super_admin' | 'admin' | 'partner' | 'ca' | 'senior_ca' | 'junior_ca'
-  | 'accountant' | 'article_assistant' | 'receptionist' | 'auditor'
-  | 'client' | 'hr' | 'finance' | 'employee'
+  | 'accountant' | 'article_assistant' | 'receptionist' | 'reception' | 'auditor'
+  | 'client' | 'hr' | 'finance' | 'employee' | 'manager' | 'team_leader'
 
 export type ThemeMode = 'light' | 'dark' | 'system'
 
@@ -96,6 +103,13 @@ export const ROUTE_PERMISSIONS: Record<string, Permission> = {
   '/payments': 'payments.view',
   '/documents': 'documents.view',
   '/tasks': 'tasks.view',
+  '/work': 'work.view',
+  '/work/board': 'work.view',
+  '/work/intake': 'work.view',
+  '/work/calendar': 'work.view',
+  '/work/timeline': 'work.view',
+  '/work/dashboard': 'work.view',
+  '/work/team': 'work.users.create',
   '/notes': 'dashboard.view',
   '/calendar': 'dashboard.view',
   '/reports': 'reports.view',

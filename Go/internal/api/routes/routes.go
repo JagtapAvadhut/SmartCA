@@ -55,6 +55,7 @@ type Deps struct {
 	LoginHistory *handlers.LoginHistoryHandler
 	NotifsExtra  *handlers.NotificationExtraHandler
 	AI           *handlers.AIHandler
+	Work         *handlers.WorkHandler
 }
 
 // NewRouter builds the chi router with /api/v1 routes.
@@ -156,10 +157,87 @@ func NewRouter(d Deps) http.Handler {
 					ar.Post("/dashboard-insights", d.AI.DashboardInsights)
 				})
 			}
+
+			if d.Work != nil {
+				mountWork(pr, d.Work)
+			}
 		})
 	})
 
 	return r
+}
+
+func mountWork(r chi.Router, h *handlers.WorkHandler) {
+	r.Route("/work", func(wr chi.Router) {
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/items", h.List)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkCreate)).Post("/items", h.Create)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/items/{id}", h.Get)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Patch("/items/{id}", h.Update)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkAssign)).Post("/items/{id}/reassign", h.Reassign)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkAssign)).Post("/items/{id}/transfer", h.Transfer)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkAssign)).Post("/items/{id}/assign", h.AssignSlot)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkTransition)).Post("/items/{id}/transitions", h.Transition)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkVerifyTL)).Post("/items/{id}/verify/tl", h.VerifyTL)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkVerifyCA)).Post("/items/{id}/verify/ca", h.VerifyCA)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkCloseManager)).Post("/items/{id}/close", h.Close)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkReopen)).Post("/items/{id}/reopen", h.Reopen)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkDelete)).Post("/items/{id}/archive", h.Archive)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkDelete)).Post("/items/{id}/restore", h.Restore)
+		wr.Delete("/items/{id}", h.PermanentDelete)
+
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/items/{id}/checklist", h.ListChecklist)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/items/{id}/checklist", h.AddChecklist)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Post("/items/{id}/checklist/{cid}/verify", h.VerifyChecklist)
+
+		wr.With(middleware.RequireWorkPermission(rbac.IntakeCreate)).Post("/intakes", h.CreateIntake)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/intakes", h.ListIntakes)
+		wr.With(middleware.RequireWorkPermission(rbac.IntakeApprove)).Post("/intakes/{id}/approve", h.ApproveIntake)
+		wr.With(middleware.RequireWorkPermission(rbac.IntakeReject)).Post("/intakes/{id}/reject", h.RejectIntake)
+
+		wr.With(middleware.RequireWorkPermission(rbac.EngagementCreate)).Post("/engagements", h.CreateEngagement)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/engagements", h.ListEngagements)
+
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/items/{id}/followups", h.ListFollowUps)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/items/{id}/followups", h.AddFollowUp)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Patch("/items/{id}/followups/{childId}", h.UpdateFollowUp)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/followups/{childId}/archive", h.ArchiveFollowUp)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/followups/{childId}/restore", h.RestoreFollowUp)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/items/{id}/calls", h.ListCalls)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/items/{id}/calls", h.AddCall)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/calls/{childId}/archive", h.ArchiveCall)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/calls/{childId}/restore", h.RestoreCall)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/items/{id}/emails", h.ListEmails)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/items/{id}/emails", h.AddEmail)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/emails/{childId}/archive", h.ArchiveEmail)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/emails/{childId}/restore", h.RestoreEmail)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/items/{id}/meetings", h.ListMeetings)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/items/{id}/meetings", h.AddMeeting)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/meetings/{childId}/archive", h.ArchiveMeeting)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/meetings/{childId}/restore", h.RestoreMeeting)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/items/{id}/meetings/{childId}/cancel", h.CancelMeeting)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/items/{id}/notes", h.ListNotes)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/items/{id}/notes", h.AddNote)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Patch("/items/{id}/notes/{childId}", h.UpdateNote)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/notes/{childId}/archive", h.ArchiveNote)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkEdit)).Post("/notes/{childId}/restore", h.RestoreNote)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/items/{id}/comments", h.ListComments)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkComment)).Post("/items/{id}/comments", h.AddComment)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkComment)).Post("/comments/{childId}/archive", h.ArchiveComment)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkComment)).Post("/comments/{childId}/restore", h.RestoreComment)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/items/{id}/attachments", h.ListAttachments)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkUpload)).Post("/items/{id}/attachments", h.AddAttachment)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/items/{id}/activity", h.ListActivity)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkAuditView)).Get("/items/{id}/audit", h.ListAudit)
+
+		wr.With(middleware.RequireWorkPermission(rbac.WorkUpload)).Post("/attachments/{attachmentId}/archive", h.SoftDeleteAttachment)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkUpload)).Post("/attachments/{attachmentId}/restore", h.RestoreAttachment)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/attachments/{attachmentId}/download", h.DownloadAttachment)
+
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/dashboard", h.Dashboard)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/search", h.Search)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkView)).Get("/timeline", h.Timeline)
+		wr.With(middleware.RequireWorkPermission(rbac.WorkUsersCreate)).Post("/team/users", h.CreateTeamUser)
+	})
 }
 
 func mountCRUD(r chi.Router, path string, h *handlers.CRUDHandler, view, create, edit, del string, dup bool) {

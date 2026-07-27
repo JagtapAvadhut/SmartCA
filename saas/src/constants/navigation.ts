@@ -2,9 +2,11 @@ import type { LucideIcon } from 'lucide-react'
 import {
   LayoutDashboard, Users, Building2, ShieldCheck, Receipt, FileText,
   Calculator, CreditCard, FolderOpen, CheckSquare, BarChart3, UserCog, Bot, Settings, IndianRupee, Scale,
-  StickyNote, CalendarDays, Trash2,
+  StickyNote, CalendarDays, Trash2, Briefcase, Inbox, Columns3,
 } from 'lucide-react'
 import type { Permission } from '@/types/auth'
+import { effectivePermissions } from '@/utils/permissions'
+import { useAuthStore } from '@/store'
 
 export interface NavItem {
   id: string
@@ -34,6 +36,18 @@ export const NAVIGATION: NavItem[] = [
   { id: 'payments', label: 'Payments', path: '/payments', icon: CreditCard, permission: 'payments.view' },
   { id: 'documents', label: 'Documents', path: '/documents', icon: FolderOpen, permission: 'documents.view' },
   { id: 'tasks', label: 'Tasks', path: '/tasks', icon: CheckSquare, permission: 'tasks.view' },
+  {
+    id: 'work', label: 'Work', path: '/work', icon: Briefcase, permission: 'work.view',
+    children: [
+      { id: 'work-list', label: 'All Work', path: '/work', icon: Briefcase, permission: 'work.view' },
+      { id: 'work-board', label: 'Board', path: '/work/board', icon: Columns3, permission: 'work.view' },
+      { id: 'work-intake', label: 'Intake', path: '/work/intake', icon: Inbox, permission: 'work.view' },
+      { id: 'work-calendar', label: 'Calendar', path: '/work/calendar', icon: CalendarDays, permission: 'work.view' },
+      { id: 'work-timeline', label: 'Timeline', path: '/work/timeline', icon: Briefcase, permission: 'work.view' },
+      { id: 'work-dashboard', label: 'Dashboard', path: '/work/dashboard', icon: LayoutDashboard, permission: 'work.view' },
+      { id: 'work-team', label: 'Team', path: '/work/team', icon: UserCog, permission: 'work.users.create' },
+    ],
+  },
   { id: 'notes', label: 'Notes', path: '/notes', icon: StickyNote, permission: 'dashboard.view' },
   { id: 'calendar', label: 'Calendar', path: '/calendar', icon: CalendarDays, permission: 'dashboard.view' },
   { id: 'reports', label: 'Reports', path: '/reports', icon: BarChart3, permission: 'reports.view' },
@@ -44,7 +58,8 @@ export const NAVIGATION: NavItem[] = [
 ]
 
 export function getFilteredNavigation(permissions: Permission[] | undefined): NavItem[] {
-  const perms = permissions ?? []
+  const role = useAuthStore.getState().user?.role
+  const perms = effectivePermissions(permissions, role)
   return NAVIGATION
     .filter((item) => !item.permission || perms.includes(item.permission))
     .map((item) => ({

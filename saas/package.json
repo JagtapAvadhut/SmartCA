@@ -11,6 +11,8 @@
     "qa:browser": "node scripts/qa-verify.mjs",
     "qa:business": "node scripts/qa-business.mjs",
     "qa:auth": "node scripts/qa-auth-e2e.mjs",
+    "qa:work": "node scripts/qa-work-e2e.mjs",
+    "qa:practice": "node scripts/qa-practice-e2e.mjs",
     "qa:screenshots": "node scripts/capture-screenshots.mjs"
   },
   "dependencies": {

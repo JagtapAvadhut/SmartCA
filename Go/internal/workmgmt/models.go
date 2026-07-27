@@ -275,6 +275,7 @@ type Actor struct {
 	Hierarchy   string // normalized WM role
 	Permissions []string
 	DownlineIDs []string // reports_to subtree for portfolio/squad scope
+	FirmKey     string   // tenancy: ABC | WM | PRACTICE | DEFAULT
 	IP          string
 	UserAgent   string
 }
@@ -300,6 +301,8 @@ type ListFilter struct {
 	RiskClass      string
 	// ScopeDownlineIDs expands portfolio/squad visibility.
 	ScopeDownlineIDs []string
+	// FirmKey scopes leadership lists to one practice tenancy (ABC/WM/PRACTICE).
+	FirmKey          string
 	ForceEmpty       bool
 	ClientID         string
 	Department       string

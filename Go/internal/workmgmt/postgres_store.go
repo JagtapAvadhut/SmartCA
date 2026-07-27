@@ -189,6 +189,24 @@ func (s *PostgresStore) ListWork(ctx context.Context, f ListFilter) (Page[WorkIt
 		i := len(args)
 		where = append(where, fmt.Sprintf("(assigned_to=$%d OR assignee_id=$%d OR assigned_by=$%d OR created_by=$%d OR owner_ca_id=$%d OR tl_id=$%d)", i, i, i, i, i, i))
 	}
+	if f.FirmKey != "" {
+		if pats := FirmSQLLikePatterns(f.FirmKey); len(pats) > 0 {
+			pat := pats[0]
+			args = append(args, pat)
+			i := len(args)
+			where = append(where, fmt.Sprintf(`(
+				created_by LIKE $%d OR assigned_by LIKE $%d OR assigned_to LIKE $%d
+				OR COALESCE(owner_ca_id,'') LIKE $%d OR COALESCE(tl_id,'') LIKE $%d
+				OR COALESCE(assignee_id,'') LIKE $%d OR id LIKE $%d
+			)`, i, i, i, i, i, i, i))
+		} else if f.FirmKey == "DEFAULT" {
+			where = append(where, `(
+				created_by NOT LIKE 'ABC-%' AND created_by NOT LIKE 'WM-%' AND created_by NOT LIKE 'PRACTICE-%'
+				AND assigned_to NOT LIKE 'ABC-%' AND assigned_to NOT LIKE 'WM-%' AND assigned_to NOT LIKE 'PRACTICE-%'
+				AND COALESCE(owner_ca_id,'') NOT LIKE 'ABC-%' AND COALESCE(owner_ca_id,'') NOT LIKE 'WM-%' AND COALESCE(owner_ca_id,'') NOT LIKE 'PRACTICE-%'
+			)`)
+		}
+	}
 	if f.ClientID != "" {
 		add("client_id=$%d", f.ClientID)
 	}
@@ -800,14 +818,32 @@ func (s *PostgresStore) Dashboard(ctx context.Context, actor Actor, today string
 	}
 	where := "deleted_at IS NULL"
 	args := []any{}
-	switch actor.Hierarchy {
-	case RoleEmployee:
+	firm := actor.FirmKey
+	if firm == "" {
+		firm = FirmKeyFromUserID(actor.ID)
+	}
+	if pats := FirmSQLLikePatterns(firm); len(pats) > 0 {
+		args = append(args, pats[0])
+		i := len(args)
+		where += fmt.Sprintf(` AND (
+			created_by LIKE $%d OR assigned_by LIKE $%d OR assigned_to LIKE $%d
+			OR COALESCE(owner_ca_id,'') LIKE $%d OR COALESCE(tl_id,'') LIKE $%d
+			OR COALESCE(assignee_id,'') LIKE $%d OR id LIKE $%d
+		)`, i, i, i, i, i, i, i)
+	} else if firm == "DEFAULT" {
+		where += ` AND (
+			created_by NOT LIKE 'ABC-%' AND created_by NOT LIKE 'WM-%' AND created_by NOT LIKE 'PRACTICE-%'
+			AND assigned_to NOT LIKE 'ABC-%' AND assigned_to NOT LIKE 'WM-%' AND assigned_to NOT LIKE 'PRACTICE-%'
+		)`
+	}
+	switch NormalizeHierarchyRole(actor.Hierarchy) {
+	case RoleEmployee, RoleJuniorCA, RoleArticleAssistant, RoleAccountant:
 		args = append(args, actor.ID)
-		where += fmt.Sprintf(" AND assigned_to=$%d", len(args))
-	case RoleCA, RoleTeamLeader:
+		where += fmt.Sprintf(" AND (assignee_id=$%d OR assigned_to=$%d)", len(args), len(args))
+	case RoleCA, RoleSeniorCA, RoleTeamLeader:
 		args = append(args, actor.ID)
 		i := len(args)
-		where += fmt.Sprintf(" AND (assigned_to=$%d OR assigned_by=$%d OR created_by=$%d)", i, i, i)
+		where += fmt.Sprintf(" AND (owner_ca_id=$%d OR tl_id=$%d OR assigned_to=$%d OR assignee_id=$%d OR assigned_by=$%d OR created_by=$%d)", i, i, i, i, i, i)
 	}
 	// Practice-aware: completed = CLOSED (+ legacy completed); pending = not CLOSED/CANCELLED;
 	// queue counts expose verify/close backlog (BUG-0009).
@@ -834,17 +870,8 @@ func (s *PostgresStore) Dashboard(ctx context.Context, actor Actor, today string
 	stats.CompletedTasks = stats.Completed
 	stats.AwaitingClose = stats.ReadyForManagerClose
 
-	deptArgs := []any{}
-	deptWhere := "deleted_at IS NULL"
-	switch actor.Hierarchy {
-	case RoleEmployee:
-		deptArgs = append(deptArgs, actor.ID)
-		deptWhere += fmt.Sprintf(" AND assigned_to=$%d", len(deptArgs))
-	case RoleCA, RoleTeamLeader:
-		deptArgs = append(deptArgs, actor.ID)
-		i := len(deptArgs)
-		deptWhere += fmt.Sprintf(" AND (assigned_to=$%d OR assigned_by=$%d OR created_by=$%d)", i, i, i)
-	}
+	deptArgs := append([]any{}, args[:len(args)-2]...) // drop today + actor.ID from main query args
+	deptWhere := where
 	rows, err := s.db.QueryContext(ctx, "SELECT COALESCE(department,'(none)'), COUNT(*) FROM wm_work_items WHERE "+deptWhere+" GROUP BY department", deptArgs...)
 	if err == nil {
 		defer rows.Close()
@@ -856,7 +883,17 @@ func (s *PostgresStore) Dashboard(ctx context.Context, actor Actor, today string
 			}
 		}
 	}
-	_ = s.db.QueryRowContext(ctx, `SELECT COUNT(*) FROM wm_followups WHERE deleted_at IS NULL AND followup_date=$1::date`, today).Scan(&stats.TodaysFollowUps)
+	// Follow-ups / calls: firm-scoped via work parties when possible
+	fuSQL := `SELECT COUNT(*) FROM wm_followups f
+		INNER JOIN wm_work_items w ON w.id = f.work_item_id
+		WHERE f.deleted_at IS NULL AND f.followup_date=$1::date AND w.deleted_at IS NULL`
+	fuArgs := []any{today}
+	if pats := FirmSQLLikePatterns(firm); len(pats) > 0 {
+		fuArgs = append(fuArgs, pats[0])
+		i := len(fuArgs)
+		fuSQL += fmt.Sprintf(` AND (w.created_by LIKE $%d OR w.assigned_to LIKE $%d OR COALESCE(w.owner_ca_id,'') LIKE $%d OR w.id LIKE $%d)`, i, i, i, i)
+	}
+	_ = s.db.QueryRowContext(ctx, fuSQL, fuArgs...).Scan(&stats.TodaysFollowUps)
 	_ = s.db.QueryRowContext(ctx, `SELECT COUNT(*) FROM wm_call_logs WHERE deleted_at IS NULL AND next_call_date IS NOT NULL AND next_call_date >= $1::date`, today).Scan(&stats.UpcomingCalls)
 	return stats, nil
 }

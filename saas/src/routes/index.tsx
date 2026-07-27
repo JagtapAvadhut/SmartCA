@@ -20,6 +20,14 @@ const InvoicesPage = lazy(() => import('@/pages/Invoices/InvoicesPage'))
 const PaymentsPage = lazy(() => import('@/pages/Payments/PaymentsPage'))
 const DocumentsPage = lazy(() => import('@/pages/Documents/DocumentsPage'))
 const TasksPage = lazy(() => import('@/pages/Tasks/TasksPage'))
+const WorkListPage = lazy(() => import('@/pages/Work/WorkListPage'))
+const WorkDetailPage = lazy(() => import('@/pages/Work/WorkDetailPage'))
+const WorkBoardPage = lazy(() => import('@/pages/Work/WorkBoardPage'))
+const WorkIntakePage = lazy(() => import('@/pages/Work/WorkIntakePage'))
+const WorkCalendarPage = lazy(() => import('@/pages/Work/WorkCalendarPage'))
+const WorkTimelinePage = lazy(() => import('@/pages/Work/WorkTimelinePage'))
+const WorkDashboardPage = lazy(() => import('@/pages/Work/WorkDashboardPage'))
+const WorkTeamPage = lazy(() => import('@/pages/Work/WorkTeamPage'))
 const ReportsPage = lazy(() => import('@/pages/Reports/ReportsPage'))
 const EmployeesPage = lazy(() => import('@/pages/Employees/EmployeesPage'))
 const AIPage = lazy(() => import('@/pages/AI/AIPage'))
@@ -80,6 +88,14 @@ export const router = createBrowserRouter([
       { path: 'payments', element: <LazyPage><PaymentsPage /></LazyPage> },
       { path: 'documents', element: <LazyPage><DocumentsPage /></LazyPage> },
       { path: 'tasks', element: <LazyPage><TasksPage /></LazyPage> },
+      { path: 'work', element: <LazyPage><WorkListPage /></LazyPage> },
+      { path: 'work/board', element: <LazyPage><WorkBoardPage /></LazyPage> },
+      { path: 'work/intake', element: <LazyPage><WorkIntakePage /></LazyPage> },
+      { path: 'work/calendar', element: <LazyPage><WorkCalendarPage /></LazyPage> },
+      { path: 'work/timeline', element: <LazyPage><WorkTimelinePage /></LazyPage> },
+      { path: 'work/dashboard', element: <LazyPage><WorkDashboardPage /></LazyPage> },
+      { path: 'work/team', element: <LazyPage><WorkTeamPage /></LazyPage> },
+      { path: 'work/:id', element: <LazyPage><WorkDetailPage /></LazyPage> },
       { path: 'notes', element: <LazyPage><NotesPage /></LazyPage> },
       { path: 'calendar', element: <LazyPage><CalendarPage /></LazyPage> },
       { path: 'reports', element: <LazyPage><ReportsPage /></LazyPage> },

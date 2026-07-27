@@ -48,6 +48,7 @@ func actorFrom(r *http.Request) workmgmt.Actor {
 		Role:        role,
 		Hierarchy:   workmgmt.NormalizeHierarchyRole(role),
 		Permissions: perms,
+		FirmKey:     workmgmt.FirmKeyFromUserID(u.GetString("id")),
 		IP:          clientIP(r),
 		UserAgent:   r.UserAgent(),
 	}

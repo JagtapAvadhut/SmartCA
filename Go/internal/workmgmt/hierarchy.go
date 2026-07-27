@@ -301,8 +301,16 @@ func canViewWork(actor Actor, w *WorkItem) bool {
 	if role == RoleHR {
 		return false
 	}
+	firm := actor.FirmKey
+	if firm == "" {
+		firm = FirmKeyFromUserID(actor.ID)
+	}
+	inFirm := WorkBelongsToFirm(firm, w.CreatedBy, w.AssignedBy, w.AssignedTo, w.OwnerCAID, w.TlID, w.AssigneeID, w.ID)
 	if IsLeadership(role) {
-		return true
+		return inFirm
+	}
+	if !inFirm && firm != "DEFAULT" {
+		return false
 	}
 	assignee := firstNonEmptyStr(w.AssigneeID, w.AssignedTo)
 	if assignee == actor.ID || w.AssignedBy == actor.ID || w.CreatedBy == actor.ID {
@@ -420,12 +428,68 @@ func ApplyOwnershipTriadDefaults(actor Actor, in *WorkItem, assigneeRole string)
 	}
 }
 
+// FirmKeyFromUserID derives practice tenancy from seeded user id prefixes.
+func FirmKeyFromUserID(userID string) string {
+	id := strings.TrimSpace(userID)
+	switch {
+	case strings.HasPrefix(id, "ABC-"):
+		return "ABC"
+	case strings.HasPrefix(id, "WM-"):
+		return "WM"
+	case strings.HasPrefix(id, "PRACTICE-"):
+		return "PRACTICE"
+	default:
+		return "DEFAULT"
+	}
+}
+
+// FirmSQLLikePatterns returns LIKE patterns that match party ids for a firm.
+func FirmSQLLikePatterns(firmKey string) []string {
+	switch firmKey {
+	case "ABC":
+		return []string{"ABC-%"}
+	case "WM":
+		return []string{"WM-%"}
+	case "PRACTICE":
+		return []string{"PRACTICE-%"}
+	default:
+		// Demo USR-* and unknown — exclude known multi-firm seeds
+		return nil
+	}
+}
+
+// WorkBelongsToFirm reports whether a work row is in the actor's practice.
+func WorkBelongsToFirm(firmKey string, createdBy, assignedBy, assignedTo, ownerCA, tlID, assigneeID, workID string) bool {
+	if firmKey == "" || firmKey == "DEFAULT" {
+		// DEFAULT leadership: exclude ABC/WM/PRACTICE-prefixed parties (demo isolation)
+		parties := []string{createdBy, assignedBy, assignedTo, ownerCA, tlID, assigneeID, workID}
+		for _, p := range parties {
+			if strings.HasPrefix(p, "ABC-") || strings.HasPrefix(p, "WM-") || strings.HasPrefix(p, "PRACTICE-") {
+				return false
+			}
+		}
+		return true
+	}
+	prefix := firmKey + "-"
+	parties := []string{createdBy, assignedBy, assignedTo, ownerCA, tlID, assigneeID, workID}
+	for _, p := range parties {
+		if strings.HasPrefix(p, prefix) {
+			return true
+		}
+	}
+	return false
+}
+
 // applyListScope mutates filters for role-aware list/search queries (Architecture §7.2).
 func applyListScope(actor Actor, f *ListFilter) {
 	role := NormalizeHierarchyRole(actor.Hierarchy)
+	if actor.FirmKey == "" {
+		actor.FirmKey = FirmKeyFromUserID(actor.ID)
+	}
+	f.FirmKey = actor.FirmKey
 	switch {
 	case IsLeadership(role):
-		// firm-wide
+		// firm-wide within tenancy only (never cross ABC/WM/PRACTICE)
 		return
 	case role == RoleHR:
 		f.ForceEmpty = true

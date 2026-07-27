@@ -15,6 +15,7 @@ import (
 	"github.com/JagtapAvadhut/smartca-backend/internal/domain/models"
 	"github.com/JagtapAvadhut/smartca-backend/internal/rbac"
 	"github.com/JagtapAvadhut/smartca-backend/internal/repository"
+	"github.com/JagtapAvadhut/smartca-backend/internal/workmgmt"
 	"github.com/JagtapAvadhut/smartca-backend/pkg/apiresponse"
 )
 
@@ -218,6 +219,31 @@ func RequirePermission(perm string) func(http.Handler) http.Handler {
 				return
 			}
 			next.ServeHTTP(w, r)
+		})
+	}
+}
+
+// RequireWorkPermission allows explicit work.* grants or hierarchy-derived WM permissions.
+func RequireWorkPermission(perm string) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			user := UserFrom(r.Context())
+			if user == nil {
+				apiresponse.Fail(w, RequestIDFrom(r.Context()), apperrors.Unauthorized("authentication required"))
+				return
+			}
+			if rbac.HasPermission(user, perm) {
+				next.ServeHTTP(w, r)
+				return
+			}
+			role := workmgmt.NormalizeHierarchyRole(user.GetString("role"))
+			for _, p := range workmgmt.PermissionsForRole(role) {
+				if p == perm {
+					next.ServeHTTP(w, r)
+					return
+				}
+			}
+			apiresponse.Fail(w, RequestIDFrom(r.Context()), apperrors.Forbidden("insufficient work permissions"))
 		})
 	}
 }

@@ -27,3 +27,12 @@
 - **Root cause:** Postgres unique violations (`23505` on `uq_wm_work_company_period` / `uq_wm_work_client_period`) from `CreateWork` were wrapped as Internal 500.
 - **Fix:** `mapUniqueViolation` maps period unique indexes to `Conflict` (409); `CreateWork` returns mapped AppError via `mapGateErr`. Added `TestCreateWork_DuplicatePeriod_Conflict`.
 - **Tests:** `go test ./internal/workmgmt/...` PASS
+
+## BUG-0005 — Alok 55-user Practice UAT seed missing
+
+- **Status:** FIXED-PENDING-QA
+- **Root cause:** Only `wmseed` (5k load) existed; Architecture D5 / BC-P0-13 Practice UAT seed (55 named Alok org) was never shipped.
+- **Fix:** New seeder `Go/cmd/practiceuatseed` — idempotent wipe of `PRACTICE-*` / `@practice.smartca.in` only; 55 named users with `reportsTo` hierarchy + 2 PENDING_PLACEMENT; 300 clients / 100 companies / 120 engagements / 500 practice works / 15 intakes. Password `SmartCA@2025` (same bcrypt as wmseed). Roster smoke test in `cmd/practiceuatseed`.
+- **Run:** `cd Go && go run ./cmd/practiceuatseed` (DB defaults: smartca / yourpassword).
+- **Verify:** Alok/Nitesh/Mukesh `fullName` counts > 0 via psql after seed.
+- **Tests:** `go test ./cmd/practiceuatseed/ ./internal/workmgmt/...` PASS

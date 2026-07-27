@@ -136,6 +136,104 @@ func TestCloseWork_RequiresPartnerSignoff_BlocksManager(t *testing.T) {
 	}
 }
 
+func TestVerifyGates_SoD_ManagerAndSameActorCannotBoth(t *testing.T) {
+	ctx := context.Background()
+	store := workmgmt.NewMemoryStore()
+	svc := workmgmt.NewService(store)
+	mgr := actor("MGR", workmgmt.RoleManager)
+	// Stale grants: Manager must still be blocked even if permissions list includes both verify gates.
+	mgr.Permissions = append(workmgmt.PermissionsForRole(workmgmt.RoleManager),
+		workmgmt.PermVerifyTL, workmgmt.PermVerifyCA)
+	tl := actor("TL", workmgmt.RoleTeamLeader)
+	ca := actor("CA", workmgmt.RoleCA)
+	partner := actor("PTR", workmgmt.RolePartner)
+
+	for _, p := range workmgmt.PermissionsForRole(workmgmt.RoleManager) {
+		if p == workmgmt.PermVerifyTL || p == workmgmt.PermVerifyCA {
+			t.Fatalf("Manager default permissions must not include %s", p)
+		}
+	}
+
+	w, err := svc.CreateWork(ctx, mgr, &workmgmt.WorkItem{
+		Title: "SoD gates", AssignedTo: "EMP", AssignedToName: "Emp",
+		ClientID: "CL1", CompanyID: "CO1", WorkType: "GSTR-3B", PeriodKey: "2026-07",
+		RiskClass: workmgmt.RiskMedium, OwnerCAID: "CA", TlID: "TL", AssigneeID: "EMP",
+		Status: workmgmt.StatusInProgress,
+	}, workmgmt.RoleEmployee)
+	if err != nil {
+		t.Fatal(err)
+	}
+	got, err := store.GetWork(ctx, w.ID, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	got.Status = workmgmt.StatusReadyForTLVerify
+	if err := store.UpdateWork(ctx, got); err != nil {
+		t.Fatal(err)
+	}
+
+	if _, err := svc.VerifyTL(ctx, mgr, w.ID, "pass", ""); err == nil {
+		t.Fatal("Manager must not TL verify")
+	}
+	still, _ := store.GetWork(ctx, w.ID, false)
+	if still.Status != workmgmt.StatusReadyForTLVerify {
+		t.Fatalf("status must remain READY_FOR_TL_VERIFY after Manager deny, got %s", still.Status)
+	}
+
+	w, err = svc.VerifyTL(ctx, tl, w.ID, "pass", "tl ok")
+	if err != nil {
+		t.Fatalf("TL verify: %v", err)
+	}
+	if w.Status != workmgmt.StatusReadyForCAVerify {
+		t.Fatalf("want READY_FOR_CA_VERIFY got %s", w.Status)
+	}
+
+	if _, err := svc.VerifyCA(ctx, mgr, w.ID, "pass", ""); err == nil {
+		t.Fatal("Manager must not CA verify")
+	}
+	still, _ = store.GetWork(ctx, w.ID, false)
+	if still.Status != workmgmt.StatusReadyForCAVerify {
+		t.Fatalf("status must remain READY_FOR_CA_VERIFY after Manager deny, got %s", still.Status)
+	}
+
+	// Same actor with both verify grants cannot self-serve TL + CA alone.
+	w2, err := svc.CreateWork(ctx, mgr, &workmgmt.WorkItem{
+		Title: "SoD same actor", AssignedTo: "EMP", AssignedToName: "Emp",
+		ClientID: "CL1", CompanyID: "CO1", WorkType: "GSTR-3B", PeriodKey: "2026-08",
+		RiskClass: workmgmt.RiskMedium, OwnerCAID: "CA", TlID: "TL", AssigneeID: "EMP",
+		Status: workmgmt.StatusInProgress,
+	}, workmgmt.RoleEmployee)
+	if err != nil {
+		t.Fatal(err)
+	}
+	got2, _ := store.GetWork(ctx, w2.ID, false)
+	got2.Status = workmgmt.StatusReadyForTLVerify
+	_ = store.UpdateWork(ctx, got2)
+
+	w2, err = svc.VerifyTL(ctx, partner, w2.ID, "pass", "partner tl")
+	if err != nil {
+		t.Fatalf("Partner TL verify: %v", err)
+	}
+	if _, err := svc.VerifyCA(ctx, partner, w2.ID, "pass", "partner ca"); err == nil {
+		t.Fatal("same actor must not complete both TL and CA verify")
+	} else if !strings.Contains(strings.ToLower(err.Error()), "segregation") && !strings.Contains(strings.ToLower(err.Error()), "same actor") {
+		t.Fatalf("expected SoD error, got %v", err)
+	}
+	still2, _ := store.GetWork(ctx, w2.ID, false)
+	if still2.Status != workmgmt.StatusReadyForCAVerify {
+		t.Fatalf("status must remain READY_FOR_CA_VERIFY after same-actor deny, got %s", still2.Status)
+	}
+
+	// Distinct CA verifier completes the chain.
+	w2, err = svc.VerifyCA(ctx, ca, w2.ID, "pass", "ca ok")
+	if err != nil {
+		t.Fatalf("distinct CA verify: %v", err)
+	}
+	if w2.Status != workmgmt.StatusReadyForManagerClose {
+		t.Fatalf("want READY_FOR_MANAGER_CLOSE got %s", w2.Status)
+	}
+}
+
 func TestPracticeReviewGates_HappyPath(t *testing.T) {
 	ctx := context.Background()
 	svc := workmgmt.NewService(workmgmt.NewMemoryStore())

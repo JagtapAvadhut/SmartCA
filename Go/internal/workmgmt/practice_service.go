@@ -18,6 +18,21 @@ func mapGateErr(err error) error {
 	return err
 }
 
+// tlPassVerifier returns the actor ID of the latest successful TL verify (pass → READY_FOR_CA_VERIFY).
+func (s *Service) tlPassVerifier(ctx context.Context, workID string) (string, error) {
+	hist, err := s.store.ListTransitionHistory(ctx, workID)
+	if err != nil {
+		return "", apperrors.Internal("failed to load transition history", err)
+	}
+	var actorID string
+	for _, h := range hist {
+		if h.Action == ActionVerifyTL && NormalizePracticeStatus(h.ToStatus) == StatusReadyForCAVerify {
+			actorID = h.ActorID
+		}
+	}
+	return actorID, nil
+}
+
 func (s *Service) gateShadows(actor Actor, workID, from, to, action, remarks string) (WorkTransitionHistory, ActivityEvent, AuditEntry) {
 	tr := WorkTransitionHistory{
 		WorkItemID: workID,
@@ -128,6 +143,10 @@ func (s *Service) VerifyTL(ctx context.Context, actor Actor, id, decision, remar
 	if err := s.require(actor, PermVerifyTL); err != nil {
 		return nil, err
 	}
+	// SoD: Manager closes at end of chain — never TL verify (even if stale grants exist).
+	if NormalizeHierarchyRole(actor.Hierarchy) == RoleManager {
+		return nil, apperrors.Forbidden("manager cannot perform TL verify (segregation of duties)")
+	}
 	pass := strings.EqualFold(decision, "pass")
 	fail := strings.EqualFold(decision, "fail")
 	if !pass && !fail {
@@ -175,6 +194,10 @@ func (s *Service) VerifyCA(ctx context.Context, actor Actor, id, decision, remar
 	if err := s.require(actor, PermVerifyCA); err != nil {
 		return nil, err
 	}
+	// SoD: Manager closes at end of chain — never CA verify (even if stale grants exist).
+	if NormalizeHierarchyRole(actor.Hierarchy) == RoleManager {
+		return nil, apperrors.Forbidden("manager cannot perform CA verify (segregation of duties)")
+	}
 	pass := strings.EqualFold(decision, "pass")
 	fail := strings.EqualFold(decision, "fail")
 	if !pass && !fail {
@@ -191,6 +214,12 @@ func (s *Service) VerifyCA(ctx context.Context, actor Actor, id, decision, remar
 	if NormalizeHierarchyRole(actor.Hierarchy) == RoleJuniorCA &&
 		NormalizeRiskClass(cur.RiskClass) == RiskHigh {
 		return nil, apperrors.Forbidden("junior CA cannot CA Verify high-risk work")
+	}
+	// SoD: the actor who passed TL verify cannot also pass (or fail) CA verify on the same work.
+	if tlActor, herr := s.tlPassVerifier(ctx, id); herr != nil {
+		return nil, herr
+	} else if tlActor != "" && tlActor == actor.ID {
+		return nil, apperrors.Forbidden("same actor cannot perform both TL and CA verify (segregation of duties)")
 	}
 	toStatus, terr := ApplyCAVerify(cur.Status, cur.RiskClass, cur.DelegatedClose, pass)
 	if terr != nil {

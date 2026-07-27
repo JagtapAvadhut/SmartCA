@@ -77,10 +77,15 @@ func PermissionsForRole(role string) []string {
 	case RolePartner:
 		return AllPermissions()
 	case RoleManager:
-		// Manager may close via PermCloseManager; partner-flag close is Partner-only.
-		out := make([]string, 0, len(AllPermissions())-1)
+		// Manager closes at end of chain; TL/CA verify and partner-flag close are SoD-separated.
+		skip := map[string]bool{
+			PermClosePartner: true,
+			PermVerifyTL:     true,
+			PermVerifyCA:     true,
+		}
+		out := make([]string, 0, len(AllPermissions())-len(skip))
 		for _, p := range AllPermissions() {
-			if p == PermClosePartner {
+			if skip[p] {
 				continue
 			}
 			out = append(out, p)
